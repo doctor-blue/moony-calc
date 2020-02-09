@@ -14,20 +14,19 @@ abstract class BaseFragment() : Fragment() {
 
     var activity: Activity? = null
 
-    abstract val layoutId: Int
     override fun onCreateView(
 
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        var view:View? = inflater.inflate(layoutId, container, false)
+        var view:View? = inflater.inflate(getLayoutId(), container, false)
         activity = getActivity()
         init()
         return view
     }
 
     abstract fun init()
-
+    abstract fun getLayoutId(): Int
     override fun onDestroy() {
         super.onDestroy()
     }
