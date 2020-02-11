@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <Transition
+        android:id="@+id/footer_transition"
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start"
+        app:duration="1500"
+        app:autoTransition="animateToEnd"
+       >
+
+              <KeyFrameSet>
+                  <KeyPosition
+                      app:framePosition="70"
+                      app:keyPositionType="parentRelative"
+                      app:motionTarget="@id/main_footer"
+                      app:percentX="0.5"
+                      app:percentY="0.95" />
+                  <KeyPosition
+                      app:framePosition="80"
+                      app:keyPositionType="parentRelative"
+                      app:motionTarget="@id/main_footer"
+                      app:percentX="0.5"
+                      app:percentY="1" />
+                  <KeyPosition
+                      app:framePosition="90"
+                      app:keyPositionType="parentRelative"
+                      app:motionTarget="@id/main_footer"
+                      app:percentX="0.5"
+                      app:percentY="0.97" />
+              </KeyFrameSet>
+    </Transition>
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            android:alpha="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/main_footer" />
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:alpha="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/main_footer"
+            />
+    </ConstraintSet>
+</MotionScene>
