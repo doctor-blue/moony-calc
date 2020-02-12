@@ -9,7 +9,6 @@
         app:duration="1500"
         app:autoTransition="animateToEnd"
        >
-
               <KeyFrameSet>
                   <KeyPosition
                       app:framePosition="70"

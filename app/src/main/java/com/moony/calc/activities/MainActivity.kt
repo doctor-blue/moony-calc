@@ -3,8 +3,11 @@ package com.moony.calc.activities
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.motion.widget.MotionScene
 import androidx.drawerlayout.widget.DrawerLayout
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
@@ -27,7 +30,14 @@ class MainActivity : BaseActivity() {
             R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(drawerToggle!!)
-
+        card_saving_box.setOnClickListener {
+            img_wallet.setImageResource(R.drawable.ic_wallet_no_color)
+            img_saving_box.setImageResource(R.drawable.ic_piggy_color)
+        }
+        card_wallet.setOnClickListener {
+            img_saving_box.setImageResource(R.drawable.ic_piggy_no_color)
+            img_wallet.setImageResource(R.drawable.ic_wallet_with_color)
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.activity_main

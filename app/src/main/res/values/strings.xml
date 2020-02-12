@@ -2,4 +2,8 @@
     <string name="app_name">Moony</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="chart">Chart</string>
+    <string name="categories">Categories</string>
+    <string name="rate_us">Rate us</string>
+    <string name="share">Share</string>
 </resources>

@@ -3,27 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group>
         <item
-            android:id="@+id/nav_home"
-            android:title="Home" />
+            android:id="@+id/nav_chart"
+            android:title="@string/chart"
+            android:icon="@drawable/ic_pie_chart"
+            />
         <item
-            android:id="@+id/nav_gallery"
-            android:title="Ahihi" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:title="Hehe" />
-
+            android:id="@+id/nav_categories"
+            android:title="@string/categories"
+            android:icon="@drawable/ic_categories"/>
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:title="share" />
+                android:title="@string/share"
+                android:icon="@drawable/ic_share"
+                />
             <item
-                android:id="@+id/nav_send"
-                android:title="hehe" />
+                android:id="@+id/nav_rate_us"
+                android:title="@string/rate_us"
+                android:icon="@drawable/ic_star"/>
         </menu>
     </item>
 
