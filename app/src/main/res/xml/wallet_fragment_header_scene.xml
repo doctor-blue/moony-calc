@@ -23,7 +23,7 @@
         <Constraint
             android:id="@+id/card_overviews"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_80sdp"
             android:alpha="1"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="@dimen/_8sdp"
@@ -39,7 +39,7 @@
         <Constraint
             android:id="@+id/card_outstanding_target"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_80sdp"
             android:alpha="0"
             android:layout_marginLeft="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_8sdp"
@@ -57,7 +57,7 @@
         <Constraint
             android:id="@+id/card_overviews"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_80sdp"
             android:alpha="0"
             android:layout_marginLeft="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_8sdp"
@@ -71,7 +71,7 @@
         <Constraint
             android:id="@+id/card_outstanding_target"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_80sdp"
             android:alpha="1"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="@dimen/_8sdp"
