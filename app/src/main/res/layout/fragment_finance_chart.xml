@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.FinanceChartFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appbar_finance_chart">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_finance_chart"
+            android:layout_width="match_parent"
+            style="@style/Widget.Moony.Toolbar"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back_black"
+            app:menu="@menu/finance_chart">
+            <TextView
+                android:id="@+id/txt_choose_month_finance_chart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/nimbus_roman_medium"
+                android:text="Feb"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/appbar_finance_chart">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          android:padding="@dimen/_8sdp">
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/_150sdp"
+              app:cardElevation="@dimen/_3sdp"
+              app:cardCornerRadius="@dimen/_10sdp"
+              app:cardBackgroundColor="@android:color/white"
+              >
+              <TextView
+                  android:layout_gravity="center"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Chart here"
+                  android:textSize="@dimen/_30sdp"/>
+          </com.google.android.material.card.MaterialCardView>
+          <androidx.recyclerview.widget.RecyclerView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginTop="@dimen/_10sdp"
+              android:id="@+id/rev_finance_chart"/>
+      </LinearLayout>
+  </ScrollView>
+</RelativeLayout>

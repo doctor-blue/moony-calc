@@ -16,6 +16,6 @@ class MoonyFragment : FrameLayout {
     )
 
     fun replaceFragment(newFragment: BaseFragment, fragmentManager: FragmentManager) {
-        fragmentManager.beginTransaction().replace(id, newFragment).addToBackStack(null).commit()
+        fragmentManager.beginTransaction().replace(id, newFragment).commit()
     }
 }

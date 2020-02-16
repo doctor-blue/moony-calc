@@ -10,7 +10,7 @@
     tools:showIn="@layout/app_bar_main">
 
     <com.moony.calc.views.MoonyFragment
-        android:id="@+id/layout_test"
+        android:id="@+id/main_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/_70sdp"
@@ -18,8 +18,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <include layout="@layout/wallet_fragment_header" />
     </com.moony.calc.views.MoonyFragment>
 
     <androidx.constraintlayout.widget.ConstraintLayout

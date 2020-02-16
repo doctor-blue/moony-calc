@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.SavingChartFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appbar_saving_chart">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_saving_chart"
+            android:layout_width="match_parent"
+            style="@style/Widget.Moony.Toolbar"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back_black" />
+    </com.google.android.material.appbar.AppBarLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar_saving_chart">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/_8sdp">
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                app:cardElevation="@dimen/_3sdp"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardBackgroundColor="@android:color/white">
+                <RelativeLayout
+                    android:layout_width="@dimen/_280sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_2sdp"
+                    android:layout_marginRight="@dimen/_2sdp"
+                    android:background="@android:color/transparent"
+                    android:padding="@dimen/_5sdp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/goal"
+                        style="@style/Widget.Moony.Headline5"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:id="@+id/txt_title_saving_chart1"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.Moony.Headline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_title_saving_chart1"
+                        android:text="@string/in_progress"
+                        android:id="@+id/txt_title_saving_chart2"
+                        android:layout_marginTop="@dimen/_20sdp"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.Moony.Headline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_title_saving_chart2"
+                        android:text="@string/completed"
+                        android:id="@+id/txt_title_saving_chart3"
+                        android:layout_marginTop="@dimen/_20sdp"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.Moony.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:id="@+id/txt_total_goal"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.Moony.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:id="@+id/txt_total_in_progress"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_below="@id/txt_total_goal"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.Moony.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:id="@+id/txt_total_completed"
+                        android:layout_below="@+id/txt_total_in_progress"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/rev_saving_chart"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
