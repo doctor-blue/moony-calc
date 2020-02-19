@@ -25,7 +25,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/nimbus_roman_medium"
                 android:text="Feb"
-                android:textColor="@color/textColor"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold" />
         </com.google.android.material.appbar.MaterialToolbar>

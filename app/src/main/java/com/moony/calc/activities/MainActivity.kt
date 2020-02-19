@@ -1,17 +1,21 @@
 package com.moony.calc.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.views.NavigationItemClick
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_menu.*
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(),NavigationItemClick{
 
     override fun init(savedInstanceState: Bundle?) {
         initControl()
@@ -21,38 +25,32 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     private fun initEvent() {
-        /*btn_nav_main.setOnClickListener {
-           // Log.d("Hello","${main_root.currentState}")
-            if (main_root.currentState == R.id.start_main_transition) {
-                //Log.d("Hello","true")
-                main_root.setTransition(R.id.start_main_transition, R.id.end_main_transition)
-            } else if (main_root.currentState == R.id.end_main_transition) {
-                main_root.setTransition(R.id.end_main_transition, R.id.start_main_transition)
-            }
-            main_root.setTransitionDuration(1000)
-            main_root.transitionToEnd()
 
-        }*/
-
-        main_root.setTransitionListener(object :TransitionAdapter(){
-            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-                super.onTransitionCompleted(motionLayout, currentId)
-
-                if (main_root.currentState == R.id.start_main_transition) {
-                    Log.d("Hello","true")
-                } else if (main_root.currentState == R.id.end_main_transition) {
-                    Log.d("Hello","false")
-                }
-                else{
-                    Log.d("Hello","nothing")
-                }
-            }
-        })
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun initControl() {
-
+        navigation_menu.itemClick=this
     }
+
+    override fun onClick(view: View) {
+       main_root.transitionToStart()
+        when(view.id){
+            R.id.card_budget->{
+                Toast.makeText(this,"card budget click",Toast.LENGTH_SHORT).show()
+            }
+            R.id.card_saving->{
+                Toast.makeText(this,"card saving click",Toast.LENGTH_SHORT).show()
+            }
+            R.id.card_chart->{
+                Toast.makeText(this,"card chart click",Toast.LENGTH_SHORT).show()
+            }
+            R.id.card_categories->{
+                Toast.makeText(this,"card categories click",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
 
 }

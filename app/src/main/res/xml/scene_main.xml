@@ -5,7 +5,7 @@
         android:id="@+id/startToEnd"
         app:constraintSetEnd="@+id/end_main_transition"
         app:constraintSetStart="@+id/start_main_transition"
-        app:duration="1000">
+        app:duration="600">
         <OnClick
             app:clickAction="toggle"
             app:targetId="@id/btn_nav_main" />
@@ -21,11 +21,12 @@
 
         <Constraint android:id="@+id/nav_main_menu">
             <Layout
-                android:layout_width="0dp"
+                android:layout_width="@dimen/_250sdp"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </Constraint>
 
         <Constraint android:id="@+id/main_content">
@@ -77,6 +78,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <Transform android:rotationY="0"/>
         </Constraint>
 
         <Constraint android:id="@+id/main_content">

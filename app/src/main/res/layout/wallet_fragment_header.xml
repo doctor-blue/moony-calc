@@ -33,7 +33,7 @@
                 android:fontFamily="@font/hitchcut"
                 android:gravity="center"
                 android:text="Thông tin mục tiêu tiết kiệm gần đạt đc ở đây"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_20sdp" />
         </LinearLayout>
 
@@ -64,7 +64,7 @@
             android:fontFamily="@font/hitchcut"
             android:gravity="center"
             android:text="Thông tin tổng quan chi tiêu tháng ở đây"
-            android:textColor="@color/textColor"
+            android:textColor="@color/white"
             android:textSize="@dimen/_20sdp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

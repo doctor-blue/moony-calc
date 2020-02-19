@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#AFB3B4</color>
-    <color name="colorAccent">#F9AA33</color>
-    <color name="textColor">#232F34</color>
-
-    <color name="colorPrimaryNight">#008577</color>
-    <color name="colorPrimaryDarkNight">#00574B</color>
-    <color name="colorAccentNight">#D81B60</color>
+    <color name="green_800">#356859</color>
+    <color name="green_500">#37966F</color>
+    <color name="green_100">#B9E4C9</color>
+    <color name="orange_800">#FD5523</color>
+    <color name="scream_50">#FFFBE6</color>
+    <color name="white">#FFFFFF</color>
 </resources>
