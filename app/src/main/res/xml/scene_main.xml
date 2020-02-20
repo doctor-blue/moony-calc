@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Transition
         android:id="@+id/startToEnd"
-        app:constraintSetEnd="@+id/end_main_transition"
-        app:constraintSetStart="@+id/start_main_transition"
+        app:constraintSetEnd="@+id/start_main_transition"
+        app:constraintSetStart="@+id/end_main_transition"
         app:duration="600">
         <OnClick
             app:clickAction="toggle"

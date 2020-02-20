@@ -16,18 +16,18 @@
     </style>
     <style name="Widget.Moony.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">?attr/colorPrimaryDark</item>
-        <item name="fontFamily">@font/lora_regular</item>
+        <item name="fontFamily">@font/nimbus_roman_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/_16sdp</item>
     </style>
     <style name="Widget.Moony.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">?attr/colorPrimaryDark</item>
-        <item name="fontFamily">@font/lora_regular</item>
+        <item name="fontFamily">@font/nimbus_roman_medium</item>
         <item name="android:textSize">@dimen/_16sdp</item>
     </style>
     <style name="Widget.Moony.Headline4" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">?attr/colorAccent</item>
-        <item name="fontFamily">@font/lora_regular</item>
+        <item name="fontFamily">@font/nimbus_roman_medium</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="Widget.Moony.Title1" parent="TextAppearance.MaterialComponents.Headline6">

@@ -5,7 +5,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 
-class WalletFragment : BaseFragment() {
+class BugetFragment : BaseFragment() {
     override fun init(view: View) {
 
     }

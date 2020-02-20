@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChartActivity"></activity>
+        <activity android:name=".activities.AddCategoriesActivity"></activity>
+        <activity android:name=".activities.AddSavingGoalActivity" />
+        <activity android:name=".activities.AddFinanceActivity" />
+        <activity android:name=".activities.CategoriesActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name">
