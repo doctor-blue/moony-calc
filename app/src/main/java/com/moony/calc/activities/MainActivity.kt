@@ -10,6 +10,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.fragments.BugetFragment
 import com.moony.calc.views.NavigationItemClick
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_menu.*
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity(),NavigationItemClick{
     @SuppressLint("ResourceAsColor")
     private fun initControl() {
         navigation_menu.itemClick=this
+        fragment_main.replaceFragment(BugetFragment(),supportFragmentManager)
     }
 
     override fun onClick(view: View) {

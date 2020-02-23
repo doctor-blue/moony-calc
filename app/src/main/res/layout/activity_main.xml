@@ -16,16 +16,12 @@
         android:layout_height="match_parent"
         android:background="#FFFBE6"
         app:layout_constraintStart_toEndOf="@+id/nav_main_menu">
-        <TextView
+        <com.moony.calc.views.MoonyFragment
+            android:id="@+id/fragment_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Number 1"
-            android:textSize="@dimen/_30sdp"
-            android:textStyle="bold"
-            android:textColor="#255b7a"
-            android:layout_centerInParent="true"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_40sdp"
+         />
     </RelativeLayout>
 
     <com.google.android.material.card.MaterialCardView

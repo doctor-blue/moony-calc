@@ -7,9 +7,8 @@ import com.moony.calc.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_finance_chart.*
 
 class BudgetChartFragment : BaseFragment() {
-    override fun init(view:View) {
-        val toolbar=view.findViewById<MaterialToolbar>(R.id.toolbar_finance_chart)
-        toolbar.setNavigationOnClickListener { activity!!.finish() }
+    override fun init() {
+
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_finance_chart

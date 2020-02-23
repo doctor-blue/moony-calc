@@ -7,33 +7,10 @@
     tools:context=".fragments.BudgetChartFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appbar_finance_chart">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_finance_chart"
-            android:layout_width="match_parent"
-            style="@style/Widget.Moony.Toolbar"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back_black"
-            app:menu="@menu/finance_chart">
-            <TextView
-                android:id="@+id/txt_choose_month_finance_chart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/nimbus_roman_medium"
-                android:text="Feb"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_20sdp"
-                android:textStyle="bold" />
-        </com.google.android.material.appbar.MaterialToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
   <ScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_below="@+id/appbar_finance_chart">
+      >
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"

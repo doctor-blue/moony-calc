@@ -9,6 +9,7 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowBackground">@color/scream_50</item>
         <item name="colorControlHighlight">@color/green_100</item>
+        <item name="colorControlNormal">@color/green_500</item>
     </style>
     <style name="Widget.Moony.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
@@ -23,15 +24,21 @@
     <style name="Widget.Moony.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">?attr/colorPrimaryDark</item>
         <item name="fontFamily">@font/nimbus_roman_medium</item>
-        <item name="android:textSize">@dimen/_16sdp</item>
+        <item name="android:textSize">@dimen/_14sdp</item>
     </style>
     <style name="Widget.Moony.Headline4" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">?attr/colorAccent</item>
         <item name="fontFamily">@font/nimbus_roman_medium</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/_25sdp</item>
     </style>
     <style name="Widget.Moony.Title1" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Moony.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">@dimen/_16sdp</item>
         <item name="android:textStyle">bold</item>
     </style>
 </resources>
