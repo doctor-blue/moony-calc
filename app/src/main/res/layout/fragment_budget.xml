@@ -193,7 +193,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:fabCustomSize="@dimen/_50sdp"
-        app:tint="@color/green_800"
+        app:tint="@color/white"
         app:maxImageSize="@dimen/_24sdp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SavingBoxFragment">
-<!--    <RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="@dimen/_8sdp"
@@ -36,7 +36,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/tab_to_add_one"
+                android:text="@string/no_goals_tab_to_add_one"
                 android:layout_weight="1"
                 android:gravity="top|center"
                 android:textSize="@dimen/_20sdp"/>
@@ -56,6 +56,6 @@
         app:fabCustomSize="@dimen/_50sdp"
         app:tint="@color/green_800"
         app:maxImageSize="@dimen/_24sdp"
-        />-->
-    <include layout="@layout/saving_goals_item"/>
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

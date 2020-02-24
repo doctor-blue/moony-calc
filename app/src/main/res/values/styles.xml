@@ -45,7 +45,12 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="Widget.Moony.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="android:gravity">center</item>
         <item name="android:scaleType">centerCrop</item>
+        <item name="tint">@color/white</item>
+    </style>
+    <style name="Widget.Moony.TextInputLayout.OutlineBox.Dense" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/green_600</item>
+        <item name="hintTextColor">@color/green_800</item>
+        <item name="boxStrokeWidth">@dimen/_1sdp</item>
     </style>
 </resources>

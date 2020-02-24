@@ -3,115 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardCornerRadius="@dimen/_10sdp"
-    app:cardElevation="@dimen/_3sdp"
-    app:cardBackgroundColor="@color/scream_50"
     android:fitsSystemWindows="true"
-   >
-   <androidx.constraintlayout.motion.widget.MotionLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/saving_item_root"
-       app:layoutDescription="@xml/saving_goal_item_scene">
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:gravity="center"
-           app:layout_constraintTop_toBottomOf="@id/img_saving_expand"
-           android:id="@+id/saving_sunken_part">
-           <ImageView
-               android:layout_width="@dimen/_32sdp"
-               android:layout_height="@dimen/_32sdp"
-               android:scaleType="centerCrop"
-               android:id="@+id/img_add_amount"
-               android:src="@drawable/ic_add_circle_outline"
-               android:layout_marginRight="@dimen/_10sdp"
-               android:layout_marginEnd="@dimen/_10sdp"/>
-           <ImageView
-               android:layout_width="@dimen/_32sdp"
-               android:layout_height="@dimen/_32sdp"
-               android:scaleType="centerCrop"
-               android:id="@+id/img_minus_amount"
-               android:src="@drawable/ic_minus_circle_outline"
-               android:layout_marginRight="@dimen/_10sdp"
-               android:layout_marginLeft="@dimen/_10sdp"/>
-           <ImageView
-               android:layout_width="@dimen/_32sdp"
-               android:layout_height="@dimen/_32sdp"
-               android:scaleType="centerCrop"
-               android:id="@+id/img_edit_saving"
-               android:src="@drawable/ic_edit"
-               android:layout_marginRight="@dimen/_10sdp"
-               android:layout_marginLeft="@dimen/_10sdp"/>
-           <ImageView
-               android:layout_width="@dimen/_32sdp"
-               android:layout_height="@dimen/_32sdp"
-               android:scaleType="centerCrop"
-               android:id="@+id/img_remove_saving"
-               android:src="@drawable/ic_delete"
-               android:layout_marginLeft="@dimen/_10sdp"
-               android:layout_marginStart="@dimen/_10sdp" />
-       </LinearLayout>
-       <androidx.constraintlayout.widget.ConstraintLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:id="@+id/saving_floating_part"
-           android:visibility="visible"
-           android:background="@color/scream_50"
-           app:layout_constraintTop_toTopOf="parent">
+    app:cardBackgroundColor="@color/scream_50"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_3sdp">
 
-           <com.google.android.material.textview.MaterialTextView
-               android:id="@+id/txt_saving_title"
-               style="@style/Widget.Moony.Headline4"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:gravity="center"
-               android:maxLength="23"
-               android:maxLines="1"
-               app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/saving_item_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:src="@drawable/ic_unknown"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/img_goal_category_item"/>
 
-           <com.google.android.material.textview.MaterialTextView
-               android:id="@+id/txt_amount_progress"
-               style="@style/Widget.Moony.Headline5"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:gravity="center"
-               android:maxLength="20"
-               android:maxLines="1"
-               app:layout_constraintTop_toBottomOf="@id/txt_saving_title" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_saving_description_item"
+            style="@style/Widget.Moony.Headline4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLength="20"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_goal_category_item"
+            app:layout_constraintTop_toTopOf="parent" />
 
-           <com.daimajia.numberprogressbar.NumberProgressBar
-               android:id="@+id/pb_saving_goals"
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/_20sdp"
-               android:layout_marginLeft="@dimen/_10sdp"
-               android:layout_marginRight="@dimen/_10sdp"
-               app:layout_constraintTop_toBottomOf="@id/txt_amount_progress"
-               app:progress_current="0"
-               app:progress_reached_bar_height="@dimen/_5sdp"
-               app:progress_reached_color="@color/green_800"
-               app:progress_text_color="@color/orange_400"
-               app:progress_text_size="@dimen/_15sdp"
-               app:progress_unreached_bar_height="@dimen/_4sdp"
-               app:progress_unreached_color="@color/green_100" />
-       </androidx.constraintlayout.widget.ConstraintLayout>
-       <ImageView
-           android:layout_width="@dimen/_32sdp"
-           android:layout_height="@dimen/_32sdp"
-           android:src="@drawable/ic_expand"
-           app:layout_constraintTop_toBottomOf="@id/saving_floating_part"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           android:id="@+id/img_saving_expand"/>
-       <TextView
-           android:id="@+id/barrier"
-           android:layout_width="match_parent"
-           android:layout_height="@dimen/_1sdp"
-           android:background="@color/green_100"
-           android:layout_marginTop="@dimen/_5sdp"
-           app:layout_constraintTop_toBottomOf="@id/saving_sunken_part"/>
-   </androidx.constraintlayout.motion.widget.MotionLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_amount_progress_item"
+            style="@style/Widget.Moony.Headline5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLength="20"
+            android:maxLines="1"
+            app:layout_constraintTop_toBottomOf="@id/txt_saving_description_item" />
+
+        <com.daimajia.numberprogressbar.NumberProgressBar
+            android:id="@+id/pb_saving_goals_item"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            app:layout_constraintTop_toBottomOf="@id/txt_amount_progress_item"
+            app:progress_current="0"
+            app:progress_reached_bar_height="@dimen/_5sdp"
+            app:progress_reached_color="@color/green_800"
+            app:progress_text_color="@color/orange_400"
+            app:progress_text_size="@dimen/_15sdp"
+            app:progress_unreached_bar_height="@dimen/_4sdp"
+            app:progress_unreached_color="@color/green_100" />
+
+        <TextView
+            android:id="@+id/barrier"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/green_100"
+            app:layout_constraintTop_toBottomOf="@id/pb_saving_goals_item" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </com.google.android.material.card.MaterialCardView>

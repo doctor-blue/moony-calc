@@ -29,7 +29,7 @@ class MainActivity : BaseActivity(), NavigationItemClick {
     @SuppressLint("ResourceAsColor")
     private fun initControl() {
         navigation_menu.itemClick = this
-        fragment_main.replaceFragment(SavingBoxFragment(), supportFragmentManager)
+        fragment_main.replaceFragment(BudgetFragment(), supportFragmentManager)
     }
 
     override fun onClick(view: View) {

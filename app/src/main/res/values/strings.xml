@@ -20,5 +20,8 @@
     <string name="write_note">Write note</string>
     <string name="today">Today</string>
     <string name="tab_to_add_one">No Transactions\nTab \'+\' to add one</string>
-    <string name="smile">😕</string>
+    <string name="add_goal">Add Goal</string>
+    <string name="no_goals_tab_to_add_one">You still have no goals\nTab \'+\' to add one</string>
+    <string name="description">Description</string>
+    <string name="amount">Amount</string>
 </resources>

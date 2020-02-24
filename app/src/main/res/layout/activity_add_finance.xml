@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AddFinanceActivity">
-    <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_add_finance"
         android:layout_width="match_parent"
@@ -246,7 +245,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:fabCustomSize="@dimen/_50sdp"
-        app:tint="@color/green_800"
+        app:tint="@color/white"
         app:maxImageSize="@dimen/_24sdp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
