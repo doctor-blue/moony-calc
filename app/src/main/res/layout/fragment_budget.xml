@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.BugetFragment">
+    tools:context=".fragments.BudgetFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_overviews"
@@ -143,7 +143,7 @@
       </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="@dimen/_8sdp"
@@ -151,7 +151,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_overviews"
-        tools:listitem="@layout/finance_item" />
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/finance_item"
+            android:id="@+id/rv_budget"
+            android:visibility="gone"/>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:id="@+id/layout_list_empty">
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_weight="3"
+               android:scaleType="center"
+               android:src="@drawable/ic_new_file"
+               android:gravity="bottom|center"
+               android:textSize="@dimen/_100sdp"/>
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:text="@string/tab_to_add_one"
+               android:layout_weight="1"
+               android:gravity="top|center"
+               android:textSize="@dimen/_20sdp"/>
+       </LinearLayout>
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_finance"
@@ -165,6 +193,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:fabCustomSize="@dimen/_50sdp"
-        app:backgroundTint="@color/orange_800"
-        android:tint="@color/green_800"/>
+        app:tint="@color/green_800"
+        app:maxImageSize="@dimen/_24sdp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

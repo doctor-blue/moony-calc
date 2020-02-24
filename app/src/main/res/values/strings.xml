@@ -14,7 +14,11 @@
     <string name="income_title">Income:</string>
     <string name="expenses_title">Expenses:</string>
     <string name="balance_title">Balance:</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_transaction">Add transaction</string>
+    <string name="save">Save</string>
+    <string name="select_category">Select category</string>
+    <string name="write_note">Write note</string>
+    <string name="today">Today</string>
+    <string name="tab_to_add_one">No Transactions\nTab \'+\' to add one</string>
+    <string name="smile">😕</string>
 </resources>

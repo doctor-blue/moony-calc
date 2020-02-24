@@ -10,9 +10,12 @@
         <item name="android:windowBackground">@color/scream_50</item>
         <item name="colorControlHighlight">@color/green_100</item>
         <item name="colorControlNormal">@color/green_500</item>
+        <item name="actionMenuTextColor">@color/green_800</item>
+        <item name="colorOnSecondary">@color/green_600</item>
+        <item name="colorSecondary">@color/orange_800</item>
     </style>
     <style name="Widget.Moony.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:background">@color/scream_50</item>
         <item name="titleTextColor">?attr/colorPrimaryDark</item>
     </style>
     <style name="Widget.Moony.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
@@ -40,5 +43,9 @@
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textSize">@dimen/_16sdp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Widget.Moony.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:gravity">center</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 </resources>
