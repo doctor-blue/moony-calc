@@ -6,8 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
-import com.moony.calc.fragments.BudgetFragment
-import com.moony.calc.fragments.SavingBoxFragment
+import com.moony.calc.fragments.TransactionFragment
 import com.moony.calc.views.NavigationItemClick
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_menu.*
@@ -29,7 +28,7 @@ class MainActivity : BaseActivity(), NavigationItemClick {
     @SuppressLint("ResourceAsColor")
     private fun initControl() {
         navigation_menu.itemClick = this
-        fragment_main.replaceFragment(BudgetFragment(), supportFragmentManager)
+        fragment_main.replaceFragment(TransactionFragment(), supportFragmentManager)
     }
 
     override fun onClick(view: View) {

@@ -29,12 +29,12 @@
                 android:src="@drawable/ic_wallet" />
 
             <TextView
-                android:id="@+id/btn_budget"
+                android:id="@+id/btn_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="Budget"
+                android:text="@string/transaction"
                 android:textColor="?attr/colorPrimaryDark"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="Saving"
+                android:text="@string/saving_goals"
                 android:textColor="@color/green_800"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="Categories"
+                android:text="@string/categories"
                 android:textColor="?attr/colorPrimaryDark"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="Chart"
+                android:text="@string/chart"
                 android:textColor="?attr/colorPrimaryDark"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />

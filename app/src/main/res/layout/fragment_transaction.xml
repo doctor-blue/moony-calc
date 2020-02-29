@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.BudgetFragment">
+    tools:context=".fragments.TransactionFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_overviews"
@@ -155,7 +155,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/finance_item"
+            tools:listitem="@layout/transaction_item"
             android:id="@+id/rv_budget"
             android:visibility="gone"/>
        <LinearLayout

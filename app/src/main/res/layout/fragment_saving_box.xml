@@ -17,7 +17,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/finance_item"
+            tools:listitem="@layout/transaction_item"
             android:id="@+id/rv_saving_box"
             android:visibility="gone"/>
         <LinearLayout

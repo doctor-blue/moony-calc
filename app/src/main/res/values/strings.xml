@@ -25,4 +25,6 @@
     <string name="description">Description</string>
     <string name="amount">Amount</string>
     <string name="add_categories">Add categories</string>
+    <string name="transaction">Transaction</string>
+    <string name="saving_goals">Saving goals</string>
 </resources>

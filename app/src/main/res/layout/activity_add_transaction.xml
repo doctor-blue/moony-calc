@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddFinanceActivity">
+    tools:context=".activities.AddTransactionActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_add_finance"
         android:layout_width="match_parent"

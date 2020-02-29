@@ -129,7 +129,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/rv_finance_item"
-            tools:listitem="@layout/finance_children_item"
+            tools:listitem="@layout/transaction_children_item"
             app:layout_constraintTop_toBottomOf="@id/layout_finance_date_time" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
