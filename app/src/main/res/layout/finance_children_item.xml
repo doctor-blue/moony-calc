@@ -7,7 +7,7 @@
     android:maxHeight="@dimen/_250sdp"
     android:layout_marginTop="@dimen/_10sdp"
     app:cardCornerRadius="@dimen/_5sdp"
-    app:cardBackgroundColor="@color/scream_50"
+    app:cardBackgroundColor="@color/cream_50"
     android:orientation="horizontal">
     <LinearLayout
         android:layout_width="match_parent"

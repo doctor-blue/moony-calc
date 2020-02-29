@@ -1,30 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.SavingChartFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appbar_saving_chart">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_saving_chart"
-            android:layout_width="match_parent"
-            style="@style/Widget.Moony.Toolbar"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back" />
-    </com.google.android.material.appbar.AppBarLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/appbar_saving_chart">
+    tools:context=".fragments.SavingChartFragment"
+     >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/_8sdp">
             <com.google.android.material.card.MaterialCardView
@@ -32,7 +17,8 @@
                 android:layout_height="@dimen/_130sdp"
                 app:cardElevation="@dimen/_3sdp"
                 app:cardCornerRadius="@dimen/_10sdp"
-                app:cardBackgroundColor="@android:color/white">
+                android:layout_marginTop="@dimen/_10sdp"
+                app:cardBackgroundColor="@color/cream_50">
                 <RelativeLayout
                     android:layout_width="@dimen/_280sdp"
                     android:layout_height="@dimen/_120sdp"
@@ -49,7 +35,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
-                        android:id="@+id/txt_title_saving_chart1"/>
+                        android:id="@+id/txt_title_saving_chart1"
+                        tools:ignore="RelativeOverlap" />
 
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/Widget.Moony.Headline5"
@@ -105,5 +92,3 @@
                 android:id="@+id/rev_saving_chart"/>
         </LinearLayout>
     </ScrollView>
-
-</RelativeLayout>
