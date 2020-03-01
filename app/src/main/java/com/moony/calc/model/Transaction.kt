@@ -1,6 +1,11 @@
 package com.moony.calc.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "Transaction")
 class Transaction() {
+    @PrimaryKey(autoGenerate = true)
     var idTransaction:Int=0
     var money:Double=0.0
     var isIncome:Boolean=false

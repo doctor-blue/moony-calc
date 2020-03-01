@@ -1,6 +1,11 @@
 package com.moony.calc.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "saving_goal")
 class Saving() {
+    @PrimaryKey(autoGenerate = true)
     var idSaving: Int = 0
     var description: String = "Empty"
     var currentAmount: Double = 0.0
