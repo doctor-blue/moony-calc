@@ -5,25 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.AddCategoriesActivity">
+    tools:context=".activities.CategoriesActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_add_categories"
+        android:id="@+id/appbar_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_add_categories"
+            android:id="@+id/toolbar_categories"
             style="@style/Widget.Moony.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/save_menu"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="@string/add_categories" />
+            app:title="@string/add_transaction" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_add_categories"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cream_50" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
