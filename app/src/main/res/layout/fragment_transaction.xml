@@ -14,7 +14,7 @@
         android:layout_marginLeft="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_15sdp"
-        app:cardBackgroundColor="?android:windowBackground"
+        app:cardBackgroundColor="#B8F3FF"
         app:cardCornerRadius="@dimen/_8sdp"
         app:cardElevation="@dimen/_3sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -165,22 +165,20 @@
            android:layout_height="match_parent"
            android:orientation="vertical"
            android:id="@+id/layout_list_empty">
-           <ImageView
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:layout_weight="3"
-               android:scaleType="center"
-               android:tint="@color/blue"
-               android:src="@drawable/ic_new_file"
-               android:gravity="bottom|center"
-               android:textSize="@dimen/_100sdp"/>
            <TextView
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:text="@string/tab_to_add_one"
-               android:layout_weight="1"
-               android:gravity="top|center"
+               android:layout_weight="4"
+               android:gravity="center"
                android:textSize="@dimen/_20sdp"/>
+           <com.airbnb.lottie.LottieAnimationView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               app:lottie_autoPlay="true"
+               app:lottie_loop="true"
+               android:layout_weight="1"
+               app:lottie_rawRes="@raw/empty_1"/>
        </LinearLayout>
     </RelativeLayout>
 
