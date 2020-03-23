@@ -35,7 +35,7 @@
                 android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:text="@string/transaction"
-                android:textColor="?attr/colorPrimaryDark"
+                android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -68,7 +68,7 @@
                 android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:text="@string/saving_goals"
-                android:textColor="@color/green_800"
+                android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -101,7 +101,7 @@
                 android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:text="@string/categories"
-                android:textColor="?attr/colorPrimaryDark"
+                android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -137,7 +137,7 @@
                 android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:text="@string/chart"
-                android:textColor="?attr/colorPrimaryDark"
+                android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
         </RelativeLayout>

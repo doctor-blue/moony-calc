@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    app:cardBackgroundColor="@color/cream_50"
+    app:cardBackgroundColor="?android:windowBackground"
     app:cardCornerRadius="@dimen/_10sdp"
     app:cardElevation="@dimen/_3sdp">
 
@@ -53,10 +53,10 @@
             app:progress_current="0"
             app:progress_reached_bar_height="@dimen/_5sdp"
             app:progress_reached_color="@color/green_800"
-            app:progress_text_color="@color/orange_400"
+            app:progress_text_color="?attr/colorAccent"
             app:progress_text_size="@dimen/_15sdp"
             app:progress_unreached_bar_height="@dimen/_4sdp"
-            app:progress_unreached_color="@color/green_100" />
+            app:progress_unreached_color="?attr/colorControlHighlight" />
 
         <TextView
             android:id="@+id/barrier"

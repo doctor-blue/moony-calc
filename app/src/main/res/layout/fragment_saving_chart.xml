@@ -18,7 +18,8 @@
                 app:cardElevation="@dimen/_3sdp"
                 app:cardCornerRadius="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:cardBackgroundColor="@color/cream_50">
+                app:cardBackgroundColor="?android:windowBackground"
+                >
                 <RelativeLayout
                     android:layout_width="@dimen/_280sdp"
                     android:layout_height="@dimen/_120sdp"

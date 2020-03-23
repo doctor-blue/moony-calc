@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Toast
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.fragments.ChartFragment
+import com.moony.calc.fragments.SavingBoxFragment
 import com.moony.calc.fragments.TransactionFragment
 import com.moony.calc.views.NavigationItemClick
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,6 +15,9 @@ import kotlinx.android.synthetic.main.nav_menu.*
 
 
 class MainActivity : BaseActivity(), NavigationItemClick {
+    private val savingBoxFragment=SavingBoxFragment()
+    private val transactionFragment=TransactionFragment()
+    private val chartFragment=ChartFragment()
 
     override fun init(savedInstanceState: Bundle?) {
         initControl()
@@ -35,13 +40,13 @@ class MainActivity : BaseActivity(), NavigationItemClick {
         main_root.transitionToStart()
         when (view.id) {
             R.id.card_budget -> {
-                Toast.makeText(this, "card budget click", Toast.LENGTH_SHORT).show()
+                fragment_main.replaceFragment(transactionFragment, supportFragmentManager)
             }
             R.id.card_saving -> {
-                Toast.makeText(this, "card saving click", Toast.LENGTH_SHORT).show()
+                fragment_main.replaceFragment(savingBoxFragment, supportFragmentManager)
             }
             R.id.card_chart -> {
-                Toast.makeText(this, "card chart click", Toast.LENGTH_SHORT).show()
+                fragment_main.replaceFragment(chartFragment, supportFragmentManager)
             }
             R.id.card_categories -> {
                 Toast.makeText(this, "card categories click", Toast.LENGTH_SHORT).show()
