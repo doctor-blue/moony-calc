@@ -40,7 +40,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 app:cardBackgroundColor="?android:windowBackground"
-                app:cardElevation="@dimen/_3sdp"
+                app:cardElevation="@dimen/_1sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 >
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 app:cardBackgroundColor="?android:windowBackground"
-                app:cardElevation="@dimen/_3sdp"
+                app:cardElevation="@dimen/_1sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -190,7 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_48sdp"
                 android:layout_marginTop="@dimen/_30sdp"
-                app:cardElevation="@dimen/_3sdp"
+                app:cardElevation="@dimen/_1sdp"
                 app:cardBackgroundColor="?android:windowBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
