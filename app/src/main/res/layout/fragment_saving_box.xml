@@ -32,7 +32,8 @@
                 android:scaleType="center"
                 android:src="@drawable/ic_new_file"
                 android:gravity="bottom|center"
-                android:textSize="@dimen/_100sdp"/>
+                android:textSize="@dimen/_100sdp"
+                android:tint="?attr/colorPrimary"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

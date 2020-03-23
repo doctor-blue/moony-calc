@@ -14,7 +14,7 @@
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFBE6"
+        android:background="?android:windowBackground"
         app:layout_constraintStart_toEndOf="@+id/nav_main_menu">
         <com.moony.calc.views.MoonyFragment
             android:id="@+id/fragment_main"
@@ -28,7 +28,7 @@
         android:id="@+id/nav_main_menu"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="#fffbe6"
+        app:cardBackgroundColor="?android:windowBackground"
         app:cardElevation="@dimen/_5sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"/>
     </com.google.android.material.card.MaterialCardView>
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
+    <ImageView
         android:id="@+id/btn_nav_main"
         android:layout_width="@dimen/_24sdp"
         android:layout_height="@dimen/_24sdp"
@@ -50,6 +50,7 @@
         android:src="@drawable/ic_navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:tint="@color/textColor"
         />
 
     <TextView

@@ -14,7 +14,7 @@
         android:layout_marginLeft="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_15sdp"
-        app:cardBackgroundColor="@color/cream_50"
+        app:cardBackgroundColor="?android:windowBackground"
         app:cardCornerRadius="@dimen/_8sdp"
         app:cardElevation="@dimen/_3sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,12 +35,13 @@
                android:layout_width="@dimen/_24sdp"
                android:layout_height="@dimen/_24sdp"
                android:src="@drawable/ic_left_arrow"
-               android:scaleType="centerCrop"/>
+               android:scaleType="centerCrop"
+               android:tint="@color/textColor"/>
            <com.google.android.material.textview.MaterialTextView
                android:layout_width="@dimen/_170sdp"
                android:layout_height="wrap_content"
                android:gravity="center"
-               android:textColor="@color/green_800"
+               android:textColor="@color/textColor"
                android:textSize="@dimen/_18sdp"
                android:textStyle="bold"
                android:text="February 2020"
@@ -50,7 +51,8 @@
                android:layout_width="@dimen/_24sdp"
                android:layout_height="@dimen/_24sdp"
                android:src="@drawable/ic_right_arrow"
-               android:scaleType="centerCrop"/>
+               android:scaleType="centerCrop"
+               android:tint="@color/textColor"/>
        </LinearLayout>
           <LinearLayout
               android:layout_width="match_parent"
@@ -62,7 +64,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/income_title"
-                  android:textColor="@color/green_500"
+                  android:textColor="@color/textColor"
                   android:textSize="@dimen/_12sdp"
                  android:maxLines="1"
                   android:layout_weight="1"
@@ -76,7 +78,7 @@
                   android:gravity="end"
                   android:textStyle="bold"
                   android:textSize="@dimen/_14sdp"
-                  android:textColor="@color/green_800"
+                  android:textColor="@color/blue"
                   app:layout_constraintStart_toStartOf="parent"
                   android:maxLines="1"
                   android:id="@+id/txt_budget_income"
@@ -92,7 +94,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/expenses_title"
-                  android:textColor="@color/green_500"
+                  android:textColor="@color/textColor"
                   android:textSize="@dimen/_12sdp"
                   android:maxLines="1"
                   android:layout_weight="1"
@@ -106,7 +108,7 @@
                   android:gravity="end"
                   android:textStyle="bold"
                   android:textSize="@dimen/_14sdp"
-                  android:textColor="@color/orange_800"
+                  android:textColor="?attr/colorAccent"
                   android:maxLines="1"
                   android:id="@+id/txt_budget_expenses"
                   />
@@ -121,7 +123,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/balance_title"
-                  android:textColor="@color/green_500"
+                  android:textColor="@color/textColor"
                   android:textSize="@dimen/_12sdp"
                   android:maxLines="1"
                   android:layout_weight="1"
@@ -133,7 +135,7 @@
                   android:text="0"
                   android:textStyle="normal"
                   android:textSize="@dimen/_14sdp"
-                  android:textColor="@color/green_800"
+                  android:textColor="@color/textColor"
                   android:maxLines="1"
                   android:layout_weight="3"
                   android:gravity="end"
@@ -168,6 +170,7 @@
                android:layout_height="match_parent"
                android:layout_weight="3"
                android:scaleType="center"
+               android:tint="@color/blue"
                android:src="@drawable/ic_new_file"
                android:gravity="bottom|center"
                android:textSize="@dimen/_100sdp"/>
