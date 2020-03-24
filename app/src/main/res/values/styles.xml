@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/orange_800</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowBackground">@color/white</item>
-        <item name="colorControlHighlight">@color/green_100</item>
+        <item name="colorControlHighlight">@color/light_blue</item>
         <item name="colorControlNormal">@color/green_500</item>
         <item name="actionMenuTextColor">?attr/colorPrimary</item>
         <item name="colorOnSecondary">@color/cream_50</item>

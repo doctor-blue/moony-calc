@@ -17,6 +17,7 @@ class TransactionFragment : BaseFragment() {
                 )
             )
         }
+        //card_overviews.setCardBackgroundColor(context!!.resources.getColor(R.color.green_100))
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_transaction

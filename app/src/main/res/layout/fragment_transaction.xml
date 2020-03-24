@@ -14,7 +14,7 @@
         android:layout_marginLeft="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_15sdp"
-        app:cardBackgroundColor="#B8F3FF"
+        app:cardBackgroundColor="@color/light_blue"
         app:cardCornerRadius="@dimen/_8sdp"
         app:cardElevation="@dimen/_3sdp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -14,6 +14,7 @@ class NavigationMenu : LinearLayout {
     private lateinit var cardCategories: MaterialCardView
     private lateinit var cardChart: MaterialCardView
     lateinit var itemClick: NavigationItemClick
+    private lateinit var viewContext: Context
 
     constructor(context: Context) : this(context, null) {
         init(context)
@@ -31,11 +32,14 @@ class NavigationMenu : LinearLayout {
 
     private fun init(context: Context) {
         orientation = VERTICAL
+        viewContext=context
         val rootView = View.inflate(context, R.layout.menu_view, this)
         cardBudget = rootView.findViewById(R.id.card_budget)
         cardSaving = rootView.findViewById(R.id.card_saving)
         cardCategories = rootView.findViewById(R.id.card_categories)
         cardChart = findViewById(R.id.card_chart)
+        resetCardBackgroundColor()
+        setCardBackgroundClick(cardBudget,context)
 
         cardBudget.setOnClickListener {
             resetCardBackgroundColor()
@@ -48,8 +52,6 @@ class NavigationMenu : LinearLayout {
             itemClick.onClick(it)
         }
         cardCategories.setOnClickListener {
-            resetCardBackgroundColor()
-            setCardBackgroundClick(cardCategories,context)
             itemClick.onClick(it)
         }
         cardChart.setOnClickListener {
@@ -62,15 +64,15 @@ class NavigationMenu : LinearLayout {
 
     @SuppressLint("ResourceAsColor")
     private fun resetCardBackgroundColor() {
-        cardBudget.setCardBackgroundColor(android.R.color.transparent)
-        cardSaving.setCardBackgroundColor(android.R.color.transparent)
-        cardChart.setCardBackgroundColor(android.R.color.transparent)
-        cardCategories.setCardBackgroundColor(android.R.color.transparent)
+        cardBudget.setCardBackgroundColor(context.resources.getColor(R.color.white))
+        cardSaving.setCardBackgroundColor(context.resources.getColor(R.color.white))
+        cardChart.setCardBackgroundColor(context.resources.getColor(R.color.white))
+        cardCategories.setCardBackgroundColor(context.resources.getColor(R.color.white))
     }
 
     @SuppressLint("ResourceType")
     private fun setCardBackgroundClick(cardView: MaterialCardView, context: Context) {
-        cardView.setCardBackgroundColor(context.resources.getColor(R.color.green_100))
+        cardView.setCardBackgroundColor(context.resources.getColor(R.color.light_blue))
     }
 
 }
