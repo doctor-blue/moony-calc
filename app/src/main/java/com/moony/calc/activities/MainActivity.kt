@@ -1,11 +1,13 @@
 package com.moony.calc.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.fragments.CategoriesFragment
 import com.moony.calc.fragments.ChartFragment
 import com.moony.calc.fragments.SavingBoxFragment
 import com.moony.calc.fragments.TransactionFragment
@@ -49,7 +51,8 @@ class MainActivity : BaseActivity(), NavigationItemClick {
                 fragment_main.replaceFragment(chartFragment, supportFragmentManager)
             }
             R.id.card_categories -> {
-                Toast.makeText(this, "card categories click", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this,CategoriesActivity::class.java))
+
             }
         }
     }
