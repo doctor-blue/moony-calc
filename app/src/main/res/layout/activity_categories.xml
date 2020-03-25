@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@color/cream_50" />
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
