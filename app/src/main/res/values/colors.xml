@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="green_800">#D8D8E2</color>
-    <color name="green_500">#373F51</color>
-    <color name="orange_800">#fd6f43</color>
+    <color name="colorPrimaryDark">#D8D8E2</color>
+    <color name="colorPrimary">#373F51</color>
+    <color name="colorAccent">#fd6f43</color>
     <color name="cream_50">#FFFBE6</color>
     <color name="white">#F6F8FF</color>
     <color name="textColor">#373F51</color>
@@ -10,12 +10,4 @@
     <color name="light_blue">#CDEDF6</color>
 
 
-    <!--<color name="green_800">#356859</color>
-    <color name="green_500">#37966F</color>
-    <color name="green_100">#B9E4C9</color>
-    <color name="orange_800">#FD5523</color>
-    <color name="cream_50">#FFFBE6</color>
-    <color name="white">#FFFFFF</color>
-    <color name="green_600">#418875</color>
-    <color name="orange_400">#fd6f43</color>-->
 </resources>

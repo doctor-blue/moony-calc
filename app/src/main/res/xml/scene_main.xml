@@ -6,9 +6,9 @@
         app:constraintSetEnd="@+id/end_main_transition"
         app:constraintSetStart="@+id/start_main_transition"
         app:duration="600">
-        <OnClick
+      <!--  <OnClick
             app:clickAction="toggle"
-            app:targetId="@id/btn_nav_main" />
+            app:targetId="@id/btn_nav_main" />-->
         <OnSwipe
             app:dragDirection="dragRight"
             app:onTouchUp="autoComplete"

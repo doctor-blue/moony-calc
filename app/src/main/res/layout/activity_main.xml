@@ -1,75 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1EFEF"
-    app:layoutDescription="@xml/scene_main"
+    android:background="@color/white"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     tools:context=".activities.MainActivity">
 
+    <LinearLayout
+        style="@style/Widget.Moony.Backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_240sdp"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/_10sdp"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/main_content"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+                <include layout="@layout/menu_view" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btn_nav_main"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_navigation"
+            android:tint="@color/textColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_title_main"
+            style="@style/Widget.Moony.Headline4"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.moony.calc.views.MoonyFragment
+        android:id="@+id/fragment_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:windowBackground"
-        app:layout_constraintStart_toEndOf="@+id/nav_main_menu">
-        <com.moony.calc.views.MoonyFragment
-            android:id="@+id/fragment_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_40sdp">
-        </com.moony.calc.views.MoonyFragment>
-    </RelativeLayout>
+        android:layout_marginTop="@dimen/_40sdp"
+        android:background="@color/white"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/nav_main_menu"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:cardBackgroundColor="?android:windowBackground"
-        app:cardElevation="@dimen/_5sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <include layout="@layout/nav_menu"
-            android:layout_gravity="center"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
-    </com.google.android.material.card.MaterialCardView>
 
-    <ImageView
-        android:id="@+id/btn_nav_main"
-        android:layout_width="@dimen/_24sdp"
-        android:layout_height="@dimen/_24sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginLeft="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_navigation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:tint="@color/textColor"
-        />
-
-    <TextView
-        android:id="@+id/txt_title_main"
-        style="@style/Widget.Moony.Headline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:gravity="center"
-        android:text="@string/app_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <RelativeLayout
-        android:id="@+id/nav_space_swipe"
-        android:layout_width="@dimen/_5sdp"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</RelativeLayout>

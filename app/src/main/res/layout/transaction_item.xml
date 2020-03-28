@@ -7,7 +7,7 @@
     android:layout_marginTop="@dimen/_20sdp"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/_10sdp"
-    app:cardBackgroundColor="@color/cream_50"
+    app:cardBackgroundColor="@color/white"
     app:cardElevation="@dimen/_2sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,7 +76,7 @@
                     android:gravity="start"
                     android:maxLines="1"
                     android:text="@string/income_title"
-                    android:textColor="@color/green_500"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/_10sdp" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -87,7 +87,7 @@
                     android:gravity="end"
                     android:maxLines="1"
                     android:text="0"
-                    android:textColor="@color/green_800"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -105,7 +105,7 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:maxLines="1"
                     android:text="@string/expenses_title"
-                    android:textColor="@color/green_500"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/_10sdp" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -115,7 +115,7 @@
                     android:gravity="end"
                     android:maxLines="1"
                     android:text="0"
-                    android:textColor="@color/orange_800"
+                    android:textColor="?attr/colorAccent"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
             </LinearLayout>

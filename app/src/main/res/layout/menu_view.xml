@@ -1,157 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/_20sdp"
-    >
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_budget"
-        app:cardElevation="0dp"
-        android:layout_marginStart="@dimen/_3sdp"
-        android:layout_marginEnd="@dimen/_3sdp"
-        android:layout_width="wrap_content"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mnu_budget"
+        style="@style/Widget.Moony.MenuItem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="?attr/colorControlHighlight"
-        >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp">
-
-            <ImageView
-                android:id="@+id/img_wallet"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_wallet" />
-
-            <TextView
-                android:id="@+id/btn_transaction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:text="@string/transaction"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_saving"
-        app:cardElevation="0dp"
-        android:layout_marginStart="@dimen/_3sdp"
-        android:layout_marginEnd="@dimen/_3sdp"
-        android:layout_width="wrap_content"
+        android:onClick="onMenuItemClick"
+        android:text="@string/transaction"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mnu_saving"
+        style="@style/Widget.Moony.MenuItem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:cardBackgroundColor="@android:color/transparent">
+        android:onClick="onMenuItemClick"
+        android:text="@string/saving_goals" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp">
-
-            <ImageView
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_piggy_color" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:text="@string/saving_goals"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_categories"
-        android:layout_width="wrap_content"
-        android:layout_marginStart="@dimen/_3sdp"
-        android:layout_marginEnd="@dimen/_3sdp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mnu_chart"
+        style="@style/Widget.Moony.MenuItem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="0dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:cardBackgroundColor="@android:color/transparent">
+        android:onClick="onMenuItemClick"
+        android:text="@string/chart" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp">
-
-            <ImageView
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_category" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:text="@string/categories"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_chart"
-        android:layout_width="wrap_content"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mnu_categories"
+        style="@style/Widget.Moony.MenuItem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_3sdp"
-        android:layout_marginEnd="@dimen/_3sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:cardElevation="0dp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:clickable="true"
-        android:focusable="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp">
-
-            <ImageView
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_chart" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:text="@string/chart"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-
+        android:onClick="onMenuItemClick"
+        android:text="@string/categories" />
 </merge>

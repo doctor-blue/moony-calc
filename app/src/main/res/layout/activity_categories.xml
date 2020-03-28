@@ -17,16 +17,15 @@
             style="@style/Widget.Moony.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/save_menu"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="@string/add_transaction" />
+            app:title="@string/categories" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cream_50" />
+        android:background="@color/white" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager_categories"

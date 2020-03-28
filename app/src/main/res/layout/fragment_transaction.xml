@@ -37,7 +37,7 @@
                android:src="@drawable/ic_left_arrow"
                android:scaleType="centerCrop"
                android:tint="@color/textColor"/>
-           <com.google.android.material.textview.MaterialTextView
+           <TextView
                android:layout_width="@dimen/_170sdp"
                android:layout_height="wrap_content"
                android:gravity="center"
@@ -60,7 +60,7 @@
               android:orientation="horizontal"
               android:gravity="center"
               android:layout_weight="1">
-              <com.google.android.material.textview.MaterialTextView
+              <TextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/income_title"
@@ -70,7 +70,7 @@
                   android:layout_weight="1"
                   tools:ignore="NestedWeights" />
 
-              <com.google.android.material.textview.MaterialTextView
+              <TextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="0"
@@ -90,7 +90,7 @@
               android:orientation="horizontal"
               android:gravity="center"
               android:layout_weight="1">
-              <com.google.android.material.textview.MaterialTextView
+              <TextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/expenses_title"
@@ -100,7 +100,7 @@
                   android:layout_weight="1"
                   tools:ignore="NestedWeights" />
 
-              <com.google.android.material.textview.MaterialTextView
+              <TextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="0"
@@ -119,7 +119,7 @@
               android:orientation="horizontal"
               android:gravity="center"
               android:layout_weight="1">
-              <com.google.android.material.textview.MaterialTextView
+              <TextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="@string/balance_title"
@@ -129,7 +129,7 @@
                   android:layout_weight="1"
                   tools:ignore="NestedWeights" />
 
-              <com.google.android.material.textview.MaterialTextView
+              <TextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="0"
