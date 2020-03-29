@@ -7,7 +7,7 @@ import com.moony.calc.model.Saving
 
 class SavingRepository(application: Application) {
     private var applicationDao: ApplicationDao =
-        MoonyDatabase.getInstance(application).getApplicationDao()
+        MoonyDatabase.getInstance(application)!!.getApplicationDao()
     private lateinit var allSaving: LiveData<List<Saving>>
 
     fun getAllSavingGoals(): LiveData<List<Saving>> {

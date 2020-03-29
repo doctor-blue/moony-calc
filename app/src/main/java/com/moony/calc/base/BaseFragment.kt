@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 
 abstract class BaseFragment : Fragment() {
 
-    protected var activity: Activity? = null
+    protected var fragmentActivity: FragmentActivity? = null
 
     override fun onCreateView(
 
@@ -19,7 +20,7 @@ abstract class BaseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(getLayoutId(), container, false)
-        activity = getActivity()
+        fragmentActivity = activity
         return view
     }
 

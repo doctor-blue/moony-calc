@@ -7,7 +7,7 @@ import com.moony.calc.model.Transaction
 
 class TransactionRepository(application: Application) {
     private var applicationDao: ApplicationDao =
-        MoonyDatabase.getInstance(application).getApplicationDao()
+        MoonyDatabase.getInstance(application)!!.getApplicationDao()
     private lateinit var allTransaction: LiveData<List<Transaction>>
 
     fun getAllTransaction(): LiveData<List<Transaction>> {

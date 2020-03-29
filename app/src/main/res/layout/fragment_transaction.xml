@@ -36,7 +36,8 @@
                android:layout_height="@dimen/_24sdp"
                android:src="@drawable/ic_left_arrow"
                android:scaleType="centerCrop"
-               android:tint="@color/textColor"/>
+               android:tint="@color/textColor"
+               android:id="@+id/btn_pre_month"/>
            <TextView
                android:layout_width="@dimen/_170sdp"
                android:layout_height="wrap_content"
@@ -45,14 +46,15 @@
                android:textSize="@dimen/_18sdp"
                android:textStyle="bold"
                android:text="February 2020"
-               android:id="@+id/txt_budget_date"
+               android:id="@+id/txt_transaction_date"
                />
            <ImageView
                android:layout_width="@dimen/_24sdp"
                android:layout_height="@dimen/_24sdp"
                android:src="@drawable/ic_right_arrow"
                android:scaleType="centerCrop"
-               android:tint="@color/textColor"/>
+               android:tint="@color/textColor"
+               android:id="@+id/btn_next_month"/>
        </LinearLayout>
           <LinearLayout
               android:layout_width="match_parent"
@@ -81,7 +83,7 @@
                   android:textColor="@color/blue"
                   app:layout_constraintStart_toStartOf="parent"
                   android:maxLines="1"
-                  android:id="@+id/txt_budget_income"
+                  android:id="@+id/txt_transaction_income"
                   />
           </LinearLayout>
           <LinearLayout
@@ -110,7 +112,7 @@
                   android:textSize="@dimen/_14sdp"
                   android:textColor="?attr/colorAccent"
                   android:maxLines="1"
-                  android:id="@+id/txt_budget_expenses"
+                  android:id="@+id/txt_transaction_expenses"
                   />
           </LinearLayout>
           <LinearLayout
@@ -139,7 +141,7 @@
                   android:maxLines="1"
                   android:layout_weight="3"
                   android:gravity="end"
-                  android:id="@+id/txt_budget_balance"
+                  android:id="@+id/txt_transaction_balance"
                   />
           </LinearLayout>
       </LinearLayout>
@@ -158,7 +160,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/transaction_item"
-            android:id="@+id/rv_budget"
+            android:id="@+id/rv_transaction"
             android:visibility="gone"/>
        <LinearLayout
            android:layout_width="match_parent"
@@ -183,7 +185,7 @@
     </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_finance"
+        android:id="@+id/btn_add_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"

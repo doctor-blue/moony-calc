@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.moony.calc.R
-import com.moony.calc.base.BaseActivity
 import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.model.Transaction
 
@@ -22,7 +22,7 @@ import com.moony.calc.model.Transaction
 class TransactionChildrenAdapter(
     private val transactions: List<Transaction>,
     private val itemClick: (Transaction) -> Unit,
-    private val context: BaseActivity
+    private val context: FragmentActivity
 ) : RecyclerView.Adapter<TransactionChildrenAdapter.ViewHolder>() {
 
 
@@ -49,7 +49,7 @@ class TransactionChildrenAdapter(
 
         fun onBind(transaction: Transaction, itemClick: (Transaction) -> Unit) {
             val categoryViewModel =
-                ViewModelProviders.of(context).get(CategoryViewModel::class.java)
+                ViewModelProvider(context).get(CategoryViewModel::class.java)
 
             categoryViewModel.getCategory(transaction.idCategory).observe(context, Observer {
                 Glide.with(context).load(it.iconUrl).into(imgTransactionIcon)

@@ -3,6 +3,7 @@ package com.moony.calc.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.moony.calc.model.Category
+import com.moony.calc.model.DateTime
 import com.moony.calc.model.Saving
 import com.moony.calc.model.Transaction
 
@@ -40,5 +41,14 @@ interface ApplicationDao {
 
     @Query("select*from transaction_table where idDate=:id")
     fun getAllTransactionsByDate(id:Int):LiveData<List<Transaction>>
+
+
+    @Delete
+    fun deleteDateTime(dateTime: DateTime)
+    @Insert
+    fun insertDateTime(dateTime: DateTime)
+
+    @Query("select*from date_table where month=:month")
+    fun getAllDateTimeByMonth(month:String):LiveData<List<DateTime>>
 
 }
