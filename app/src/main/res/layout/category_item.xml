@@ -16,5 +16,5 @@
         android:text="Hello"
         android:textSize="@dimen/_12sdp"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
-        android:textColor="@color/green_500"/>
+        android:textColor="?attr/colorPrimary"/>
 </LinearLayout>

@@ -17,6 +17,9 @@ interface ApplicationDao {
     @Query("select*from Category where isIncome = :isIncome")
     fun getAllCategory(isIncome:Boolean):LiveData<List<Category>>
 
+    @Query("select * from Category where idCategory=:id")
+    fun getCategory(id:Int):LiveData<Category>
+
     @Update
     fun updateSaving(saving: Saving)
     @Delete
@@ -32,6 +35,10 @@ interface ApplicationDao {
     fun deleteTransaction(transaction: Transaction)
     @Insert
     fun insertTransaction(transaction: Transaction)
-    @Query("select*from `Transaction`")
+    @Query("select*from transaction_table")
     fun getAllTransactions():LiveData<List<Transaction>>
+
+    @Query("select*from transaction_table where idDate=:id")
+    fun getAllTransactionsByDate(id:Int):LiveData<List<Transaction>>
+
 }
