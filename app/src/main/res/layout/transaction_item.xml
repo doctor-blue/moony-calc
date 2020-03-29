@@ -15,44 +15,35 @@
         android:layout_height="match_parent"
         android:padding="@dimen/_10sdp">
 
-        <RelativeLayout
-            android:id="@+id/layout_finance_date_time"
+        <LinearLayout
+            android:id="@+id/layout_transaction_date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_finance_day"
+                android:id="@+id/txt_transaction_day"
                 style="@style/Widget.Moony.Headline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
                 android:gravity="center"
-                android:text="0" />
+                android:text="0"
+                android:textSize="@dimen/_30sdp"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_finance_day_of_week"
+                android:id="@+id/txt_transaction_day_of_week"
                 style="@style/Widget.Moony.Headline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_toEndOf="@id/txt_finance_day"
-                android:layout_toRightOf="@id/txt_finance_day"
-                android:text="Sun" />
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:text="Sun"
+                />
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/Widget.Moony.Headline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_finance_day_of_week"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_toEndOf="@id/txt_finance_day"
-                android:layout_toRightOf="@id/txt_finance_day"
-                android:text="0/0/0000" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -80,7 +71,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txt_finance_income"
+                    android:id="@+id/txt_transaction_income"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -109,7 +100,7 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txt_finance_expenses"
+                    android:id="@+id/txt_transaction_expenses"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
@@ -128,9 +119,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/rv_finance_item"
+            android:id="@+id/rv_transaction_item"
             tools:listitem="@layout/transaction_children_item"
-            app:layout_constraintTop_toBottomOf="@id/layout_finance_date_time" />
+            app:layout_constraintTop_toBottomOf="@id/layout_transaction_date_time" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

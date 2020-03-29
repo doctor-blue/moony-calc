@@ -20,5 +20,8 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
         categoryRepository.deleteCategory(category)
     }
 
-    fun getAllCategory(isIncome:Boolean): LiveData<List<Category>> = categoryRepository.getAllCategory(isIncome)
+    fun getAllCategory(isIncome: Boolean): LiveData<List<Category>> =
+        categoryRepository.getAllCategory(isIncome)
+
+    fun getCategory(id: Int): LiveData<Category> = categoryRepository.getCategory(id)
 }

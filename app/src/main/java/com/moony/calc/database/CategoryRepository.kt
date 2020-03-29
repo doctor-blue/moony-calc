@@ -15,6 +15,9 @@ class CategoryRepository(application: Application) {
         return allCategory
     }
 
+    fun getCategory(id: Int): LiveData<Category> = applicationDao.getCategory(id)
+
+
     fun insertCategory(category: Category) {
         InsertTask(applicationDao).execute(category)
     }

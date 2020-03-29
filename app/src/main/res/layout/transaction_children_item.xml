@@ -8,6 +8,7 @@
     android:layout_marginTop="@dimen/_10sdp"
     app:cardCornerRadius="@dimen/_5sdp"
     app:cardBackgroundColor="@color/white"
+    android:id="@+id/card_transaction_child"
     android:orientation="horizontal">
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
         <ImageView
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
-            android:id="@+id/img_finance_child_icon"
+            android:id="@+id/img_transaction_child"
             />
         <TextView
             android:layout_width="match_parent"
@@ -26,7 +27,7 @@
             android:text="Empty"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_weight="1"
-            android:id="@+id/txt_finance_child_name"
+            android:id="@+id/txt_transaction_child_name"
             android:layout_marginStart="@dimen/_10sdp"
             style="@style/TextAppearance.Moony.Subtitle1"
             />
@@ -38,6 +39,6 @@
             android:gravity="end"
             android:textStyle="normal"
             android:textSize="@dimen/_12sdp"
-            android:id="@+id/txt_finance_child_date"/>
+            android:id="@+id/txt_transaction_child_money"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
