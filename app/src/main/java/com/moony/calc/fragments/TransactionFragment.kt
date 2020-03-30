@@ -64,7 +64,7 @@ class TransactionFragment : BaseFragment() {
     }
 
     private fun createTransactionList(list: List<DateTime>) {
-        val adapter = TransactionAdapter(list, fragmentActivity!!) {
+        val adapter = TransactionAdapter(list, fragmentActivity!!) {transaction, dateTime,category ->
             //Nội dung của hàm itemClick ở đây
 
         }

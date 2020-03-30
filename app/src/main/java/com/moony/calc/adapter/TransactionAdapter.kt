@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moony.calc.R
 import com.moony.calc.database.TransactionViewModel
+import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
 
 class TransactionAdapter(
     private val dates: List<DateTime>,
     private val activity: FragmentActivity,
-    private val itemClick: (Transaction) -> Unit
+    private val itemClick: (Transaction,DateTime,Category) -> Unit
 ) : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,7 +39,7 @@ class TransactionAdapter(
         private val txtExpenses: TextView = itemView.findViewById(R.id.txt_transaction_expenses)
         private val rvTransaction: RecyclerView = itemView.findViewById(R.id.rv_transaction_item)
 
-        fun onBind(dateTime: DateTime, itemClick: (Transaction) -> Unit) {
+        fun onBind(dateTime: DateTime, itemClick: (Transaction,DateTime,Category) -> Unit) {
             txtTransactionDay.text = dateTime.day.toString()
 
             val transactionViewModel =
@@ -55,7 +56,7 @@ class TransactionAdapter(
                 txtExpenses.text = expenses.toString()
                 txtIncome.text = income.toString()
                 //itemClick ở đây là 1 hàm mà nội dung của hàm sẽ được viết ở TransactionFragment
-                val adapter = TransactionChildrenAdapter(it, itemClick, activity)
+                val adapter = TransactionChildrenAdapter(it, itemClick, activity,dateTime)
                 val layoutManager = LinearLayoutManager(activity)
                 rvTransaction.setHasFixedSize(true)
                 rvTransaction.layoutManager = layoutManager
