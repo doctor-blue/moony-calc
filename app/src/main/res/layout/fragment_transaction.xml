@@ -173,14 +173,17 @@
                android:text="@string/tab_to_add_one"
                android:layout_weight="4"
                android:gravity="center"
+               android:textColor="@android:color/darker_gray"
                android:textSize="@dimen/_20sdp"/>
-           <com.airbnb.lottie.LottieAnimationView
+           <TextView
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               app:lottie_autoPlay="true"
-               app:lottie_loop="true"
                android:layout_weight="1"
-               app:lottie_rawRes="@raw/empty_1"/>
+               android:text=":("
+               android:gravity="center"
+               android:textSize="@dimen/_128sdp"
+               android:textColor="@android:color/darker_gray"
+              />
        </LinearLayout>
     </RelativeLayout>
 

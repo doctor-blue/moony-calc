@@ -1,2 +1,2 @@
-include ':app', ':monthandyearpicker', ':datetimepicker', ':library'
+include ':app', ':monthandyearpicker'
 rootProject.name='Moony'

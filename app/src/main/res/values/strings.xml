@@ -29,4 +29,5 @@
     <string name="saving_goals">Saving goals</string>
     <string name="select_month">Select month</string>
     <string name="transaction_detail">Transaction Details</string>
+    <string name="manage_your_spending_and_savings">Manage your spending and savings</string>
 </resources>

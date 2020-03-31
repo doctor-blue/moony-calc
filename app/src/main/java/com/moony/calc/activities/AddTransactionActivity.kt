@@ -28,6 +28,7 @@ class AddTransactionActivity : BaseActivity() {
     private val requestCode = 234
     private lateinit var transactionViewModel: TransactionViewModel
     private val calendar: Calendar = Calendar.getInstance()
+    private var month :String= ""
 
     companion object {
         const val KEYS = "CATEGORY_ADD_TRANSACTION"
@@ -110,9 +111,25 @@ class AddTransactionActivity : BaseActivity() {
 
     private fun pickDateTime() {
         val dialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
-            calendar.add(Calendar.YEAR, year)
-            calendar.add(Calendar.MONTH, month)
-            calendar.add(Calendar.DAY_OF_MONTH, dayOfMonth)
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            this.month ="${calendar.getDisplayName(
+                Calendar.MONTH,
+                Calendar.LONG,
+                Locale.ENGLISH
+            )} ${calendar.get(
+                Calendar.YEAR
+            )}"
+
+            txt_transaction_time.text=("${calendar[Calendar.DAY_OF_MONTH]} ${calendar.getDisplayName(
+                Calendar.MONTH,
+                Calendar.LONG,
+                Locale.ENGLISH
+            )} ${calendar.get(
+                Calendar.YEAR
+            )}")
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
 
