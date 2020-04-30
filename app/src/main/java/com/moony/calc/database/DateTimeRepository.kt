@@ -1,6 +1,5 @@
 package com.moony.calc.database
 
-import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.moony.calc.model.DateTime
@@ -8,7 +7,11 @@ import com.moony.calc.model.DateTime
 class DateTimeRepository(private val applicationDao: ApplicationDao) {
 
 
-    fun getAllDateTimeByMonth(month: String) :LiveData<List<DateTime>> = applicationDao.getAllDateTimeByMonth(month)
+    fun getAllDateTimeByMonth(month: String): LiveData<List<DateTime>> =
+        applicationDao.getAllDateTimeByMonth(month)
+
+    fun getDateTime(day: Int, month: String): LiveData<DateTime> =
+        applicationDao.getDateTime(day, month)
 
     fun insertDateTime(dateTime: DateTime) {
         InsertTask(applicationDao).execute(dateTime)

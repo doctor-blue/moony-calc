@@ -2,9 +2,10 @@ package com.moony.calc.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "Category")
-class Category(var title: String, var iconUrl: String,var isIncome:Boolean=false) {
+class Category(var title: String, var iconUrl: String,var isIncome:Boolean=false) :Serializable{
     @PrimaryKey(autoGenerate = true)
     var idCategory:Int=0
 }

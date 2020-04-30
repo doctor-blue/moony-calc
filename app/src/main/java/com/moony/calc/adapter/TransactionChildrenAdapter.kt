@@ -1,15 +1,14 @@
 package com.moony.calc.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.moony.calc.R
 import com.moony.calc.database.CategoryViewModel
@@ -23,7 +22,7 @@ import com.moony.calc.model.Transaction
 
 class TransactionChildrenAdapter(
     private val transactions: List<Transaction>,
-    private val itemClick: (Transaction,DateTime,Category) -> Unit,
+    private val itemClick: (Transaction, DateTime, Category) -> Unit,
     private val context: FragmentActivity,
     private val dateTime: DateTime
 ) : RecyclerView.Adapter<TransactionChildrenAdapter.ViewHolder>() {
@@ -38,7 +37,7 @@ class TransactionChildrenAdapter(
     override fun getItemCount(): Int = transactions.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(transactions[position], itemClick,dateTime)
+        holder.onBind(transactions[position], itemClick, dateTime)
     }
 
 
@@ -49,21 +48,33 @@ class TransactionChildrenAdapter(
             itemView.findViewById(R.id.txt_transaction_child_name)
         private val cardTransaction: MaterialCardView =
             itemView.findViewById(R.id.card_transaction_child)
+        private val txtTransactionMoney: TextView =
+            itemView.findViewById(R.id.txt_transaction_child_money)
 
-        fun onBind(transaction: Transaction, itemClick: (Transaction,DateTime,Category) -> Unit,dateTime: DateTime) {
+        fun onBind(
+            transaction: Transaction,
+            itemClick: (Transaction, DateTime, Category) -> Unit,
+            dateTime: DateTime
+        ) {
             val categoryViewModel =
                 ViewModelProvider(context).get(CategoryViewModel::class.java)
-            var category:Category?=null
+            txtTransactionMoney.text = "${transaction.money}"
+            if (transaction.isIncome)
+                txtTransactionMoney.setTextColor(Color.parseColor("#373F51"))
+            else
+                txtTransactionMoney.setTextColor(Color.parseColor("#fd6f43"))
 
-            categoryViewModel.getCategory(transaction.idCategory).observe(context, Observer {
-                Glide.with(context).load(it.iconUrl).into(imgTransactionIcon)
-                txtTransactionName.text = it.title
+            var category: Category = Category("Test", "URL", true)
+
+            /* categoryViewModel.getCategory(transaction.idCategory).observe(context, Observer {
+                 *//*Glide.with(context).load(it.iconUrl).into(imgTransactionIcon)
+                txtTransactionName.text = it.title*//*
                 category=it
-            })
+            })*/
 
             cardTransaction.setOnClickListener {
                 //thực hiện hàm click nội dung hàm sẽ được viết ở TransactionFragment
-                itemClick(transaction,dateTime,category!!)
+                itemClick(transaction, dateTime, category)
             }
         }
     }

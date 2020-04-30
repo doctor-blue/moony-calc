@@ -11,7 +11,11 @@ import com.moony.calc.activities.AddTransactionActivity
 import com.moony.calc.adapter.TransactionAdapter
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.DateTimeViewModel
+import com.moony.calc.database.TransactionViewModel
+import com.moony.calc.keys.MoonyKey
+import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
+import com.moony.calc.model.Transaction
 import com.whiteelephant.monthpicker.MonthPickerDialog
 import kotlinx.android.synthetic.main.fragment_transaction.*
 import java.util.*
@@ -24,6 +28,7 @@ class TransactionFragment : BaseFragment() {
         "${calNow.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH)} ${calNow.get(
             Calendar.YEAR
         )}"
+    private lateinit var transactionViewModel: TransactionViewModel
 
     //Dòng này dùng để lắng nghe nếu cái month thay đổi giá trị thì load dữ liệu tương ứng theo đó
     private var month: String by Delegates.observable(defaultTime) { _, oldValue, newValue ->
@@ -36,6 +41,23 @@ class TransactionFragment : BaseFragment() {
             .observe(viewLifecycleOwner, Observer {
                 createTransactionList(it)
             })
+        transactionViewModel.getTotalMoney(true, oldValue).removeObservers(viewLifecycleOwner)
+        transactionViewModel.getTotalMoney(true, newValue)
+            .observe(viewLifecycleOwner, Observer { income ->
+
+                transactionViewModel.getTotalMoney(false, oldValue)
+                    .removeObservers(viewLifecycleOwner)
+
+                transactionViewModel.getTotalMoney(false, newValue)
+                    .observe(viewLifecycleOwner, Observer { expenses ->
+                        var exp=0.0
+                        if (expenses!=null) exp=expenses
+                        txt_transaction_income.text = "$income"
+                        txt_transaction_expenses.text = "$exp"
+                        txt_transaction_balance.text = "${income - exp}"
+                    })
+            })
+
     }
 
 
@@ -54,6 +76,8 @@ class TransactionFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         dateTimeViewModel =
             ViewModelProvider(fragmentActivity!!).get(DateTimeViewModel::class.java)
+        transactionViewModel =
+            ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
 
         month =
             "${calNow.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH)} ${calNow.get(
@@ -64,10 +88,7 @@ class TransactionFragment : BaseFragment() {
     }
 
     private fun createTransactionList(list: List<DateTime>) {
-        val adapter = TransactionAdapter(list, fragmentActivity!!) {transaction, dateTime,category ->
-            //Nội dung của hàm itemClick ở đây
-
-        }
+        val adapter = TransactionAdapter(list, fragmentActivity!!, transactionItemClick)
         rv_transaction.setHasFixedSize(true)
         rv_transaction.layoutManager = LinearLayoutManager(fragmentActivity)
         rv_transaction.adapter = adapter
@@ -81,6 +102,16 @@ class TransactionFragment : BaseFragment() {
         }
 
     }
+
+    private val transactionItemClick: (Transaction, DateTime, Category) -> Unit =
+        { transaction, dateTime, category ->
+            //Nội dung của hàm itemClick ở đây
+            val intent = Intent(context, AddTransactionActivity::class.java)
+            intent.putExtra(MoonyKey.transactionDetail, transaction)
+            intent.putExtra(MoonyKey.transactionCategory, category)
+            intent.putExtra(MoonyKey.transactionDateTime, dateTime)
+            startActivity(intent)
+        }
 
     private fun initEvent() {
         btn_add_transaction.setOnClickListener {
@@ -122,12 +153,12 @@ class TransactionFragment : BaseFragment() {
 
     }
 
-    private fun showMonthYearPickerDialog(){
-        val  builder =  MonthPickerDialog.Builder(fragmentActivity,
+    private fun showMonthYearPickerDialog() {
+        val builder = MonthPickerDialog.Builder(fragmentActivity,
             MonthPickerDialog.OnDateSetListener { selectedMonth, selectedYear ->
 
-                calNow.set(Calendar.YEAR,selectedYear)
-                calNow.set(Calendar.MONTH,selectedMonth)
+                calNow.set(Calendar.YEAR, selectedYear)
+                calNow.set(Calendar.MONTH, selectedMonth)
 
                 month = "${calNow.getDisplayName(
                     Calendar.MONTH,
@@ -137,7 +168,8 @@ class TransactionFragment : BaseFragment() {
                     Calendar.YEAR
                 )}"
                 txt_transaction_date.text = month
-            },calNow.get(Calendar.YEAR),calNow.get(Calendar.MONTH))
+            }, calNow.get(Calendar.YEAR), calNow.get(Calendar.MONTH)
+        )
 
         builder.setActivatedMonth(Calendar.JULY)
             .setMinYear(1990)

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moony.calc.R
+import com.moony.calc.database.DateTimeViewModel
 import com.moony.calc.database.TransactionViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
@@ -34,7 +35,6 @@ class TransactionAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtTransactionDay: TextView = itemView.findViewById(R.id.txt_transaction_day)
-        private val txtDayOfWeek: TextView = itemView.findViewById(R.id.txt_transaction_day_of_week)
         private val txtIncome: TextView = itemView.findViewById(R.id.txt_transaction_income)
         private val txtExpenses: TextView = itemView.findViewById(R.id.txt_transaction_expenses)
         private val rvTransaction: RecyclerView = itemView.findViewById(R.id.rv_transaction_item)
@@ -44,14 +44,18 @@ class TransactionAdapter(
 
             val transactionViewModel =
                 ViewModelProvider(activity).get(TransactionViewModel::class.java)
+            val dateTimeViewModel =ViewModelProvider(activity)[DateTimeViewModel::class.java]
             //Lấy Transaction theo từng ngày trong tháng và gộp nó vào 1 list để hiển thị trong list con
             transactionViewModel.getAllTransactionByDate(dateTime.id).observe(activity, Observer {
 
                 var income = 0.0
                 var expenses = 0.0
-                for (transaction in it) {
+
+                for (transaction in it)
                     if (transaction.isIncome) income += transaction.money else expenses += transaction.money
-                }
+
+                if (it.isEmpty())
+                    dateTimeViewModel.deleteDateTime(dateTime)
 
                 txtExpenses.text = expenses.toString()
                 txtIncome.text = income.toString()

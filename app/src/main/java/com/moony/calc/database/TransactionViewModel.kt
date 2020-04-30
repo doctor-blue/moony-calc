@@ -18,6 +18,9 @@ class TransactionViewModel(application: Application):AndroidViewModel(applicatio
         transactionRepository.deleteTransaction(transaction)
     }
     fun getAllTransaction():LiveData<List<Transaction>> = transactionRepository.getAllTransaction()
+
     fun getAllTransactionByDate(id:Int):LiveData<List<Transaction>> = transactionRepository.getAllTransactionByDate(id)
+
+    fun getTotalMoney(isIncome:Boolean,month:String):LiveData<Double> = transactionRepository.getTotalMoney(isIncome,month)
 
 }

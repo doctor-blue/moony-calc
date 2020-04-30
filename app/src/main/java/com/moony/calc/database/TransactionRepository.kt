@@ -14,7 +14,10 @@ class TransactionRepository(application: Application) {
         allTransaction = applicationDao.getAllTransactions()
         return allTransaction
     }
-    fun getAllTransactionByDate(id:Int)=applicationDao.getAllTransactionsByDate(id)
+
+    fun getTotalMoney(isIncome: Boolean,month:String): LiveData<Double> = applicationDao.getTotalMoney(isIncome,month)
+
+    fun getAllTransactionByDate(id: Int) = applicationDao.getAllTransactionsByDate(id)
 
     fun insertTransaction(transaction: Transaction) {
         InsertTask(applicationDao).execute(transaction)

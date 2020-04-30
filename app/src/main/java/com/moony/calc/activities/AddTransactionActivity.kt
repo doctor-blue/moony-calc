@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.database.DateTimeViewModel
 import com.moony.calc.database.TransactionViewModel
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
@@ -26,9 +28,14 @@ class AddTransactionActivity : BaseActivity() {
     private var dateTime: DateTime? = null
     private var category: Category? = null
     private val requestCode = 234
-    private lateinit var transactionViewModel: TransactionViewModel
+    private val transactionViewModel: TransactionViewModel by lazy {
+        ViewModelProvider(this)[TransactionViewModel::class.java]
+    }
     private val calendar: Calendar = Calendar.getInstance()
-    private var month :String= ""
+    private var month: String = ""
+    private val dateTimeViewModel: DateTimeViewModel by lazy {
+        ViewModelProvider(this)[DateTimeViewModel::class.java]
+    }
 
     companion object {
         const val KEYS = "CATEGORY_ADD_TRANSACTION"
@@ -51,8 +58,22 @@ class AddTransactionActivity : BaseActivity() {
         category =
             intent.getSerializableExtra(MoonyKey.transactionCategory) as Category?
 
-        transactionViewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
+        this.month = "${calendar.getDisplayName(
+            Calendar.MONTH,
+            Calendar.LONG,
+            Locale.ENGLISH
+        )} ${calendar.get(
+            Calendar.YEAR
+        )}"
 
+        txt_transaction_time.text =
+            ("${calendar[Calendar.DAY_OF_MONTH]} ${calendar.getDisplayName(
+                Calendar.MONTH,
+                Calendar.LONG,
+                Locale.ENGLISH
+            )} ${calendar.get(
+                Calendar.YEAR
+            )}")
 
         transaction?.let { tran ->
             //transaction,category và date time không = null tức là đang ở trạng thái detail nên set thông tin cho các view
@@ -64,10 +85,12 @@ class AddTransactionActivity : BaseActivity() {
                     edt_transaction_money.setText(tran.money.toString())
                     edt_transaction_note.setText(tran.note)
 
-                    Glide.with(this).load(cate.iconUrl).into(img_categories)
+                    //Glide.with(this).load(cate.iconUrl).into(img_categories)
                     txt_title_transaction_category.text = cate.title
 
                     txt_transaction_time.text = ("${date.day}, ${date.month}")
+                    month = date.month
+                    calendar.set(Calendar.DAY_OF_MONTH, date.day)
                     btn_delete_transaction.visibility = View.VISIBLE
                 }
             }
@@ -85,6 +108,7 @@ class AddTransactionActivity : BaseActivity() {
             //Delete Transaction
             transaction?.let {
                 transactionViewModel.deleteTransaction(it)
+                finish()
             }
         }
 
@@ -106,7 +130,42 @@ class AddTransactionActivity : BaseActivity() {
     }
 
     private fun saveTransaction() {
+        //Sẽ lắng nghe coi date time đã được thêm vào database hay chưa để có thể get id của date time ra và thêm transaction hoặc update transaction
+        dateTimeViewModel.getDateTime(calendar[Calendar.DAY_OF_MONTH], month)
+            .observe(this, Observer {
+                //kiểm tra coi ngày đã chọn đã tồn tại trong database hay chưa
+                if (it == null) {
+                    if (!isDetails) {
+                        //Ko tồn tại thì thêm
+                        dateTime = DateTime(calendar[Calendar.DAY_OF_MONTH], month)
+                        dateTimeViewModel.insertDateTime(dateTime!!)
+                    }
+                } else {
+                    //đã tồn tại thì check là thêm mới hay là chi tiết
+                    if (isDetails) {
+                        transaction?.let { transaction ->
+                            transaction.idDate = it.id
+                            transaction.month = month
+                            transaction.note = edt_transaction_note.text.toString()
+                            transaction.money =
+                                edt_transaction_money.text.toString().toDouble()
 
+                            transactionViewModel.updateTransaction(transaction)
+                        }
+                    } else {
+                        transaction = Transaction(
+                            edt_transaction_money.text.toString().toDouble(),
+                            true,
+                            month,
+                            it.id,
+                            0,
+                            edt_transaction_note.text.toString()
+                        )
+                        transactionViewModel.insertTransaction(transaction!!)
+                    }
+                    finish()
+                }
+            })
     }
 
     private fun pickDateTime() {
@@ -115,7 +174,7 @@ class AddTransactionActivity : BaseActivity() {
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            this.month ="${calendar.getDisplayName(
+            this.month = "${calendar.getDisplayName(
                 Calendar.MONTH,
                 Calendar.LONG,
                 Locale.ENGLISH
@@ -123,13 +182,14 @@ class AddTransactionActivity : BaseActivity() {
                 Calendar.YEAR
             )}"
 
-            txt_transaction_time.text=("${calendar[Calendar.DAY_OF_MONTH]} ${calendar.getDisplayName(
-                Calendar.MONTH,
-                Calendar.LONG,
-                Locale.ENGLISH
-            )} ${calendar.get(
-                Calendar.YEAR
-            )}")
+            txt_transaction_time.text =
+                ("${calendar[Calendar.DAY_OF_MONTH]} ${calendar.getDisplayName(
+                    Calendar.MONTH,
+                    Calendar.LONG,
+                    Locale.ENGLISH
+                )} ${calendar.get(
+                    Calendar.YEAR
+                )}")
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
 
