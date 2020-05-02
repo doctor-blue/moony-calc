@@ -44,7 +44,7 @@
                     android:id="@+id/edt_transaction_money"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="12"
+                    android:maxLength="8"
                     android:maxLines="1"
                     android:paddingStart="@dimen/_30sdp"
                     android:paddingLeft="@dimen/_30sdp"

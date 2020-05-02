@@ -2,7 +2,9 @@ package com.moony.calc.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,35 +31,30 @@ class TransactionFragment : BaseFragment() {
             Calendar.YEAR
         )}"
     private lateinit var transactionViewModel: TransactionViewModel
+    private var totalIncome=0.0
+    private var totalExpenses=0.0
+    private  var totalIncomeLiveData:LiveData<Double>?=null
+    private var totalExpensesLiveData:LiveData<Double>?=null
+    private var dateTimeLiveData:LiveData<List<DateTime>>?=null
 
     //Dòng này dùng để lắng nghe nếu cái month thay đổi giá trị thì load dữ liệu tương ứng theo đó
     private var month: String by Delegates.observable(defaultTime) { _, oldValue, newValue ->
 
         //Xóa bỏ cái observe cũ đi nếu không nó sẽ chồng chéo lên nhau
-        dateTimeViewModel.getAllDateTimeByMonth(oldValue).removeObservers(viewLifecycleOwner)
+        dateTimeLiveData?.removeObserver(dateTimeObserver)
 
         //lấy data từ database
-        dateTimeViewModel.getAllDateTimeByMonth(newValue)
-            .observe(viewLifecycleOwner, Observer {
-                createTransactionList(it)
-            })
-        transactionViewModel.getTotalMoney(true, oldValue).removeObservers(viewLifecycleOwner)
-        transactionViewModel.getTotalMoney(true, newValue)
-            .observe(viewLifecycleOwner, Observer { income ->
+        dateTimeLiveData=dateTimeViewModel.getAllDateTimeByMonth(newValue)
 
-                transactionViewModel.getTotalMoney(false, oldValue)
-                    .removeObservers(viewLifecycleOwner)
+        dateTimeLiveData!!.observe(viewLifecycleOwner,dateTimeObserver)
 
-                transactionViewModel.getTotalMoney(false, newValue)
-                    .observe(viewLifecycleOwner, Observer { expenses ->
-                        var exp=0.0
-                        if (expenses!=null) exp=expenses
-                        txt_transaction_income.text = "$income"
-                        txt_transaction_expenses.text = "$exp"
-                        txt_transaction_balance.text = "${income - exp}"
-                    })
-            })
 
+        totalIncomeLiveData?.removeObserver(totalIncomeObserver)
+        totalIncomeLiveData=transactionViewModel.getTotalMoney(true, newValue)
+        totalIncomeLiveData!!.observe(viewLifecycleOwner,totalIncomeObserver)
+
+        totalExpensesLiveData?.removeObserver(totalExpensesObserver)
+        totalExpensesLiveData=transactionViewModel.getTotalMoney(false,newValue)
     }
 
 
@@ -70,6 +67,26 @@ class TransactionFragment : BaseFragment() {
 
     private fun initControl() {
 
+    }
+    private val dateTimeObserver= Observer<List<DateTime>> {
+        Log.d("TEST_LIST"," date time")
+        createTransactionList(it)
+    }
+    private val totalIncomeObserver= Observer<Double> {income->
+        totalIncome=0.0
+        if (income!=null) totalIncome=income
+        Log.d("INCOME"," inc $income")
+        totalExpensesLiveData!!.removeObserver(totalExpensesObserver)
+        totalExpensesLiveData!!.observe(viewLifecycleOwner,totalExpensesObserver)
+
+    }
+    private val totalExpensesObserver= Observer<Double> {expenses->
+        totalExpenses=0.0
+        if (expenses!=null) totalExpenses=expenses
+        Log.d("INCOME"," exp  $expenses")
+        txt_transaction_income.text = "$totalIncome"
+        txt_transaction_expenses.text = "$totalExpenses"
+        txt_transaction_balance.text = "${totalIncome - totalExpenses}"
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -15,6 +15,7 @@ import com.moony.calc.database.TransactionViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
+import kotlin.math.roundToLong
 
 class TransactionAdapter(
     private val dates: List<DateTime>,
@@ -53,6 +54,9 @@ class TransactionAdapter(
 
                 for (transaction in it)
                     if (transaction.isIncome) income += transaction.money else expenses += transaction.money
+
+                income= ((income * 1000.0).roundToLong() /1000.0)
+                expenses= ((expenses * 1000.0).roundToLong() /1000.0)
 
                 if (it.isEmpty())
                     dateTimeViewModel.deleteDateTime(dateTime)
