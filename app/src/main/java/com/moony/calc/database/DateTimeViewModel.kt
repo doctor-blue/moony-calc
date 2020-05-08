@@ -14,8 +14,8 @@ class DateTimeViewModel(application: Application) : AndroidViewModel(application
         dateTimeRepository = DateTimeRepository(applicationDao)
     }
 
-    fun getAllDateTimeByMonth(month: String): LiveData<List<DateTime>> =
-        dateTimeRepository.getAllDateTimeByMonth(month)
+    fun getAllDateTimeByMonth(month: Int,year: Int): LiveData<List<DateTime>> =
+        dateTimeRepository.getAllDateTimeByMonth(month,year)
 
     fun insertDateTime(dateTime: DateTime) =
         dateTimeRepository.insertDateTime(dateTime)
@@ -24,8 +24,8 @@ class DateTimeViewModel(application: Application) : AndroidViewModel(application
     fun deleteDateTime(dateTime: DateTime) =
         dateTimeRepository.deleteDateTime(dateTime)
 
-    fun getDateTime(day: Int, month: String) =
-        dateTimeRepository.getDateTime(day, month)
+    fun getDateTime(day: Int, month: Int,year:Int) =
+        dateTimeRepository.getDateTime(day, month,year)
 
 
 }

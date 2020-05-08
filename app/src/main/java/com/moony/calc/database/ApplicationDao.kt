@@ -51,8 +51,8 @@ interface ApplicationDao {
     @Query("select*from transaction_table where idDate=:id")
     fun getAllTransactionsByDate(id: Int): LiveData<List<Transaction>>
 
-    @Query("select sum(money) as double from transaction_table where isIncome =:isIncome and month=:month")
-    fun getTotalMoney(isIncome: Boolean,month: String):LiveData<Double>
+    @Query("select sum(money) as double from transaction_table where isIncome =:isIncome and month=:month and year=:year")
+    fun getTotalMoney(isIncome:Boolean,month:Int,year:Int):LiveData<Double>
 
 
     @Delete
@@ -61,10 +61,10 @@ interface ApplicationDao {
     @Insert
     fun insertDateTime(dateTime: DateTime)
 
-    @Query("select*from date_table where month=:month")
-    fun getAllDateTimeByMonth(month: String): LiveData<List<DateTime>>
+    @Query("select*from date_table where month=:month and year=:year")
+    fun getAllDateTimeByMonth(month: Int,year:Int): LiveData<List<DateTime>>
 
-    @Query("select*from date_table where month=:month and day=:day")
-    fun getDateTime(day: Int, month: String): LiveData<DateTime>
+    @Query("select*from date_table where month=:month and day=:day and year=:year")
+    fun getDateTime(day: Int, month: Int,year:Int): LiveData<DateTime>
 
 }

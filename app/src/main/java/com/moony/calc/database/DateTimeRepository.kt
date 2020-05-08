@@ -7,11 +7,11 @@ import com.moony.calc.model.DateTime
 class DateTimeRepository(private val applicationDao: ApplicationDao) {
 
 
-    fun getAllDateTimeByMonth(month: String): LiveData<List<DateTime>> =
-        applicationDao.getAllDateTimeByMonth(month)
+    fun getAllDateTimeByMonth(month: Int,year: Int): LiveData<List<DateTime>> =
+        applicationDao.getAllDateTimeByMonth(month,year)
 
-    fun getDateTime(day: Int, month: String): LiveData<DateTime> =
-        applicationDao.getDateTime(day, month)
+    fun getDateTime(day: Int, month: Int,year:Int): LiveData<DateTime> =
+        applicationDao.getDateTime(day, month,year)
 
     fun insertDateTime(dateTime: DateTime) {
         InsertTask(applicationDao).execute(dateTime)

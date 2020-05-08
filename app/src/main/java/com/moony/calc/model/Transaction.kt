@@ -8,10 +8,11 @@ import java.io.Serializable
 class Transaction (
     var money: Double,
     var isIncome: Boolean,
-    var month: String,
     var idDate: Int,
     var idCategory: Int,
-    var note:String
+    var note:String,
+    var month:Int,
+    var year:Int
 ) :Serializable{
     @PrimaryKey(autoGenerate = true)
     var idTransaction:Int=0

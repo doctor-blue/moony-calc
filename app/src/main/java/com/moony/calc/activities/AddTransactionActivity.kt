@@ -4,6 +4,10 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter.LengthFilter
+import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,6 +22,7 @@ import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
+import com.moony.calc.utils.ConvertDate
 import kotlinx.android.synthetic.main.activity_add_transaction.*
 import java.util.*
 
@@ -32,7 +37,7 @@ class AddTransactionActivity : BaseActivity() {
         ViewModelProvider(this)[TransactionViewModel::class.java]
     }
     private val calendar: Calendar = Calendar.getInstance()
-    private var month: String = ""
+
     private val dateTimeViewModel: DateTimeViewModel by lazy {
         ViewModelProvider(this)[DateTimeViewModel::class.java]
     }
@@ -58,22 +63,7 @@ class AddTransactionActivity : BaseActivity() {
         category =
             intent.getSerializableExtra(MoonyKey.transactionCategory) as Category?
 
-        this.month = "${calendar.getDisplayName(
-            Calendar.MONTH,
-            Calendar.LONG,
-            Locale.ENGLISH
-        )} ${calendar.get(
-            Calendar.YEAR
-        )}"
-
-        txt_transaction_time.text =
-            ("${calendar[Calendar.DAY_OF_MONTH]} ${calendar.getDisplayName(
-                Calendar.MONTH,
-                Calendar.LONG,
-                Locale.ENGLISH
-            )} ${calendar.get(
-                Calendar.YEAR
-            )}")
+        txt_transaction_time.text = ConvertDate.formatDateTime(calendar)
 
         transaction?.let { tran ->
             //transaction,category và date time không = null tức là đang ở trạng thái detail nên set thông tin cho các view
@@ -88,8 +78,11 @@ class AddTransactionActivity : BaseActivity() {
                     //Glide.with(this).load(cate.iconUrl).into(img_categories)
                     txt_title_transaction_category.text = cate.title
 
-                    txt_transaction_time.text = ("${date.day}, ${date.month}")
-                    month = date.month
+                    calendar.set(Calendar.DAY_OF_MONTH, date.day)
+                    calendar.set(Calendar.MONTH, date.month)
+                    calendar.set(Calendar.YEAR, date.year)
+                    txt_transaction_time.text = ConvertDate.formatDateTime(calendar)
+
                     calendar.set(Calendar.DAY_OF_MONTH, date.day)
                     btn_delete_transaction.visibility = View.VISIBLE
                 }
@@ -98,6 +91,7 @@ class AddTransactionActivity : BaseActivity() {
 
 
     }
+
 
     private fun initEvents() {
         layout_transaction_category.setOnClickListener {
@@ -115,6 +109,28 @@ class AddTransactionActivity : BaseActivity() {
         layout_transaction_date_time.setOnClickListener {
             pickDateTime()
         }
+
+
+        edt_transaction_money.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) = Unit
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("AMD", "text= ${s.toString()}  length= ${s!!.length}")
+                s.let {
+                    if (it.toString().contains('.')) {
+                        val maxLength = "${s}0".toDouble().toInt().toString().length + 3
+                        edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
+                    } else {
+                        edt_transaction_money.filters = arrayOf(LengthFilter(8))
+                    }
+                }
+
+            }
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -131,24 +147,31 @@ class AddTransactionActivity : BaseActivity() {
 
     private fun saveTransaction() {
         //Sẽ lắng nghe coi date time đã được thêm vào database hay chưa để có thể get id của date time ra và thêm transaction hoặc update transaction
-        dateTimeViewModel.getDateTime(calendar[Calendar.DAY_OF_MONTH], month)
+        dateTimeViewModel.getDateTime(
+            calendar[Calendar.DAY_OF_MONTH],
+            calendar[Calendar.MONTH],
+            calendar[Calendar.YEAR]
+        )
             .observe(this, Observer {
                 //kiểm tra coi ngày đã chọn đã tồn tại trong database hay chưa
                 if (it == null) {
-                    if (!isDetails) {
-                        //Ko tồn tại thì thêm
-                        dateTime = DateTime(calendar[Calendar.DAY_OF_MONTH], month)
-                        dateTimeViewModel.insertDateTime(dateTime!!)
-                    }
+                    //Ko tồn tại thì thêm
+                    dateTime = DateTime(
+                        calendar[Calendar.DAY_OF_MONTH],
+                        calendar[Calendar.MONTH],
+                        calendar[Calendar.YEAR]
+                    )
+                    dateTimeViewModel.insertDateTime(dateTime!!)
                 } else {
                     //đã tồn tại thì check là thêm mới hay là chi tiết
                     if (isDetails) {
                         transaction?.let { transaction ->
                             transaction.idDate = it.id
-                            transaction.month = month
                             transaction.note = edt_transaction_note.text.toString()
                             transaction.money =
                                 edt_transaction_money.text.toString().toDouble()
+                            transaction.month = calendar[Calendar.MONTH]
+                            transaction.year = calendar[Calendar.YEAR]
 
                             transactionViewModel.updateTransaction(transaction)
                         }
@@ -156,10 +179,11 @@ class AddTransactionActivity : BaseActivity() {
                         transaction = Transaction(
                             edt_transaction_money.text.toString().toDouble(),
                             true,
-                            month,
                             it.id,
                             0,
-                            edt_transaction_note.text.toString()
+                            edt_transaction_note.text.toString(),
+                            calendar[Calendar.MONTH],
+                            calendar[Calendar.YEAR]
                         )
                         transactionViewModel.insertTransaction(transaction!!)
                     }
@@ -174,22 +198,8 @@ class AddTransactionActivity : BaseActivity() {
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            this.month = "${calendar.getDisplayName(
-                Calendar.MONTH,
-                Calendar.LONG,
-                Locale.ENGLISH
-            )} ${calendar.get(
-                Calendar.YEAR
-            )}"
+            txt_transaction_time.text = ConvertDate.formatDateTime(calendar)
 
-            txt_transaction_time.text =
-                ("${calendar[Calendar.DAY_OF_MONTH]} ${calendar.getDisplayName(
-                    Calendar.MONTH,
-                    Calendar.LONG,
-                    Locale.ENGLISH
-                )} ${calendar.get(
-                    Calendar.YEAR
-                )}")
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
 
