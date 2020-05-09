@@ -15,6 +15,7 @@ import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
+import com.moony.calc.utils.decimalFormat
 
 /**
  * Đây là lớp con của List các Transaction
@@ -58,7 +59,8 @@ class TransactionChildrenAdapter(
         ) {
             val categoryViewModel =
                 ViewModelProvider(context).get(CategoryViewModel::class.java)
-            txtTransactionMoney.text = "${transaction.money}"
+
+            txtTransactionMoney.text = transaction.money.decimalFormat()
             if (transaction.isIncome)
                 txtTransactionMoney.setTextColor(Color.parseColor("#373F51"))
             else

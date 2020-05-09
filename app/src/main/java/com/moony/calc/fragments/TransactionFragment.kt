@@ -18,7 +18,8 @@ import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
-import com.moony.calc.utils.ConvertDate
+import com.moony.calc.utils.decimalFormat
+import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog
 import kotlinx.android.synthetic.main.fragment_transaction.*
 import java.util.*
@@ -28,8 +29,8 @@ class TransactionFragment : BaseFragment() {
     private lateinit var dateTimeViewModel: DateTimeViewModel
 
     private lateinit var transactionViewModel: TransactionViewModel
-    private var totalIncome = 0.0
-    private var totalExpenses = 0.0
+    private var totalIncome:Double = 0.0
+    private var totalExpenses:Double = 0.0
     private var totalIncomeLiveData: LiveData<Double>? = null
     private var totalExpensesLiveData: LiveData<Double>? = null
     private var dateTimeLiveData: LiveData<List<DateTime>>? = null
@@ -62,9 +63,11 @@ class TransactionFragment : BaseFragment() {
         totalExpenses = 0.0
         if (expenses != null) totalExpenses = expenses
         Log.d("INCOME", " exp  $expenses")
-        txt_transaction_income.text = "$totalIncome"
-        txt_transaction_expenses.text = "$totalExpenses"
-        txt_transaction_balance.text = "${totalIncome - totalExpenses}"
+
+        txt_transaction_income.text = totalIncome.decimalFormat()
+        txt_transaction_expenses.text = totalExpenses.decimalFormat()
+        txt_transaction_balance.text = (totalIncome - totalExpenses).decimalFormat()
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -75,7 +78,7 @@ class TransactionFragment : BaseFragment() {
             ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
 
         refreshData()
-        txt_transaction_date.text = ConvertDate.formatMonth(calNow, Locale.ENGLISH)
+        txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
 
     }
 
@@ -135,13 +138,13 @@ class TransactionFragment : BaseFragment() {
         btn_next_month.setOnClickListener {
             //tiến thêm 1 tháng
             calNow.add(Calendar.MONTH, 1)
-            txt_transaction_date.text = ConvertDate.formatMonth(calNow, Locale.ENGLISH)
+            txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
             refreshData()
         }
         btn_pre_month.setOnClickListener {
 
             calNow.add(Calendar.MONTH, -1)
-            txt_transaction_date.text = ConvertDate.formatMonth(calNow, Locale.ENGLISH)
+            txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
             refreshData()
         }
         txt_transaction_date.setOnClickListener {
@@ -158,7 +161,7 @@ class TransactionFragment : BaseFragment() {
                 calNow.set(Calendar.YEAR, selectedYear)
                 calNow.set(Calendar.MONTH, selectedMonth)
 
-                txt_transaction_date.text = ConvertDate.formatMonth(calNow, Locale.ENGLISH)
+                txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
             }, calNow.get(Calendar.YEAR), calNow.get(Calendar.MONTH)
         )
 

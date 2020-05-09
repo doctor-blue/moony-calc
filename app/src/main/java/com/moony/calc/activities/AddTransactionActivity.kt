@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter.LengthFilter
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -22,7 +21,8 @@ import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
-import com.moony.calc.utils.ConvertDate
+import com.moony.calc.utils.decimalFormat
+import com.moony.calc.utils.formatDateTime
 import kotlinx.android.synthetic.main.activity_add_transaction.*
 import java.util.*
 
@@ -63,7 +63,7 @@ class AddTransactionActivity : BaseActivity() {
         category =
             intent.getSerializableExtra(MoonyKey.transactionCategory) as Category?
 
-        txt_transaction_time.text = ConvertDate.formatDateTime(calendar)
+        txt_transaction_time.text = calendar.formatDateTime()
 
         transaction?.let { tran ->
             //transaction,category và date time không = null tức là đang ở trạng thái detail nên set thông tin cho các view
@@ -72,7 +72,7 @@ class AddTransactionActivity : BaseActivity() {
                     isDetails = true
                     toolbar_add_transaction.title = resources.getString(R.string.transaction_detail)
 
-                    edt_transaction_money.setText(tran.money.toString())
+                    edt_transaction_money.setText(tran.money.decimalFormat())
                     edt_transaction_note.setText(tran.note)
 
                     //Glide.with(this).load(cate.iconUrl).into(img_categories)
@@ -81,7 +81,7 @@ class AddTransactionActivity : BaseActivity() {
                     calendar.set(Calendar.DAY_OF_MONTH, date.day)
                     calendar.set(Calendar.MONTH, date.month)
                     calendar.set(Calendar.YEAR, date.year)
-                    txt_transaction_time.text = ConvertDate.formatDateTime(calendar)
+                    txt_transaction_time.text = calendar.formatDateTime()
 
                     calendar.set(Calendar.DAY_OF_MONTH, date.day)
                     btn_delete_transaction.visibility = View.VISIBLE
@@ -118,13 +118,24 @@ class AddTransactionActivity : BaseActivity() {
                 Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("AMD", "text= ${s.toString()}  length= ${s!!.length}")
-                s.let {
-                    if (it.toString().contains('.')) {
-                        val maxLength = "${s}0".toDouble().toInt().toString().length + 3
+
+                s?.let {
+                    if (it.toString().contains('.') || it.toString().contains(',')) {
+                        /**
+                         * "${handleTextToDouble(it.toString())}0" nhiều trường hợp nó ở dạng #. thay vì #.# nên thêm 0 để đc chuỗi dạng #.0
+                         * chuyển về kiểu double sau đó format nó sẽ được chuỗi ở dạng #.00 và lấy độ dài làm max length cho edit_text
+                         */
+                        val maxLength = "${handleTextToDouble(it.toString())}0".toDouble().decimalFormat().length
                         edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
                     } else {
-                        edt_transaction_money.filters = arrayOf(LengthFilter(8))
+                        edt_transaction_money.filters = arrayOf(LengthFilter(9))
+                        if (it.length - 1 == 8) {
+                            //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
+                            val lastChar = it[8]
+                            if (!(lastChar == '.' || lastChar == ',')) {
+                                edt_transaction_money.setText(it.subSequence(0, 8))
+                            }
+                        }
                     }
                 }
 
@@ -169,7 +180,7 @@ class AddTransactionActivity : BaseActivity() {
                             transaction.idDate = it.id
                             transaction.note = edt_transaction_note.text.toString()
                             transaction.money =
-                                edt_transaction_money.text.toString().toDouble()
+                                handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
                             transaction.month = calendar[Calendar.MONTH]
                             transaction.year = calendar[Calendar.YEAR]
 
@@ -177,8 +188,8 @@ class AddTransactionActivity : BaseActivity() {
                         }
                     } else {
                         transaction = Transaction(
-                            edt_transaction_money.text.toString().toDouble(),
-                            true,
+                            handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
+                            false,
                             it.id,
                             0,
                             edt_transaction_note.text.toString(),
@@ -198,7 +209,7 @@ class AddTransactionActivity : BaseActivity() {
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            txt_transaction_time.text = ConvertDate.formatDateTime(calendar)
+            txt_transaction_time.text = calendar.formatDateTime()
 
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
@@ -214,6 +225,14 @@ class AddTransactionActivity : BaseActivity() {
                 Glide.with(this).load(category!!.iconUrl).into(img_categories)
                 txt_title_transaction_category.text = category!!.title
             }
+    }
+
+    private fun handleTextToDouble(s: String): String {
+        var text = s
+        if (text.contains(',')) {
+            text = text.replace(',', '.')
+        }
+        return text
     }
 
 
