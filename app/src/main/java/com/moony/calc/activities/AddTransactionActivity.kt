@@ -88,6 +88,7 @@ class AddTransactionActivity : BaseActivity() {
                 }
             }
         }
+        edt_transaction_money.setSelection(edt_transaction_money.text.toString().length)
 
 
     }
@@ -125,7 +126,7 @@ class AddTransactionActivity : BaseActivity() {
                          * "${handleTextToDouble(it.toString())}0" nhiều trường hợp nó ở dạng #. thay vì #.# nên thêm 0 để đc chuỗi dạng #.0
                          * chuyển về kiểu double sau đó format nó sẽ được chuỗi ở dạng #.00 và lấy độ dài làm max length cho edit_text
                          */
-                        val maxLength = "${handleTextToDouble(it.toString())}0".toDouble().decimalFormat().length
+                        val maxLength = "${handleTextToDouble(it.toString())}1".toDouble().decimalFormat().length
                         edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
                     } else {
                         edt_transaction_money.filters = arrayOf(LengthFilter(9))
@@ -134,6 +135,7 @@ class AddTransactionActivity : BaseActivity() {
                             val lastChar = it[8]
                             if (!(lastChar == '.' || lastChar == ',')) {
                                 edt_transaction_money.setText(it.subSequence(0, 8))
+                                edt_transaction_money.setSelection(8)
                             }
                         }
                     }
@@ -142,6 +144,10 @@ class AddTransactionActivity : BaseActivity() {
             }
 
         })
+
+        toolbar_add_transaction.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

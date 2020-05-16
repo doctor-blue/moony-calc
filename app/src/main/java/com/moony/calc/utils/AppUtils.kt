@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
 
-fun Double.decimalFormat(): String = DecimalFormat("0.00").format(this)
+fun Double.decimalFormat(): String = if (this==this.toInt().toDouble()) this.toInt().toString() else DecimalFormat("0.00").format(this)
 
 fun Calendar.formatMonth(locale: Locale): String =
     "${getDisplayName(MONTH, LONG, locale)} ${get(YEAR)}"

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
 import com.moony.calc.activities.AddTransactionActivity
+import com.moony.calc.activities.SavingDetailActivity
 import com.moony.calc.adapter.TransactionAdapter
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.DateTimeViewModel
@@ -130,7 +131,7 @@ class TransactionFragment : BaseFragment() {
             startActivity(
                 Intent(
                     activity,
-                    AddTransactionActivity::class.java
+                    SavingDetailActivity::class.java
                 )
             )
         }
