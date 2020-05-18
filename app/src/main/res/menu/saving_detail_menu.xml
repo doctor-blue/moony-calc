@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/mnu_delete_saving"
+        android:icon="@drawable/ic_delete_primary_color"
+        app:showAsAction="ifRoom"
+        android:title=""
+        />
+    <item android:title=""
+        android:id="@+id/mnu_edit_saving"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_edit_primary_color"
+        />
+</menu>

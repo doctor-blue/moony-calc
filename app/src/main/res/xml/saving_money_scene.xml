@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Transition android:id="@+id/saving_transition"
+        app:constraintSetStart="@id/start"
+        app:constraintSetEnd="@id/end"
+        app:duration="800"
+        >
+        <OnClick app:clickAction="toggle"
+            app:targetId="@id/btn_expanded"/>
+    </Transition>
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@+id/btn_expanded">
+            <Layout  android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabCustomSize="@dimen/_40sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_subtract_saving_money"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:src="@drawable/ic_expand_more"
+                />
+        </Constraint>
+        <Constraint android:id="@+id/btn_add_saving_money">
+            <Layout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabCustomSize="@dimen/_50sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_subtract_saving_money"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside"
+                />
+            <CustomAttribute app:attributeName="ColorFilter"
+                app:customColorValue="@color/white"/>
+            <PropertySet android:visibility="visible"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_subtract_saving_money">
+            <Layout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabCustomSize="@dimen/_45sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_expanded"
+                app:layout_constraintTop_toBottomOf="@+id/btn_add_saving_money"
+                />
+            <CustomAttribute app:attributeName="ColorFilter"
+                app:customColorValue="@color/white"/>
+            <PropertySet android:visibility="visible"/>
+        </Constraint>
+    </ConstraintSet>
+
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint android:id="@+id/btn_expanded">
+            <Layout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabCustomSize="@dimen/_40sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_expand_less"
+                />
+        </Constraint>
+        <Constraint android:id="@+id/btn_add_saving_money">
+            <Layout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabCustomSize="@dimen/_50sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <CustomAttribute app:attributeName="ColorFilter"
+                app:customColorValue="@color/white"/>
+            <PropertySet android:visibility="gone"/>
+        </Constraint>
+        <Constraint android:id="@+id/btn_subtract_saving_money">
+            <Layout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabCustomSize="@dimen/_45sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <CustomAttribute app:attributeName="ColorFilter"
+                app:customColorValue="@color/white"/>
+            <PropertySet android:visibility="gone"/>
+        </Constraint>
+    </ConstraintSet>
+</MotionScene>

@@ -33,6 +33,7 @@
     <style name="Widget.Moony.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:background">@color/white</item>
         <item name="titleTextColor">@color/textColor</item>
+        <item name="drawableTint">@color/colorPrimary</item>
     </style>
 
     <style name="Widget.Moony.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
@@ -53,6 +54,12 @@
         <item name="fontFamily">@font/nimbus_roman_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/_25sdp</item>
+    </style>
+    <style name="Widget.Moony.Title2" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="fontFamily">@font/nimbus_roman_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/_23sdp</item>
     </style>
 
     <style name="Widget.Moony.Title1" parent="TextAppearance.MaterialComponents.Headline6">

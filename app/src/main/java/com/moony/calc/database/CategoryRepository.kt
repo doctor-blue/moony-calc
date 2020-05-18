@@ -1,57 +1,22 @@
 package com.moony.calc.database
 
 import android.app.Application
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.moony.calc.model.Category
 
 class CategoryRepository(application: Application) {
-    private var applicationDao: ApplicationDao =
-        MoonyDatabase.getInstance(application)!!.getApplicationDao()
-    private lateinit var allCategory: LiveData<List<Category>>
-
-    fun getAllCategory(isIncome: Boolean): LiveData<List<Category>> {
-        allCategory = applicationDao.getAllCategory(isIncome)
-        return allCategory
-    }
-
-    fun getCategory(id: Int): LiveData<Category> = applicationDao.getCategory(id)
+    private var categoryDao: CategoryDao =
+        MoonyDatabase.getInstance(application).getCategoryDao()
 
 
-    fun insertCategory(category: Category) {
-        InsertTask(applicationDao).execute(category)
-    }
+    fun getAllCategory(isIncome: Boolean): LiveData<List<Category>> =categoryDao.getAllCategory(isIncome)
 
-    fun deleteCategory(category: Category) {
-        DeleteTask(applicationDao).execute(category)
-    }
+    fun getCategory(id: Int): LiveData<Category> = categoryDao.getCategory(id)
 
-    fun updateCategory(category: Category) {
-        UpdateTask(applicationDao).execute(category)
-    }
 
-    private class InsertTask(private val applicationDao: ApplicationDao) :
-        AsyncTask<Category, Unit?, Unit?>() {
-        override fun doInBackground(vararg category: Category): Unit? {
-            applicationDao.insertCategory(category[0])
-            return null
-        }
-    }
+    suspend fun insertCategory(category: Category) = categoryDao.insertCategory(category)
 
-    private class UpdateTask(private val applicationDao: ApplicationDao) :
-        AsyncTask<Category, Unit?, Unit?>() {
-        override fun doInBackground(vararg category: Category): Unit? {
-            applicationDao.updateCategory(category[0])
-            return null
-        }
-    }
+    suspend fun deleteCategory(category: Category) = categoryDao.deleteCategory(category)
 
-    private class DeleteTask(private val applicationDao: ApplicationDao) :
-        AsyncTask<Category, Unit?, Unit?>() {
-        override fun doInBackground(vararg category: Category): Unit? {
-            applicationDao.deleteCategory(category[0])
-            return null
-        }
-
-    }
+    suspend fun updateCategory(category: Category) = categoryDao.updateCategory(category)
 }
