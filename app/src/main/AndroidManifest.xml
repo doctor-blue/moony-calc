@@ -10,13 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AddCategoriesActivity"/>
+        <activity android:name=".activities.MainActivity"/>
+        <activity android:name=".activities.AddCategoriesActivity" />
         <activity android:name=".activities.AddSavingGoalActivity" />
         <activity android:name=".activities.AddTransactionActivity" />
         <activity android:name=".activities.CategoriesActivity" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.SplashScreenActivity"
             android:label="@string/app_name"
+            android:theme="@style/SplashFullScreen"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

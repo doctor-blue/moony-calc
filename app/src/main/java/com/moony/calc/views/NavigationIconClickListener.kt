@@ -13,7 +13,7 @@ import com.moony.calc.R
 
 class NavigationIconClickListener @JvmOverloads internal constructor(
         private val context: Context, private val sheet: View, private val interpolator: Interpolator? = null,
-        private val openIcon: Drawable? = null, private val closeIcon: Drawable? = null) : View.OnClickListener {
+        private val openIcon: Drawable? = null, private val closeIcon: Drawable? = null,private val menu:View) : View.OnClickListener {
 
     private val animatorSet = AnimatorSet()
     private val height: Int
@@ -35,6 +35,10 @@ class NavigationIconClickListener @JvmOverloads internal constructor(
         animatorSet.removeAllListeners()
         animatorSet.end()
         animatorSet.cancel()
+        if (backdropShown)
+            menu.visibility=View.VISIBLE
+        else
+            menu.visibility=View.GONE
 
         updateIcon(it)
 

@@ -17,7 +17,8 @@
         android:layout_marginTop="@dimen/_40sdp"
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/_10sdp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/layout_main_menu">
 
         <ScrollView
             android:layout_width="match_parent"

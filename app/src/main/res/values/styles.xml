@@ -14,6 +14,9 @@
         <item name="colorOnSecondary">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorAccent</item>
     </style>
+    <style name="SplashFullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
     <style name="Widget.Moony.Backdrop" parent="">
         <item name="android:background">@color/white</item>

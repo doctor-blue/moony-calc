@@ -7,14 +7,17 @@ import com.moony.calc.model.Transaction
 
 class TransactionRepository(application: Application) {
     private var applicationDao: ApplicationDao =
-        MoonyDatabase.getInstance(application).getApplicationDao()
+        MoonyDatabase.getInstance(application)!!.getApplicationDao()
     private lateinit var allTransaction: LiveData<List<Transaction>>
 
     fun getAllTransaction(): LiveData<List<Transaction>> {
         allTransaction = applicationDao.getAllTransactions()
         return allTransaction
     }
-    fun getAllTransactionByDate(id:Int)=applicationDao.getAllTransactionsByDate(id)
+
+    fun getTotalMoney(isIncome: Boolean,month:String): LiveData<Double> = applicationDao.getTotalMoney(isIncome,month)
+
+    fun getAllTransactionByDate(id: Int) = applicationDao.getAllTransactionsByDate(id)
 
     fun insertTransaction(transaction: Transaction) {
         InsertTask(applicationDao).execute(transaction)

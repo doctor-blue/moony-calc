@@ -29,7 +29,6 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     private fun initEvent() {
-        //(this as AppCompatActivity).setSupportActionBar(app_bar_main)
         btn_nav_main.setOnClickListener(
             navigationIconClickListener
         )
@@ -40,12 +39,15 @@ class MainActivity : BaseActivity() {
     private fun initControl() {
         fragment_main.fragmentManager = supportFragmentManager
         fragment_main.replaceFragment(TransactionFragment())
+        layout_main_menu.visibility=View.GONE
+
         navigationIconClickListener = NavigationIconClickListener(
             this,
             fragment_main,
             AccelerateDecelerateInterpolator(),
             ContextCompat.getDrawable(this, R.drawable.ic_navigation), // Menu open icon
-            ContextCompat.getDrawable(this, R.drawable.ic_menu_close)
+            ContextCompat.getDrawable(this, R.drawable.ic_menu_close),
+            layout_main_menu
         )
     }
 

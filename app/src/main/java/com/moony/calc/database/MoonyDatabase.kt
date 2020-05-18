@@ -9,21 +9,26 @@ import com.moony.calc.model.DateTime
 import com.moony.calc.model.Saving
 import com.moony.calc.model.Transaction
 
-@Database(entities = [Transaction::class, Saving::class, Category::class,DateTime::class], version = 1)
+@Database(
+    entities = [Transaction::class, Saving::class, Category::class, DateTime::class],
+    version = 1
+)
 abstract class MoonyDatabase : RoomDatabase() {
     abstract fun getApplicationDao(): ApplicationDao
 
     companion object {
+        @Volatile
         private var instance: MoonyDatabase? = null
-        fun getInstance(context: Context): MoonyDatabase {
+        fun getInstance(context: Context): MoonyDatabase? {
             if (instance == null)
-                instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MoonyDatabase::class.java,
-                    "MoonyDatabase.db"
-                )
-                    .fallbackToDestructiveMigration().build()
-            return instance!!
+                synchronized(this) {
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        MoonyDatabase::class.java,
+                        "MoonyDatabase.db"
+                    ).build()
+                }
+            return instance
         }
     }
 }

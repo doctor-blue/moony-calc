@@ -7,7 +7,7 @@ import com.moony.calc.model.Category
 
 class CategoryRepository(application: Application) {
     private var applicationDao: ApplicationDao =
-        MoonyDatabase.getInstance(application).getApplicationDao()
+        MoonyDatabase.getInstance(application)!!.getApplicationDao()
     private lateinit var allCategory: LiveData<List<Category>>
 
     fun getAllCategory(isIncome: Boolean): LiveData<List<Category>> {
