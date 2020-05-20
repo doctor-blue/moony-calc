@@ -12,6 +12,10 @@ class SavingHistoryViewModel(application: Application) : AndroidViewModel(applic
 
     fun getAllSavingHistory(idSaving: Int) = savingHistoryRepository.getAllSavingHistory(idSaving)
 
+    /**
+     * Hàm dưới đây dùng để lấy all số tiền đã tiết kiệm được từ SavingHistory ra
+     * lấy được số tiền hiện tại từ đây để tính ra % số tiền đã tiết kiệm được
+     */
     fun getCurrentAmount(idSaving: Int) = savingHistoryRepository.getCurrentSavingAmount(idSaving)
 
     fun insertSavingHistory(savingHistory: SavingHistory) = viewModelScope.launch {

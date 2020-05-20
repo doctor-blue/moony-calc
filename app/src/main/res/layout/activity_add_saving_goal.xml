@@ -37,8 +37,8 @@
                 style="@style/Widget.Moony.TextInputLayout.OutlineBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
                 android:hint="@string/description"
+                app:errorEnabled="true"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -55,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:errorEnabled="true"
                 android:hint="@string/amount"
+                app:errorEnabled="true"
                 app:layout_constraintTop_toBottomOf="@id/textInput_goal_description">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -126,6 +126,18 @@
                     app:layout_constraintStart_toEndOf="@id/img_goal_calendar"
                     app:layout_constraintTop_toBottomOf="@id/textInput_goal_amount" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_saving_goals"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_default_goal_pic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_goal_categories" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "saving_goal")
 class Saving(
     var description: String,
-    var currentAmount: Double,
     var desiredAmount: Double,
-    var idCategory: Int
+    var idCategory: Int,
+    var linkImage: String = "Empty"
 ) {
     @PrimaryKey(autoGenerate = true)
     var idSaving: Int = 0
