@@ -38,4 +38,6 @@
     <string name="total">Total</string>
     <string name="history_saving">History</string>
     <string name="empty">Empty</string>
+    <string name="add_income_category">Add income category</string>
+    <string name="add_expense_category">Add expense category</string>
 </resources>

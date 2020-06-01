@@ -1,2 +1,2 @@
-include ':app', ':monthandyearpicker'
+include ':app', ':monthandyearpicker', ':androidsvg'
 rootProject.name='Moony'
