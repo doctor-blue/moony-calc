@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activities.AddCategoriesActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_add_categories"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_add_categories"
@@ -22,8 +24,36 @@
             app:title="@string/add_categories" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.moony.calc.views.SVGImageView
+        android:id="@+id/img_choose_category"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@color/blue"
+        app:layout_constraintEnd_toStartOf="@id/edt_title_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar_add_categories" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="0dp"
+        android:id="@+id/edt_title_category"
+        android:maxLength="60"
+        android:maxLines="1"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img_choose_category"
+        app:layout_constraintTop_toBottomOf="@id/appbar_add_categories"
+        android:layout_marginStart="@dimen/_5sdp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_add_categories"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_choose_category"
+        tools:listitem="@layout/category_list_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>

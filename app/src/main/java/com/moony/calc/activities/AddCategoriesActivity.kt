@@ -1,8 +1,12 @@
 package com.moony.calc.activities
 
 import android.os.Bundle
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
+import com.moony.calc.adapter.CategoriesListAdapter
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.utils.AssetFolderManager
 import kotlinx.android.synthetic.main.activity_add_categories.*
 
 
@@ -25,6 +29,17 @@ class AddCategoriesActivity : BaseActivity() {
         } else {
             toolbar_add_categories.title = resources.getString(R.string.add_expense_category)
         }
+
+        with(AssetFolderManager){
+            context=this@AddCategoriesActivity
+            addItemToMap()
+        }
+
+        val categoriesListAdapter = CategoriesListAdapter(AssetFolderManager.imageMap.keys.toList(),this)
+        rv_add_categories.setHasFixedSize(true)
+        rv_add_categories.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        rv_add_categories.adapter=categoriesListAdapter
+
     }
 
     override fun getLayoutId(): Int = R.layout.activity_add_categories

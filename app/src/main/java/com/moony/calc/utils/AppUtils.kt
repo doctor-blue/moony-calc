@@ -13,4 +13,5 @@ fun Double.decimalFormat(): String =
 fun Calendar.formatMonth(locale: Locale): String =
     "${getDisplayName(MONTH, LONG, locale)} ${get(YEAR)}"
 
+
 fun Calendar.formatDateTime(): String = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(time)

@@ -27,12 +27,10 @@ import com.moony.androidsvg.RenderOptions
 import com.moony.androidsvg.SVG
 import com.moony.androidsvg.SVGParseException
 import com.moony.calc.R
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.*
 import java.lang.reflect.Method
+import kotlin.coroutines.CoroutineContext
 
 /**
  * SVGImageView is a View widget that allows users to include SVG images in their layouts.
@@ -48,7 +46,10 @@ import java.lang.reflect.Method
  * <dd>Optional extra CSS to apply when rendering the SVG</dd>
 </dl> *
  */
-class SVGImageView : AppCompatImageView {
+class SVGImageView : AppCompatImageView,CoroutineScope {
+    override val coroutineContext: CoroutineContext
+        get() =Dispatchers.Main
+
     private var svg: SVG? = null
     private val renderOptions = RenderOptions()
 
@@ -281,7 +282,12 @@ class SVGImageView : AppCompatImageView {
     private fun loadUrl(inputStream: InputStream) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                this@SVGImageView.svg = SVG.getFromInputStream(inputStream)
+                this@SVGImageView.svg =
+                    withContext(Dispatchers.IO) {
+                        SVG.getFromInputStream(
+                            inputStream
+                        )
+                    }
                 withContext(Dispatchers.Main) {
                     doRender()
                 }
@@ -341,8 +347,10 @@ class SVGImageView : AppCompatImageView {
 
     private fun doRender() {
         if (svg == null) return
-        val picture = svg!!.renderToPicture(renderOptions)
-        setSoftwareLayerType()
-        setImageDrawable(PictureDrawable(picture))
+        val picture = async { svg!!.renderToPicture(renderOptions) }
+       launch {
+           setSoftwareLayerType()
+           setImageDrawable(PictureDrawable(picture.await()))
+       }
     }
 }
