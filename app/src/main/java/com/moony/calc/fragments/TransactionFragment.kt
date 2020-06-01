@@ -131,7 +131,7 @@ class TransactionFragment : BaseFragment() {
             startActivity(
                 Intent(
                     activity,
-                    SavingDetailActivity::class.java
+                    AddTransactionActivity::class.java
                 )
             )
         }

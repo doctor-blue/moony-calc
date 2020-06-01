@@ -40,4 +40,19 @@
     <string name="empty">Empty</string>
     <string name="add_income_category">Add income category</string>
     <string name="add_expense_category">Add expense category</string>
+
+    <string name="education">Education</string>
+    <string name="electronics">Electronics</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="family">Family</string>
+    <string name="fitness">Fitness</string>
+    <string name="food">Food</string>
+    <string name="furniture">Furniture</string>
+    <string name="income">Income</string>
+    <string name="life">Life</string>
+    <string name="medical">Medical</string>
+    <string name="shopping">Shopping</string>
+    <string name="transportation">Transportation</string>
+
+
 </resources>
