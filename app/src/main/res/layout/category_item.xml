@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical">
-    <com.moony.calc.views.SVGImageView
+    <ImageView
         android:layout_width="@dimen/_32sdp"
         android:layout_height="@dimen/_32sdp"
         android:src="@drawable/ic_unknown"
@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_category_item_name"
-        android:text="Hello"
         android:textSize="@dimen/_12sdp"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:textColor="?attr/colorPrimary"/>
