@@ -8,18 +8,19 @@
     app:cardCornerRadius="@dimen/_10sdp"
     app:cardElevation="@dimen/_3sdp">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/saving_item_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
+            android:id="@+id/img_goal_category_item"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
-            android:src="@drawable/ic_unknown"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_unknown"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/img_goal_category_item"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_saving_description_item"
@@ -65,5 +66,5 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@color/light_blue"
             app:layout_constraintTop_toBottomOf="@id/pb_saving_goals_item" />
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </>
 </com.google.android.material.card.MaterialCardView>

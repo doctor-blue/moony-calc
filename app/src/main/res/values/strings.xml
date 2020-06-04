@@ -19,9 +19,9 @@
     <string name="select_category">Select category</string>
     <string name="write_note">Write note</string>
     <string name="today">Today</string>
-    <string name="tab_to_add_one">No Transactions\nTab \'+\' to add one</string>
+    <string name="tab_to_add_one">No Transactions\nTap \'+\' to add one</string>
     <string name="add_goal">Add Goal</string>
-    <string name="no_goals_tab_to_add_one">You still have no goals\nTab \'+\' to add one</string>
+    <string name="no_goals_tab_to_add_one">You still have no goals\nTap \'+\' to add one</string>
     <string name="description">Description</string>
     <string name="amount">Amount</string>
     <string name="add_categories">Add categories</string>
@@ -53,6 +53,10 @@
     <string name="medical">Medical</string>
     <string name="shopping">Shopping</string>
     <string name="transportation">Transportation</string>
+    <string name="due_date">Due date: </string>
+    <string name="empty_error">This field cannot be empty</string>
+    <string name="empty_date_error">Please select Date</string>
+    <string name="empty_category_error">Please select Category</string>
 
 
 </resources>

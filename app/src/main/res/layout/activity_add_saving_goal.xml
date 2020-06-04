@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout_root_add_goal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -38,6 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/description"
+                app:counterEnabled="true"
+                app:counterMaxLength="100"
                 app:errorEnabled="true"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -46,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text"
-                    android:maxLength="20" />
+                    android:maxLength="100" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -63,8 +67,8 @@
                     android:id="@+id/edt_goal_amount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="number"
-                    android:maxLength="9" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="12" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -85,11 +89,12 @@
                     android:src="@drawable/ic_calendar" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_due_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_5sdp"
-                    android:text="Due date:"
+                    android:hint="Due date:"
                     android:textColor="?attr/colorAccent"
                     android:textSize="@dimen/_16sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -115,6 +120,7 @@
                     android:src="@drawable/ic_unknown" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_title_category_add_saving"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
@@ -137,7 +143,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_goal_categories" />
+                app:layout_constraintTop_toBottomOf="@id/layout_goal_categories"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

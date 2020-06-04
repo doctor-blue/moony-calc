@@ -131,6 +131,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_marginLeft="@dimen/_5sdp"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="254"
                             android:hint="@string/write_note"
                             app:errorEnabled="true"
                             app:hintAnimationEnabled="true">

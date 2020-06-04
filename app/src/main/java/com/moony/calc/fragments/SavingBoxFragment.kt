@@ -8,10 +8,21 @@ import kotlinx.android.synthetic.main.fragment_saving_box.*
 
 class SavingBoxFragment : BaseFragment() {
     override fun init() {
+        initControl()
+        initEvent()
+    }
+
+    private fun initEvent() {
         btn_add_saving_goals.setOnClickListener {
             startActivity(Intent(activity,AddSavingGoalActivity::class.java))
         }
     }
 
+    private fun initControl() {
+
+    }
+
     override fun getLayoutId(): Int = R.layout.fragment_saving_box
+
+
 }
