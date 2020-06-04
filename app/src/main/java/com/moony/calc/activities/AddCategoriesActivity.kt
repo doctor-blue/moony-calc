@@ -31,7 +31,7 @@ class AddCategoriesActivity : BaseActivity() {
         } else {
             toolbar_add_categories.title = resources.getString(R.string.add_expense_category)
         }
-        edt_title_category.isFocusable=false
+
 
         with(AssetFolderManager) {
             context = this@AddCategoriesActivity
