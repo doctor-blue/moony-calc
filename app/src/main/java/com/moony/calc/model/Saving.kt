@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 class Saving(
     var description: String,
     var desiredAmount: Double,
+    var deadLine: String,
     var idCategory: Int,
     var linkImage: String = "Empty"
 ) {
