@@ -15,18 +15,18 @@ import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.utils.AssetFolderManager
 import kotlinx.android.synthetic.main.activity_add_categories.*
-import kotlinx.android.synthetic.main.activity_add_saving_goal.*
 
 
 class AddCategoriesActivity : BaseActivity() {
     private var isIncome = true
     private var linkImage = ""
 
-    private val categoryViewModel:CategoryViewModel by lazy {
+    private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(this)[CategoryViewModel::class.java]
     }
+
     companion object {
-        val KEY = "com.moony.calc.activities.AddCategoriesActivity"
+       const val KEY = "com.moony.calc.activities.AddCategoriesActivity"
     }
 
     override fun init(savedInstanceState: Bundle?) {
@@ -42,6 +42,7 @@ class AddCategoriesActivity : BaseActivity() {
         } else {
             toolbar_add_categories.title = resources.getString(R.string.add_expense_category)
         }
+        toolbar_add_categories.setNavigationOnClickListener { finish() }
 
 
         with(AssetFolderManager) {
@@ -80,10 +81,15 @@ class AddCategoriesActivity : BaseActivity() {
 
     private fun saveCategory() {
         val snackBar: Snackbar =
-            Snackbar.make(layout_root_add_categories, R.string.please_select_icon, Snackbar.LENGTH_LONG)
+            Snackbar.make(
+                layout_root_add_categories,
+                R.string.please_select_icon,
+                Snackbar.LENGTH_LONG
+            )
         snackBar.setTextColor(resources.getColor(R.color.white))
         snackBar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
         snackBar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
+
         when {
             edt_title_category.text.toString().trim().isEmpty() -> {
                 snackBar.setText(R.string.please_add_title)
@@ -93,7 +99,14 @@ class AddCategoriesActivity : BaseActivity() {
                 snackBar.show()
             }
             else -> {
-                categoryViewModel.insertCategory(Category(edt_title_category.text.toString().trim(),linkImage,isIncome))
+                categoryViewModel.insertCategory(
+                    Category(
+                        edt_title_category.text.toString().trim(),
+                        linkImage,
+                        isIncome
+                    )
+                )
+                finish()
             }
         }
 

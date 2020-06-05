@@ -1,6 +1,6 @@
 package com.moony.calc.base
 
-import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 abstract class BaseFragment : Fragment() {
 
     protected var fragmentActivity: FragmentActivity? = null
+    protected lateinit var baseContext: Context
 
     override fun onCreateView(
 
@@ -21,11 +22,12 @@ abstract class BaseFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(getLayoutId(), container, false)
         fragmentActivity = activity
+        baseContext = context!!
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         init()
     }
 

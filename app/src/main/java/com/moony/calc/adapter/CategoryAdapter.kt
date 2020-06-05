@@ -22,16 +22,22 @@ class CategoryAdapter(
         private val imgIcon: ImageView = itemView.findViewById(R.id.img_category_item)
         private val txtCategoryName: TextView = itemView.findViewById(R.id.txt_category_item_name)
 
-        fun onBind(links: String, onClick: (Any) -> Unit) {
-            Glide.with(context).load("//android_asset/$links").into(imgIcon)
+        fun onBind(link: String, onClick: (Any) -> Unit) {
+            Glide.with(context).load("//android_asset/$link").into(imgIcon)
             txtCategoryName.text = ""
             imgIcon.setOnClickListener {
-                onClick(links)
+                onClick(link)
             }
         }
 
         fun onBind(category: Category, onClick: (Any) -> Unit) {
             txtCategoryName.text = category.title
+            if (category.title==context.resources.getText(R.string.add)){
+                Glide.with(context).load(R.drawable.ic_add).into(imgIcon)
+            }
+            else{
+                Glide.with(context).load("//android_asset/${category.iconUrl}").into(imgIcon)
+            }
             imgIcon.setOnClickListener {
                 onClick(category)
             }

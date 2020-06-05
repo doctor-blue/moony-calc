@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.moony.calc.R
 import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
+import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 
 /**
@@ -62,17 +65,17 @@ class TransactionChildrenAdapter(
 
             txtTransactionMoney.text = transaction.money.decimalFormat()
             if (transaction.isIncome)
-                txtTransactionMoney.setTextColor(Color.parseColor("#373F51"))
+                txtTransactionMoney.setTextColor(Color.parseColor("#00A8E8"))
             else
                 txtTransactionMoney.setTextColor(Color.parseColor("#fd6f43"))
 
             var category: Category = Category("Test", "URL", true)
 
-            /* categoryViewModel.getCategory(transaction.idCategory).observe(context, Observer {
-                 *//*Glide.with(context).load(it.iconUrl).into(imgTransactionIcon)
-                txtTransactionName.text = it.title*//*
+             categoryViewModel.getCategory(transaction.idCategory).observe(context, Observer {
+                 Glide.with(context).load(AssetFolderManager.assetPath+it.iconUrl).into(imgTransactionIcon)
+                txtTransactionName.text = it.title
                 category=it
-            })*/
+            })
 
             cardTransaction.setOnClickListener {
                 //thực hiện hàm click nội dung hàm sẽ được viết ở TransactionFragment

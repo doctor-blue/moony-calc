@@ -59,6 +59,8 @@
     <string name="empty_category_error">Please select Category</string>
     <string name="please_add_title">Please add title for category</string>
     <string name="please_select_icon">Please select icon</string>
+    <string name="add">Add</string>
+    <string name="expenses">Expenses</string>
 
 
 </resources>

@@ -1,15 +1,21 @@
 package com.moony.calc.adapter
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.moony.calc.fragments.CategoriesFragment
+import com.moony.calc.R
+import com.moony.calc.base.BaseFragment
 
-class CategoriesPagerAdapter (fm: FragmentManager): FragmentPagerAdapter(fm) {
+class CategoriesPagerAdapter(
+    fm: FragmentManager,
+    val fragments: List<BaseFragment>,
+    val context: Context
+) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> CategoriesFragment()
-            else -> CategoriesFragment()
+            0 -> fragments[0]
+            else -> fragments[1]
         }
     }
 
@@ -17,8 +23,8 @@ class CategoriesPagerAdapter (fm: FragmentManager): FragmentPagerAdapter(fm) {
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
-            0 -> "Income"
-            else -> "Expenses"
+            0 -> context.resources.getString(R.string.income)
+            else -> context.resources.getString(R.string.expenses)
         }
     }
 

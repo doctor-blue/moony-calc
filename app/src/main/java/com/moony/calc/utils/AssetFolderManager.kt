@@ -8,7 +8,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
 object AssetFolderManager {
-    val assetPath = "//android_asset/"
+    const val assetPath = "//android_asset/"
     lateinit var context: Context
     val imageMap = HashMap<Int, String>()
     fun addItemToMap() {

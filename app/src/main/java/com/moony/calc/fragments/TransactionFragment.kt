@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
 import com.moony.calc.activities.AddTransactionActivity
-import com.moony.calc.activities.SavingDetailActivity
 import com.moony.calc.adapter.TransactionAdapter
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.DateTimeViewModel
@@ -30,8 +29,8 @@ class TransactionFragment : BaseFragment() {
     private lateinit var dateTimeViewModel: DateTimeViewModel
 
     private lateinit var transactionViewModel: TransactionViewModel
-    private var totalIncome:Double = 0.0
-    private var totalExpenses:Double = 0.0
+    private var totalIncome: Double = 0.0
+    private var totalExpenses: Double = 0.0
     private var totalIncomeLiveData: LiveData<Double>? = null
     private var totalExpensesLiveData: LiveData<Double>? = null
     private var dateTimeLiveData: LiveData<List<DateTime>>? = null
@@ -45,7 +44,8 @@ class TransactionFragment : BaseFragment() {
     }
 
     private fun initControl() {
-
+        refreshData()
+        txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
     }
 
     private val dateTimeObserver = Observer<List<DateTime>> {
@@ -71,18 +71,13 @@ class TransactionFragment : BaseFragment() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         dateTimeViewModel =
             ViewModelProvider(fragmentActivity!!).get(DateTimeViewModel::class.java)
         transactionViewModel =
             ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
-
-        refreshData()
-        txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
-
     }
-
     private fun refreshData() {
         dateTimeLiveData?.removeObserver(dateTimeObserver)
 
@@ -93,11 +88,13 @@ class TransactionFragment : BaseFragment() {
         dateTimeLiveData!!.observe(viewLifecycleOwner, dateTimeObserver)
 
         totalIncomeLiveData?.removeObserver(totalIncomeObserver)
-        totalIncomeLiveData = transactionViewModel.getTotalMoney(true, calNow[Calendar.MONTH],calNow[Calendar.YEAR])
+        totalIncomeLiveData =
+            transactionViewModel.getTotalMoney(true, calNow[Calendar.MONTH], calNow[Calendar.YEAR])
         totalIncomeLiveData!!.observe(viewLifecycleOwner, totalIncomeObserver)
 
         totalExpensesLiveData?.removeObserver(totalExpensesObserver)
-        totalExpensesLiveData = transactionViewModel.getTotalMoney(false,  calNow[Calendar.MONTH],calNow[Calendar.YEAR])
+        totalExpensesLiveData =
+            transactionViewModel.getTotalMoney(false, calNow[Calendar.MONTH], calNow[Calendar.YEAR])
     }
 
     private fun createTransactionList(list: List<DateTime>) {
