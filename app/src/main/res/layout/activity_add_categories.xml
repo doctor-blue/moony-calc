@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout_root_add_categories"
     android:orientation="vertical"
     tools:context=".activities.AddCategoriesActivity">
 
@@ -28,6 +29,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layout_content_add_cate"
+        android:focusableInTouchMode="true"
         android:layout_marginTop="@dimen/_10sdp"
         android:padding="@dimen/_5sdp">
 

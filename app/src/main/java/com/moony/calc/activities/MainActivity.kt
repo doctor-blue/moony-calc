@@ -66,7 +66,7 @@ class MainActivity : BaseActivity() {
                 navigationIconClickListener.showBackdrop(btn_nav_main)
             }
             R.id.mnu_categories -> {
-                startActivity(Intent(this, AddCategoriesActivity::class.java))
+                startActivity(Intent(this, CategoriesActivity::class.java).putExtra(CategoriesActivity.KEY,true))
                 navigationIconClickListener.showBackdrop(btn_nav_main)
             }
         }

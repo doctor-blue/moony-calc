@@ -21,6 +21,7 @@ import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
+import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
 import kotlinx.android.synthetic.main.activity_add_transaction.*
@@ -40,10 +41,6 @@ class AddTransactionActivity : BaseActivity() {
 
     private val dateTimeViewModel: DateTimeViewModel by lazy {
         ViewModelProvider(this)[DateTimeViewModel::class.java]
-    }
-
-    companion object {
-        const val KEYS = "CATEGORY_ADD_TRANSACTION"
     }
 
     override fun init(savedInstanceState: Bundle?) {
@@ -189,15 +186,17 @@ class AddTransactionActivity : BaseActivity() {
                                 handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
                             transaction.month = calendar[Calendar.MONTH]
                             transaction.year = calendar[Calendar.YEAR]
+                            transaction.idCategory=category!!.idCategory
+                            transaction.isIncome=category!!.isIncome
 
                             transactionViewModel.updateTransaction(transaction)
                         }
                     } else {
                         transaction = Transaction(
                             handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
-                            false,
+                            category!!.isIncome,
                             it.id,
-                            0,
+                            category!!.idCategory,
                             edt_transaction_note.text.toString(),
                             calendar[Calendar.MONTH],
                             calendar[Calendar.YEAR]
@@ -227,8 +226,8 @@ class AddTransactionActivity : BaseActivity() {
         //Lấy Category về sau khi mở CategoriesActivity để chọn
         if (requestCode == this.requestCode)
             if (resultCode == Activity.RESULT_OK) {
-                category = data?.getSerializableExtra(KEYS) as Category?
-                Glide.with(this).load(category!!.iconUrl).into(img_categories)
+                category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
+                Glide.with(this).load(AssetFolderManager.assetPath+category!!.iconUrl).into(img_categories)
                 txt_title_transaction_category.text = category!!.title
             }
     }

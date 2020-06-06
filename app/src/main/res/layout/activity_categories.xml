@@ -30,5 +30,6 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager_categories"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_15sdp"/>
 </LinearLayout>
