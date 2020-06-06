@@ -34,14 +34,13 @@ class SavingBoxFragment() : BaseFragment() {
 
     private fun initControl() {
         rv_saving_box.layoutManager = LinearLayoutManager(context)
-
         savingViewModel.getAllSaving().observe(this,
-            Observer<List<Saving>> { t ->
-                if (t != null) {
-                    savings = t
-                }
+            Observer { savings ->
+                val adapter = SavingBoxAdapter(context!!, savings)
+                rv_saving_box.adapter=adapter
             })
-        val adapter = SavingBoxAdapter(baseContext, savings)
+
+
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_saving_box

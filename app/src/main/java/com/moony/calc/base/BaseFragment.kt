@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentActivity
 abstract class BaseFragment : Fragment() {
 
     protected var fragmentActivity: FragmentActivity? = null
-    protected lateinit var baseContext: Context
+    protected  var baseContext: Context?=null
 
     override fun onCreateView(
 
@@ -22,7 +22,7 @@ abstract class BaseFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(getLayoutId(), container, false)
         fragmentActivity = activity
-        baseContext = context!!
+        baseContext = activity
         return view
     }
 
