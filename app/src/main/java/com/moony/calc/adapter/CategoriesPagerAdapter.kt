@@ -14,8 +14,8 @@ class CategoriesPagerAdapter(
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> fragments[0]
-            else -> fragments[1]
+            0 -> fragments[1]
+            else -> fragments[0]
         }
     }
 
@@ -23,8 +23,9 @@ class CategoriesPagerAdapter(
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
-            0 -> context.resources.getString(R.string.income)
-            else -> context.resources.getString(R.string.expenses)
+            0 -> context.resources.getString(R.string.expenses)
+            else -> context.resources.getString(R.string.income)
+
         }
     }
 

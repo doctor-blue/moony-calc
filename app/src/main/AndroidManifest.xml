@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.SavingDetailActivity"/>
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.AddCategoriesActivity" />
+        <activity android:name=".activities.AddCategoriesActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activities.AddSavingGoalActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activities.AddTransactionActivity" />
         <activity android:name=".activities.CategoriesActivity" />

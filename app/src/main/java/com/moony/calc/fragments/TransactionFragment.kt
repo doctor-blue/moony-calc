@@ -60,6 +60,7 @@ class TransactionFragment : BaseFragment() {
         totalExpensesLiveData!!.observe(viewLifecycleOwner, totalExpensesObserver)
 
     }
+
     private val totalExpensesObserver = Observer<Double> { expenses ->
         totalExpenses = 0.0
         if (expenses != null) totalExpenses = expenses
@@ -78,6 +79,7 @@ class TransactionFragment : BaseFragment() {
         transactionViewModel =
             ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
     }
+
     private fun refreshData() {
         dateTimeLiveData?.removeObserver(dateTimeObserver)
 
@@ -102,6 +104,8 @@ class TransactionFragment : BaseFragment() {
         rv_transaction.setHasFixedSize(true)
         rv_transaction.layoutManager = LinearLayoutManager(fragmentActivity)
         rv_transaction.adapter = adapter
+
+        progress_loading.visibility = View.INVISIBLE
 
         if (list.isEmpty()) {
             layout_list_empty.visibility = View.VISIBLE
@@ -137,18 +141,28 @@ class TransactionFragment : BaseFragment() {
             //tiến thêm 1 tháng
             calNow.add(Calendar.MONTH, 1)
             txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+
+            showProgressBar()
             refreshData()
         }
         btn_pre_month.setOnClickListener {
 
             calNow.add(Calendar.MONTH, -1)
             txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+
+            showProgressBar()
             refreshData()
         }
         txt_transaction_date.setOnClickListener {
             showMonthYearPickerDialog()
         }
 
+    }
+
+    private fun showProgressBar() {
+        progress_loading.visibility = View.VISIBLE
+        layout_list_empty.visibility = View.GONE
+        rv_transaction.visibility = View.GONE
     }
 
     private fun showMonthYearPickerDialog() {
@@ -160,6 +174,9 @@ class TransactionFragment : BaseFragment() {
                 calNow.set(Calendar.MONTH, selectedMonth)
 
                 txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+
+                showProgressBar()
+                refreshData()
             }, calNow.get(Calendar.YEAR), calNow.get(Calendar.MONTH)
         )
 
