@@ -53,7 +53,7 @@ class AddSavingGoalActivity : BaseActivity() {
     }
 
     private fun saveSavingGoal() {
-        var snackbar: Snackbar =
+        val snackbar: Snackbar =
             Snackbar.make(layout_root_add_goal, R.string.empty_date_error, Snackbar.LENGTH_LONG)
         snackbar.setTextColor(resources.getColor(R.color.white))
         snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
@@ -69,12 +69,12 @@ class AddSavingGoalActivity : BaseActivity() {
             txt_due_date.text.toString().trim().isEmpty() -> {
                 snackbar.show()
             }
-//            txt_title_category_add_saving.text.toString().trim().isEmpty() -> {
-//                snackbar.setText(R.string.empty_category_error)
-//                snackbar.show()
-//            }
+            txt_title_category_add_saving.text.toString().trim().isEmpty() -> {
+                snackbar.setText(R.string.empty_category_error)
+                snackbar.show()
+            }
             else -> {
-                var saving: Saving = Saving(edt_goal_description.text.toString().trim(),
+                val saving: Saving = Saving(edt_goal_description.text.toString().trim(),
                     edt_goal_amount.text.toString().trim().toDouble(), deadLine,0,"")
                 savingViewModel.insertSaving(saving)
                 finish()

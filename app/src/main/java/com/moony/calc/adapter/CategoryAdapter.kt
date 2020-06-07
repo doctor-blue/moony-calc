@@ -31,11 +31,13 @@ class CategoryAdapter(
         }
 
         fun onBind(category: Category, onClick: (Any) -> Unit) {
-            txtCategoryName.text = category.title
-            if (category.title==context.resources.getText(R.string.add)){
+            if (category.title.length >= 10) {
+                txtCategoryName.text = (category.title.substring(0,10)+"...")
+            } else txtCategoryName.text = category.title
+
+            if (category.title == context.resources.getText(R.string.add)) {
                 Glide.with(context).load(R.drawable.ic_add).into(imgIcon)
-            }
-            else{
+            } else {
                 Glide.with(context).load("//android_asset/${category.iconUrl}").into(imgIcon)
             }
             imgIcon.setOnClickListener {

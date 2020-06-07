@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_add_transaction.*
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class AddTransactionActivity : BaseActivity() {
     private var isDetails: Boolean = false
     private var transaction: Transaction? = null
@@ -72,8 +73,15 @@ class AddTransactionActivity : BaseActivity() {
                     edt_transaction_money.setText(tran.money.decimalFormat())
                     edt_transaction_note.setText(tran.note)
 
-                    //Glide.with(this).load(cate.iconUrl).into(img_categories)
+                    Glide.with(this).load(AssetFolderManager.assetPath + cate.iconUrl)
+                        .into(img_categories)
                     txt_title_transaction_category.text = cate.title
+
+                    if (category!!.isIncome) {
+                        edt_transaction_money.setTextColor(resources.getColor(R.color.blue))
+                    } else {
+                        edt_transaction_money.setTextColor(resources.getColor(R.color.colorAccent))
+                    }
 
                     calendar.set(Calendar.DAY_OF_MONTH, date.day)
                     calendar.set(Calendar.MONTH, date.month)
@@ -118,21 +126,25 @@ class AddTransactionActivity : BaseActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 s?.let {
-                    if (it.toString().contains('.') || it.toString().contains(',')) {
-                        /**
-                         * "${handleTextToDouble(it.toString())}0" nhiều trường hợp nó ở dạng #. thay vì #.# nên thêm 0 để đc chuỗi dạng #.0
-                         * chuyển về kiểu double sau đó format nó sẽ được chuỗi ở dạng #.00 và lấy độ dài làm max length cho edit_text
-                         */
-                        val maxLength = "${handleTextToDouble(it.toString())}1".toDouble().decimalFormat().length
-                        edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
-                    } else {
-                        edt_transaction_money.filters = arrayOf(LengthFilter(9))
-                        if (it.length - 1 == 8) {
-                            //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
-                            val lastChar = it[8]
-                            if (!(lastChar == '.' || lastChar == ',')) {
-                                edt_transaction_money.setText(it.subSequence(0, 8))
-                                edt_transaction_money.setSelection(8)
+                    if (s.isNotEmpty()) {
+                        textInput_transaction_money.error = null
+                        if (it.toString().contains('.') || it.toString().contains(',')) {
+                            /**
+                             * "${handleTextToDouble(it.toString())}0" nhiều trường hợp nó ở dạng #. thay vì #.# nên thêm 0 để đc chuỗi dạng #.0
+                             * chuyển về kiểu double sau đó format nó sẽ được chuỗi ở dạng #.00 và lấy độ dài làm max length cho edit_text
+                             */
+                            val maxLength = "${handleTextToDouble(it.toString())}1".toDouble()
+                                .decimalFormat().length
+                            edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
+                        } else {
+                            edt_transaction_money.filters = arrayOf(LengthFilter(9))
+                            if (it.length - 1 == 8) {
+                                //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
+                                val lastChar = it[8]
+                                if (!(lastChar == '.' || lastChar == ',')) {
+                                    edt_transaction_money.setText(it.subSequence(0, 8))
+                                    edt_transaction_money.setSelection(8)
+                                }
                             }
                         }
                     }
@@ -160,52 +172,64 @@ class AddTransactionActivity : BaseActivity() {
     }
 
     private fun saveTransaction() {
-        //Sẽ lắng nghe coi date time đã được thêm vào database hay chưa để có thể get id của date time ra và thêm transaction hoặc update transaction
-        dateTimeViewModel.getDateTime(
-            calendar[Calendar.DAY_OF_MONTH],
-            calendar[Calendar.MONTH],
-            calendar[Calendar.YEAR]
-        )
-            .observe(this, Observer {
-                //kiểm tra coi ngày đã chọn đã tồn tại trong database hay chưa
-                if (it == null) {
-                    //Ko tồn tại thì thêm
-                    dateTime = DateTime(
-                        calendar[Calendar.DAY_OF_MONTH],
-                        calendar[Calendar.MONTH],
-                        calendar[Calendar.YEAR]
-                    )
-                    dateTimeViewModel.insertDateTime(dateTime!!)
-                } else {
-                    //đã tồn tại thì check là thêm mới hay là chi tiết
-                    if (isDetails) {
-                        transaction?.let { transaction ->
-                            transaction.idDate = it.id
-                            transaction.note = edt_transaction_note.text.toString()
-                            transaction.money =
-                                handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
-                            transaction.month = calendar[Calendar.MONTH]
-                            transaction.year = calendar[Calendar.YEAR]
-                            transaction.idCategory=category!!.idCategory
-                            transaction.isIncome=category!!.isIncome
+        when {
 
-                            transactionViewModel.updateTransaction(transaction)
+            edt_transaction_money.text.toString().trim().isEmpty() -> {
+                textInput_transaction_money.error = resources.getString(R.string.empty_error)
+            }
+            txt_title_transaction_category.text.toString().trim().isEmpty() -> {
+                textInput_transaction_title_category.error=resources.getString(R.string.empty_category_error)
+            }
+            else -> {
+                //Sẽ lắng nghe coi date time đã được thêm vào database hay chưa để có thể get id của date time ra và thêm transaction hoặc update transaction
+                dateTimeViewModel.getDateTime(
+                    calendar[Calendar.DAY_OF_MONTH],
+                    calendar[Calendar.MONTH],
+                    calendar[Calendar.YEAR]
+                )
+                    .observe(this, Observer {
+                        //kiểm tra coi ngày đã chọn đã tồn tại trong database hay chưa
+                        if (it == null) {
+                            //Ko tồn tại thì thêm
+                            dateTime = DateTime(
+                                calendar[Calendar.DAY_OF_MONTH],
+                                calendar[Calendar.MONTH],
+                                calendar[Calendar.YEAR]
+                            )
+                            dateTimeViewModel.insertDateTime(dateTime!!)
+                        } else {
+                            //đã tồn tại thì check là thêm mới hay là chi tiết
+                            if (isDetails) {
+                                transaction?.let { transaction ->
+                                    transaction.idDate = it.id
+                                    transaction.note = edt_transaction_note.text.toString()
+                                    transaction.money =
+                                        handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
+                                    transaction.month = calendar[Calendar.MONTH]
+                                    transaction.year = calendar[Calendar.YEAR]
+                                    transaction.idCategory = category!!.idCategory
+                                    transaction.isIncome = category!!.isIncome
+
+                                    transactionViewModel.updateTransaction(transaction)
+                                }
+                            } else {
+                                transaction = Transaction(
+                                    handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
+                                    category!!.isIncome,
+                                    it.id,
+                                    category!!.idCategory,
+                                    edt_transaction_note.text.toString(),
+                                    calendar[Calendar.MONTH],
+                                    calendar[Calendar.YEAR]
+                                )
+                                transactionViewModel.insertTransaction(transaction!!)
+                            }
+                            finish()
                         }
-                    } else {
-                        transaction = Transaction(
-                            handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
-                            category!!.isIncome,
-                            it.id,
-                            category!!.idCategory,
-                            edt_transaction_note.text.toString(),
-                            calendar[Calendar.MONTH],
-                            calendar[Calendar.YEAR]
-                        )
-                        transactionViewModel.insertTransaction(transaction!!)
-                    }
-                    finish()
-                }
-            })
+                    })
+            }
+        }
+
     }
 
     private fun pickDateTime() {
@@ -227,8 +251,18 @@ class AddTransactionActivity : BaseActivity() {
         if (requestCode == this.requestCode)
             if (resultCode == Activity.RESULT_OK) {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
-                Glide.with(this).load(AssetFolderManager.assetPath+category!!.iconUrl).into(img_categories)
+                Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
+                    .into(img_categories)
+
                 txt_title_transaction_category.text = category!!.title
+                textInput_transaction_title_category.error=null
+
+                if (category!!.isIncome) {
+                    edt_transaction_money.setTextColor(resources.getColor(R.color.blue))
+                } else {
+                    edt_transaction_money.setTextColor(resources.getColor(R.color.colorAccent))
+                }
+
             }
     }
 

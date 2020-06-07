@@ -47,12 +47,6 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
                 rv_categories.setHasFixedSize(true)
                 rv_categories.layoutManager = GridLayoutManager(activity, 4)
                 rv_categories.adapter = categoryAdapter
-                rv_categories.addItemDecoration(
-                    GridSpacingItemDecoration(
-                        4, activity.resources.getDimensionPixelOffset(R.dimen._20sdp),
-                        true
-                    )
-                )
             })
     }
 
