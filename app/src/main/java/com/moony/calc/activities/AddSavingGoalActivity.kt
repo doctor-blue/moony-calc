@@ -1,6 +1,7 @@
 package com.moony.calc.activities
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -12,13 +13,18 @@ import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.database.SavingViewModel
+import com.moony.calc.keys.MoonyKey
+import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
+import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import kotlinx.android.synthetic.main.activity_add_saving_goal.*
+import kotlinx.android.synthetic.main.activity_add_transaction.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,6 +33,7 @@ class AddSavingGoalActivity : BaseActivity() {
     private val calendar: Calendar = Calendar.getInstance()
     private var deadLine: String = ""
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
+    private var category: Category? = null
     companion object{
         private const val KEY_PICK_CATEGORY = 1101
     }
@@ -140,6 +147,10 @@ class AddSavingGoalActivity : BaseActivity() {
             val intent: Intent = Intent(this@AddSavingGoalActivity, CategoriesActivity::class.java)
             startActivityForResult(intent, KEY_PICK_CATEGORY)
         }
+
+        toolbar_add_saving_goal.setNavigationOnClickListener{
+            finish()
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.activity_add_saving_goal
@@ -163,5 +174,18 @@ class AddSavingGoalActivity : BaseActivity() {
             txt_due_date.text = resources.getString(R.string.due_date) + " " + deadLine
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == KEY_PICK_CATEGORY)
+            if(resultCode == Activity.RESULT_OK) {
+                category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
+                Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
+                    .into(img_goal_category)
+
+                txt_title_category_add_saving.text = category!!.title
+
+            }
     }
 }

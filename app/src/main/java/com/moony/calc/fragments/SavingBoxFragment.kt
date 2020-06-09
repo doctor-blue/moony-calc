@@ -39,8 +39,6 @@ class SavingBoxFragment() : BaseFragment() {
                 val adapter = SavingBoxAdapter(context!!, savings)
                 rv_saving_box.adapter=adapter
             })
-
-
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_saving_box
