@@ -5,20 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.lifecycle.LiveData
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.daimajia.numberprogressbar.NumberProgressBar
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import com.moony.calc.R
+import com.moony.calc.database.CategoryViewModel
+import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
+import com.moony.calc.utils.AssetFolderManager
+import com.moony.calc.utils.decimalFormat
 
 class SavingBoxAdapter(
-    private val context: Context,
-    private val savings: List<Saving>
-//    private val onClick: (Unit) -> Unit
+    private val context: FragmentActivity,
+    private val savings: List<Saving>,
+    private val onClick: (Any) -> Unit
 ) : RecyclerView.Adapter<SavingBoxAdapter.SavingViewHolder>() {
 
     inner class SavingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,11 +34,21 @@ class SavingBoxAdapter(
         val txtAmountProgressItem: MaterialTextView =
             itemView.findViewById(R.id.txt_amount_progress_item)
         val pbSavingGoalsItem: NumberProgressBar = itemView.findViewById(R.id.pb_saving_goals_item)
+        val cardSavingBox: MaterialCardView = itemView.findViewById(R.id.card_saving_box)
 
-        fun onBind(saving:Saving){
-            imgGoalCategoryItem.setImageResource(saving.idCategory)
+        fun onBind(saving:Saving, onClick: (Any) -> Unit){
+            val categoryViewModel =
+                ViewModelProvider(context).get(CategoryViewModel::class.java)
+            var category: Category = Category("Test", "URL", true)
+            categoryViewModel.getCategory(saving.idCategory).observe(context, Observer{category ->
+                Glide.with(context).load(AssetFolderManager.assetPath + category.iconUrl).into(imgGoalCategoryItem)
+            })
             txtSavingDescriptionItem.text = saving.description
-            txtAmountProgressItem.text = saving.desiredAmount.toString()
+            txtAmountProgressItem.text = saving.desiredAmount.decimalFormat()
+
+            cardSavingBox.setOnClickListener{
+                onClick(saving)
+            }
         }
     }
 
@@ -46,6 +62,6 @@ class SavingBoxAdapter(
 
 
     override fun onBindViewHolder(holder: SavingViewHolder, position: Int) {
-        holder.onBind(savings[position])
+        holder.onBind(savings[position], onClick)
     }
 }

@@ -34,6 +34,7 @@ class AddSavingGoalActivity : BaseActivity() {
     private var deadLine: String = ""
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
     private var category: Category? = null
+    private var idCategory: Int = 0
     companion object{
         private const val KEY_PICK_CATEGORY = 1101
     }
@@ -82,7 +83,7 @@ class AddSavingGoalActivity : BaseActivity() {
             }
             else -> {
                 val saving: Saving = Saving(edt_goal_description.text.toString().trim(),
-                    edt_goal_amount.text.toString().trim().toDouble(), deadLine,0,"")
+                    edt_goal_amount.text.toString().trim().toDouble(), deadLine, idCategory,"")
                 savingViewModel.insertSaving(saving)
                 finish()
             }
@@ -184,6 +185,7 @@ class AddSavingGoalActivity : BaseActivity() {
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
                     .into(img_goal_category)
 
+                idCategory = category!!.idCategory
                 txt_title_category_add_saving.text = category!!.title
 
             }

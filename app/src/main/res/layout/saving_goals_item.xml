@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_saving_box"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
     android:fitsSystemWindows="true"
     app:cardBackgroundColor="?android:windowBackground"
     app:cardCornerRadius="@dimen/_10sdp"
-    app:cardElevation="@dimen/_3sdp">
+    app:cardElevation="@dimen/_2sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/saving_item_root"
@@ -17,6 +22,8 @@
             android:id="@+id/img_goal_category_item"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_unknown"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +34,14 @@
             style="@style/Widget.Moony.Headline4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_29sdp"
             android:gravity="center"
             android:maxLength="20"
             android:maxLines="1"
+            android:textSize="@dimen/_15sdp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/img_goal_category_item"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,9 +50,11 @@
             style="@style/Widget.Moony.Headline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center"
             android:maxLength="20"
             android:maxLines="1"
+            android:textSize="@dimen/_13sdp"
             app:layout_constraintTop_toBottomOf="@id/txt_saving_description_item" />
 
         <com.daimajia.numberprogressbar.NumberProgressBar
@@ -49,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_10sdp"
             app:layout_constraintTop_toBottomOf="@id/txt_amount_progress_item"
             app:progress_current="0"
