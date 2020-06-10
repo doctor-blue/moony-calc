@@ -17,6 +17,7 @@ import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.database.DateTimeViewModel
 import com.moony.calc.database.TransactionViewModel
+import com.moony.calc.dialog.ConfirmDialogBuilder
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.DateTime
@@ -106,9 +107,17 @@ class AddTransactionActivity : BaseActivity() {
         }
         btn_delete_transaction.setOnClickListener {
             //Delete Transaction
-            transaction?.let {
-                transactionViewModel.deleteTransaction(it)
-                finish()
+            transaction?.let { transaction ->
+                val builder = ConfirmDialogBuilder(this)
+                builder.setContent(resources.getString(R.string.notice_delete_transaction))
+                val dialog = builder.createDialog()
+                builder.btnConfirm.setOnClickListener {
+                    transactionViewModel.deleteTransaction(transaction)
+                    finish()
+                }
+                builder.btnCancel.setOnClickListener { dialog.dismiss() }
+                builder.showDialog()
+
             }
         }
 
@@ -178,7 +187,8 @@ class AddTransactionActivity : BaseActivity() {
                 textInput_transaction_money.error = resources.getString(R.string.empty_error)
             }
             txt_title_transaction_category.text.toString().trim().isEmpty() -> {
-                textInput_transaction_title_category.error=resources.getString(R.string.empty_category_error)
+                textInput_transaction_title_category.error =
+                    resources.getString(R.string.empty_category_error)
             }
             else -> {
                 //Sẽ lắng nghe coi date time đã được thêm vào database hay chưa để có thể get id của date time ra và thêm transaction hoặc update transaction
@@ -255,7 +265,7 @@ class AddTransactionActivity : BaseActivity() {
                     .into(img_categories)
 
                 txt_title_transaction_category.text = category!!.title
-                textInput_transaction_title_category.error=null
+                textInput_transaction_title_category.error = null
 
                 if (category!!.isIncome) {
                     edt_transaction_money.setTextColor(resources.getColor(R.color.blue))

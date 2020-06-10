@@ -27,9 +27,10 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
         categoryViewModel.getAllCategory(isIncome)
             .observe(viewLifecycleOwner, Observer { list ->
                 val categories = list as MutableList<Category>
+
                 categories.add(Category(activity.resources.getString(R.string.add), "", isIncome))
 
-                val categoryAdapter = CategoryAdapter(activity, null, categories) {
+                val categoryAdapter = CategoryAdapter(activity, null, categories,CategoriesActivity.isJustWatch) {
                     val category: Category = it as Category
                     if (category.title == activity.resources.getString(R.string.add)) {
                         val intent = Intent(activity, AddCategoriesActivity::class.java)

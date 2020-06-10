@@ -72,9 +72,11 @@ class TransactionChildrenAdapter(
             var category: Category = Category("Test", "URL", true)
 
              categoryViewModel.getCategory(transaction.idCategory).observe(context, Observer {
-                 Glide.with(context).load(AssetFolderManager.assetPath+it.iconUrl).into(imgTransactionIcon)
-                txtTransactionName.text = it.title
-                category=it
+                 if(it!=null){
+                     Glide.with(context).load(AssetFolderManager.assetPath+it.iconUrl).into(imgTransactionIcon)
+                     txtTransactionName.text = it.title
+                     category=it
+                 }
             })
 
             cardTransaction.setOnClickListener {

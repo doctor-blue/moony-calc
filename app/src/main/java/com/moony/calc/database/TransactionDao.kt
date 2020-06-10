@@ -25,5 +25,8 @@ interface TransactionDao {
     @Query("select sum(money) as double from transaction_table where isIncome =:isIncome and month=:month and year=:year")
     fun getTotalMoney(isIncome: Boolean, month: Int, year: Int): LiveData<Double>
 
+    @Query("delete from transaction_table where idCategory=:idCategory")
+    suspend fun deleteAllTransactionByCategory(idCategory: Int)
+
 
 }

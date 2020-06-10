@@ -44,7 +44,7 @@ class CategoriesListAdapter(
                         .await()
 
                 withContext(Dispatchers.Main) {
-                    val categoryAdapter = CategoryAdapter(context, listIcon, null, onClick)
+                    val categoryAdapter = CategoryAdapter(context, listIcon, null,false, onClick)
                     rvCategory.setHasFixedSize(true)
                     rvCategory.layoutManager = GridLayoutManager(context, 4)
                     rvCategory.adapter = categoryAdapter

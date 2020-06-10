@@ -23,4 +23,6 @@ class TransactionRepository(application: Application) {
 
     suspend fun updateTransaction(transaction: Transaction) =
         transactionDao.updateTransaction(transaction)
+
+    suspend fun deleteAllTransactionByCategory(idCategory: Int) = transactionDao.deleteAllTransactionByCategory(idCategory)
 }
