@@ -169,7 +169,7 @@ class AddSavingGoalActivity : BaseActivity() {
         val dialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_YEAR, dayOfMonth)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
             deadLine = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
             txt_due_date.text = resources.getString(R.string.due_date) + " " + deadLine
