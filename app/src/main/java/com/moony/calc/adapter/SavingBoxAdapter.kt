@@ -1,11 +1,9 @@
 package com.moony.calc.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -28,25 +26,28 @@ class SavingBoxAdapter(
 ) : RecyclerView.Adapter<SavingBoxAdapter.SavingViewHolder>() {
 
     inner class SavingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imgGoalCategoryItem: ImageView = itemView.findViewById(R.id.img_goal_category_item)
-        val txtSavingDescriptionItem: MaterialTextView =
+        private val imgGoalCategoryItem: ImageView =
+            itemView.findViewById(R.id.img_goal_category_item)
+        private val txtSavingDescriptionItem: MaterialTextView =
             itemView.findViewById(R.id.txt_saving_description_item)
-        val txtAmountProgressItem: MaterialTextView =
+        private val txtAmountProgressItem: MaterialTextView =
             itemView.findViewById(R.id.txt_amount_progress_item)
-        val pbSavingGoalsItem: NumberProgressBar = itemView.findViewById(R.id.pb_saving_goals_item)
-        val cardSavingBox: MaterialCardView = itemView.findViewById(R.id.card_saving_box)
+        private val pbSavingGoalsItem: NumberProgressBar =
+            itemView.findViewById(R.id.pb_saving_goals_item)
+        private val cardSavingBox: MaterialCardView = itemView.findViewById(R.id.card_saving_box)
 
-        fun onBind(saving:Saving, onClick: (Any) -> Unit){
+        fun onBind(saving: Saving, onClick: (Any) -> Unit) {
             val categoryViewModel =
                 ViewModelProvider(context).get(CategoryViewModel::class.java)
             var category: Category = Category("Test", "URL", true)
-            categoryViewModel.getCategory(saving.idCategory).observe(context, Observer{category ->
-                Glide.with(context).load(AssetFolderManager.assetPath + category.iconUrl).into(imgGoalCategoryItem)
+            categoryViewModel.getCategory(saving.idCategory).observe(context, Observer { category ->
+                Glide.with(context).load(AssetFolderManager.assetPath + category.iconUrl)
+                    .into(imgGoalCategoryItem)
             })
             txtSavingDescriptionItem.text = saving.description
             txtAmountProgressItem.text = saving.desiredAmount.decimalFormat()
 
-            cardSavingBox.setOnClickListener{
+            cardSavingBox.setOnClickListener {
                 onClick(saving)
             }
         }

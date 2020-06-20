@@ -12,12 +12,7 @@ class CategoriesPagerAdapter(
     val fragments: List<BaseFragment>,
     val context: Context
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    override fun getItem(position: Int): Fragment {
-        return when (position) {
-            0 -> fragments[1]
-            else -> fragments[0]
-        }
-    }
+    override fun getItem(position: Int): Fragment  = fragments[position]
 
     override fun getCount(): Int = 2
 

@@ -27,6 +27,7 @@ class CategoryAdapter(
     private val categoryViewModel by lazy {
         ViewModelProvider(context as FragmentActivity).get(CategoryViewModel::class.java)
     }
+
     private val transactionViewModel by lazy {
         ViewModelProvider(context as FragmentActivity).get(TransactionViewModel::class.java)
     }
@@ -49,6 +50,13 @@ class CategoryAdapter(
                 txtCategoryName.text = (category.title.substring(0, 10) + "...")
             } else {
                 txtCategoryName.text = category.title
+            }
+
+            if (category.title == context.resources.getText(R.string.add)) {
+                Glide.with(context).load(R.drawable.ic_add).into(imgIcon)
+                btnRemoveCategory.visibility = View.GONE
+            } else {
+                Glide.with(context).load("//android_asset/${category.iconUrl}").into(imgIcon)
                 if (canRemove) {
                     btnRemoveCategory.visibility = View.VISIBLE
                     btnRemoveCategory.setOnClickListener {
@@ -68,13 +76,6 @@ class CategoryAdapter(
 
                     }
                 }
-            }
-
-            if (category.title == context.resources.getText(R.string.add)) {
-                Glide.with(context).load(R.drawable.ic_add).into(imgIcon)
-                btnRemoveCategory.visibility = View.GONE
-            } else {
-                Glide.with(context).load("//android_asset/${category.iconUrl}").into(imgIcon)
             }
             imgIcon.setOnClickListener {
                 onClick(category)
