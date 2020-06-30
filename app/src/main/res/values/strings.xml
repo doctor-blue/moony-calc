@@ -66,5 +66,5 @@
     <string name="cancel">Cancel</string>
     <string name="notice_delete_transaction">Do you really want to delete this transaction ?</string>
     <string name="notice_delete_category">Do you really want to delete this Category and delete ALL Transaction about it ?</string>
-
+    <string name="notice_delete_saving">Do you really want to delete this saving goal ?</string>
 </resources>

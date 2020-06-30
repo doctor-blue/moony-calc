@@ -2,14 +2,14 @@
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Transition android:id="@+id/saving_transition"
-        app:constraintSetStart="@id/start"
-        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/savings_start"
+        app:constraintSetEnd="@id/savings_end"
         app:duration="800"
         >
         <OnClick app:clickAction="toggle"
             app:targetId="@id/btn_expanded"/>
     </Transition>
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet android:id="@+id/savings_start">
         <Constraint android:id="@+id/btn_expanded">
             <Layout  android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
     </ConstraintSet>
 
 
-    <ConstraintSet android:id="@+id/start">
+    <ConstraintSet android:id="@+id/savings_end">
         <Constraint android:id="@+id/btn_expanded">
             <Layout android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

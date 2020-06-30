@@ -36,6 +36,7 @@ class AddTransactionActivity : BaseActivity() {
     private var dateTime: DateTime? = null
     private var category: Category? = null
     private val requestCode = 234
+
     private val transactionViewModel: TransactionViewModel by lazy {
         ViewModelProvider(this)[TransactionViewModel::class.java]
     }
@@ -113,6 +114,7 @@ class AddTransactionActivity : BaseActivity() {
                 val dialog = builder.createDialog()
                 builder.btnConfirm.setOnClickListener {
                     transactionViewModel.deleteTransaction(transaction)
+                    dialog.dismiss()
                     finish()
                 }
                 builder.btnCancel.setOnClickListener { dialog.dismiss() }

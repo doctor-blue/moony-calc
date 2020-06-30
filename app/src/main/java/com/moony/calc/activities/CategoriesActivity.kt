@@ -19,8 +19,9 @@ class CategoriesActivity : BaseActivity() {
         val fragments = mutableListOf<BaseFragment>()
         val incomeFragment = CategoriesFragment(true, this)
         val expensesFragment = CategoriesFragment(false, this)
-        fragments.add(incomeFragment)
         fragments.add(expensesFragment)
+        fragments.add(incomeFragment)
+
 
         val fragmentAdapter = CategoriesPagerAdapter(supportFragmentManager, fragments, this)
         viewpager_categories.adapter = fragmentAdapter

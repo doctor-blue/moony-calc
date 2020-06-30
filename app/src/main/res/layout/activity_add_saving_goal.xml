@@ -133,7 +133,7 @@
                     app:layout_constraintTop_toBottomOf="@id/textInput_goal_amount" />
             </LinearLayout>
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/img_saving_goals"
                 android:layout_width="@dimen/_250sdp"
                 android:layout_height="@dimen/_200sdp"
@@ -144,7 +144,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_goal_categories"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

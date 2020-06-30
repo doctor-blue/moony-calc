@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.moony.calc.R
 import com.moony.calc.activities.AddTransactionActivity
 import com.moony.calc.adapter.TransactionAdapter
@@ -156,6 +157,18 @@ class TransactionFragment : BaseFragment() {
         txt_transaction_date.setOnClickListener {
             showMonthYearPickerDialog()
         }
+
+
+        rv_transaction.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0 || dy < 0 && btn_add_transaction.isShown) btn_add_transaction.hide()
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) btn_add_transaction.show()
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
 
     }
 

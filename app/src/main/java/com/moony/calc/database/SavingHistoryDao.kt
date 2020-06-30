@@ -22,4 +22,7 @@ interface SavingHistoryDao {
     @Query("select sum(amount) from saving_history where idSaving=:idSaving ")
     fun getCurrentSavingAmount(idSaving: Int):LiveData<Double>
 
+    @Query("delete from saving_history where idSaving=:idSaving")
+    suspend fun deleteAllSavingHistoryBySaving(idSaving: Int)
+
 }

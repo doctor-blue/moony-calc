@@ -8,14 +8,17 @@ import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.CategoryViewModel
-import com.moony.calc.model.Saving
+import com.moony.calc.database.SavingViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import kotlinx.android.synthetic.main.fragment_saving_detail.*
 
-class SavingDetailFragment(var saving: Saving) : BaseFragment() {
+class SavingDetailFragment(var idSaving: Int) : BaseFragment() {
 
     private val categoryViewModel: CategoryViewModel by lazy { ViewModelProvider(this)[CategoryViewModel::class.java] }
+    private val savingViewModel: SavingViewModel by lazy {
+        ViewModelProvider(this)[SavingViewModel::class.java]
+    }
 
     override fun getLayoutId(): Int = R.layout.fragment_saving_detail
     override fun init() {
@@ -35,12 +38,17 @@ class SavingDetailFragment(var saving: Saving) : BaseFragment() {
 
     private fun initControl() {
         wv_saving_detail.setProgress(55)
-        txt_saving_detail_date.text = saving.deadLine
-        txt_saving_total.text = saving.desiredAmount.decimalFormat()
-        categoryViewModel.getCategory(saving.idCategory).observe(this, Observer {
-            Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
-                .into(img_saving_detail_categories)
-            txt_saving_detail_categories.text = it.title
+
+        savingViewModel.getSaving(idSaving).observe(viewLifecycleOwner, Observer { saving ->
+           saving?.let {
+               txt_saving_detail_date.text = saving.deadLine
+               txt_saving_total.text = saving.desiredAmount.decimalFormat()
+               categoryViewModel.getCategory(saving.idCategory).observe(this, Observer {
+                   Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
+                       .into(img_saving_detail_categories)
+                   txt_saving_detail_categories.text = it.title
+               })
+           }
         })
     }
 }

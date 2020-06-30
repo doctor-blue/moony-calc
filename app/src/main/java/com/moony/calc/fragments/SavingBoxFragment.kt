@@ -1,14 +1,11 @@
 package com.moony.calc.fragments
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.view.View
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.moony.calc.R
 import com.moony.calc.activities.AddSavingGoalActivity
 import com.moony.calc.activities.SavingDetailActivity
@@ -22,6 +19,9 @@ class SavingBoxFragment() : BaseFragment() {
     private lateinit var savings: List<Saving>
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
 
+    companion object {
+        const val SAVING_KEY = "com.moony.calc.fragments.SavingBoxFragment.SAVING_KEY"
+    }
 
     override fun init() {
         initControl()
@@ -30,25 +30,30 @@ class SavingBoxFragment() : BaseFragment() {
 
     private fun initEvent() {
         btn_add_saving_goals.setOnClickListener {
-            startActivity(Intent(activity,AddSavingGoalActivity::class.java))
+            startActivity(Intent(activity, AddSavingGoalActivity::class.java))
         }
+        rv_saving_box.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy < 0 && !btn_add_saving_goals.isShown)
+                    btn_add_saving_goals.show();
+                else if (dy > 0 && btn_add_saving_goals.isShown)
+                    btn_add_saving_goals.hide();
+            }
+        })
     }
 
     private fun initControl() {
         rv_saving_box.layoutManager = LinearLayoutManager(context)
         savingViewModel.getAllSaving().observe(this,
             Observer { savings ->
-                if(savings.isNotEmpty()) {
+                if (savings.isNotEmpty()) {
                     val adapter = SavingBoxAdapter(activity!!, savings) {
                         val saving: Saving = it as Saving
                         val intent: Intent = Intent(baseContext, SavingDetailActivity::class.java)
-                        intent.putExtra("SavingDescription", saving.description)
-                        intent.putExtra("SavingAmount", saving.desiredAmount)
-                        intent.putExtra("SavingDeadLine", saving.deadLine)
-                        intent.putExtra("IDCategory", saving.idCategory)
+                        intent.putExtra(SAVING_KEY,saving)
                         startActivity(intent)
                     }
-                    rv_saving_box.adapter=adapter
+                    rv_saving_box.adapter = adapter
                     txt_add_goal_manual.visibility = View.GONE
                     txt_empty_goal.visibility = View.GONE
                     rv_saving_box.visibility = View.VISIBLE

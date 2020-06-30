@@ -14,31 +14,34 @@ class ConfirmDialogBuilder @SuppressLint("InflateParams") constructor(context: C
 
 
     private val rootView: View = LayoutInflater.from(context).inflate(R.layout.dialog_confirm, null)
-    val btnConfirm:MaterialButton
-    val btnCancel:MaterialButton
-    private val txtTitle:MaterialTextView
-    private val txtContent:MaterialTextView
-    private lateinit var dialog:AlertDialog
+    val btnConfirm: MaterialButton
+    val btnCancel: MaterialButton
+    private val txtTitle: MaterialTextView
+    private val txtContent: MaterialTextView
+    private lateinit var dialog: AlertDialog
 
     init {
-        btnConfirm=rootView.findViewById(R.id.btn_confirm_confirm_dialog)
-        btnCancel=rootView.findViewById(R.id.btn_cancel_confirm_dialog)
-        txtContent=rootView.findViewById(R.id.txt_content_confirm_dialog)
-        txtTitle=rootView.findViewById(R.id.txt_title_confirm_dialog)
+        btnConfirm = rootView.findViewById(R.id.btn_confirm_confirm_dialog)
+        btnCancel = rootView.findViewById(R.id.btn_cancel_confirm_dialog)
+        txtContent = rootView.findViewById(R.id.txt_content_confirm_dialog)
+        txtTitle = rootView.findViewById(R.id.txt_title_confirm_dialog)
         setView(rootView)
     }
+
     fun createDialog(): AlertDialog {
-         dialog = create()
+        dialog = create()
         return dialog
     }
 
-    fun setTitle(title:String){
+    fun setTitle(title: String) {
         txtTitle.text = title
     }
-    fun setContent(content:String){
-        txtContent.text=content
+
+    fun setContent(content: String) {
+        txtContent.text = content
     }
-    fun showDialog(){
+
+    fun showDialog() {
         dialog.show()
     }
 

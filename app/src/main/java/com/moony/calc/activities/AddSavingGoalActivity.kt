@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.database.SavingViewModel
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
@@ -24,7 +25,6 @@ import com.moony.calc.model.Saving
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import kotlinx.android.synthetic.main.activity_add_saving_goal.*
-import kotlinx.android.synthetic.main.activity_add_transaction.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,9 +35,17 @@ class AddSavingGoalActivity : BaseActivity() {
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
     private var category: Category? = null
     private var idCategory: Int = 0
-    companion object{
+    private val categoryViewModel: CategoryViewModel by lazy {
+        ViewModelProvider(this)[CategoryViewModel::class.java]
+    }
+    private var isEditSaving = false
+    private var saving: Saving? = null
+
+    companion object {
         private const val KEY_PICK_CATEGORY = 1101
     }
+
+    override fun getLayoutId(): Int = R.layout.activity_add_saving_goal
 
     override fun init(savedInstanceState: Bundle?) {
         initControl()
@@ -46,6 +54,25 @@ class AddSavingGoalActivity : BaseActivity() {
 
     private fun initControl() {
         setSupportActionBar(toolbar_add_saving_goal)
+
+        saving = intent.getSerializableExtra(SavingDetailActivity.EDIT_SAVINGS) as Saving?
+        saving?.let { sav ->
+            isEditSaving = true
+
+            edt_goal_description.setText(sav.description)
+            edt_goal_amount.setText(("${sav.desiredAmount}"))
+            txt_due_date.text = sav.deadLine
+            deadLine=sav.deadLine
+
+            idCategory = sav.idCategory
+            categoryViewModel.getCategory(idCategory).observe(this, Observer {
+                category = it
+                Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
+                    .into(img_goal_category)
+                txt_title_category_add_saving.text = it.title
+            })
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -82,9 +109,22 @@ class AddSavingGoalActivity : BaseActivity() {
                 snackbar.show()
             }
             else -> {
-                val saving: Saving = Saving(edt_goal_description.text.toString().trim(),
-                    edt_goal_amount.text.toString().trim().toDouble(), deadLine, idCategory,"")
-                savingViewModel.insertSaving(saving)
+                if (isEditSaving) {
+                    saving?.let {
+                        it.description=edt_goal_description.text.toString().trim()
+                        it.deadLine=deadLine
+                        it.idCategory=idCategory
+                        it.desiredAmount=edt_goal_amount.text.toString().trim().toDouble()
+
+                        savingViewModel.updateSaving(it)
+                    }
+                } else {
+                    val saving = Saving(
+                        edt_goal_description.text.toString().trim(),
+                        edt_goal_amount.text.toString().trim().toDouble(), deadLine, idCategory, ""
+                    )
+                    savingViewModel.insertSaving(saving)
+                }
                 finish()
             }
         }
@@ -149,12 +189,11 @@ class AddSavingGoalActivity : BaseActivity() {
             startActivityForResult(intent, KEY_PICK_CATEGORY)
         }
 
-        toolbar_add_saving_goal.setNavigationOnClickListener{
+        toolbar_add_saving_goal.setNavigationOnClickListener {
             finish()
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_add_saving_goal
 
     private fun handleTextToDouble(s: String): String {
         var text = s
@@ -179,8 +218,8 @@ class AddSavingGoalActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == KEY_PICK_CATEGORY)
-            if(resultCode == Activity.RESULT_OK) {
+        if (requestCode == KEY_PICK_CATEGORY)
+            if (resultCode == Activity.RESULT_OK) {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
                     .into(img_goal_category)
