@@ -8,7 +8,9 @@ class SavingHistory(
     var description: String,
     var idSaving: Int,
     var amount: Double,
-    var isSaving: Boolean
+    var isSaving: Boolean,
+    var idCategory: Int,
+    var date:String
 ) {
     @PrimaryKey(autoGenerate = true)
     var idSavingHistory: Int = 0

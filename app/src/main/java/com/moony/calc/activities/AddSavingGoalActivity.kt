@@ -34,7 +34,7 @@ class AddSavingGoalActivity : BaseActivity() {
     private var deadLine: String = ""
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
     private var category: Category? = null
-    private var idCategory: Int = 0
+
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(this)[CategoryViewModel::class.java]
     }
@@ -42,7 +42,7 @@ class AddSavingGoalActivity : BaseActivity() {
     private var saving: Saving? = null
 
     companion object {
-        private const val KEY_PICK_CATEGORY = 1101
+        const val KEY_PICK_CATEGORY = 1101
     }
 
     override fun getLayoutId(): Int = R.layout.activity_add_saving_goal
@@ -64,8 +64,7 @@ class AddSavingGoalActivity : BaseActivity() {
             txt_due_date.text = sav.deadLine
             deadLine=sav.deadLine
 
-            idCategory = sav.idCategory
-            categoryViewModel.getCategory(idCategory).observe(this, Observer {
+            categoryViewModel.getCategory(sav.idSaving).observe(this, Observer {
                 category = it
                 Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
                     .into(img_goal_category)
@@ -113,7 +112,7 @@ class AddSavingGoalActivity : BaseActivity() {
                     saving?.let {
                         it.description=edt_goal_description.text.toString().trim()
                         it.deadLine=deadLine
-                        it.idCategory=idCategory
+                        it.idCategory=category!!.idCategory
                         it.desiredAmount=edt_goal_amount.text.toString().trim().toDouble()
 
                         savingViewModel.updateSaving(it)
@@ -121,7 +120,7 @@ class AddSavingGoalActivity : BaseActivity() {
                 } else {
                     val saving = Saving(
                         edt_goal_description.text.toString().trim(),
-                        edt_goal_amount.text.toString().trim().toDouble(), deadLine, idCategory, ""
+                        edt_goal_amount.text.toString().trim().toDouble(), deadLine, category!!.idCategory, ""
                     )
                     savingViewModel.insertSaving(saving)
                 }
@@ -223,8 +222,6 @@ class AddSavingGoalActivity : BaseActivity() {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
                     .into(img_goal_category)
-
-                idCategory = category!!.idCategory
                 txt_title_category_add_saving.text = category!!.title
 
             }

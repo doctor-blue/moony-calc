@@ -52,7 +52,10 @@ class SavingDetailActivity : BaseActivity() {
         saving = intent.getSerializableExtra(SavingBoxFragment.SAVING_KEY) as Saving
 
         val fragments: List<BaseFragment> =
-            mutableListOf(SavingDetailFragment(saving.idSaving), SavingHistoryFragment())
+            mutableListOf(
+                SavingDetailFragment(saving.idSaving),
+                SavingHistoryFragment(saving.idSaving)
+            )
         val savingDetailAdapter = SavingDetailAdapter(supportFragmentManager, fragments, this)
         viewpager_detail_saving.adapter = savingDetailAdapter
         tab_layout_saving.setupWithViewPager(viewpager_detail_saving)
