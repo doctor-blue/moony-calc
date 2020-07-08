@@ -2,6 +2,7 @@ package com.moony.calc.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "saving_history")
 class SavingHistory(
@@ -11,7 +12,7 @@ class SavingHistory(
     var isSaving: Boolean,
     var idCategory: Int,
     var date:String
-) {
+):Serializable {
     @PrimaryKey(autoGenerate = true)
     var idSavingHistory: Int = 0
 }

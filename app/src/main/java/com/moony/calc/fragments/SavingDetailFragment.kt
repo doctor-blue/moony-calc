@@ -1,24 +1,35 @@
 package com.moony.calc.fragments
 
-import android.view.Menu
-import android.view.MenuInflater
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.CategoryViewModel
+import com.moony.calc.database.SavingHistoryViewModel
 import com.moony.calc.database.SavingViewModel
+import com.moony.calc.model.Category
+import com.moony.calc.model.Saving
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import kotlinx.android.synthetic.main.fragment_saving_detail.*
+import kotlin.math.floor
 
 class SavingDetailFragment(var idSaving: Int) : BaseFragment() {
 
-    private val categoryViewModel: CategoryViewModel by lazy { ViewModelProvider(this)[CategoryViewModel::class.java] }
+    private val categoryViewModel: CategoryViewModel by lazy {
+        ViewModelProvider(this)[CategoryViewModel::class.java]
+    }
     private val savingViewModel: SavingViewModel by lazy {
         ViewModelProvider(this)[SavingViewModel::class.java]
     }
+    private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
+        ViewModelProvider(this)[SavingHistoryViewModel::class.java]
+    }
+    private var categoryLiveData: LiveData<Category>? = null
+    private var moneySavedLiveData: LiveData<Double>? = null
+    private lateinit var saving: Saving
 
     override fun getLayoutId(): Int = R.layout.fragment_saving_detail
     override fun init() {
@@ -31,24 +42,43 @@ class SavingDetailFragment(var idSaving: Int) : BaseFragment() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
+    private fun initControl() {
+        wv_saving_detail.setProgress(0)
+
+        savingViewModel.getSaving(idSaving).observe(viewLifecycleOwner, savingObserver)
 
     }
 
-    private fun initControl() {
-        wv_saving_detail.setProgress(55)
+    private val savingObserver = Observer<Saving> { saving ->
+        saving?.let {
+            this.saving = it
+            txt_saving_detail_date.text = saving.deadLine
+            txt_saving_total.text = saving.desiredAmount.decimalFormat()
 
-        savingViewModel.getSaving(idSaving).observe(viewLifecycleOwner, Observer { saving ->
-           saving?.let {
-               txt_saving_detail_date.text = saving.deadLine
-               txt_saving_total.text = saving.desiredAmount.decimalFormat()
-               categoryViewModel.getCategory(saving.idCategory).observe(this, Observer {
-                   Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
-                       .into(img_saving_detail_categories)
-                   txt_saving_detail_categories.text = it.title
-               })
-           }
-        })
+            categoryLiveData?.removeObserver(categoryObserver)
+            categoryLiveData = categoryViewModel.getCategory(saving.idCategory)
+            categoryLiveData!!.observe(viewLifecycleOwner, categoryObserver)
+
+            moneySavedLiveData?.removeObserver(moneySavedObserver)
+            moneySavedLiveData = savingHistoryViewModel.getCurrentAmount(it.idSaving)
+            moneySavedLiveData!!.observe(viewLifecycleOwner, moneySavedObserver)
+        }
+    }
+    private val categoryObserver = Observer<Category> {
+        Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
+            .into(img_saving_detail_categories)
+        txt_saving_detail_categories.text = it.title
+    }
+
+    private val moneySavedObserver = Observer<Double> {
+        var saved=it
+        if(saved==null) saved=0.0
+        var progress = floor(saved / saving.desiredAmount * 100).toInt()
+        if (progress > 100) progress = 100
+        wv_saving_detail.setProgress(progress)
+        txt_saving_progress.text = ("$progress%")
+        txt_saving_saved.text=saved.decimalFormat()
+        txt_saving_remaining.text=(saving.desiredAmount-saved).decimalFormat()
+
     }
 }

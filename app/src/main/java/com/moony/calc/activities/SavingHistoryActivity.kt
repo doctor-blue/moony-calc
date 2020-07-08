@@ -110,10 +110,7 @@ class SavingHistoryActivity : BaseActivity() {
                                 //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
                                 val lastChar = it[8]
                                 if (!(lastChar == '.' || lastChar == ',')) {
-                                    val minus = if (!isSaving) '-' else ' '
-                                    edt_saving_history_amount.setText(
-                                        (minus.toString().trim() + it.subSequence(0, 8))
-                                    )
+                                    edt_saving_history_amount.setText(it.subSequence(0, 8))
                                     edt_saving_history_amount.setSelection(8)
                                 }
                             }
@@ -193,8 +190,7 @@ class SavingHistoryActivity : BaseActivity() {
                         val savingHistory = SavingHistory(
                             edt_history_saving_description.text.toString(),
                             idSaving,
-                            edt_saving_history_amount.text.toString().replace('-', ' ').trim()
-                                .toDouble(),
+                            edt_saving_history_amount.text.toString().toDouble(),
                             isSaving,
                             category.idCategory,
                             dateAdded

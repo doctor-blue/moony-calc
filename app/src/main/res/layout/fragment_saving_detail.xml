@@ -73,6 +73,7 @@
             android:layout_height="@dimen/_180sdp"
             android:layout_marginTop="@dimen/_30sdp"
             app:cardCornerRadius="@dimen/_90sdp"
+            app:cardBackgroundColor="@color/white"
             app:cardElevation="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="20%"
+                android:id="@+id/txt_saving_progress"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/_30sdp" />
         </com.google.android.material.card.MaterialCardView>

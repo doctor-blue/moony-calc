@@ -65,8 +65,10 @@ class SavingHistoryFragment(private val idSaving: Int) : BaseFragment() {
         rv_saving_history.setHasFixedSize(true)
 
         savingHistoryViewModel.getAllSavingHistory(idSaving).observe(viewLifecycleOwner, Observer {
-            val savingHistoryAdapter = SavingHistoryAdapter(activity!!, it) {
-
+            val savingHistoryAdapter = SavingHistoryAdapter(activity!!, it) {history->
+                val intent=Intent(baseContext,SavingHistoryActivity::class.java)
+                intent.putExtra(EDIT_HISTORY,history)
+                startActivity(intent)
             }
             rv_saving_history.adapter = savingHistoryAdapter
 
