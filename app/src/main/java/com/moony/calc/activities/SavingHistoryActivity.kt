@@ -77,6 +77,11 @@ class SavingHistoryActivity : BaseActivity() {
                 })
         }
 
+        if (isSaving)
+            toolbar_history_saving.title = resources.getString(R.string.more_money_on)
+        else
+            toolbar_history_saving.title = resources.getString(R.string.get_money_out)
+
 
 
 
@@ -186,11 +191,13 @@ class SavingHistoryActivity : BaseActivity() {
                 if (savingHistory != null) {
                     //do
                 } else {
+                    var amount = edt_saving_history_amount.text.toString().toDouble()
+                    if (!isSaving) amount *= -1
                     category?.let { category ->
                         val savingHistory = SavingHistory(
                             edt_history_saving_description.text.toString(),
                             idSaving,
-                            edt_saving_history_amount.text.toString().toDouble(),
+                            amount,
                             isSaving,
                             category.idCategory,
                             dateAdded

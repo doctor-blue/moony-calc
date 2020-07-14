@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/transaction"
+        android:icon="@drawable/ic_card"
+        android:id="@+id/transaction_fragment"
+        />
+    <item
+        android:title="@string/saving_goals"
+        android:icon="@drawable/ic_saving"
+        android:id="@+id/saving_fragment"
+        />
+    <item
+        android:title="@string/chart"
+        android:icon="@drawable/ic_pie_chart"
+        android:id="@+id/chart_fragment"
+        />
+    <!--<item
+        android:title="@string/more"
+        android:icon="@drawable/ic_person"
+        android:id="@+id/more_fragment"
+        />-->
+</menu>

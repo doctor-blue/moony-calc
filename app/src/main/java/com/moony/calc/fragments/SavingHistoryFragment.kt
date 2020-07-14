@@ -13,7 +13,11 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.SavingHistoryViewModel
 import kotlinx.android.synthetic.main.fragment_saving_history.*
 
-class SavingHistoryFragment(private val idSaving: Int) : BaseFragment() {
+class SavingHistoryFragment() : BaseFragment() {
+    private var idSaving:Int=0
+    constructor(idSaving:Int):this(){
+        this.idSaving=idSaving
+    }
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
         ViewModelProvider(activity!!)[SavingHistoryViewModel::class.java]
     }

@@ -64,7 +64,7 @@ class AddSavingGoalActivity : BaseActivity() {
             txt_due_date.text = sav.deadLine
             deadLine=sav.deadLine
 
-            categoryViewModel.getCategory(sav.idSaving).observe(this, Observer {
+            categoryViewModel.getCategory(sav.idCategory).observe(this, Observer {
                 category = it
                 Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
                     .into(img_goal_category)

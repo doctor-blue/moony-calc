@@ -1,15 +1,19 @@
 package com.moony.calc.views
 
 import android.content.Context
-import android.os.AsyncTask
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
 import androidx.fragment.app.FragmentManager
 import com.moony.calc.base.BaseFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MoonyFragment : FrameLayout {
-     lateinit var fragmentManager: FragmentManager
+    lateinit var fragmentManager: FragmentManager
+    private var currentFragment: BaseFragment? = null
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -19,12 +23,12 @@ class MoonyFragment : FrameLayout {
     )
 
     fun replaceFragment(newFragment: BaseFragment) {
-        ReplaceTask(fragmentManager,id).execute(newFragment)
-    }
-    private class ReplaceTask(private val fragmentManager: FragmentManager,private val id:Int):AsyncTask<BaseFragment,Unit,Unit>(){
-        override fun doInBackground(vararg params: BaseFragment?) {
-            fragmentManager.beginTransaction().replace(id, params[0]!!).commit()
-            Log.d("TEST",params[0].toString())
+        if (currentFragment !== newFragment) {
+            Log.d(MoonyFragment::class.java.simpleName,"${currentFragment?.id}  ${newFragment.id}")
+            currentFragment = newFragment
+            GlobalScope.launch(Dispatchers.Default) {
+                fragmentManager.beginTransaction().replace(id, newFragment).commit()
+            }
         }
 
     }

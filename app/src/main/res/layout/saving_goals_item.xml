@@ -67,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@id/txt_amount_progress_item"
             app:progress_current="0"
             app:progress_reached_bar_height="@dimen/_5sdp"
-            app:progress_reached_color="?attr/colorPrimaryDark"
+            app:progress_reached_color="@color/blue"
             app:progress_text_color="?attr/colorAccent"
             app:progress_text_size="@dimen/_15sdp"
             app:progress_unreached_bar_height="@dimen/_4sdp"

@@ -15,6 +15,7 @@ import com.moony.calc.R
 import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.model.SavingHistory
 import com.moony.calc.utils.AssetFolderManager
+import com.moony.calc.utils.decimalFormat
 
 class SavingHistoryAdapter(
     private val activity: FragmentActivity,
@@ -51,7 +52,8 @@ class SavingHistoryAdapter(
                 Glide.with(activity).load(AssetFolderManager.assetPath + it.iconUrl)
                     .into(imgCategory)
             })
-            txtMoney.text = savingHistory.amount.toString()
+
+            txtMoney.text = savingHistory.amount.decimalFormat()
             if (savingHistory.isSaving) {
                 txtMoney.setTextColor(activity.resources.getColor(R.color.blue))
             } else {

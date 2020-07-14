@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -74,4 +74,60 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-</RelativeLayout>
+</RelativeLayout>-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    tools:context=".activities.MainActivity">
+
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        android:layout_marginBottom="@dimen/_3sdp"
+        app:layout_constraintBottom_toTopOf="@+id/test"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph='@navigation/nav_graph' />
+
+   <com.google.android.material.card.MaterialCardView
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/_55sdp"
+       app:cardBackgroundColor="#F6F6FF"
+       app:cardCornerRadius="0dp"
+       android:id="@+id/test"
+       app:cardElevation="@dimen/_5sdp"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent">
+       <me.ibrahimsn.lib.SmoothBottomBar
+           android:id="@+id/bottomBar"
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/_55sdp"
+           app:backgroundColor="#F6F6FF"
+           app:iconSize="24dp"
+           app:iconTint="#C7C7C7"
+           app:iconTintActive="@color/textColor"
+           app:indicatorColor="#52DBDBDB"
+           app:indicatorRadius="10dp"
+           app:itemPadding="10dp"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:menu="@menu/bottom_menu"
+           app:sideMargins="10dp"
+           app:textColor="@color/textColor"
+           app:textSize="14sp" />
+   </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

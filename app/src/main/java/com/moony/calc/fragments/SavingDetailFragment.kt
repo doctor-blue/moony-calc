@@ -71,14 +71,21 @@ class SavingDetailFragment(var idSaving: Int) : BaseFragment() {
     }
 
     private val moneySavedObserver = Observer<Double> {
-        var saved=it
-        if(saved==null) saved=0.0
+        var saved = it
+        if (saved == null) saved = 0.0
+
         var progress = floor(saved / saving.desiredAmount * 100).toInt()
+
         if (progress > 100) progress = 100
+
         wv_saving_detail.setProgress(progress)
         txt_saving_progress.text = ("$progress%")
-        txt_saving_saved.text=saved.decimalFormat()
-        txt_saving_remaining.text=(saving.desiredAmount-saved).decimalFormat()
+        txt_saving_saved.text = saved.decimalFormat()
+
+        var remaining = (saving.desiredAmount - saved)
+        if (remaining < 0) remaining = 0.0
+
+        txt_saving_remaining.text = remaining.decimalFormat()
 
     }
 }
