@@ -1,27 +1,21 @@
 package com.moony.calc.activities
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.onNavDestinationSelected
+import com.doctorblue.noname_library.OnItemSelectedListener
 import com.moony.calc.R
+import com.moony.calc.animation.MenuAnimation
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.fragments.ChartFragment
 import com.moony.calc.fragments.SavingBoxFragment
 import com.moony.calc.fragments.TransactionFragment
-import com.moony.calc.views.NavigationIconClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), OnItemSelectedListener {
     private val savingBoxFragment = SavingBoxFragment()
     private val transactionFragment = TransactionFragment()
     private val chartFragment = ChartFragment()
-
-    private lateinit var navigationIconClickListener: NavigationIconClickListener
-    private lateinit var navController: NavController
+    private var isLeftMenuShow = false
 
     override fun init(savedInstanceState: Bundle?) {
         initControl()
@@ -31,66 +25,50 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     private fun initEvent() {
-        /* btn_nav_main.setOnClickListener(
-             navigationIconClickListener
-         )*/
 
     }
 
     private fun initControl() {
-        /* fragment_main.fragmentManager = supportFragmentManager
-         fragment_main.replaceFragment(TransactionFragment())
-         layout_main_menu.visibility = View.GONE
+        fragment_main.fragmentManager = supportFragmentManager
 
-         navigationIconClickListener = NavigationIconClickListener(
-             this,
-             fragment_main,
-             AccelerateDecelerateInterpolator(),
-             ContextCompat.getDrawable(this, R.drawable.ic_navigation), // Menu open icon
-             ContextCompat.getDrawable(this, R.drawable.ic_menu_close),
-             layout_main_menu
-         )*/
-        navController = findNavController(R.id.main_fragment)
-
+        no_name_bottom_bar.onItemSelectedListener = this
+        no_name_bottom_bar.itemActiveIndex = 0
+        no_name_bottom_bar.onItemReselected=onItemReselected
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.bottom_menu, menu)
-        bottomBar.setupWithNavController(menu!!, navController)
-        return true
-    }
-   
-
-    override fun onSupportNavigateUp(): Boolean {
-        navController.navigateUp()
-        return true
-    }
-
-/*
-    fun onMenuItemClick(view: View) {
-        when (view.id) {
-            R.id.mnu_budget -> {
+    override fun onItemSelect(id: Int) {
+        when (id) {
+            R.id.transaction_fragment -> {
                 fragment_main.replaceFragment(transactionFragment)
-                navigationIconClickListener.showBackdrop(btn_nav_main)
             }
-            R.id.mnu_saving -> {
+            R.id.saving_fragment -> {
                 fragment_main.replaceFragment(savingBoxFragment)
-                navigationIconClickListener.showBackdrop(btn_nav_main)
             }
-            R.id.mnu_chart -> {
+            R.id.chart_fragment -> {
                 fragment_main.replaceFragment(chartFragment)
-                navigationIconClickListener.showBackdrop(btn_nav_main)
             }
-            R.id.mnu_categories -> {
-                startActivity(
-                    Intent(this, CategoriesActivity::class.java).putExtra(
-                        CategoriesActivity.KEY,
-                        true
-                    )
-                )
-                navigationIconClickListener.showBackdrop(btn_nav_main)
+            R.id.more_fragment -> {
+                /* startActivity(
+                     Intent(this, CategoriesActivity::class.java).putExtra(
+                         CategoriesActivity.KEY,
+                         true
+                     )
+                 )*/
+
             }
         }
-    }*/
+    }
+    private val onItemReselected:(Int)->Unit={
+        if (it==R.id.more_fragment ){
+            isLeftMenuShow = if (!isLeftMenuShow){
+                MenuAnimation.showLeftMenu(fragment_main, left_menu)
+                true
+            }else{
+                MenuAnimation.hideLeftMenu(fragment_main, left_menu)
+                false
+            }
+        }
+    }
+
 }
 

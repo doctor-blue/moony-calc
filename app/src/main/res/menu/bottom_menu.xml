@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:title="@string/transaction"
-        android:icon="@drawable/ic_card"
+        android:icon="@drawable/ic_home_outline"
         android:id="@+id/transaction_fragment"
         />
     <item
@@ -12,12 +12,12 @@
         />
     <item
         android:title="@string/chart"
-        android:icon="@drawable/ic_pie_chart"
+        android:icon="@drawable/ic_pie_chart_outline"
         android:id="@+id/chart_fragment"
         />
-    <!--<item
+    <item
         android:title="@string/more"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/ic_baseline_menu"
         android:id="@+id/more_fragment"
-        />-->
+        />
 </menu>

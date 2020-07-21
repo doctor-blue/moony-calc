@@ -35,9 +35,10 @@ class SavingBoxFragment() : BaseFragment() {
         rv_saving_box.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy < 0 && !btn_add_saving_goals.isShown)
-                    btn_add_saving_goals.show();
+                    btn_add_saving_goals.show()
                 else if (dy > 0 && btn_add_saving_goals.isShown)
                     btn_add_saving_goals.hide();
+                btn_add_saving_goals.id
             }
         })
     }
