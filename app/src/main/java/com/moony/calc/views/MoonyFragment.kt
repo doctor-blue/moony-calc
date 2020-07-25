@@ -6,9 +6,6 @@ import android.util.Log
 import android.widget.FrameLayout
 import androidx.fragment.app.FragmentManager
 import com.moony.calc.base.BaseFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MoonyFragment : FrameLayout {
     lateinit var fragmentManager: FragmentManager
@@ -24,11 +21,9 @@ class MoonyFragment : FrameLayout {
 
     fun replaceFragment(newFragment: BaseFragment) {
         if (currentFragment !== newFragment) {
-            Log.d(MoonyFragment::class.java.simpleName,"${currentFragment?.id}  ${newFragment.id}")
+            Log.d(MoonyFragment::class.java.simpleName, "${currentFragment?.id}  ${newFragment.id}")
             currentFragment = newFragment
-            GlobalScope.launch(Dispatchers.Default) {
-                fragmentManager.beginTransaction().replace(id, newFragment).commit()
-            }
+            fragmentManager.beginTransaction().replace(id, newFragment).commit()
         }
 
     }

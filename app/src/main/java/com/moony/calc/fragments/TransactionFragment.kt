@@ -25,7 +25,7 @@ import com.whiteelephant.monthpicker.MonthPickerDialog
 import kotlinx.android.synthetic.main.fragment_transaction.*
 import java.util.*
 
-class TransactionFragment : BaseFragment() {
+class TransactionFragment() : BaseFragment() {
     private var calNow = Calendar.getInstance()
     private lateinit var dateTimeViewModel: DateTimeViewModel
 
@@ -37,11 +37,36 @@ class TransactionFragment : BaseFragment() {
     private var dateTimeLiveData: LiveData<List<DateTime>>? = null
 
 
+
     override fun getLayoutId(): Int = R.layout.fragment_transaction
 
     override fun init() {
         initControl()
         initEvent()
+        /*     val radius = baseContext!!.resources.getDimension(R.dimen._10sdp)
+             motion_transaction.setTransitionListener(object : MotionLayout.TransitionListener {
+                 override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
+                 }
+
+                 override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
+                 }
+
+                 override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+                     if (p3 == 0.9f) {
+                         if (p2 == R.id.end_trans)
+                             card_transaction.radius = 0f
+                     } else if (p3 < 0.9f)
+                         card_transaction.radius = radius - radius * p3
+                 }
+
+                 override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                     *//*if (p1==R.id.end_trans){
+                    card_transaction.radius=0f
+                }*//*
+            }
+
+
+        })*/
     }
 
     private fun initControl() {
@@ -161,11 +186,12 @@ class TransactionFragment : BaseFragment() {
 
         rv_transaction.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0 || dy < 0 && btn_add_transaction.isShown) btn_add_transaction.hide()
+                /* if (dy > 0) noNameBottomBar.hide()
+                 else noNameBottomBar.show()*/
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) btn_add_transaction.show()
+                //if (newState == RecyclerView.SCROLL_STATE_IDLE) noNameBottomBar.show()
                 super.onScrollStateChanged(recyclerView, newState)
             }
         })
@@ -205,6 +231,5 @@ class TransactionFragment : BaseFragment() {
             .show()
 
     }
-
 
 }

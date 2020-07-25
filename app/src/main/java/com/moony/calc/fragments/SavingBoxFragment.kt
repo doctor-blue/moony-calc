@@ -55,12 +55,10 @@ class SavingBoxFragment() : BaseFragment() {
                         startActivity(intent)
                     }
                     rv_saving_box.adapter = adapter
-                    txt_add_goal_manual.visibility = View.GONE
-                    txt_empty_goal.visibility = View.GONE
+                    layout_list_empty.visibility=View.GONE
                     rv_saving_box.visibility = View.VISIBLE
                 } else {
-                    txt_add_goal_manual.visibility = View.VISIBLE
-                    txt_empty_goal.visibility = View.VISIBLE
+                    layout_list_empty.visibility=View.VISIBLE
                     rv_saving_box.visibility = View.GONE
                 }
 

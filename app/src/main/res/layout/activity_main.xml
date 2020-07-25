@@ -5,82 +5,38 @@
     android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColor"
     android:clipChildren="false"
     android:clipToPadding="false"
     tools:context=".activities.MainActivity">
-    <com.moony.calc.views.MoonyFragment
-        android:id="@+id/fragment_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    <LinearLayout
-        android:layout_height="match_parent"
-        android:layout_width="@dimen/_200sdp"
-        android:orientation="vertical"
-        android:id="@+id/left_menu"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:src="@drawable/ic_categories"/>
-            <TextView
-                android:layout_width="@dimen/_176sdp"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Moony.Headline5"
-                android:text="@string/categories"
-                android:gravity="center"/>
-        </LinearLayout>
 
-    </LinearLayout>
-<!--
-    <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        app:layout_constraintStart_toStartOf="parent"
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/no_name_bottom_bar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
-        app:cardBackgroundColor="#6370e0"
-        app:layout_constraintCircleRadius="30dp"
-        app:cardCornerRadius="20dp"
-       >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Your Balance"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:textSize="@dimen/_25sdp"/>
-    </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
--->
+        app:navGraph='@navigation/nav_graph_main' />
+
     <com.doctorblue.noname_library.NoNameBottomBar
         android:id="@+id/no_name_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_menu"
+        android:layout_height="@dimen/_38sdp"
+        android:background="#F3F6FF"
         app:iconSize="@dimen/_18sdp"
+        app:iconTint="#97abce"
+        app:iconTintActive="#6370e0"
+        app:indicatorColor="#0fcbfb"
         app:indicatorPosition="top"
         app:indicatorType="point"
-        android:background="#F3F6FF"
-        app:indicatorColor="#0fcbfb"
-        app:iconTintActive="#6370e0"
-        app:iconTint="#97abce"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

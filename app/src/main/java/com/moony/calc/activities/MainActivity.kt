@@ -1,9 +1,10 @@
 package com.moony.calc.activities
 
+import android.content.Intent
 import android.os.Bundle
-import com.doctorblue.noname_library.OnItemSelectedListener
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.moony.calc.R
-import com.moony.calc.animation.MenuAnimation
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.fragments.ChartFragment
 import com.moony.calc.fragments.SavingBoxFragment
@@ -11,11 +12,12 @@ import com.moony.calc.fragments.TransactionFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity(), OnItemSelectedListener {
+class MainActivity : BaseActivity() {
     private val savingBoxFragment = SavingBoxFragment()
     private val transactionFragment = TransactionFragment()
     private val chartFragment = ChartFragment()
-    private var isLeftMenuShow = false
+
+    private lateinit var navController: NavController
 
     override fun init(savedInstanceState: Bundle?) {
         initControl()
@@ -29,46 +31,15 @@ class MainActivity : BaseActivity(), OnItemSelectedListener {
     }
 
     private fun initControl() {
-        fragment_main.fragmentManager = supportFragmentManager
-
-        no_name_bottom_bar.onItemSelectedListener = this
-        no_name_bottom_bar.itemActiveIndex = 0
-        no_name_bottom_bar.onItemReselected=onItemReselected
+        navController = findNavController(R.id.main_fragment)
+        no_name_bottom_bar.setupWithNavController(navController)
     }
 
-    override fun onItemSelect(id: Int) {
-        when (id) {
-            R.id.transaction_fragment -> {
-                fragment_main.replaceFragment(transactionFragment)
-            }
-            R.id.saving_fragment -> {
-                fragment_main.replaceFragment(savingBoxFragment)
-            }
-            R.id.chart_fragment -> {
-                fragment_main.replaceFragment(chartFragment)
-            }
-            R.id.more_fragment -> {
-                /* startActivity(
-                     Intent(this, CategoriesActivity::class.java).putExtra(
-                         CategoriesActivity.KEY,
-                         true
-                     )
-                 )*/
+    override fun navigateUpTo(upIntent: Intent?): Boolean {
+        navController.navigateUp()
+        return true
+    }
 
-            }
-        }
-    }
-    private val onItemReselected:(Int)->Unit={
-        if (it==R.id.more_fragment ){
-            isLeftMenuShow = if (!isLeftMenuShow){
-                MenuAnimation.showLeftMenu(fragment_main, left_menu)
-                true
-            }else{
-                MenuAnimation.hideLeftMenu(fragment_main, left_menu)
-                false
-            }
-        }
-    }
 
 }
 
