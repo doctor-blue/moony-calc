@@ -17,6 +17,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
+        android:textColor="@color/colorPrimary"
         android:text="@string/transaction"/>
 
     <com.google.android.material.card.MaterialCardView

@@ -32,7 +32,7 @@
 
     <style name="Widget.Moony.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:background">@color/white</item>
-        <item name="titleTextColor">@color/textColor</item>
+        <item name="titleTextColor">@color/colorPrimary</item>
         <item name="drawableTint">@color/colorPrimary</item>
     </style>
 

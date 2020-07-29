@@ -26,7 +26,6 @@
         android:id="@+id/no_name_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_38sdp"
-        android:background="#F3F6FF"
         app:iconSize="@dimen/_18sdp"
         app:iconTint="#97abce"
         app:iconTintActive="#6370e0"
