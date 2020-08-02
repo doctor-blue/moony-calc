@@ -44,7 +44,7 @@ class SavingBoxFragment: BaseFragment() {
     }
 
     private fun initControl() {
-        rv_saving_box.layoutManager = LinearLayoutManager(context)
+        rv_saving_box.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         savingViewModel.getAllSaving().observe(this,
             Observer { savings ->
                 if (savings.isNotEmpty()) {

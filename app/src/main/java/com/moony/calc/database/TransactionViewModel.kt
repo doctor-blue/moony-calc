@@ -24,8 +24,8 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
     fun getAllTransaction(): LiveData<List<Transaction>> = transactionRepository.getAllTransaction()
 
-    fun getAllTransactionByDate(id: Int): LiveData<List<Transaction>> =
-        transactionRepository.getAllTransactionByDate(id)
+    fun getAllTransactionByDate(month: Int, year: Int): LiveData<List<Transaction>> =
+        transactionRepository.getAllTransactionByDate(month,year)
 
     fun getTotalMoney(isIncome: Boolean, month: Int, year: Int): LiveData<Double> =
         transactionRepository.getTotalMoney(isIncome, month, year)

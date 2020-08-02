@@ -8,7 +8,7 @@
     tools:context=".fragments.SavingBoxFragment">
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_110sdp"
+        android:layout_height="@dimen/_120sdp"
         android:layout_marginLeft="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_18sdp"
         android:layout_marginRight="@dimen/_8sdp"
@@ -102,12 +102,12 @@
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/_32sdp"
-        android:layout_height="@dimen/_32sdp"
+        android:layout_height="@dimen/_35sdp"
         android:id="@+id/btn_add_saving_goals"
         app:cardBackgroundColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_saving_box"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_35sdp"
         app:cardElevation="@dimen/_3sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_20sdp"
@@ -126,16 +126,16 @@
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_32sdp"
+        android:layout_height="@dimen/_40sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_saving_box"
         style="@style/Widget.Moony.Headline4"
-        android:textSize="@dimen/_20sdp"
+        android:textSize="@dimen/_30sdp"
         android:gravity="center"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:text="@string/saving_goals"
-        android:layout_marginTop="@dimen/_10sdp"/>
+        android:layout_marginTop="@dimen/_35sdp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -144,14 +144,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/btn_add_saving_goals"
         >
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/transaction_item"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/saving_goals_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
             android:id="@+id/rv_saving_box"
-            android:visibility="gone"/>
+            android:visibility="visible"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

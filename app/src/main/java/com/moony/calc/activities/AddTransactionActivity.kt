@@ -213,7 +213,7 @@ class AddTransactionActivity : BaseActivity() {
                             //đã tồn tại thì check là thêm mới hay là chi tiết
                             if (isDetails) {
                                 transaction?.let { transaction ->
-                                    transaction.idDate = it.id
+                                    transaction.day = calendar[Calendar.DAY_OF_MONTH]
                                     transaction.note = edt_transaction_note.text.toString()
                                     transaction.money =
                                         handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
@@ -228,9 +228,9 @@ class AddTransactionActivity : BaseActivity() {
                                 transaction = Transaction(
                                     handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
                                     category!!.isIncome,
-                                    it.id,
                                     category!!.idCategory,
                                     edt_transaction_note.text.toString(),
+                                    calendar[Calendar.DAY_OF_MONTH],
                                     calendar[Calendar.MONTH],
                                     calendar[Calendar.YEAR]
                                 )

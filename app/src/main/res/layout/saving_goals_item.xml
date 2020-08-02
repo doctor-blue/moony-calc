@@ -2,8 +2,8 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_saving_box"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/_200sdp"
+    android:layout_height="@dimen/_180sdp"
     android:layout_marginLeft="@dimen/_10sdp"
     android:layout_marginTop="@dimen/_10sdp"
     android:layout_marginRight="@dimen/_10sdp"
@@ -23,18 +23,19 @@
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_unknown"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/_5sdp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_saving_description_item"
             style="@style/Widget.Moony.Headline4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_29sdp"
             android:gravity="center"
             android:maxLength="20"
@@ -43,14 +44,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/img_goal_category_item"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/_29sdp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_amount_progress_item"
             style="@style/Widget.Moony.Headline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
             android:maxLength="20"
             android:maxLines="1"
@@ -62,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginRight="@dimen/_10sdp"
             app:layout_constraintTop_toBottomOf="@id/txt_amount_progress_item"
             app:progress_current="0"

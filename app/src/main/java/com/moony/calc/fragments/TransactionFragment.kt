@@ -1,23 +1,19 @@
 package com.moony.calc.fragments
 
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.moony.calc.R
 import com.moony.calc.activities.AddTransactionActivity
 import com.moony.calc.adapter.TransactionAdapter
 import com.moony.calc.base.BaseFragment
-import com.moony.calc.database.DateTimeViewModel
 import com.moony.calc.database.TransactionViewModel
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
-import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatMonth
@@ -27,15 +23,15 @@ import java.util.*
 
 class TransactionFragment() : BaseFragment() {
     private var calNow = Calendar.getInstance()
-    private lateinit var dateTimeViewModel: DateTimeViewModel
-
-    private lateinit var transactionViewModel: TransactionViewModel
+    private val transactionViewModel: TransactionViewModel by lazy {
+        ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
+    }
     private var totalIncome: Double = 0.0
     private var totalExpenses: Double = 0.0
     private var totalIncomeLiveData: LiveData<Double>? = null
     private var totalExpensesLiveData: LiveData<Double>? = null
-    private var dateTimeLiveData: LiveData<List<DateTime>>? = null
-
+    private var transactionAdapter: TransactionAdapter? = null
+    private var transactionLiveData: LiveData<List<Transaction>>? = null
 
 
     override fun getLayoutId(): Int = R.layout.fragment_transaction
@@ -43,41 +39,18 @@ class TransactionFragment() : BaseFragment() {
     override fun init() {
         initControl()
         initEvent()
-        /*     val radius = baseContext!!.resources.getDimension(R.dimen._10sdp)
-             motion_transaction.setTransitionListener(object : MotionLayout.TransitionListener {
-                 override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
-                 }
-
-                 override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
-                 }
-
-                 override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
-                     if (p3 == 0.9f) {
-                         if (p2 == R.id.end_trans)
-                             card_transaction.radius = 0f
-                     } else if (p3 < 0.9f)
-                         card_transaction.radius = radius - radius * p3
-                 }
-
-                 override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                     *//*if (p1==R.id.end_trans){
-                    card_transaction.radius=0f
-                }*//*
-            }
-
-
-        })*/
     }
 
     private fun initControl() {
         refreshData()
         txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+        transactionAdapter = TransactionAdapter(fragmentActivity!!, transactionItemClick)
+        rv_transaction.setHasFixedSize(true)
+        rv_transaction.layoutManager = LinearLayoutManager(fragmentActivity)
+        rv_transaction.adapter = transactionAdapter
+
     }
 
-    private val dateTimeObserver = Observer<List<DateTime>> {
-        Log.d("TEST_LIST", " date time")
-        createTransactionList(it)
-    }
     private val totalIncomeObserver = Observer<Double> { income ->
         totalIncome = 0.0
         if (income != null) totalIncome = income
@@ -97,39 +70,8 @@ class TransactionFragment() : BaseFragment() {
         txt_transaction_balance.text = (totalIncome - totalExpenses).decimalFormat()
 
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dateTimeViewModel =
-            ViewModelProvider(fragmentActivity!!).get(DateTimeViewModel::class.java)
-        transactionViewModel =
-            ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
-    }
-
-    private fun refreshData() {
-        dateTimeLiveData?.removeObserver(dateTimeObserver)
-
-        //lấy data từ database
-        dateTimeLiveData =
-            dateTimeViewModel.getAllDateTimeByMonth(calNow[Calendar.MONTH], calNow[Calendar.YEAR])
-
-        dateTimeLiveData!!.observe(viewLifecycleOwner, dateTimeObserver)
-
-        totalIncomeLiveData?.removeObserver(totalIncomeObserver)
-        totalIncomeLiveData =
-            transactionViewModel.getTotalMoney(true, calNow[Calendar.MONTH], calNow[Calendar.YEAR])
-        totalIncomeLiveData!!.observe(viewLifecycleOwner, totalIncomeObserver)
-
-        totalExpensesLiveData?.removeObserver(totalExpensesObserver)
-        totalExpensesLiveData =
-            transactionViewModel.getTotalMoney(false, calNow[Calendar.MONTH], calNow[Calendar.YEAR])
-    }
-
-    private fun createTransactionList(list: List<DateTime>) {
-        val adapter = TransactionAdapter(list, fragmentActivity!!, transactionItemClick)
-        rv_transaction.setHasFixedSize(true)
-        rv_transaction.layoutManager = LinearLayoutManager(fragmentActivity)
-        rv_transaction.adapter = adapter
+    private val transactionObserver = Observer<List<Transaction>> { list ->
+        transactionAdapter!!.refreshTransactions(list)
 
         progress_loading.visibility = View.INVISIBLE
 
@@ -140,16 +82,37 @@ class TransactionFragment() : BaseFragment() {
             layout_list_empty.visibility = View.GONE
             rv_transaction.visibility = View.VISIBLE
         }
+    }
+
+
+    private fun refreshData() {
+        totalIncomeLiveData?.removeObserver(totalIncomeObserver)
+        totalIncomeLiveData =
+            transactionViewModel.getTotalMoney(true, calNow[Calendar.MONTH], calNow[Calendar.YEAR])
+        totalIncomeLiveData!!.observe(viewLifecycleOwner, totalIncomeObserver)
+
+        totalExpensesLiveData?.removeObserver(totalExpensesObserver)
+        totalExpensesLiveData =
+            transactionViewModel.getTotalMoney(false, calNow[Calendar.MONTH], calNow[Calendar.YEAR])
+
+        transactionLiveData?.removeObserver(transactionObserver)
+        transactionLiveData =
+            transactionViewModel.getAllTransactionByDate(
+                calNow[Calendar.MONTH],
+                calNow[Calendar.YEAR]
+            )
+        transactionLiveData!!.observe(viewLifecycleOwner, transactionObserver)
+
 
     }
 
-    private val transactionItemClick: (Transaction, DateTime, Category) -> Unit =
-        { transaction, dateTime, category ->
+    private val transactionItemClick: (Transaction, Category) -> Unit =
+        { transaction, category ->
             //Nội dung của hàm itemClick ở đây
             val intent = Intent(context, AddTransactionActivity::class.java)
             intent.putExtra(MoonyKey.transactionDetail, transaction)
             intent.putExtra(MoonyKey.transactionCategory, category)
-            intent.putExtra(MoonyKey.transactionDateTime, dateTime)
+            //intent.putExtra(MoonyKey.transactionDateTime, dateTime)
             startActivity(intent)
         }
 
@@ -182,20 +145,6 @@ class TransactionFragment() : BaseFragment() {
         txt_transaction_date.setOnClickListener {
             showMonthYearPickerDialog()
         }
-
-
-        rv_transaction.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                /* if (dy > 0) noNameBottomBar.hide()
-                 else noNameBottomBar.show()*/
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                //if (newState == RecyclerView.SCROLL_STATE_IDLE) noNameBottomBar.show()
-                super.onScrollStateChanged(recyclerView, newState)
-            }
-        })
-
     }
 
     private fun showProgressBar() {
