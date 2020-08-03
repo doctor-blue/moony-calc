@@ -95,7 +95,6 @@
                         android:layout_width="@dimen/_24sdp"
                         android:layout_height="@dimen/_24sdp"
                         android:scaleType="centerCrop"
-                        android:tint="@color/colorPrimary"
                         android:src="@drawable/ic_unknown" />
 
                     <com.google.android.material.textfield.TextInputLayout

@@ -11,13 +11,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Database(
-    entities = [Transaction::class, Saving::class, Category::class, DateTime::class, SavingHistory::class],
+    entities = [Transaction::class, Saving::class, Category::class, SavingHistory::class],
     version = 1
 )
 abstract class MoonyDatabase : RoomDatabase() {
     abstract fun getTransactionDao(): TransactionDao
     abstract fun getCategoryDao(): CategoryDao
-    abstract fun getDateTimeDao(): DateTimeDao
     abstract fun getSavingDao(): SavingDao
     abstract fun getSavingHistoryDao(): SavingHistoryDao
 
