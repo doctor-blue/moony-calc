@@ -1,5 +1,6 @@
 package com.moony.calc.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -79,6 +80,7 @@ class AddCategoriesActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    @SuppressLint("WrongConstant")
     private fun saveCategory() {
         val snackBar: Snackbar =
             Snackbar.make(
@@ -88,7 +90,7 @@ class AddCategoriesActivity : BaseActivity() {
             )
         snackBar.setTextColor(resources.getColor(R.color.white))
         snackBar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
-        snackBar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
+        snackBar.animationMode = Snackbar.ANIMATION_MODE_FADE
 
         when {
             edt_title_category.text.toString().trim().isEmpty() -> {

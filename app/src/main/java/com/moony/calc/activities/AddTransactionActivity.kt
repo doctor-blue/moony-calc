@@ -10,17 +10,14 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
-import com.moony.calc.database.DateTimeViewModel
 import com.moony.calc.database.TransactionViewModel
 import com.moony.calc.dialog.ConfirmDialogBuilder
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
-import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
@@ -33,7 +30,6 @@ import java.util.*
 class AddTransactionActivity : BaseActivity() {
     private var isDetails: Boolean = false
     private var transaction: Transaction? = null
-    private var dateTime: DateTime? = null
     private var category: Category? = null
     private val requestCode = 234
 
@@ -42,9 +38,6 @@ class AddTransactionActivity : BaseActivity() {
     }
     private val calendar: Calendar = Calendar.getInstance()
 
-    private val dateTimeViewModel: DateTimeViewModel by lazy {
-        ViewModelProvider(this)[DateTimeViewModel::class.java]
-    }
 
     override fun init(savedInstanceState: Bundle?) {
         initControls()
@@ -58,8 +51,7 @@ class AddTransactionActivity : BaseActivity() {
         val intent = intent
         transaction =
             intent.getSerializableExtra(MoonyKey.transactionDetail) as Transaction?
-        dateTime =
-            intent.getSerializableExtra(MoonyKey.transactionDateTime) as DateTime?
+
         category =
             intent.getSerializableExtra(MoonyKey.transactionCategory) as Category?
 
@@ -68,31 +60,29 @@ class AddTransactionActivity : BaseActivity() {
         transaction?.let { tran ->
             //transaction,category và date time không = null tức là đang ở trạng thái detail nên set thông tin cho các view
             category?.let { cate ->
-                dateTime?.let { date ->
-                    isDetails = true
-                    toolbar_add_transaction.title = resources.getString(R.string.transaction_detail)
+                isDetails = true
+                toolbar_add_transaction.title = resources.getString(R.string.transaction_detail)
 
-                    edt_transaction_money.setText(tran.money.decimalFormat())
-                    edt_transaction_note.setText(tran.note)
+                edt_transaction_money.setText(tran.money.decimalFormat())
+                edt_transaction_note.setText(tran.note)
 
-                    Glide.with(this).load(AssetFolderManager.assetPath + cate.iconUrl)
-                        .into(img_categories)
-                    txt_title_transaction_category.text = cate.title
+                Glide.with(this).load(AssetFolderManager.assetPath + cate.iconUrl)
+                    .into(img_categories)
+                txt_title_transaction_category.text = cate.title
 
-                    if (category!!.isIncome) {
-                        edt_transaction_money.setTextColor(resources.getColor(R.color.blue))
-                    } else {
-                        edt_transaction_money.setTextColor(resources.getColor(R.color.colorAccent))
-                    }
+                if (category!!.isIncome) {
 
-                    calendar.set(Calendar.DAY_OF_MONTH, date.day)
-                    calendar.set(Calendar.MONTH, date.month)
-                    calendar.set(Calendar.YEAR, date.year)
-                    txt_transaction_time.text = calendar.formatDateTime()
+                } else {
 
-                    calendar.set(Calendar.DAY_OF_MONTH, date.day)
-                    btn_delete_transaction.visibility = View.VISIBLE
                 }
+
+                calendar.set(Calendar.DAY_OF_MONTH, tran.day)
+                calendar.set(Calendar.MONTH, tran.month)
+                calendar.set(Calendar.YEAR, tran.year)
+                txt_transaction_time.text = calendar.formatDateTime()
+
+                calendar.set(Calendar.DAY_OF_MONTH, tran.day)
+                btn_delete_transaction.visibility = View.VISIBLE
             }
         }
         edt_transaction_money.setSelection(edt_transaction_money.text.toString().length)
@@ -193,52 +183,33 @@ class AddTransactionActivity : BaseActivity() {
                     resources.getString(R.string.empty_category_error)
             }
             else -> {
-                //Sẽ lắng nghe coi date time đã được thêm vào database hay chưa để có thể get id của date time ra và thêm transaction hoặc update transaction
-                dateTimeViewModel.getDateTime(
-                    calendar[Calendar.DAY_OF_MONTH],
-                    calendar[Calendar.MONTH],
-                    calendar[Calendar.YEAR]
-                )
-                    .observe(this, Observer {
-                        //kiểm tra coi ngày đã chọn đã tồn tại trong database hay chưa
-                        if (it == null) {
-                            //Ko tồn tại thì thêm
-                            dateTime = DateTime(
-                                calendar[Calendar.DAY_OF_MONTH],
-                                calendar[Calendar.MONTH],
-                                calendar[Calendar.YEAR]
-                            )
-                            dateTimeViewModel.insertDateTime(dateTime!!)
-                        } else {
-                            //đã tồn tại thì check là thêm mới hay là chi tiết
-                            if (isDetails) {
-                                transaction?.let { transaction ->
-                                    transaction.idDate = it.id
-                                    transaction.note = edt_transaction_note.text.toString()
-                                    transaction.money =
-                                        handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
-                                    transaction.month = calendar[Calendar.MONTH]
-                                    transaction.year = calendar[Calendar.YEAR]
-                                    transaction.idCategory = category!!.idCategory
-                                    transaction.isIncome = category!!.isIncome
+                if (isDetails) {
+                    transaction?.let { transaction ->
+                        transaction.day = calendar[Calendar.DAY_OF_MONTH]
+                        transaction.note = edt_transaction_note.text.toString()
+                        transaction.money =
+                            handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
+                        transaction.month = calendar[Calendar.MONTH]
+                        transaction.year = calendar[Calendar.YEAR]
+                        transaction.idCategory = category!!.idCategory
+                        transaction.isIncome = category!!.isIncome
 
-                                    transactionViewModel.updateTransaction(transaction)
-                                }
-                            } else {
-                                transaction = Transaction(
-                                    handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
-                                    category!!.isIncome,
-                                    it.id,
-                                    category!!.idCategory,
-                                    edt_transaction_note.text.toString(),
-                                    calendar[Calendar.MONTH],
-                                    calendar[Calendar.YEAR]
-                                )
-                                transactionViewModel.insertTransaction(transaction!!)
-                            }
-                            finish()
-                        }
-                    })
+                        transactionViewModel.updateTransaction(transaction)
+                    }
+                } else {
+                    transaction = Transaction(
+                        handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
+                        category!!.isIncome,
+                        category!!.idCategory,
+                        edt_transaction_note.text.toString(),
+                        calendar[Calendar.DAY_OF_MONTH],
+                        calendar[Calendar.MONTH],
+                        calendar[Calendar.YEAR]
+                    )
+                    transactionViewModel.insertTransaction(transaction!!)
+                }
+                finish()
+
             }
         }
 

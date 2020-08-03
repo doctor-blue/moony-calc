@@ -11,9 +11,6 @@
     <string name="goal">Goals</string>
     <string name="feedback">Feedback</string>
     <string name="about">About</string>
-    <string name="income_title">Income:</string>
-    <string name="expenses_title">Expenses:</string>
-    <string name="balance_title">Balance:</string>
     <string name="add_transaction">Add transaction</string>
     <string name="save">Save</string>
     <string name="select_category">Select category</string>
@@ -69,4 +66,10 @@
     <string name="notice_delete_saving">Do you really want to delete this saving goal ?</string>
     <string name="add_saving_history">How much did you save?</string>
     <string name="date">Date :</string>
+    <string name="get_money_out">Get the money out</string>
+    <string name="more_money_on">More money on</string>
+    <string name="more">More</string>
+    <string name="your_balance">Your Balance</string>
+    <string name="income_title">Income :</string>
+    <string name="expenses_title">Expenses:</string>
 </resources>

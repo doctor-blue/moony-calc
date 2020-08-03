@@ -15,7 +15,7 @@ import com.moony.calc.database.SavingViewModel
 import com.moony.calc.model.Saving
 import kotlinx.android.synthetic.main.fragment_saving_box.*
 
-class SavingBoxFragment() : BaseFragment() {
+class SavingBoxFragment: BaseFragment() {
     private lateinit var savings: List<Saving>
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
 
@@ -35,31 +35,30 @@ class SavingBoxFragment() : BaseFragment() {
         rv_saving_box.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy < 0 && !btn_add_saving_goals.isShown)
-                    btn_add_saving_goals.show();
+
                 else if (dy > 0 && btn_add_saving_goals.isShown)
-                    btn_add_saving_goals.hide();
+
+                btn_add_saving_goals.id
             }
         })
     }
 
     private fun initControl() {
-        rv_saving_box.layoutManager = LinearLayoutManager(context)
+        rv_saving_box.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         savingViewModel.getAllSaving().observe(this,
             Observer { savings ->
                 if (savings.isNotEmpty()) {
-                    val adapter = SavingBoxAdapter(activity!!, savings) {
+                    val adapter = SavingBoxAdapter(requireActivity(), savings) {
                         val saving: Saving = it as Saving
-                        val intent: Intent = Intent(baseContext, SavingDetailActivity::class.java)
+                        val intent = Intent(baseContext, SavingDetailActivity::class.java)
                         intent.putExtra(SAVING_KEY,saving)
                         startActivity(intent)
                     }
                     rv_saving_box.adapter = adapter
-                    txt_add_goal_manual.visibility = View.GONE
-                    txt_empty_goal.visibility = View.GONE
+                    layout_list_empty.visibility=View.GONE
                     rv_saving_box.visibility = View.VISIBLE
                 } else {
-                    txt_add_goal_manual.visibility = View.VISIBLE
-                    txt_empty_goal.visibility = View.VISIBLE
+                    layout_list_empty.visibility=View.VISIBLE
                     rv_saving_box.visibility = View.GONE
                 }
 

@@ -5,31 +5,27 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.moony.calc.R
 import com.moony.calc.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Database(
-    entities = [Transaction::class, Saving::class, Category::class, DateTime::class, SavingHistory::class],
+    entities = [Transaction::class, Saving::class, Category::class, SavingHistory::class],
     version = 1
 )
 abstract class MoonyDatabase : RoomDatabase() {
     abstract fun getTransactionDao(): TransactionDao
     abstract fun getCategoryDao(): CategoryDao
-    abstract fun getDateTimeDao(): DateTimeDao
     abstract fun getSavingDao(): SavingDao
     abstract fun getSavingHistoryDao(): SavingHistoryDao
 
     companion object {
         @Volatile
         private var instance: MoonyDatabase? = null
-        private var context:Context?=null
         fun getInstance(context: Context): MoonyDatabase {
             if (instance == null)
                 synchronized(this) {
-                    this.context=context
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         MoonyDatabase::class.java,
@@ -45,7 +41,8 @@ abstract class MoonyDatabase : RoomDatabase() {
                 adDefaultCategory(instance!!.getCategoryDao())
             }
         }
-        private fun adDefaultCategory(categoryDao: CategoryDao){
+
+        private fun adDefaultCategory(categoryDao: CategoryDao) {
             GlobalScope.launch(Dispatchers.IO) {
                 //default category
                 //categoryDao.insertCategory(Category(context!!.resources.getString(R.string.empty),"categories/education/art.png"))

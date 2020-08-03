@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/transaction_fragment">
+
+    <fragment
+        android:id="@+id/transaction_fragment"
+        android:name="com.moony.calc.fragments.TransactionFragment"
+        android:label="fragment_transaction"
+        tools:layout="@layout/fragment_transaction" >
+        <action
+            android:id="@+id/action_transaction_fragment_to_saving_fragment"
+            app:destination="@id/saving_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/saving_fragment"
+        android:name="com.moony.calc.fragments.SavingBoxFragment"
+        android:label="fragment_saving_box"
+        tools:layout="@layout/fragment_saving_box" >
+        <action
+            android:id="@+id/action_saving_fragment_to_chart_fragment"
+            app:destination="@id/chart_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chart_fragment"
+        android:name="com.moony.calc.fragments.ChartFragment"
+        android:label="fragment_chart"
+        tools:layout="@layout/fragment_chart" />
+</navigation>

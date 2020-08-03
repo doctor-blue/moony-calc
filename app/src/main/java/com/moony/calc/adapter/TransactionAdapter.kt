@@ -1,78 +1,82 @@
 package com.moony.calc.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.material.card.MaterialCardView
 import com.moony.calc.R
-import com.moony.calc.database.DateTimeViewModel
-import com.moony.calc.database.TransactionViewModel
+import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.model.Category
-import com.moony.calc.model.DateTime
 import com.moony.calc.model.Transaction
+import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
-import kotlin.math.roundToLong
 
 class TransactionAdapter(
-    private val dates: List<DateTime>,
-    private val activity: FragmentActivity,
-    private val itemClick: (Transaction, DateTime, Category) -> Unit
+    private val context: FragmentActivity,
+    private val itemClick: (Transaction, Category) -> Unit
 ) : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
+    private var transactions:List<Transaction> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(activity).inflate(R.layout.transaction_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.transaction_item, parent, false)
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = dates.size
+    override fun getItemCount(): Int = transactions.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(dates[position], itemClick)
+        holder.onBind(transactions[position], itemClick)
+    }
+
+    fun refreshTransactions(transactions:List<Transaction>){
+        this.transactions=transactions
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val txtTransactionDay: TextView = itemView.findViewById(R.id.txt_transaction_day)
-        private val txtIncome: TextView = itemView.findViewById(R.id.txt_transaction_income)
-        private val txtExpenses: TextView = itemView.findViewById(R.id.txt_transaction_expenses)
-        private val rvTransaction: RecyclerView = itemView.findViewById(R.id.rv_transaction_item)
+        private val imgTransactionIcon: ImageView =
+            itemView.findViewById(R.id.img_transaction)
+        private val txtTransactionName: TextView =
+            itemView.findViewById(R.id.txt_transaction_name)
+        private val cardTransaction: MaterialCardView =
+            itemView.findViewById(R.id.card_transaction)
+        private val txtTransactionMoney: TextView =
+            itemView.findViewById(R.id.txt_transaction_money)
+        private val txtDate:TextView =itemView.findViewById(R.id.txt_transaction_date)
 
-        fun onBind(dateTime: DateTime, itemClick: (Transaction, DateTime, Category) -> Unit) {
-            txtTransactionDay.text = dateTime.day.toString()
+        fun onBind(transaction: Transaction, itemClick: (Transaction, Category) -> Unit) {
+            var category: Category = Category("Test", "URL", true)
+            val categoryViewModel =
+                ViewModelProvider(context).get(CategoryViewModel::class.java)
 
-            val transactionViewModel =
-                ViewModelProvider(activity).get(TransactionViewModel::class.java)
-            val dateTimeViewModel = ViewModelProvider(activity)[DateTimeViewModel::class.java]
-            //Lấy Transaction theo từng ngày trong tháng và gộp nó vào 1 list để hiển thị trong list con
-            transactionViewModel.getAllTransactionByDate(dateTime.id).observe(activity, Observer {
-
-                var income = 0.0
-                var expenses = 0.0
-
-                for (transaction in it)
-                    if (transaction.isIncome) income += transaction.money else expenses += transaction.money
-
-                income = ((income * 1000.0).roundToLong() / 1000.0)
-                expenses = ((expenses * 1000.0).roundToLong() / 1000.0)
-
-                if (it.isEmpty())
-                    dateTimeViewModel.deleteDateTime(dateTime)
-
-
-                txtExpenses.text = expenses.decimalFormat()
-                txtIncome.text = income.decimalFormat()
-                //itemClick ở đây là 1 hàm mà nội dung của hàm sẽ được viết ở TransactionFragment
-                val adapter = TransactionChildrenAdapter(it, itemClick, activity, dateTime)
-                val layoutManager = LinearLayoutManager(activity)
-                rvTransaction.setHasFixedSize(true)
-                rvTransaction.layoutManager = layoutManager
-                rvTransaction.adapter = adapter
-
+            categoryViewModel.getCategory(transaction.idCategory).observe(context, Observer {
+                if(it!=null){
+                    Glide.with(context).load(AssetFolderManager.assetPath+it.iconUrl).into(imgTransactionIcon)
+                    txtTransactionName.text = it.title
+                    category=it
+                }
             })
+
+            txtTransactionMoney.text = transaction.money.decimalFormat()
+            if (transaction.isIncome)
+                txtTransactionMoney.setTextColor(Color.parseColor("#00A8E8"))
+            else
+                txtTransactionMoney.setTextColor(Color.parseColor("#fd6f43"))
+
+            txtDate.text=("${transaction.day}/${transaction.month+1}/${transaction.year}")
+
+            cardTransaction.setOnClickListener {
+                //thực hiện hàm click nội dung hàm sẽ được viết ở TransactionFragment
+                itemClick(transaction, category)
+            }
         }
     }
 }

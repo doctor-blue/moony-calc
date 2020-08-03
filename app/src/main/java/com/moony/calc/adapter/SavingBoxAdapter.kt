@@ -14,10 +14,12 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import com.moony.calc.R
 import com.moony.calc.database.CategoryViewModel
+import com.moony.calc.database.SavingHistoryViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
+import kotlin.math.floor
 
 class SavingBoxAdapter(
     private val context: FragmentActivity,
@@ -39,11 +41,26 @@ class SavingBoxAdapter(
         fun onBind(saving: Saving, onClick: (Any) -> Unit) {
             val categoryViewModel =
                 ViewModelProvider(context).get(CategoryViewModel::class.java)
-            var category: Category = Category("Test", "URL", true)
+
             categoryViewModel.getCategory(saving.idCategory).observe(context, Observer { category ->
                 Glide.with(context).load(AssetFolderManager.assetPath + category.iconUrl)
                     .into(imgGoalCategoryItem)
             })
+            val  savingHistoryViewModel=ViewModelProvider(context)[SavingHistoryViewModel::class.java]
+            savingHistoryViewModel.getCurrentAmount(saving.idSaving).observe(context, Observer {
+                var saved = it
+                if (saved == null) saved = 0.0
+
+                var progress = floor(saved / saving.desiredAmount * 100).toInt()
+
+                if (progress<0) progress=0
+                if (progress > 100) progress = 100
+
+
+                pbSavingGoalsItem.progress=progress
+            })
+
+
             txtSavingDescriptionItem.text = saving.description
             txtAmountProgressItem.text = saving.desiredAmount.decimalFormat()
 

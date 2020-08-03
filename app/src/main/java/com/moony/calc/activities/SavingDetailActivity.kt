@@ -59,6 +59,7 @@ class SavingDetailActivity : BaseActivity() {
         val savingDetailAdapter = SavingDetailAdapter(supportFragmentManager, fragments, this)
         viewpager_detail_saving.adapter = savingDetailAdapter
         tab_layout_saving.setupWithViewPager(viewpager_detail_saving)
+        toolbar_saving_detail.title=saving.description
 
 
         setSupportActionBar(toolbar_saving_detail)

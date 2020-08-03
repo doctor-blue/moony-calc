@@ -13,7 +13,7 @@ class TransactionRepository(application: Application) {
     fun getTotalMoney(isIncome: Boolean, month: Int, year: Int): LiveData<Double> =
         transactionDao.getTotalMoney(isIncome, month, year)
 
-    fun getAllTransactionByDate(id: Int) = transactionDao.getAllTransactionsByDate(id)
+    fun getAllTransactionByDate(month: Int, year: Int) = transactionDao.getAllTransactionsByDate(month,year)
 
     suspend fun insertTransaction(transaction: Transaction) =
         transactionDao.insertTransaction(transaction)

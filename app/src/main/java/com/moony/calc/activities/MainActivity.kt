@@ -1,17 +1,14 @@
 package com.moony.calc.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.fragments.ChartFragment
 import com.moony.calc.fragments.SavingBoxFragment
 import com.moony.calc.fragments.TransactionFragment
-import com.moony.calc.views.NavigationIconClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -19,7 +16,8 @@ class MainActivity : BaseActivity() {
     private val savingBoxFragment = SavingBoxFragment()
     private val transactionFragment = TransactionFragment()
     private val chartFragment = ChartFragment()
-    private lateinit var navigationIconClickListener: NavigationIconClickListener
+
+    private lateinit var navController: NavController
 
     override fun init(savedInstanceState: Bundle?) {
         initControl()
@@ -29,47 +27,19 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     private fun initEvent() {
-        btn_nav_main.setOnClickListener(
-            navigationIconClickListener
-        )
 
     }
 
-    @SuppressLint("ResourceAsColor")
     private fun initControl() {
-        fragment_main.fragmentManager = supportFragmentManager
-        fragment_main.replaceFragment(TransactionFragment())
-        layout_main_menu.visibility=View.GONE
-
-        navigationIconClickListener = NavigationIconClickListener(
-            this,
-            fragment_main,
-            AccelerateDecelerateInterpolator(),
-            ContextCompat.getDrawable(this, R.drawable.ic_navigation), // Menu open icon
-            ContextCompat.getDrawable(this, R.drawable.ic_menu_close),
-            layout_main_menu
-        )
+        navController = findNavController(R.id.main_fragment)
+        no_name_bottom_bar.setupWithNavController(navController)
     }
 
-    fun onMenuItemClick(view: View) {
-        when (view.id) {
-            R.id.mnu_budget -> {
-                fragment_main.replaceFragment(transactionFragment)
-                navigationIconClickListener.showBackdrop(btn_nav_main)
-            }
-            R.id.mnu_saving -> {
-                fragment_main.replaceFragment(savingBoxFragment)
-                navigationIconClickListener.showBackdrop(btn_nav_main)
-            }
-            R.id.mnu_chart -> {
-                fragment_main.replaceFragment(chartFragment)
-                navigationIconClickListener.showBackdrop(btn_nav_main)
-            }
-            R.id.mnu_categories -> {
-                startActivity(Intent(this, CategoriesActivity::class.java).putExtra(CategoriesActivity.KEY,true))
-                navigationIconClickListener.showBackdrop(btn_nav_main)
-            }
-        }
+    override fun navigateUpTo(upIntent: Intent?): Boolean {
+        navController.navigateUp()
+        return true
     }
+
+
 }
 

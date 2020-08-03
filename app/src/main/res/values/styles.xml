@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -32,7 +32,7 @@
 
     <style name="Widget.Moony.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:background">@color/white</item>
-        <item name="titleTextColor">@color/textColor</item>
+        <item name="titleTextColor">@color/colorPrimary</item>
         <item name="drawableTint">@color/colorPrimary</item>
     </style>
 
@@ -40,7 +40,7 @@
         <item name="android:textColor">@color/textColor</item>
         <item name="fontFamily">@font/nimbus_roman_medium</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/_16sdp</item>
+        <item name="android:textSize">@dimen/_17sdp</item>
     </style>
 
     <style name="Widget.Moony.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
@@ -50,7 +50,7 @@
     </style>
 
     <style name="Widget.Moony.Headline4" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textColor">@color/textColor</item>
         <item name="fontFamily">@font/nimbus_roman_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/_25sdp</item>

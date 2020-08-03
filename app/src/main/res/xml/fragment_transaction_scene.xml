@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Transition
+        app:constraintSetEnd="@id/end_trans"
+        app:constraintSetStart="@id/start_trans"
+       >
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:touchAnchorId="@id/card_transaction" />
+        <KeyFrameSet>
+            <KeyPosition
+                app:motionTarget="@id/btn_add_transaction"
+                app:framePosition="20"
+                app:keyPositionType="parentRelative"
+                app:percentX="1.2"
+                app:percentY="0.015"
+                />
+            <KeyPosition
+                app:motionTarget="@id/btn_add_transaction"
+                app:framePosition="80"
+                app:keyPositionType="parentRelative"
+                app:percentX="1.2"
+                app:percentY="0.9"
+                />
+            <KeyAttribute app:framePosition="100"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                app:motionTarget="@id/btn_add_transaction"/>
+        </KeyFrameSet>
+
+    </Transition>
+    <ConstraintSet android:id="@+id/start_trans">
+        <Constraint android:id="@+id/btn_add_transaction">
+            <Layout
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"/>
+        </Constraint>
+        <Constraint android:id="@+id/card_transaction">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_235sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </Constraint>
+        <Constraint android:id="@+id/layout_transaction">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_250sdp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </Constraint>
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/end_trans">
+        <Constraint android:id="@+id/btn_add_transaction">
+            <Layout
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_48sdp"
+              />
+        </Constraint>
+        <Constraint android:id="@+id/layout_transaction">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_250sdp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </Constraint>
+        <Constraint android:id="@+id/card_transaction">
+            <Layout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/backgroundColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </Constraint>
+    </ConstraintSet>
+</MotionScene>

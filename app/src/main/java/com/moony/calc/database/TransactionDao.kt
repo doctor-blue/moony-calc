@@ -19,8 +19,8 @@ interface TransactionDao {
     @Query("select*from transaction_table")
     fun getAllTransactions(): LiveData<List<Transaction>>
 
-    @Query("select*from transaction_table where idDate=:id")
-    fun getAllTransactionsByDate(id: Int): LiveData<List<Transaction>>
+    @Query("select*from transaction_table  where month=:month and year=:year ")
+    fun getAllTransactionsByDate(month: Int, year: Int): LiveData<List<Transaction>>
 
     @Query("select sum(money) as double from transaction_table where isIncome =:isIncome and month=:month and year=:year")
     fun getTotalMoney(isIncome: Boolean, month: Int, year: Int): LiveData<Double>
