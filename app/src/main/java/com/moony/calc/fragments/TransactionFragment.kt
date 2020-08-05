@@ -15,13 +15,14 @@ import com.moony.calc.database.TransactionViewModel
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.Transaction
+import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog
 import kotlinx.android.synthetic.main.fragment_transaction.*
 import java.util.*
 
-class TransactionFragment() : BaseFragment() {
+class TransactionFragment: BaseFragment() {
     private var calNow = Calendar.getInstance()
     private val transactionViewModel: TransactionViewModel by lazy {
         ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
@@ -32,6 +33,9 @@ class TransactionFragment() : BaseFragment() {
     private var totalExpensesLiveData: LiveData<Double>? = null
     private var transactionAdapter: TransactionAdapter? = null
     private var transactionLiveData: LiveData<List<Transaction>>? = null
+    private val settings:Settings by lazy {
+        Settings.getInstance(baseContext!!)
+    }
 
 
     override fun getLayoutId(): Int = R.layout.fragment_transaction
@@ -54,7 +58,7 @@ class TransactionFragment() : BaseFragment() {
     private val totalIncomeObserver = Observer<Double> { income ->
         totalIncome = 0.0
         if (income != null) totalIncome = income
-        Log.d("INCOME", " inc $income")
+
         totalExpensesLiveData!!.removeObserver(totalExpensesObserver)
         totalExpensesLiveData!!.observe(viewLifecycleOwner, totalExpensesObserver)
 
@@ -63,11 +67,10 @@ class TransactionFragment() : BaseFragment() {
     private val totalExpensesObserver = Observer<Double> { expenses ->
         totalExpenses = 0.0
         if (expenses != null) totalExpenses = expenses
-        Log.d("INCOME", " exp  $expenses")
 
-        txt_transaction_income.text = totalIncome.decimalFormat()
-        txt_transaction_expenses.text = totalExpenses.decimalFormat()
-        txt_transaction_balance.text = (totalIncome - totalExpenses).decimalFormat()
+        txt_transaction_income.text = (totalIncome.decimalFormat()+settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+        txt_transaction_expenses.text = (totalExpenses.decimalFormat()+settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+        txt_transaction_balance.text = ((totalIncome - totalExpenses).decimalFormat()+settings.getString(Settings.SettingKey.CURRENCY_UNIT))
 
     }
     private val transactionObserver = Observer<List<Transaction>> { list ->

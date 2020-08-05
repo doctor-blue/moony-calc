@@ -151,13 +151,13 @@ class AddSavingGoalActivity : BaseActivity() {
                                 .decimalFormat().length
                             edt_goal_amount.filters = arrayOf(InputFilter.LengthFilter(maxLength))
                         } else {
-                            edt_goal_amount.filters = arrayOf(InputFilter.LengthFilter(9))
-                            if (it.length - 1 == 8) {
+                            edt_goal_amount.filters = arrayOf(InputFilter.LengthFilter(13))
+                            if (it.length - 1 == 12) {
                                 //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
-                                val lastChar = it[8]
+                                val lastChar = it[12]
                                 if (!(lastChar == '.' || lastChar == ',')) {
-                                    edt_goal_amount.setText(it.subSequence(0, 8))
-                                    edt_goal_amount.setSelection(8)
+                                    edt_goal_amount.setText(it.subSequence(0, 12))
+                                    edt_goal_amount.setSelection(12)
                                 }
                             }
                         }

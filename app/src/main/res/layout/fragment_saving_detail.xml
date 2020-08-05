@@ -85,7 +85,7 @@
                 android:layout_height="match_parent"
                 app:above_wave_color="@color/blue"
                 app:blow_wave_color="@color/colorAccent"
-                app:progress="55" />
+                 />
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/Widget.Moony.Headline6"

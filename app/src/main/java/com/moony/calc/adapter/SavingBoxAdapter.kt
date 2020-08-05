@@ -18,14 +18,17 @@ import com.moony.calc.database.SavingHistoryViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
 import com.moony.calc.utils.AssetFolderManager
+import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import kotlin.math.floor
 
 class SavingBoxAdapter(
     private val context: FragmentActivity,
-    private val savings: List<Saving>,
+    private val onGoalCompleted: () -> Unit,
     private val onClick: (Any) -> Unit
 ) : RecyclerView.Adapter<SavingBoxAdapter.SavingViewHolder>() {
+    private val settings = Settings.getInstance(context)
+    private var savings: List<Saving> = listOf()
 
     inner class SavingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgGoalCategoryItem: ImageView =
@@ -46,23 +49,28 @@ class SavingBoxAdapter(
                 Glide.with(context).load(AssetFolderManager.assetPath + category.iconUrl)
                     .into(imgGoalCategoryItem)
             })
-            val  savingHistoryViewModel=ViewModelProvider(context)[SavingHistoryViewModel::class.java]
+            val savingHistoryViewModel =
+                ViewModelProvider(context)[SavingHistoryViewModel::class.java]
             savingHistoryViewModel.getCurrentAmount(saving.idSaving).observe(context, Observer {
                 var saved = it
                 if (saved == null) saved = 0.0
 
                 var progress = floor(saved / saving.desiredAmount * 100).toInt()
 
-                if (progress<0) progress=0
+                if (progress < 0) progress = 0
                 if (progress > 100) progress = 100
+                if (progress==100){
+                    onGoalCompleted()
+                }
 
 
-                pbSavingGoalsItem.progress=progress
+                pbSavingGoalsItem.progress = progress
             })
 
 
             txtSavingDescriptionItem.text = saving.description
-            txtAmountProgressItem.text = saving.desiredAmount.decimalFormat()
+            txtAmountProgressItem.text =
+                (saving.desiredAmount.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
 
             cardSavingBox.setOnClickListener {
                 onClick(saving)
@@ -81,5 +89,10 @@ class SavingBoxAdapter(
 
     override fun onBindViewHolder(holder: SavingViewHolder, position: Int) {
         holder.onBind(savings[position], onClick)
+    }
+
+    fun setSavings(savings: List<Saving>) {
+        this.savings = savings
+        notifyDataSetChanged()
     }
 }

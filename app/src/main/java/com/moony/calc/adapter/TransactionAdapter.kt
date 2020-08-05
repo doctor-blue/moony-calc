@@ -1,6 +1,5 @@
 package com.moony.calc.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.model.Transaction
 import com.moony.calc.utils.AssetFolderManager
+import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 
 class TransactionAdapter(
@@ -24,6 +24,7 @@ class TransactionAdapter(
     private val itemClick: (Transaction, Category) -> Unit
 ) : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
     private var transactions:List<Transaction> = listOf()
+    private val settings=Settings.getInstance(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.transaction_item, parent, false)
@@ -53,7 +54,7 @@ class TransactionAdapter(
         private val txtDate:TextView =itemView.findViewById(R.id.txt_transaction_date)
 
         fun onBind(transaction: Transaction, itemClick: (Transaction, Category) -> Unit) {
-            var category: Category = Category("Test", "URL", true)
+            var category = Category("Test", "URL", true)
             val categoryViewModel =
                 ViewModelProvider(context).get(CategoryViewModel::class.java)
 
@@ -65,11 +66,10 @@ class TransactionAdapter(
                 }
             })
 
-            txtTransactionMoney.text = transaction.money.decimalFormat()
             if (transaction.isIncome)
-                txtTransactionMoney.setTextColor(Color.parseColor("#00A8E8"))
+                txtTransactionMoney.text=(transaction.money.decimalFormat()+settings.getString(Settings.SettingKey.CURRENCY_UNIT))
             else
-                txtTransactionMoney.setTextColor(Color.parseColor("#fd6f43"))
+                txtTransactionMoney.text=((transaction.money*-1).decimalFormat()+settings.getString(Settings.SettingKey.CURRENCY_UNIT))
 
             txtDate.text=("${transaction.day}/${transaction.month+1}/${transaction.year}")
 

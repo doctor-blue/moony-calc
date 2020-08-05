@@ -49,14 +49,14 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_amount_progress_item"
-            style="@style/Widget.Moony.Headline5"
+            style="@style/Widget.Moony.Headline4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
             android:maxLength="20"
             android:maxLines="1"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_16sdp"
             app:layout_constraintTop_toBottomOf="@id/txt_saving_description_item" />
 
         <com.daimajia.numberprogressbar.NumberProgressBar
@@ -72,6 +72,8 @@
             app:progress_reached_color="@color/blue"
             app:progress_text_color="?attr/colorAccent"
             app:progress_text_size="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:progress_unreached_bar_height="@dimen/_4sdp"
             app:progress_unreached_color="?attr/colorControlHighlight" />
 
