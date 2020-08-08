@@ -18,6 +18,7 @@ import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.database.SavingHistoryViewModel
+import com.moony.calc.fragments.AddSavingGoalFragment
 import com.moony.calc.fragments.SavingHistoryFragment
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
@@ -143,7 +144,7 @@ class SavingHistoryActivity : BaseActivity() {
         }
         layout_saving_history_categories.setOnClickListener {
             val intent: Intent = Intent(this@SavingHistoryActivity, CategoriesActivity::class.java)
-            startActivityForResult(intent, AddSavingGoalActivity.KEY_PICK_CATEGORY)
+            startActivityForResult(intent, AddSavingGoalFragment.KEY_PICK_CATEGORY)
         }
         toolbar_history_saving.setNavigationOnClickListener { finish() }
 
@@ -234,7 +235,7 @@ class SavingHistoryActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AddSavingGoalActivity.KEY_PICK_CATEGORY)
+        if (requestCode == AddSavingGoalFragment.KEY_PICK_CATEGORY)
             if (resultCode == Activity.RESULT_OK) {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)

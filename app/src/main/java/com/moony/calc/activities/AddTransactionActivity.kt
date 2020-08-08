@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_add_transaction.*
 import java.util.*
 
 
-@Suppress("DEPRECATION")
 class AddTransactionActivity : BaseActivity() {
     private var isDetails: Boolean = false
     private var transaction: Transaction? = null

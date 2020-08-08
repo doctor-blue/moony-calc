@@ -12,6 +12,7 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.SavingHistoryViewModel
 import com.moony.calc.database.SavingViewModel
 import com.moony.calc.dialog.ConfirmDialogBuilder
+import com.moony.calc.fragments.AddSavingGoalFragment
 import com.moony.calc.fragments.SavingBoxFragment
 import com.moony.calc.fragments.SavingDetailFragment
 import com.moony.calc.fragments.SavingHistoryFragment
@@ -72,7 +73,7 @@ class SavingDetailActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.mnu_edit_saving) {
-            val intent = Intent(this, AddSavingGoalActivity::class.java)
+            val intent = Intent(this, AddSavingGoalFragment::class.java)
             intent.putExtra(EDIT_SAVINGS, saving)
             startActivity(intent)
         } else {

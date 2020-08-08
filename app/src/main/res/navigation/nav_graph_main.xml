@@ -11,8 +11,13 @@
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" >
         <action
-            android:id="@+id/action_transaction_fragment_to_saving_fragment"
-            app:destination="@id/saving_fragment" />
+            android:id="@+id/ac_transaction_to_saving_fragment"
+            app:destination="@id/saving_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/slide_out_left"
+            />
     </fragment>
     <fragment
         android:id="@+id/saving_fragment"
@@ -20,12 +25,28 @@
         android:label="fragment_saving_box"
         tools:layout="@layout/fragment_saving_box" >
         <action
-            android:id="@+id/action_saving_fragment_to_chart_fragment"
-            app:destination="@id/chart_fragment" />
+            android:id="@+id/ac_saving_to_chart_fragment"
+            app:destination="@id/chart_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_saving_fragment_to_addSavingGoalActivity"
+            app:destination="@id/addSavingGoalActivity"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/chart_fragment"
         android:name="com.moony.calc.fragments.ChartFragment"
         android:label="fragment_chart"
         tools:layout="@layout/fragment_chart" />
+    <fragment
+        android:id="@+id/addSavingGoalActivity"
+        android:name="com.moony.calc.fragments.AddSavingGoalFragment"
+        android:label="activity_add_saving_goal"
+        tools:layout="@layout/activity_add_saving_goal" />
 </navigation>

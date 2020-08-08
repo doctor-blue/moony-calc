@@ -4,9 +4,9 @@ import android.content.Intent
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
-import com.moony.calc.activities.AddSavingGoalActivity
 import com.moony.calc.activities.SavingDetailActivity
 import com.moony.calc.adapter.SavingBoxAdapter
 import com.moony.calc.base.BaseFragment
@@ -30,7 +30,7 @@ class SavingBoxFragment : BaseFragment() {
 
     private fun initEvent() {
         btn_add_saving_goals.setOnClickListener {
-            startActivity(Intent(activity, AddSavingGoalActivity::class.java))
+            findNavController().navigate(R.id.action_saving_fragment_to_addSavingGoalActivity)
         }
         adapter = SavingBoxAdapter(requireActivity(), countCompletedGoals) {
             val saving: Saving = it as Saving

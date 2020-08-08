@@ -72,4 +72,5 @@
     <string name="your_balance">Your Balance</string>
     <string name="income_title">Income :</string>
     <string name="expenses_title">Expenses:</string>
+    <string name="update_goal">Update Goal</string>
 </resources>

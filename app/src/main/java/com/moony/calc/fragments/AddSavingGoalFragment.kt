@@ -1,23 +1,19 @@
-package com.moony.calc.activities
+package com.moony.calc.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.view.Menu
-import android.view.MenuItem
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
-import com.moony.calc.base.BaseActivity
-import com.moony.calc.database.CategoryViewModel
+import com.moony.calc.activities.CategoriesActivity
+import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.SavingViewModel
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
@@ -28,18 +24,12 @@ import kotlinx.android.synthetic.main.activity_add_saving_goal.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddSavingGoalActivity : BaseActivity() {
+class AddSavingGoalFragment : BaseFragment() {
 
     private val calendar: Calendar = Calendar.getInstance()
     private var deadLine: String = ""
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
     private var category: Category? = null
-
-    private val categoryViewModel: CategoryViewModel by lazy {
-        ViewModelProvider(this)[CategoryViewModel::class.java]
-    }
-    private var isEditSaving = false
-    private var saving: Saving? = null
 
     companion object {
         const val KEY_PICK_CATEGORY = 1101
@@ -47,50 +37,25 @@ class AddSavingGoalActivity : BaseActivity() {
 
     override fun getLayoutId(): Int = R.layout.activity_add_saving_goal
 
-    override fun init(savedInstanceState: Bundle?) {
+    override fun init() {
         initControl()
         initEvent()
     }
 
     private fun initControl() {
-        setSupportActionBar(toolbar_add_saving_goal)
-
-        saving = intent.getSerializableExtra(SavingDetailActivity.EDIT_SAVINGS) as Saving?
-        saving?.let { sav ->
-            isEditSaving = true
-
-            edt_goal_description.setText(sav.description)
-            edt_goal_amount.setText(("${sav.desiredAmount}"))
-            txt_due_date.text = sav.deadLine
-            deadLine=sav.deadLine
-
-            categoryViewModel.getCategory(sav.idCategory).observe(this, Observer {
-                category = it
-                Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
-                    .into(img_goal_category)
-                txt_title_category_add_saving.text = it.title
-            })
-
+        toolbar_add_saving_goal.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.mnu_save) {
+                saveSavingGoal()
+            }
+            return@setOnMenuItemClickListener true
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.save_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.mnu_save) {
-            saveSavingGoal()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun saveSavingGoal() {
         val snackbar: Snackbar =
             Snackbar.make(layout_root_add_goal, R.string.empty_date_error, Snackbar.LENGTH_LONG)
         snackbar.setTextColor(resources.getColor(R.color.white))
-        snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
+        snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorAccent))
         snackbar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
 
         when {
@@ -108,23 +73,15 @@ class AddSavingGoalActivity : BaseActivity() {
                 snackbar.show()
             }
             else -> {
-                if (isEditSaving) {
-                    saving?.let {
-                        it.description=edt_goal_description.text.toString().trim()
-                        it.deadLine=deadLine
-                        it.idCategory=category!!.idCategory
-                        it.desiredAmount=edt_goal_amount.text.toString().trim().toDouble()
-
-                        savingViewModel.updateSaving(it)
-                    }
-                } else {
-                    val saving = Saving(
-                        edt_goal_description.text.toString().trim(),
-                        edt_goal_amount.text.toString().trim().toDouble(), deadLine, category!!.idCategory, ""
-                    )
-                    savingViewModel.insertSaving(saving)
-                }
-                finish()
+                val saving = Saving(
+                    edt_goal_description.text.toString().trim(),
+                    edt_goal_amount.text.toString().trim().toDouble(),
+                    deadLine,
+                    category!!.idCategory,
+                    ""
+                )
+                savingViewModel.insertSaving(saving)
+                requireActivity().onBackPressed()
             }
         }
     }
@@ -184,12 +141,15 @@ class AddSavingGoalActivity : BaseActivity() {
         }
 
         layout_goal_categories.setOnClickListener {
-            val intent: Intent = Intent(this@AddSavingGoalActivity, CategoriesActivity::class.java)
-            startActivityForResult(intent, KEY_PICK_CATEGORY)
+            val intent = Intent(requireContext(), CategoriesActivity::class.java)
+            startActivityForResult(
+                intent,
+                KEY_PICK_CATEGORY
+            )
         }
 
         toolbar_add_saving_goal.setNavigationOnClickListener {
-            finish()
+            requireActivity().onBackPressed()
         }
     }
 
@@ -204,7 +164,7 @@ class AddSavingGoalActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun pickDateTime() {
-        val dialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
+        val dialog = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)

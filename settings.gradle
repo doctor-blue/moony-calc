@@ -1,2 +1,3 @@
+include ':noname_library'
 include ':app', ':monthandyearpicker'
 rootProject.name='Moony'

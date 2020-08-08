@@ -14,7 +14,6 @@ import com.moony.calc.model.Saving
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import kotlinx.android.synthetic.main.fragment_saving_detail.*
-import kotlin.math.floor
 
 class SavingDetailFragment(var idSaving: Int) : BaseFragment() {
 
@@ -70,15 +69,16 @@ class SavingDetailFragment(var idSaving: Int) : BaseFragment() {
         var saved = it
         if (saved == null) saved = 0.0
 
-        var progress = floor(saved / saving.desiredAmount * 100).toInt()
-
+        //var progress = floor(saved / saving.desiredAmount * 100).toInt()
+        var progress = 0
         if (progress > 100) progress = 100
 
         wv_saving_detail.setProgress(progress)
         txt_saving_progress.text = ("$progress%")
         txt_saving_saved.text = saved.decimalFormat()
 
-        var remaining = (saving.desiredAmount - saved)
+        /*var remaining = (saving.desiredAmount - saved)*/
+        var remaining = 0.0
         if (remaining < 0) remaining = 0.0
 
         txt_saving_remaining.text = remaining.decimalFormat()
