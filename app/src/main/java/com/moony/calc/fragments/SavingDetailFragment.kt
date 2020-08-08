@@ -43,9 +43,9 @@ class SavingDetailFragment(var idSaving: Int) : BaseFragment() {
     }
 
     private fun initControl() {
-        wv_saving_detail.setProgress(0)
-
         savingViewModel.getSaving(idSaving).observe(viewLifecycleOwner, savingObserver)
+        moneySavedLiveData = savingHistoryViewModel.getCurrentAmount(idSaving)
+        moneySavedLiveData!!.observe(viewLifecycleOwner, moneySavedObserver)
 
     }
 
@@ -58,10 +58,6 @@ class SavingDetailFragment(var idSaving: Int) : BaseFragment() {
             categoryLiveData?.removeObserver(categoryObserver)
             categoryLiveData = categoryViewModel.getCategory(saving.idCategory)
             categoryLiveData!!.observe(viewLifecycleOwner, categoryObserver)
-
-            moneySavedLiveData?.removeObserver(moneySavedObserver)
-            moneySavedLiveData = savingHistoryViewModel.getCurrentAmount(it.idSaving)
-            moneySavedLiveData!!.observe(viewLifecycleOwner, moneySavedObserver)
         }
     }
     private val categoryObserver = Observer<Category> {

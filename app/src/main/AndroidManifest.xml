@@ -16,11 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.MainActivity2"></activity>
         <activity
             android:name=".activities.SavingHistoryActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activities.SavingDetailActivity" />
-        <activity android:name=".activities.MainActivity" />
         <activity
             android:name=".activities.AddCategoriesActivity"
             android:windowSoftInputMode="adjustResize" />

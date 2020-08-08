@@ -54,11 +54,7 @@ class SavingHistoryAdapter(
             })
 
             txtMoney.text = savingHistory.amount.decimalFormat()
-            if (savingHistory.isSaving) {
-                txtMoney.setTextColor(activity.resources.getColor(R.color.blue))
-            } else {
-                txtMoney.setTextColor(activity.resources.getColor(R.color.colorAccent))
-            }
+
             if (savingHistory.description.length > 10) {
                 txtTitle.text = (savingHistory.description.substring(0, 10) + "...")
             } else {
