@@ -1,34 +1,28 @@
-package com.moony.calc.activities
+package com.moony.calc.fragments
 
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter.LengthFilter
 import android.text.TextWatcher
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
-import com.moony.calc.base.BaseActivity
+import com.moony.calc.activities.CategoriesActivity
+import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.TransactionViewModel
-import com.moony.calc.dialog.ConfirmDialogBuilder
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.Transaction
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
-import kotlinx.android.synthetic.main.activity_add_transaction.*
+import kotlinx.android.synthetic.main.fragment_add_transaction.*
 import java.util.*
 
 
-class AddTransactionActivity : BaseActivity() {
-    private var isDetails: Boolean = false
-    private var transaction: Transaction? = null
+class AddTransactionFragment : BaseFragment() {
     private var category: Category? = null
     private val requestCode = 234
 
@@ -38,52 +32,17 @@ class AddTransactionActivity : BaseActivity() {
     private val calendar: Calendar = Calendar.getInstance()
 
 
-    override fun init(savedInstanceState: Bundle?) {
+    override fun init() {
         initControls()
         initEvents()
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_add_transaction
+    override fun getLayoutId(): Int = R.layout.fragment_add_transaction
 
     private fun initControls() {
-        setSupportActionBar(toolbar_add_transaction)
-        val intent = intent
-        transaction =
-            intent.getSerializableExtra(MoonyKey.transactionDetail) as Transaction?
-
-        category =
-            intent.getSerializableExtra(MoonyKey.transactionCategory) as Category?
 
         txt_transaction_time.text = calendar.formatDateTime()
 
-        transaction?.let { tran ->
-            //transaction,category và date time không = null tức là đang ở trạng thái detail nên set thông tin cho các view
-            category?.let { cate ->
-                isDetails = true
-                toolbar_add_transaction.title = resources.getString(R.string.transaction_detail)
-
-                edt_transaction_money.setText(tran.money.decimalFormat())
-                edt_transaction_note.setText(tran.note)
-
-                Glide.with(this).load(AssetFolderManager.assetPath + cate.iconUrl)
-                    .into(img_categories)
-                txt_title_transaction_category.text = cate.title
-
-                if (category!!.isIncome) {
-
-                } else {
-
-                }
-
-                calendar.set(Calendar.DAY_OF_MONTH, tran.day)
-                calendar.set(Calendar.MONTH, tran.month)
-                calendar.set(Calendar.YEAR, tran.year)
-                txt_transaction_time.text = calendar.formatDateTime()
-
-                calendar.set(Calendar.DAY_OF_MONTH, tran.day)
-                btn_delete_transaction.visibility = View.VISIBLE
-            }
-        }
         edt_transaction_money.setSelection(edt_transaction_money.text.toString().length)
 
 
@@ -92,24 +51,8 @@ class AddTransactionActivity : BaseActivity() {
 
     private fun initEvents() {
         layout_transaction_category.setOnClickListener {
-            val intent = Intent(this@AddTransactionActivity, CategoriesActivity::class.java)
+            val intent = Intent(requireContext(), CategoriesActivity::class.java)
             startActivityForResult(intent, requestCode)
-        }
-        btn_delete_transaction.setOnClickListener {
-            //Delete Transaction
-            transaction?.let { transaction ->
-                val builder = ConfirmDialogBuilder(this)
-                builder.setContent(resources.getString(R.string.notice_delete_transaction))
-                val dialog = builder.createDialog()
-                builder.btnConfirm.setOnClickListener {
-                    transactionViewModel.deleteTransaction(transaction)
-                    dialog.dismiss()
-                    finish()
-                }
-                builder.btnCancel.setOnClickListener { dialog.dismiss() }
-                builder.showDialog()
-
-            }
         }
 
         layout_transaction_date_time.setOnClickListener {
@@ -155,21 +98,17 @@ class AddTransactionActivity : BaseActivity() {
         })
 
         toolbar_add_transaction.setNavigationOnClickListener {
-            finish()
+            requireActivity().onBackPressed()
+        }
+
+        toolbar_add_transaction.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.mnu_save) {
+                saveTransaction()
+            }
+            true
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.save_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.mnu_save) {
-            saveTransaction()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     private fun saveTransaction() {
         when {
@@ -182,32 +121,17 @@ class AddTransactionActivity : BaseActivity() {
                     resources.getString(R.string.empty_category_error)
             }
             else -> {
-                if (isDetails) {
-                    transaction?.let { transaction ->
-                        transaction.day = calendar[Calendar.DAY_OF_MONTH]
-                        transaction.note = edt_transaction_note.text.toString()
-                        transaction.money =
-                            handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
-                        transaction.month = calendar[Calendar.MONTH]
-                        transaction.year = calendar[Calendar.YEAR]
-                        transaction.idCategory = category!!.idCategory
-                        transaction.isIncome = category!!.isIncome
-
-                        transactionViewModel.updateTransaction(transaction)
-                    }
-                } else {
-                    transaction = Transaction(
-                        handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
-                        category!!.isIncome,
-                        category!!.idCategory,
-                        edt_transaction_note.text.toString(),
-                        calendar[Calendar.DAY_OF_MONTH],
-                        calendar[Calendar.MONTH],
-                        calendar[Calendar.YEAR]
-                    )
-                    transactionViewModel.insertTransaction(transaction!!)
-                }
-                finish()
+                val transaction = Transaction(
+                    handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
+                    category!!.isIncome,
+                    category!!.idCategory,
+                    edt_transaction_note.text.toString(),
+                    calendar[Calendar.DAY_OF_MONTH],
+                    calendar[Calendar.MONTH],
+                    calendar[Calendar.YEAR]
+                )
+                transactionViewModel.insertTransaction(transaction)
+                requireActivity().onBackPressed()
 
             }
         }
@@ -215,7 +139,7 @@ class AddTransactionActivity : BaseActivity() {
     }
 
     private fun pickDateTime() {
-        val dialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
+        val dialog = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)

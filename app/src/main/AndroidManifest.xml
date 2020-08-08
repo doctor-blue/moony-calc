@@ -26,7 +26,6 @@
             android:name=".activities.AddCategoriesActivity"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".activities.AddTransactionActivity" />
         <activity android:name=".activities.CategoriesActivity" />
         <activity
             android:name=".activities.SplashScreenActivity"

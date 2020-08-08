@@ -9,35 +9,48 @@
         android:id="@+id/transaction_fragment"
         android:name="com.moony.calc.fragments.TransactionFragment"
         android:label="fragment_transaction"
-        tools:layout="@layout/fragment_transaction" >
+        tools:layout="@layout/fragment_transaction">
         <action
             android:id="@+id/ac_transaction_to_saving_fragment"
             app:destination="@id/saving_fragment"
             app:enterAnim="@anim/slide_in_right"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             app:exitAnim="@anim/slide_out_left"
-            />
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_transaction_fragment_to_transactionDetailFragment"
+            app:destination="@id/transactionDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_transaction_fragment_to_addTransactionFragment"
+            app:destination="@id/addTransactionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/saving_fragment"
         android:name="com.moony.calc.fragments.SavingBoxFragment"
         android:label="fragment_saving_box"
-        tools:layout="@layout/fragment_saving_box" >
+        tools:layout="@layout/fragment_saving_box">
         <action
             android:id="@+id/ac_saving_to_chart_fragment"
             app:destination="@id/chart_fragment"
             app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_saving_fragment_to_addSavingGoalActivity"
             app:destination="@id/addSavingGoalActivity"
             app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/chart_fragment"
@@ -48,5 +61,35 @@
         android:id="@+id/addSavingGoalActivity"
         android:name="com.moony.calc.fragments.AddSavingGoalFragment"
         android:label="activity_add_saving_goal"
-        tools:layout="@layout/activity_add_saving_goal" />
+        tools:layout="@layout/fragment_add_saving_goal" />
+    <fragment
+        android:id="@+id/transactionDetailFragment"
+        android:name="com.moony.calc.fragments.TransactionDetailFragment"
+        android:label="fragment_transaction_detail"
+        tools:layout="@layout/fragment_transaction_detail">
+        <argument
+            android:name="@string/transaction"
+            app:argType="com.moony.calc.model.Transaction"
+            />
+        <argument
+            android:name="@string/categories"
+            app:argType="com.moony.calc.model.Category" />
+        <action
+            android:id="@+id/action_transactionDetailFragment_to_updateTransactionFragment"
+            app:destination="@id/updateTransactionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addTransactionFragment"
+        android:name="com.moony.calc.fragments.AddTransactionFragment"
+        android:label="fragment_add_transaction"
+        tools:layout="@layout/fragment_add_transaction" />
+    <fragment
+        android:id="@+id/updateTransactionFragment"
+        android:name="com.moony.calc.fragments.UpdateTransactionFragment"
+        android:label="fragment_update_transaction"
+        tools:layout="@layout/fragment_update_transaction" />
 </navigation>
