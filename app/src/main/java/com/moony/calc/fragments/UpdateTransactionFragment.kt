@@ -17,6 +17,7 @@ import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.Transaction
 import com.moony.calc.utils.AssetFolderManager
+import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
 import kotlinx.android.synthetic.main.fragment_update_transaction.*
@@ -31,7 +32,9 @@ class UpdateTransactionFragment : BaseFragment() {
         ViewModelProvider(this)[TransactionViewModel::class.java]
     }
     private val calendar: Calendar = Calendar.getInstance()
-
+    private val settings: Settings by lazy {
+        Settings.getInstance(baseContext!!)
+    }
 
     override fun init() {
         initControls()
@@ -39,20 +42,12 @@ class UpdateTransactionFragment : BaseFragment() {
     }
 
     private fun initControls() {
-        /* val intent = intent
-         transaction =
-             intent.getSerializableExtra(MoonyKey.transactionDetail) as Transaction?
-
-         category =
-             intent.getSerializableExtra(MoonyKey.transactionCategory) as Category*/
-
-        txt_transaction_time.text = calendar.formatDateTime()
+        transaction = arguments?.getSerializable(getString(R.string.transaction)) as Transaction
+        category = arguments?.getSerializable(getString(R.string.categories)) as Category
 
         transaction?.let { tran ->
             category?.let { cate ->
-                toolbar_update_transaction.title = resources.getString(R.string.transaction_detail)
 
-                edt_transaction_money.setText(tran.money.decimalFormat())
                 edt_transaction_note.setText(tran.note)
 
                 Glide.with(this).load(AssetFolderManager.assetPath + cate.iconUrl)
@@ -60,10 +55,10 @@ class UpdateTransactionFragment : BaseFragment() {
                 txt_title_transaction_category.text = cate.title
 
                 if (category!!.isIncome) {
+                    edt_transaction_money.setText(tran.money.decimalFormat())
 
-                } else {
-
-                }
+                } else
+                    edt_transaction_money.setText(((-1 * tran.money).decimalFormat()))
 
                 calendar.set(Calendar.DAY_OF_MONTH, tran.day)
                 calendar.set(Calendar.MONTH, tran.month)
@@ -74,6 +69,10 @@ class UpdateTransactionFragment : BaseFragment() {
             }
         }
         edt_transaction_money.setSelection(edt_transaction_money.text.toString().length)
+
+        txt_currency_unit.text = settings.getString(
+            Settings.SettingKey.CURRENCY_UNIT
+        )
     }
 
     private fun initEvents() {
@@ -90,6 +89,7 @@ class UpdateTransactionFragment : BaseFragment() {
                 builder.btnConfirm.setOnClickListener {
                     transactionViewModel.deleteTransaction(transaction)
                     dialog.dismiss()
+                    requireActivity().onBackPressed()
                     requireActivity().onBackPressed()
                 }
                 builder.btnCancel.setOnClickListener { dialog.dismiss() }
@@ -214,10 +214,8 @@ class UpdateTransactionFragment : BaseFragment() {
                 txt_title_transaction_category.text = category!!.title
                 textInput_transaction_title_category.error = null
 
-                if (category!!.isIncome) {
-                    edt_transaction_money.setTextColor(resources.getColor(R.color.blue))
-                } else {
-                    edt_transaction_money.setTextColor(resources.getColor(R.color.colorAccent))
+                if (!category!!.isIncome) {
+                    edt_transaction_money.setText(('-' + edt_transaction_money.text.toString()))
                 }
 
             }

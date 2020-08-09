@@ -91,5 +91,13 @@
         android:id="@+id/updateTransactionFragment"
         android:name="com.moony.calc.fragments.UpdateTransactionFragment"
         android:label="fragment_update_transaction"
-        tools:layout="@layout/fragment_update_transaction" />
+        tools:layout="@layout/fragment_update_transaction" >
+        <argument
+            android:name="@string/transaction"
+            app:argType="com.moony.calc.model.Transaction"
+            />
+        <argument
+            android:name="@string/categories"
+            app:argType="com.moony.calc.model.Category" />
+    </fragment>
 </navigation>

@@ -16,6 +16,7 @@ import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.Transaction
 import com.moony.calc.utils.AssetFolderManager
+import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
 import kotlinx.android.synthetic.main.fragment_add_transaction.*
@@ -30,7 +31,9 @@ class AddTransactionFragment : BaseFragment() {
         ViewModelProvider(this)[TransactionViewModel::class.java]
     }
     private val calendar: Calendar = Calendar.getInstance()
-
+    private val settings: Settings by lazy {
+        Settings.getInstance(baseContext!!)
+    }
 
     override fun init() {
         initControls()
@@ -45,7 +48,9 @@ class AddTransactionFragment : BaseFragment() {
 
         edt_transaction_money.setSelection(edt_transaction_money.text.toString().length)
 
-
+        txt_currency_unit.text = settings.getString(
+            Settings.SettingKey.CURRENCY_UNIT
+        )
     }
 
 
@@ -163,12 +168,9 @@ class AddTransactionFragment : BaseFragment() {
                 txt_title_transaction_category.text = category!!.title
                 textInput_transaction_title_category.error = null
 
-                if (category!!.isIncome) {
-                    edt_transaction_money.setTextColor(resources.getColor(R.color.blue))
-                } else {
-                    edt_transaction_money.setTextColor(resources.getColor(R.color.colorAccent))
+                if (!category!!.isIncome) {
+                    edt_transaction_money.setText(('-' + edt_transaction_money.text.toString()))
                 }
-
             }
     }
 

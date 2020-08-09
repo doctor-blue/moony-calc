@@ -113,12 +113,7 @@ class TransactionFragment : BaseFragment() {
 
     private val transactionItemClick: (Transaction, Category) -> Unit =
         { transaction, category ->
-            /*    //Nội dung của hàm itemClick ở đây
-                val intent = Intent(context, AddTransactionFragment::class.java)
-                intent.putExtra(MoonyKey.transactionDetail, transaction)
-                intent.putExtra(MoonyKey.transactionCategory, category)
-                startActivity(intent)
-    */
+
             val bundle = bundleOf(
                 getString(R.string.transaction) to transaction,
                 getString(R.string.categories) to category
