@@ -101,6 +101,9 @@ class TransactionDetailFragment : BaseFragment() {
             }
             true
         }
+        toolbar_transaction_detail.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
 

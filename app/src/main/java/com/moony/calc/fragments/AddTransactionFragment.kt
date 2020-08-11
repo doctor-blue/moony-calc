@@ -17,7 +17,6 @@ import com.moony.calc.model.Category
 import com.moony.calc.model.Transaction
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
-import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
 import kotlinx.android.synthetic.main.fragment_add_transaction.*
 import java.util.*
@@ -77,24 +76,26 @@ class AddTransactionFragment : BaseFragment() {
                     if (s.isNotEmpty()) {
                         textInput_transaction_money.error = null
                         if (it.toString().contains('.') || it.toString().contains(',')) {
-                            /**
-                             * "${handleTextToDouble(it.toString())}0" nhiều trường hợp nó ở dạng #. thay vì #.# nên thêm 0 để đc chuỗi dạng #.0
-                             * chuyển về kiểu double sau đó format nó sẽ được chuỗi ở dạng #.00 và lấy độ dài làm max length cho edit_text
-                             */
-                            val maxLength = "${handleTextToDouble(it.toString())}1".toDouble()
-                                .decimalFormat().length
+                            var maxLength = 11
+
+                            if (it.toString().contains('-')) maxLength++
+
                             edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
                         } else {
-                            edt_transaction_money.filters = arrayOf(LengthFilter(9))
-                            if (it.length - 1 == 8) {
+                            var maxLength = 9
+                            if (it.toString().contains('-')) maxLength++
+
+                            edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
+                            if (it.length - 1 == maxLength - 1) {
                                 //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
-                                val lastChar = it[8]
+                                val lastChar = it[maxLength - 1]
                                 if (!(lastChar == '.' || lastChar == ',')) {
-                                    edt_transaction_money.setText(it.subSequence(0, 8))
-                                    edt_transaction_money.setSelection(8)
+                                    edt_transaction_money.setText(it.subSequence(0, maxLength - 1))
+                                    edt_transaction_money.setSelection(maxLength - 1)
                                 }
                             }
                         }
+
                     }
                 }
 
@@ -126,8 +127,13 @@ class AddTransactionFragment : BaseFragment() {
                     resources.getString(R.string.empty_category_error)
             }
             else -> {
+
+                val money = edt_transaction_money.text.toString()
+
                 val transaction = Transaction(
-                    handleTextToDouble(edt_transaction_money.text.toString()).toDouble(),
+                    handleTextToDouble(
+                        (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+                    ).toDouble(),
                     category!!.isIncome,
                     category!!.idCategory,
                     edt_transaction_note.text.toString(),
@@ -168,9 +174,20 @@ class AddTransactionFragment : BaseFragment() {
                 txt_title_transaction_category.text = category!!.title
                 textInput_transaction_title_category.error = null
 
+                var money = edt_transaction_money.text.toString()
+
                 if (!category!!.isIncome) {
-                    edt_transaction_money.setText(('-' + edt_transaction_money.text.toString()))
+                    if (edt_transaction_money?.text.toString().isNotEmpty()) {
+                        edt_transaction_money.filters =
+                            arrayOf(LengthFilter(money.length + 1))
+                    }
+                    if (!money.contains('-'))
+                        money = "-$money"
+                } else {
+                    if (money.contains('-'))
+                        money=money.replace('-', ' ').trim()
                 }
+                edt_transaction_money.setText(money)
             }
     }
 

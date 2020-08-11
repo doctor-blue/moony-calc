@@ -20,7 +20,18 @@ import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
+import kotlinx.android.synthetic.main.fragment_add_transaction.*
 import kotlinx.android.synthetic.main.fragment_update_transaction.*
+import kotlinx.android.synthetic.main.fragment_update_transaction.edt_transaction_money
+import kotlinx.android.synthetic.main.fragment_update_transaction.edt_transaction_note
+import kotlinx.android.synthetic.main.fragment_update_transaction.img_categories
+import kotlinx.android.synthetic.main.fragment_update_transaction.layout_transaction_category
+import kotlinx.android.synthetic.main.fragment_update_transaction.layout_transaction_date_time
+import kotlinx.android.synthetic.main.fragment_update_transaction.textInput_transaction_money
+import kotlinx.android.synthetic.main.fragment_update_transaction.textInput_transaction_title_category
+import kotlinx.android.synthetic.main.fragment_update_transaction.txt_currency_unit
+import kotlinx.android.synthetic.main.fragment_update_transaction.txt_title_transaction_category
+import kotlinx.android.synthetic.main.fragment_update_transaction.txt_transaction_time
 import java.util.*
 
 class UpdateTransactionFragment : BaseFragment() {
@@ -111,35 +122,41 @@ class UpdateTransactionFragment : BaseFragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+
                 s?.let {
                     if (s.isNotEmpty()) {
                         textInput_transaction_money.error = null
                         if (it.toString().contains('.') || it.toString().contains(',')) {
-                            /**
-                             * "${handleTextToDouble(it.toString())}0" nhiều trường hợp nó ở dạng #. thay vì #.# nên thêm 0 để đc chuỗi dạng #.0
-                             * chuyển về kiểu double sau đó format nó sẽ được chuỗi ở dạng #.00 và lấy độ dài làm max length cho edit_text
-                             */
-                            val maxLength = "${handleTextToDouble(it.toString())}1".toDouble()
-                                .decimalFormat().length
+                            var maxLength = 11
+
+                            if (it.toString().contains('-')) maxLength++
+
                             edt_transaction_money.filters = arrayOf(
                                 InputFilter.LengthFilter(
                                     maxLength
                                 )
                             )
                         } else {
-                            edt_transaction_money.filters = arrayOf(InputFilter.LengthFilter(9))
-                            if (it.length - 1 == 8) {
+                            var maxLength = 9
+                            if (it.toString().contains('-')) maxLength++
+
+                            edt_transaction_money.filters = arrayOf(
+                                InputFilter.LengthFilter(
+                                    maxLength
+                                )
+                            )
+                            if (it.length - 1 == maxLength - 1) {
                                 //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
-                                val lastChar = it[8]
+                                val lastChar = it[maxLength - 1]
                                 if (!(lastChar == '.' || lastChar == ',')) {
-                                    edt_transaction_money.setText(it.subSequence(0, 8))
-                                    edt_transaction_money.setSelection(8)
+                                    edt_transaction_money.setText(it.subSequence(0, maxLength - 1))
+                                    edt_transaction_money.setSelection(maxLength - 1)
                                 }
                             }
                         }
+
                     }
                 }
-
             }
 
         })
@@ -168,11 +185,14 @@ class UpdateTransactionFragment : BaseFragment() {
                     resources.getString(R.string.empty_category_error)
             }
             else -> {
+                val money = edt_transaction_money.text.toString()
+
                 transaction?.let { transaction ->
                     transaction.day = calendar[Calendar.DAY_OF_MONTH]
                     transaction.note = edt_transaction_note.text.toString()
-                    transaction.money =
-                        handleTextToDouble(edt_transaction_money.text.toString()).toDouble()
+                    transaction.money = handleTextToDouble(
+                        (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+                    ).toDouble()
                     transaction.month = calendar[Calendar.MONTH]
                     transaction.year = calendar[Calendar.YEAR]
                     transaction.idCategory = category!!.idCategory
@@ -214,9 +234,20 @@ class UpdateTransactionFragment : BaseFragment() {
                 txt_title_transaction_category.text = category!!.title
                 textInput_transaction_title_category.error = null
 
+                var money = edt_transaction_money.text.toString()
+
                 if (!category!!.isIncome) {
-                    edt_transaction_money.setText(('-' + edt_transaction_money.text.toString()))
+                    if (edt_transaction_money?.text.toString().isNotEmpty()) {
+                        edt_transaction_money.filters =
+                            arrayOf(InputFilter.LengthFilter(money.length + 1))
+                    }
+                    if (!money.contains('-'))
+                        money = "-$money"
+                } else {
+                    if (money.contains('-'))
+                        money=money.replace('-', ' ').trim()
                 }
+                edt_transaction_money.setText(money)
 
             }
     }
