@@ -24,7 +24,7 @@ class MainActivity : BaseActivity() {
     private fun initEvent() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.transaction_fragment || destination.id == R.id.saving_fragment || destination.id == R.id.chart_fragment) {
+            if (destination.id == R.id.transaction_fragment || destination.id == R.id.saving_fragment || destination.id == R.id.chart_fragment || destination.id == R.id.setting_fragment) {
                 no_name_bottom_bar.show()
                 Log.d("MainActivity", "show + ${no_name_bottom_bar.isShow}")
             } else {

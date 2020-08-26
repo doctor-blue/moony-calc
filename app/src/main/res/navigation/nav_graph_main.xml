@@ -56,7 +56,11 @@
         android:id="@+id/chart_fragment"
         android:name="com.moony.calc.fragments.ChartFragment"
         android:label="fragment_chart"
-        tools:layout="@layout/fragment_chart" />
+        tools:layout="@layout/fragment_chart" >
+        <action
+            android:id="@+id/action_chart_fragment_to_settingFragment"
+            app:destination="@id/setting_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/addSavingGoalActivity"
         android:name="com.moony.calc.fragments.AddSavingGoalFragment"
@@ -100,4 +104,9 @@
             android:name="@string/categories"
             app:argType="com.moony.calc.model.Category" />
     </fragment>
+    <fragment
+        android:id="@+id/setting_fragment"
+        android:name="com.moony.calc.fragments.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

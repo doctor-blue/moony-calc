@@ -74,4 +74,5 @@
     <string name="expenses_title">Expenses:</string>
     <string name="update_goal">Update Goal</string>
     <string name="update_transaction">Update Transaction</string>
+    <string name="settings">Settings</string>
 </resources>

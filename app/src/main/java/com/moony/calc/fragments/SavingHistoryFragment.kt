@@ -19,7 +19,7 @@ class SavingHistoryFragment() : BaseFragment() {
         this.idSaving=idSaving
     }
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
-        ViewModelProvider(activity!!)[SavingHistoryViewModel::class.java]
+        ViewModelProvider(requireActivity())[SavingHistoryViewModel::class.java]
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_saving_history
@@ -69,7 +69,7 @@ class SavingHistoryFragment() : BaseFragment() {
         rv_saving_history.setHasFixedSize(true)
 
         savingHistoryViewModel.getAllSavingHistory(idSaving).observe(viewLifecycleOwner, Observer {
-            val savingHistoryAdapter = SavingHistoryAdapter(activity!!, it) {history->
+            val savingHistoryAdapter = SavingHistoryAdapter(requireActivity(), it) {history->
                 val intent=Intent(baseContext,SavingHistoryActivity::class.java)
                 intent.putExtra(EDIT_HISTORY,history)
                 startActivity(intent)
