@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.google.android.material:material:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
     implementation project(path: ':monthandyearpicker')
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
 
