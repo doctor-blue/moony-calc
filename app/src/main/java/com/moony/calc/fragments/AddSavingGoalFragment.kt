@@ -20,7 +20,7 @@ import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
-import kotlinx.android.synthetic.main.activity_add_saving_goal.*
+import kotlinx.android.synthetic.main.fragment_add_saving_goal.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +35,7 @@ class AddSavingGoalFragment : BaseFragment() {
         const val KEY_PICK_CATEGORY = 1101
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_add_saving_goal
+    override fun getLayoutId(): Int = R.layout.fragment_add_saving_goal
 
     override fun init() {
         initControl()

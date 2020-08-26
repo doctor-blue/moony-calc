@@ -16,9 +16,9 @@
         android:id="@+id/chart_fragment"
         />
     <item
-        android:title="@string/chart"
+        android:title="@string/settings"
         android:icon="@drawable/ic_settings_outline"
-        android:id="@+id/fragment_setting"
+        android:id="@+id/setting_fragment"
         />
 
 </menu>

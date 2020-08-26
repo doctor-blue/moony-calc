@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_root_add_transaction"
     android:layout_width="match_parent"
-    android:background="@color/backgroundColor"
     android:layout_height="match_parent"
-    tools:context=".activities.AddTransactionActivity">
+    android:background="@color/backgroundColor"
+    tools:context=".fragments.AddTransactionFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_add_transaction"
@@ -48,19 +48,37 @@
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_transaction_money"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:maxLength="12"
-                    android:maxLines="1"
-                    android:paddingStart="@dimen/_30sdp"
-                    android:paddingLeft="@dimen/_30sdp"
-                    android:text="0"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/_30sdp"
-                    tools:ignore="RtlSymmetry" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_transaction_money"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:inputType="numberDecimal"
+                        android:maxLength="12"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_30sdp"
+                        android:paddingLeft="@dimen/_30sdp"
+                        android:text="0"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/_30sdp"
+                        tools:ignore="RtlSymmetry" />
+
+                    <TextView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:gravity="center"
+                        android:text="$"
+                        android:id="@+id/txt_currency_unit"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/_30sdp" />
+                </LinearLayout>
             </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -87,7 +105,7 @@
                     android:id="@+id/layout_transaction_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -112,7 +130,6 @@
                             android:id="@+id/txt_title_transaction_category"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_10sdp"
                             android:hint="@string/select_category"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_16sdp" />
@@ -142,16 +159,16 @@
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:hint="@string/write_note"
                         app:counterEnabled="true"
-                        app:hintTextColor="@color/colorPrimary"
                         app:counterMaxLength="254"
                         app:errorEnabled="true"
-                        app:hintAnimationEnabled="true">
+                        app:hintAnimationEnabled="true"
+                        app:hintTextColor="@color/colorPrimary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edt_transaction_note"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="?android:windowBackground"
+                            android:background="@color/backgroundColor"
                             android:maxLength="255"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_16sdp" />
@@ -163,7 +180,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -188,7 +205,6 @@
                             android:id="@+id/txt_transaction_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="?android:windowBackground"
                             android:text="@string/today"
                             android:textColor="@color/textColor"
                             android:textSize="@dimen/_16sdp" />
@@ -197,74 +213,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!--
-                            <com.google.android.material.card.MaterialCardView
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_48sdp"
-                                android:layout_marginTop="@dimen/_30sdp"
-                                app:cardElevation="@dimen/_1sdp"
-                                app:cardBackgroundColor="?android:windowBackground"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:layout_marginRight="@dimen/_10sdp"
-                                android:layout_marginBottom="@dimen/_10sdp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/card_finance_description">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:gravity="center">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:layout_weight="1">
-
-                                        <ImageView
-                                            android:layout_width="@dimen/_24sdp"
-                                            android:layout_height="@dimen/_24sdp"
-                                            android:scaleType="centerCrop"
-                                            android:alpha="0.8"
-                                            android:tint="@color/textColor"
-                                            android:src="@drawable/ic_photo"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_weight="1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center">
-
-                                        <ImageView
-                                            android:layout_width="@dimen/_24sdp"
-                                            android:layout_height="@dimen/_24sdp"
-                                            android:scaleType="centerCrop"
-                                            android:tint="@color/textColor"
-                                            android:alpha="0.8"
-                                            android:src="@drawable/ic_camera"/>
-                                    </LinearLayout>
-                                </LinearLayout>
-                            </com.google.android.material.card.MaterialCardView>
-        -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_delete_transaction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_delete"
-        android:visibility="gone"
-        app:fabCustomSize="@dimen/_50sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="@dimen/_24sdp"
-        app:tint="@color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,18 +1,17 @@
 package com.moony.calc.fragments
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
-import com.moony.calc.activities.AddTransactionActivity
 import com.moony.calc.adapter.TransactionAdapter
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.TransactionViewModel
-import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.Transaction
 import com.moony.calc.utils.Settings
@@ -22,7 +21,7 @@ import com.whiteelephant.monthpicker.MonthPickerDialog
 import kotlinx.android.synthetic.main.fragment_transaction.*
 import java.util.*
 
-class TransactionFragment: BaseFragment() {
+class TransactionFragment : BaseFragment() {
     private var calNow = Calendar.getInstance()
     private val transactionViewModel: TransactionViewModel by lazy {
         ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
@@ -33,7 +32,7 @@ class TransactionFragment: BaseFragment() {
     private var totalExpensesLiveData: LiveData<Double>? = null
     private var transactionAdapter: TransactionAdapter? = null
     private var transactionLiveData: LiveData<List<Transaction>>? = null
-    private val settings:Settings by lazy {
+    private val settings: Settings by lazy {
         Settings.getInstance(baseContext!!)
     }
 
@@ -68,9 +67,12 @@ class TransactionFragment: BaseFragment() {
         totalExpenses = 0.0
         if (expenses != null) totalExpenses = expenses
 
-        txt_transaction_income.text = (totalIncome.decimalFormat()+settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-        txt_transaction_expenses.text = (totalExpenses.decimalFormat()+settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-        txt_transaction_balance.text = ((totalIncome - totalExpenses).decimalFormat()+settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+        txt_transaction_income.text =
+            (totalIncome.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+        txt_transaction_expenses.text =
+            (totalExpenses.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+        txt_transaction_balance.text =
+            ((totalIncome - totalExpenses).decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
 
     }
     private val transactionObserver = Observer<List<Transaction>> { list ->
@@ -111,22 +113,17 @@ class TransactionFragment: BaseFragment() {
 
     private val transactionItemClick: (Transaction, Category) -> Unit =
         { transaction, category ->
-            //Nội dung của hàm itemClick ở đây
-            val intent = Intent(context, AddTransactionActivity::class.java)
-            intent.putExtra(MoonyKey.transactionDetail, transaction)
-            intent.putExtra(MoonyKey.transactionCategory, category)
-            //intent.putExtra(MoonyKey.transactionDateTime, dateTime)
-            startActivity(intent)
+
+            val bundle = bundleOf(
+                getString(R.string.transaction) to transaction,
+                getString(R.string.categories) to category
+            )
+            findNavController().navigate(R.id.action_transaction_fragment_to_transactionDetailFragment, bundle)
         }
 
     private fun initEvent() {
         btn_add_transaction.setOnClickListener {
-            startActivity(
-                Intent(
-                    activity,
-                    AddTransactionActivity::class.java
-                )
-            )
+           findNavController().navigate(R.id.action_transaction_fragment_to_addTransactionFragment)
         }
 
         btn_next_month.setOnClickListener {
