@@ -1,9 +1,10 @@
-package com.moony.calc.fragments
+package com.moony.calc.activities
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -13,10 +14,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
-import com.moony.calc.activities.CategoriesActivity
-import com.moony.calc.base.BaseFragment
+import com.moony.calc.base.BaseActivity
 import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.database.SavingViewModel
+import com.moony.calc.fragments.AddSavingGoalFragment
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
@@ -27,7 +28,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class UpdateSavingGoalFragment : BaseFragment() {
+class UpdateSavingGoalActivity : BaseActivity() {
     private val calendar: Calendar = Calendar.getInstance()
     private var deadLine: String = ""
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
@@ -40,9 +41,10 @@ class UpdateSavingGoalFragment : BaseFragment() {
 
     companion object {
         const val KEY_PICK_CATEGORY = 1101
+        const val KEY_GET_TRANSACTION = 1102
     }
 
-    override fun init() {
+    override fun init(savedInstanceState: Bundle?) {
         initControls()
         initEvents()
     }
@@ -101,7 +103,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
         }
 
         layout_goal_categories.setOnClickListener {
-            val intent = Intent(requireContext(), CategoriesActivity::class.java)
+            val intent = Intent(this, CategoriesActivity::class.java)
             startActivityForResult(
                 intent,
                 AddSavingGoalFragment.KEY_PICK_CATEGORY
@@ -109,7 +111,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
         }
 
         toolbar_update_saving_goal.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
+            onBackPressed()
         }
 
         toolbar_update_saving_goal.setOnMenuItemClickListener { item ->
@@ -121,6 +123,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
     }
 
     private fun initControls() {
+        saving = intent.getSerializableExtra(SavingDetailActivity.EDIT_SAVINGS) as Saving
         saving?.let { sav ->
 
             edt_goal_description.setText(sav.description)
@@ -128,7 +131,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
             txt_due_date.text = sav.deadLine
             deadLine = sav.deadLine
 
-            categoryViewModel.getCategory(sav.idCategory).observe(viewLifecycleOwner, Observer {
+            categoryViewModel.getCategory(sav.idCategory).observe(this, Observer {
                 category = it
                 Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
                     .into(img_goal_category)
@@ -150,7 +153,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
         val snackbar: Snackbar =
             Snackbar.make(layout_root_update_goal, R.string.empty_date_error, Snackbar.LENGTH_LONG)
         snackbar.setTextColor(resources.getColor(R.color.white))
-        snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+        snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
         snackbar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
 
         when {
@@ -176,7 +179,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
 
                     savingViewModel.updateSaving(it)
                 }
-                requireActivity().onBackPressed()
+                onBackPressed()
 
             }
         }
@@ -188,7 +191,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
 
     @SuppressLint("SetTextI18n")
     private fun pickDateTime() {
-        val dialog = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
+        val dialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -201,7 +204,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AddSavingGoalFragment.KEY_PICK_CATEGORY)
+        if (requestCode == KEY_PICK_CATEGORY) {
             if (resultCode == Activity.RESULT_OK) {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
@@ -209,5 +212,7 @@ class UpdateSavingGoalFragment : BaseFragment() {
                 txt_title_category_update_saving.text = category!!.title
 
             }
+        }
+
     }
 }

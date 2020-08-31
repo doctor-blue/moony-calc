@@ -7,6 +7,7 @@ import android.content.Intent
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -66,9 +67,11 @@ class AddSavingGoalFragment : BaseFragment() {
                 textInput_goal_amount.error = resources.getString(R.string.empty_error)
             }
             txt_due_date.text.toString().trim().isEmpty() -> {
+                hideKeyboard()
                 snackbar.show()
             }
             txt_title_category_add_saving.text.toString().trim().isEmpty() -> {
+                hideKeyboard()
                 snackbar.setText(R.string.empty_category_error)
                 snackbar.show()
             }
@@ -185,5 +188,11 @@ class AddSavingGoalFragment : BaseFragment() {
                 txt_title_category_add_saving.text = category!!.title
 
             }
+    }
+
+    private fun hideKeyboard() {
+        (requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+            requireActivity().window.decorView.windowToken, 0
+        )
     }
 }

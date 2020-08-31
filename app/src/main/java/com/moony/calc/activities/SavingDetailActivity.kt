@@ -73,7 +73,7 @@ class SavingDetailActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.mnu_edit_saving) {
-            val intent = Intent(this, AddSavingGoalFragment::class.java)
+            val intent = Intent(this, UpdateSavingGoalActivity::class.java)
             intent.putExtra(EDIT_SAVINGS, saving)
             startActivity(intent)
         } else {
