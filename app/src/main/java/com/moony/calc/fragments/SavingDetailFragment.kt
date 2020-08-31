@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
+import com.moony.calc.activities.SavingDetailActivity
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.database.CategoryViewModel
 import com.moony.calc.database.SavingHistoryViewModel
@@ -57,6 +58,7 @@ class SavingDetailFragment(var savings: Saving) : BaseFragment() {
             this.saving = it
             txt_saving_detail_date.text = saving.deadLine
             txt_saving_total.text = saving.desiredAmount.decimalFormat()
+            (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.description
 
             categoryLiveData?.removeObserver(categoryObserver)
             categoryLiveData = categoryViewModel.getCategory(saving.idCategory)

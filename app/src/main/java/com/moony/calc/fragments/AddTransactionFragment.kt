@@ -6,6 +6,7 @@ import android.content.Intent
 import android.text.Editable
 import android.text.InputFilter.LengthFilter
 import android.text.TextWatcher
+import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R

@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activities.SavingHistoryActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -39,6 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.UpdateSavingGoalActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
     </application>
 
 </manifest>

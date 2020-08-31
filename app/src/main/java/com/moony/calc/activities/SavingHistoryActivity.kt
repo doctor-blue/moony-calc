@@ -251,17 +251,12 @@ class SavingHistoryActivity : BaseActivity() {
         if (requestCode == AddSavingGoalFragment.KEY_PICK_CATEGORY)
             if (resultCode == Activity.RESULT_OK) {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
-                val url = category?.iconUrl
 
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
                     .into(img_saving_history_category)
 
-                val title1 = txt_title_category_saving_history.text.toString()
-
                 txt_title_category_saving_history.text = category!!.title
 
-                val title2 = txt_title_category_saving_history.text.toString()
-                val title3 = txt_title_category_saving_history.text.toString()
 
             }
     }

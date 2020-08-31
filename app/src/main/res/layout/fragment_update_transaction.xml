@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_root_update_transaction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/backgroundColor"
     tools:context=".fragments.UpdateTransactionFragment">
-
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_update_transaction"
         android:layout_width="match_parent"
@@ -25,202 +24,214 @@
             app:title="@string/update_transaction" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_transaction_money"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        app:cardBackgroundColor="@color/backgroundColor"
-        app:cardElevation="@dimen/_2sdp"
-        app:layout_constraintTop_toBottomOf="@id/appbar_update_transaction">
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="0dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInput_transaction_money"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+          <com.google.android.material.card.MaterialCardView
+              android:id="@+id/card_transaction_money"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toTopOf="parent"
+              android:layout_marginLeft="@dimen/_10sdp"
+              android:layout_marginTop="@dimen/_50sdp"
+              android:layout_marginRight="@dimen/_10sdp"
+              app:cardBackgroundColor="@color/backgroundColor"
+              app:cardElevation="@dimen/_2sdp"
+            >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_transaction_money"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:inputType="numberDecimal"
-                    android:maxLength="12"
-                    android:maxLines="1"
-                    android:paddingStart="@dimen/_30sdp"
-                    android:paddingLeft="@dimen/_30sdp"
-                    android:text="0"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/_30sdp"
-                    tools:ignore="RtlSymmetry" />
+              <com.google.android.material.textfield.TextInputLayout
+                  android:id="@+id/textInput_transaction_money"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  app:boxBackgroundColor="@color/white">
 
-                <TextView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:gravity="center"
-                    android:text="$"
-                    android:id="@+id/txt_currency_unit"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/_30sdp" />
-            </LinearLayout>
-        </com.google.android.material.textfield.TextInputLayout>
-    </com.google.android.material.card.MaterialCardView>
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_finance_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        app:cardBackgroundColor="@color/backgroundColor"
-        app:cardElevation="@dimen/_2sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_transaction_money">
+                      <com.google.android.material.textfield.TextInputEditText
+                          android:id="@+id/edt_transaction_money"
+                          android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="3"
+                          android:inputType="numberDecimal"
+                          android:maxLength="12"
+                          android:maxLines="1"
+                          android:paddingStart="@dimen/_30sdp"
+                          android:paddingLeft="@dimen/_30sdp"
+                          android:text="0"
+                          android:textColor="@color/textColor"
+                          android:textSize="@dimen/_30sdp"
+                          tools:ignore="RtlSymmetry" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/_10sdp">
+                      <TextView
+                          android:layout_width="@dimen/_20sdp"
+                          android:layout_height="wrap_content"
+                          android:layout_marginEnd="@dimen/_10sdp"
+                          android:layout_marginRight="@dimen/_10sdp"
+                          android:gravity="center"
+                          android:text="$"
+                          android:id="@+id/txt_currency_unit"
+                          android:textColor="@color/textColor"
+                          android:textSize="@dimen/_30sdp" />
+                  </LinearLayout>
+              </com.google.android.material.textfield.TextInputLayout>
+          </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
-                android:id="@+id/layout_transaction_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:orientation="horizontal">
+          <com.google.android.material.card.MaterialCardView
+              android:id="@+id/card_finance_description"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/_10sdp"
+              android:layout_marginTop="@dimen/_20sdp"
+              android:layout_marginRight="@dimen/_10sdp"
+              app:cardBackgroundColor="@color/backgroundColor"
+              app:cardElevation="@dimen/_2sdp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@id/card_transaction_money">
 
-                <ImageView
-                    android:id="@+id/img_categories"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_unknown" />
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:padding="@dimen/_10sdp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInput_transaction_title_category"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:hint="@string/select_category"
-                    app:errorEnabled="true"
-                    app:hintAnimationEnabled="true">
+                  <LinearLayout
+                      android:id="@+id/layout_transaction_category"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:gravity="bottom"
+                      android:orientation="horizontal">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txt_title_transaction_category"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="@string/select_category"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/_16sdp" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+                      <ImageView
+                          android:id="@+id/img_categories"
+                          android:layout_width="@dimen/_24sdp"
+                          android:layout_height="@dimen/_24sdp"
+                          android:scaleType="centerCrop"
+                          android:src="@drawable/ic_unknown" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                      <com.google.android.material.textfield.TextInputLayout
+                          android:id="@+id/textInput_transaction_title_category"
+                          style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="@dimen/_5sdp"
+                          android:layout_marginLeft="@dimen/_5sdp"
+                          android:hint="@string/select_category"
+                          app:errorEnabled="true"
+                          app:hintAnimationEnabled="true">
 
-                <ImageView
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_note"
-                    android:tint="@color/colorPrimary" />
+                          <com.google.android.material.textview.MaterialTextView
+                              android:id="@+id/txt_title_transaction_category"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent"
+                              android:hint="@string/select_category"
+                              android:textColor="@color/textColor"
+                              android:textSize="@dimen/_16sdp" />
+                      </com.google.android.material.textfield.TextInputLayout>
+                  </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInput_finance_note"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:hint="@string/write_note"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="254"
-                    app:errorEnabled="true"
-                    app:hintAnimationEnabled="true"
-                    app:hintTextColor="@color/colorPrimary">
+                  <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="@dimen/_20sdp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_transaction_note"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/backgroundColor"
-                        android:maxLength="255"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/_16sdp" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+                      <ImageView
+                          android:layout_width="@dimen/_24sdp"
+                          android:layout_height="@dimen/_24sdp"
+                          android:scaleType="centerCrop"
+                          android:src="@drawable/ic_note"
+                          android:tint="@color/colorPrimary" />
 
-            <LinearLayout
-                android:id="@+id/layout_transaction_date_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="bottom"
-                android:orientation="horizontal">
+                      <com.google.android.material.textfield.TextInputLayout
+                          android:id="@+id/textInput_finance_note"
+                          style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="@dimen/_5sdp"
+                          android:layout_marginLeft="@dimen/_5sdp"
+                          android:hint="@string/write_note"
+                          app:counterEnabled="true"
+                          app:counterMaxLength="254"
+                          app:errorEnabled="true"
+                          app:hintAnimationEnabled="true"
+                          app:hintTextColor="@color/colorPrimary">
 
-                <ImageView
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_calendar"
-                    android:tint="@color/colorPrimary" />
+                          <com.google.android.material.textfield.TextInputEditText
+                              android:id="@+id/edt_transaction_note"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:background="@color/backgroundColor"
+                              android:maxLength="255"
+                              android:textColor="@color/textColor"
+                              android:textSize="@dimen/_16sdp" />
+                      </com.google.android.material.textfield.TextInputLayout>
+                  </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInput_finance_calendar"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:hint="@string/select_category"
-                    app:errorEnabled="true"
-                    app:hintAnimationEnabled="true">
+                  <LinearLayout
+                      android:id="@+id/layout_transaction_date_time"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="@dimen/_10sdp"
+                      android:gravity="bottom"
+                      android:orientation="horizontal">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txt_transaction_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/today"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/_16sdp" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                      <ImageView
+                          android:layout_width="@dimen/_24sdp"
+                          android:layout_height="@dimen/_24sdp"
+                          android:scaleType="centerCrop"
+                          android:src="@drawable/ic_calendar"
+                          android:tint="@color/colorPrimary" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_delete_transaction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_delete_primary_color"
-        app:fabCustomSize="@dimen/_50sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_finance_description"
-        app:maxImageSize="@dimen/_24sdp"
-        app:tint="@color/white" />
+                      <com.google.android.material.textfield.TextInputLayout
+                          android:id="@+id/textInput_finance_calendar"
+                          style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="@dimen/_5sdp"
+                          android:layout_marginLeft="@dimen/_5sdp"
+                          android:hint="@string/select_category"
+                          app:errorEnabled="true"
+                          app:hintAnimationEnabled="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                          <com.google.android.material.textview.MaterialTextView
+                              android:id="@+id/txt_transaction_time"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:text="@string/today"
+                              android:textColor="@color/textColor"
+                              android:textSize="@dimen/_16sdp" />
+                      </com.google.android.material.textfield.TextInputLayout>
+                  </LinearLayout>
+              </LinearLayout>
+          </com.google.android.material.card.MaterialCardView>
+
+          <com.google.android.material.floatingactionbutton.FloatingActionButton
+              android:id="@+id/btn_delete_transaction"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/_10sdp"
+              android:layout_marginEnd="@dimen/_10sdp"
+              android:layout_marginRight="@dimen/_10sdp"
+              android:layout_marginTop="@dimen/_20sdp"
+              android:scaleType="centerCrop"
+              android:src="@drawable/ic_delete_primary_color"
+              app:fabCustomSize="@dimen/_50sdp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/card_finance_description"
+              app:maxImageSize="@dimen/_24sdp"
+              app:tint="@color/white" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+  </ScrollView>
+</LinearLayout>
