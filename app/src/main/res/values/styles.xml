@@ -83,4 +83,12 @@
         <item name="hintTextColor">@color/textColor</item>
         <item name="boxStrokeWidth">@dimen/_1sdp</item>
     </style>
+
+    <style name="TextAppearance.Moony.Item" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearance.Moony.Header" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
