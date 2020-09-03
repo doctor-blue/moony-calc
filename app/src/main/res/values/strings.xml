@@ -75,4 +75,10 @@
     <string name="update_goal">Update Goal</string>
     <string name="update_transaction">Update Transaction</string>
     <string name="settings">Settings</string>
+    <string name="spinner_title">Type of Currency</string>
+
+    <string-array name="Currency">
+        <item>USD</item>
+        <item>VND</item>
+    </string-array>
 </resources>
