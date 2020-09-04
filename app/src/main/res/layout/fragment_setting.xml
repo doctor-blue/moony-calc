@@ -17,11 +17,11 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_circle"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_app" />
+            android:src="@drawable/ic_app"
+            />
 
 
         <TextView
@@ -68,15 +68,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center_vertical"
         android:minHeight="@dimen/_60sdp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/_12sdp"
         android:paddingRight="@dimen/_12sdp">
-
+        <TextView
+            style="@style/TextAppearance.Moony.Item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/item_settings_2" />
         <Spinner
             android:id="@+id/settings_spinner"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             tools:entries="@array/Currency" />
     </LinearLayout>

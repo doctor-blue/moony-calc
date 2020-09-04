@@ -32,6 +32,7 @@ class TransactionFragment : BaseFragment() {
     private var totalExpensesLiveData: LiveData<Double>? = null
     private var transactionAdapter: TransactionAdapter? = null
     private var transactionLiveData: LiveData<List<Transaction>>? = null
+
     private val settings: Settings by lazy {
         Settings.getInstance(baseContext!!)
     }
