@@ -75,4 +75,19 @@
     <string name="update_goal">Update Goal</string>
     <string name="update_transaction">Update Transaction</string>
     <string name="settings">Settings</string>
+
+    <string name="notification">Notification</string>
+    <string name="invite_friends">Invite friends</string>
+    <string name="give_us_feedback">Give us feedback</string>
+<!--    <string name="rate_us">Rate us</string>-->
+<!--    <string name="about">About</string>-->
+
+    <string name="currency_unit">Currency unit</string>
+
+
+    <string-array name="currency">
+        <item>none</item>
+        <item>$</item>
+        <item>vnd</item>
+    </string-array>
 </resources>
