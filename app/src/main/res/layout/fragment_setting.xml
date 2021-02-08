@@ -48,7 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/item_settings_1" />
+            android:text="@string/notification" />
 
         <Switch
             android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="@string/item_settings_2" />
+            android:text="@string/currency_unit" />
         <Spinner
             android:id="@+id/settings_spinner"
             android:layout_width="0dp"
@@ -114,7 +114,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/item_settings_2" />
+            android:text="@string/invite_friends" />
 
         <View
             android:layout_width="@dimen/_15sdp"
@@ -152,7 +152,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/item_settings_3" />
+            android:text="@string/give_us_feedback" />
 
         <View
             android:layout_width="@dimen/_15sdp"
@@ -190,7 +190,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/item_settings_4" />
+            android:text="@string/rate_us" />
 
         <View
             android:layout_width="@dimen/_15sdp"
@@ -228,7 +228,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/item_settings_5" />
+            android:text="@string/about" />
 
         <View
             android:layout_width="@dimen/_15sdp"
