@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/backgroundColor"
-    tools:context=".fragments.UpdateTransactionFragment">
+    tools:context=".ui.transaction.UpdateTransactionFragment">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_update_transaction"
         android:layout_width="match_parent"

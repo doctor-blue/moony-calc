@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/transaction_fragment"
-        android:name="com.moony.calc.fragments.TransactionFragment"
+        android:name="com.moony.calc.ui.transaction.TransactionFragment"
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/saving_fragment"
-        android:name="com.moony.calc.fragments.SavingBoxFragment"
+        android:name="com.moony.calc.ui.saving.SavingBoxFragment"
         android:label="fragment_saving_box"
         tools:layout="@layout/fragment_saving_box">
         <action
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/chart_fragment"
-        android:name="com.moony.calc.fragments.ChartFragment"
+        android:name="com.moony.calc.ui.chart.ChartFragment"
         android:label="fragment_chart"
         tools:layout="@layout/fragment_chart" >
         <action
@@ -63,12 +63,12 @@
     </fragment>
     <fragment
         android:id="@+id/addSavingGoalActivity"
-        android:name="com.moony.calc.fragments.AddSavingGoalFragment"
+        android:name="com.moony.calc.ui.saving.AddSavingGoalFragment"
         android:label="activity_add_saving_goal"
         tools:layout="@layout/fragment_add_saving_goal" />
     <fragment
         android:id="@+id/transactionDetailFragment"
-        android:name="com.moony.calc.fragments.TransactionDetailFragment"
+        android:name="com.moony.calc.ui.transaction.TransactionDetailFragment"
         android:label="fragment_transaction_detail"
         tools:layout="@layout/fragment_transaction_detail">
         <argument
@@ -88,12 +88,12 @@
     </fragment>
     <fragment
         android:id="@+id/addTransactionFragment"
-        android:name="com.moony.calc.fragments.AddTransactionFragment"
+        android:name="com.moony.calc.ui.transaction.AddTransactionFragment"
         android:label="fragment_add_transaction"
         tools:layout="@layout/fragment_add_transaction" />
     <fragment
         android:id="@+id/updateTransactionFragment"
-        android:name="com.moony.calc.fragments.UpdateTransactionFragment"
+        android:name="com.moony.calc.ui.transaction.UpdateTransactionFragment"
         android:label="fragment_update_transaction"
         tools:layout="@layout/fragment_update_transaction" >
         <argument
@@ -106,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/setting_fragment"
-        android:name="com.moony.calc.fragments.SettingFragment"
+        android:name="com.moony.calc.ui.settings.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>

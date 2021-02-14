@@ -19,14 +19,14 @@
         <activity android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".activities.SavingHistoryActivity"
+            android:name=".ui.saving.SavingHistoryActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activities.SavingDetailActivity" />
+        <activity android:name=".ui.saving.SavingDetailActivity" />
         <activity
-            android:name=".activities.AddCategoriesActivity"
+            android:name=".ui.category.AddCategoriesActivity"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".activities.CategoriesActivity" />
+        <activity android:name=".ui.category.CategoriesActivity" />
         <activity
             android:name=".activities.SplashScreenActivity"
             android:label="@string/app_name"
@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.UpdateSavingGoalActivity"
+        <activity android:name=".ui.saving.UpdateSavingGoalActivity"
             android:windowSoftInputMode="adjustResize"
             />
     </application>

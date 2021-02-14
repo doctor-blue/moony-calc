@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SavingDetailFragment">
+    tools:context=".ui.saving.SavingDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_category">
 
-            <com.moony.calc.views.WaveView
+            <com.moony.calc.ui.views.WaveView
                 android:id="@+id/wv_saving_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

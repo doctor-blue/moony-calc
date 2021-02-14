@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".activities.SavingDetailActivity">
+    tools:context=".ui.saving.SavingDetailActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_saving_detail"
         android:layout_width="match_parent"

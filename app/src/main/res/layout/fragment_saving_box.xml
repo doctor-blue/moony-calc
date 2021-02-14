@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.SavingBoxFragment">
+    tools:context=".ui.saving.SavingBoxFragment">
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="@dimen/_120sdp"

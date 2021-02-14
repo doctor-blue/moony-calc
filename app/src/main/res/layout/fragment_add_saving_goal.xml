@@ -5,7 +5,7 @@
     android:id="@+id/layout_root_add_goal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AddSavingGoalFragment">
+    tools:context=".ui.saving.AddSavingGoalFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_add_saving_goal"

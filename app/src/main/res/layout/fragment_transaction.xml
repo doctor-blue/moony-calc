@@ -6,7 +6,7 @@
     android:id="@+id/motion_transaction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TransactionFragment">
+    tools:context=".ui.transaction.TransactionFragment">
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
