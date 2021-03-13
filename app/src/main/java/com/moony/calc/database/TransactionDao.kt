@@ -3,6 +3,7 @@ package com.moony.calc.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.moony.calc.model.Transaction
+import com.moony.calc.model.TransactionItem
 
 @Dao
 interface TransactionDao {
@@ -28,5 +29,7 @@ interface TransactionDao {
     @Query("delete from transaction_table where idCategory=:idCategory")
     suspend fun deleteAllTransactionByCategory(idCategory: Int)
 
+    @Query("select transaction_table.*, category_table.* from transaction_table inner join category_table on transaction_table.idCategory = category_table.idCategory ")
+    fun getAllTransactionItem(): LiveData<List<TransactionItem>>
 
 }

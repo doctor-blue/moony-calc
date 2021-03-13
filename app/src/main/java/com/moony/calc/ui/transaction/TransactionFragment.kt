@@ -1,5 +1,6 @@
 package com.moony.calc.ui.transaction
 
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
@@ -105,6 +106,10 @@ class TransactionFragment : BaseFragment() {
                 calNow[Calendar.YEAR]
             )
         transactionLiveData!!.observe(viewLifecycleOwner, transactionObserver)
+
+//        transactionViewModel.getAllTransactionItem().observe(viewLifecycleOwner,{
+//            it[0].category.title.let { it1 -> Log.d("TransactionFragment", it1) }
+//        })
 
 
     }

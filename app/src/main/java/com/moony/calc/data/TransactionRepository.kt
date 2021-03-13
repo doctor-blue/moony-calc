@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.moony.calc.database.MoonyDatabase
 import com.moony.calc.model.Transaction
+import com.moony.calc.model.TransactionItem
 
 class TransactionRepository(application: Application) {
     private var transactionDao =
@@ -26,4 +27,6 @@ class TransactionRepository(application: Application) {
         transactionDao.updateTransaction(transaction)
 
     suspend fun deleteAllTransactionByCategory(idCategory: Int) = transactionDao.deleteAllTransactionByCategory(idCategory)
+
+    fun getAllTransactionItem():LiveData<List<TransactionItem>> = transactionDao.getAllTransactionItem()
 }
