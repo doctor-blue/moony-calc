@@ -26,13 +26,15 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     fun getAllTransaction(): LiveData<List<Transaction>> = transactionRepository.getAllTransaction()
 
     fun getAllTransactionByDate(month: Int, year: Int): LiveData<List<Transaction>> =
-        transactionRepository.getAllTransactionByDate(month,year)
+        transactionRepository.getAllTransactionByDate(month, year)
 
-    fun getTotalMoney(isIncome: Boolean, month: Int, year: Int): LiveData<Double> =
-        transactionRepository.getTotalMoney(isIncome, month, year)
+    fun getTotalMoney( month: Int, year: Int): LiveData<Double> =
+        transactionRepository.getTotalMoney( month, year)
 
-    fun deleteAllTransactionByCategory(idCategory:Int)=viewModelScope.launch {
+    fun deleteAllTransactionByCategory(idCategory: Int) = viewModelScope.launch {
         transactionRepository.deleteAllTransactionByCategory(idCategory)
     }
+
+    fun getAllTransactionItem(month: Int, year: Int) = transactionRepository.getAllTransactionItem(month, year)
 
 }
