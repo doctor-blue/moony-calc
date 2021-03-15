@@ -9,33 +9,22 @@ import android.text.TextWatcher
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
-import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.base.BaseFragment
-import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
-import com.moony.calc.model.Transaction
+import com.moony.calc.model.TransactionItem
+import com.moony.calc.ui.category.CategoriesActivity
+import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
 import kotlinx.android.synthetic.main.fragment_update_transaction.*
-import kotlinx.android.synthetic.main.fragment_update_transaction.edt_transaction_money
-import kotlinx.android.synthetic.main.fragment_update_transaction.edt_transaction_note
-import kotlinx.android.synthetic.main.fragment_update_transaction.img_categories
-import kotlinx.android.synthetic.main.fragment_update_transaction.layout_transaction_category
-import kotlinx.android.synthetic.main.fragment_update_transaction.layout_transaction_date_time
-import kotlinx.android.synthetic.main.fragment_update_transaction.textInput_transaction_money
-import kotlinx.android.synthetic.main.fragment_update_transaction.textInput_transaction_title_category
-import kotlinx.android.synthetic.main.fragment_update_transaction.txt_currency_unit
-import kotlinx.android.synthetic.main.fragment_update_transaction.txt_title_transaction_category
-import kotlinx.android.synthetic.main.fragment_update_transaction.txt_transaction_time
 import java.util.*
 
 class UpdateTransactionFragment : BaseFragment() {
     private val requestCode = 234
-    private var transaction: Transaction? = null
-    private var category: Category? = null
+    private var transactionItem: TransactionItem? = null
 
     private val transactionViewModel: TransactionViewModel by lazy {
         ViewModelProvider(this)[TransactionViewModel::class.java]
@@ -51,31 +40,30 @@ class UpdateTransactionFragment : BaseFragment() {
     }
 
     private fun initControls() {
-        transaction = arguments?.getSerializable(getString(R.string.transaction)) as Transaction
-        category = arguments?.getSerializable(getString(R.string.categories)) as Category
+        transactionItem =
+            arguments?.getSerializable(getString(R.string.transaction)) as TransactionItem
 
-        transaction?.let { tran ->
-            category?.let { cate ->
+        transactionItem?.let { item ->
 
-                edt_transaction_note.setText(tran.note)
+            edt_transaction_note.setText(item.transaction.note)
 
-                Glide.with(this).load(AssetFolderManager.assetPath + cate.iconUrl)
-                    .into(img_categories)
-                txt_title_transaction_category.text = cate.title
+            Glide.with(this).load(AssetFolderManager.assetPath + item.category.iconUrl)
+                .into(img_categories)
+            txt_title_transaction_category.text = item.category.title
 
-                if (category!!.isIncome) {
-                    edt_transaction_money.setText(tran.money.decimalFormat())
+            if (item.category.isIncome) {
+                edt_transaction_money.setText(item.transaction.money.decimalFormat())
 
-                } else
-                    edt_transaction_money.setText(((-1 * tran.money).decimalFormat()))
+            } else
+                edt_transaction_money.setText(((-1 * item.transaction.money).decimalFormat()))
 
-                calendar.set(Calendar.DAY_OF_MONTH, tran.day)
-                calendar.set(Calendar.MONTH, tran.month)
-                calendar.set(Calendar.YEAR, tran.year)
-                txt_transaction_time.text = calendar.formatDateTime()
+            calendar.set(Calendar.DAY_OF_MONTH, item.transaction.day)
+            calendar.set(Calendar.MONTH, item.transaction.month)
+            calendar.set(Calendar.YEAR, item.transaction.year)
+            txt_transaction_time.text = calendar.formatDateTime()
 
-                calendar.set(Calendar.DAY_OF_MONTH, tran.day)
-            }
+            calendar.set(Calendar.DAY_OF_MONTH, item.transaction.day)
+
         }
         edt_transaction_money.setSelection(edt_transaction_money.text.toString().length)
 
@@ -91,12 +79,12 @@ class UpdateTransactionFragment : BaseFragment() {
         }
         btn_delete_transaction.setOnClickListener {
             //Delete Transaction
-            transaction?.let { transaction ->
+            transactionItem?.let { item ->
                 val builder = ConfirmDialogBuilder(requireContext())
                 builder.setContent(resources.getString(R.string.notice_delete_transaction))
                 val dialog = builder.createDialog()
                 builder.btnConfirm.setOnClickListener {
-                    transactionViewModel.deleteTransaction(transaction)
+                    transactionViewModel.deleteTransaction(item.transaction)
                     dialog.dismiss()
                     requireActivity().onBackPressed()
                     requireActivity().onBackPressed()
@@ -185,18 +173,16 @@ class UpdateTransactionFragment : BaseFragment() {
             else -> {
                 val money = edt_transaction_money.text.toString()
 
-                transaction?.let { transaction ->
-                    transaction.day = calendar[Calendar.DAY_OF_MONTH]
-                    transaction.note = edt_transaction_note.text.toString()
-                    transaction.money = handleTextToDouble(
+                transactionItem?.let { item ->
+                    item.transaction.day = calendar[Calendar.DAY_OF_MONTH]
+                    item.transaction.note = edt_transaction_note.text.toString()
+                    item.transaction.money = handleTextToDouble(
                         (if (money.contains('-')) money.replace('-', ' ').trim() else money)
                     ).toDouble()
-                    transaction.month = calendar[Calendar.MONTH]
-                    transaction.year = calendar[Calendar.YEAR]
-                    transaction.idCategory = category!!.idCategory
-                    transaction.isIncome = category!!.isIncome
+                    item.transaction.month = calendar[Calendar.MONTH]
+                    item.transaction.year = calendar[Calendar.YEAR]
 
-                    transactionViewModel.updateTransaction(transaction)
+                    transactionViewModel.updateTransaction(item.transaction)
                 }
                 requireActivity().onBackPressed()
 
@@ -225,27 +211,34 @@ class UpdateTransactionFragment : BaseFragment() {
         //Lấy Category về sau khi mở CategoriesActivity để chọn
         if (requestCode == this.requestCode)
             if (resultCode == Activity.RESULT_OK) {
-                category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
-                Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
-                    .into(img_categories)
 
-                txt_title_transaction_category.text = category!!.title
-                textInput_transaction_title_category.error = null
+                transactionItem?.let { item ->
+                    item.category =
+                        data?.getSerializableExtra(MoonyKey.pickCategory) as Category
+                    item.transaction.idCategory = item.category.idCategory
 
-                var money = edt_transaction_money.text.toString()
+                    Glide.with(this).load(AssetFolderManager.assetPath + item.category.iconUrl)
+                        .into(img_categories)
 
-                if (!category!!.isIncome) {
-                    if (edt_transaction_money?.text.toString().isNotEmpty()) {
-                        edt_transaction_money.filters =
-                            arrayOf(InputFilter.LengthFilter(money.length + 1))
+                    txt_title_transaction_category.text = item.category.title
+                    textInput_transaction_title_category.error = null
+
+                    var money = edt_transaction_money.text.toString()
+
+                    if (transactionItem?.category!!.isIncome) {
+                        if (edt_transaction_money?.text.toString().isNotEmpty()) {
+                            edt_transaction_money.filters =
+                                arrayOf(InputFilter.LengthFilter(money.length + 1))
+                        }
+                        if (!money.contains('-'))
+                            money = "-$money"
+                    } else {
+                        if (money.contains('-'))
+                            money = money.replace('-', ' ').trim()
                     }
-                    if (!money.contains('-'))
-                        money = "-$money"
-                } else {
-                    if (money.contains('-'))
-                        money=money.replace('-', ' ').trim()
+                    edt_transaction_money.setText(money)
                 }
-                edt_transaction_money.setText(money)
+
 
             }
     }

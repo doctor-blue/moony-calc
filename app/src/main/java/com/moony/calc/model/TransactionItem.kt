@@ -2,8 +2,9 @@ package com.moony.calc.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import java.io.Serializable
 
-class TransactionItem (
+class TransactionItem(
     @Embedded
     var transaction: Transaction,
     @Relation(
@@ -11,4 +12,4 @@ class TransactionItem (
         entityColumn = "idCategory"
     )
     var category: Category
-)
+) : Serializable

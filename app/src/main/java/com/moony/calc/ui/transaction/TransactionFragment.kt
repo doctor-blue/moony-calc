@@ -1,22 +1,24 @@
 package com.moony.calc.ui.transaction
 
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
-import com.moony.calc.model.Category
-import com.moony.calc.model.Transaction
+import com.moony.calc.model.TransactionItem
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog
 import kotlinx.android.synthetic.main.fragment_transaction.*
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.*
 
 class TransactionFragment : BaseFragment() {
@@ -26,10 +28,8 @@ class TransactionFragment : BaseFragment() {
     }
     private var totalIncome: Double = 0.0
     private var totalExpenses: Double = 0.0
-    private var totalIncomeLiveData: LiveData<Double>? = null
-    private var totalExpensesLiveData: LiveData<Double>? = null
     private var transactionAdapter: TransactionAdapter? = null
-    private var transactionLiveData: LiveData<List<Transaction>>? = null
+    private var transactionLiveData: LiveData<List<TransactionItem>>? = null
 
     private val settings: Settings by lazy {
         Settings.getInstance(baseContext!!)
@@ -53,29 +53,25 @@ class TransactionFragment : BaseFragment() {
 
     }
 
-    private val totalIncomeObserver = Observer<Double> { income ->
-        totalIncome = 0.0
-        if (income != null) totalIncome = income
-
-        totalExpensesLiveData!!.removeObserver(totalExpensesObserver)
-        totalExpensesLiveData!!.observe(viewLifecycleOwner, totalExpensesObserver)
-
-    }
-
-    private val totalExpensesObserver = Observer<Double> { expenses ->
-        totalExpenses = 0.0
-        if (expenses != null) totalExpenses = expenses
-
-        txt_transaction_income.text =
-            (totalIncome.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-        txt_transaction_expenses.text =
-            (totalExpenses.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-        txt_transaction_balance.text =
-            ((totalIncome - totalExpenses).decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-
-    }
-    private val transactionObserver = Observer<List<Transaction>> { list ->
+    private val transactionObserver = Observer<List<TransactionItem>> { list ->
         transactionAdapter!!.refreshTransactions(list)
+        totalExpenses = 0.0
+        totalIncome = 0.0
+
+        lifecycleScope.launch {
+            list.asFlow().collect {
+                if (it.category.isIncome) {
+                    totalIncome += it.transaction.money
+                } else {
+                    totalExpenses += it.transaction.money
+                }
+                updateTotalTransaction()
+            }
+        }
+
+        if (list.isEmpty()){
+            updateTotalTransaction()
+        }
 
         progress_loading.visibility = View.INVISIBLE
 
@@ -88,45 +84,45 @@ class TransactionFragment : BaseFragment() {
         }
     }
 
+    private fun updateTotalTransaction() {
+
+        txt_transaction_income.text =
+            (totalIncome.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+        txt_transaction_expenses.text =
+            (totalExpenses.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+        txt_transaction_balance.text =
+            ((totalIncome - totalExpenses).decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+
+    }
+
 
     private fun refreshData() {
-        totalIncomeLiveData?.removeObserver(totalIncomeObserver)
-        totalIncomeLiveData =
-            transactionViewModel.getTotalMoney(true, calNow[Calendar.MONTH], calNow[Calendar.YEAR])
-        totalIncomeLiveData!!.observe(viewLifecycleOwner, totalIncomeObserver)
-
-        totalExpensesLiveData?.removeObserver(totalExpensesObserver)
-        totalExpensesLiveData =
-            transactionViewModel.getTotalMoney(false, calNow[Calendar.MONTH], calNow[Calendar.YEAR])
-
         transactionLiveData?.removeObserver(transactionObserver)
-        transactionLiveData =
-            transactionViewModel.getAllTransactionByDate(
-                calNow[Calendar.MONTH],
-                calNow[Calendar.YEAR]
-            )
+        transactionLiveData = transactionViewModel.getAllTransactionItem(
+            calNow[Calendar.MONTH],
+            calNow[Calendar.YEAR]
+        )
         transactionLiveData!!.observe(viewLifecycleOwner, transactionObserver)
 
-//        transactionViewModel.getAllTransactionItem().observe(viewLifecycleOwner,{
-//            it[0].category.title.let { it1 -> Log.d("TransactionFragment", it1) }
-//        })
 
 
     }
 
-    private val transactionItemClick: (Transaction, Category) -> Unit =
-        { transaction, category ->
+    private val transactionItemClick: (TransactionItem) -> Unit =
+        { transactionItem ->
 
             val bundle = bundleOf(
-                getString(R.string.transaction) to transaction,
-                getString(R.string.categories) to category
+                getString(R.string.transaction) to transactionItem,
             )
-            findNavController().navigate(R.id.action_transaction_fragment_to_transactionDetailFragment, bundle)
+            findNavController().navigate(
+                R.id.action_transaction_fragment_to_transactionDetailFragment,
+                bundle
+            )
         }
 
     private fun initEvent() {
         btn_add_transaction.setOnClickListener {
-           findNavController().navigate(R.id.action_transaction_fragment_to_addTransactionFragment)
+            findNavController().navigate(R.id.action_transaction_fragment_to_addTransactionFragment)
         }
 
         btn_next_month.setOnClickListener {
@@ -159,7 +155,7 @@ class TransactionFragment : BaseFragment() {
     private fun showMonthYearPickerDialog() {
         val builder = MonthPickerDialog.Builder(
             fragmentActivity,
-            MonthPickerDialog.OnDateSetListener { selectedMonth, selectedYear ->
+            { selectedMonth, selectedYear ->
 
                 calNow.set(Calendar.YEAR, selectedYear)
                 calNow.set(Calendar.MONTH, selectedMonth)

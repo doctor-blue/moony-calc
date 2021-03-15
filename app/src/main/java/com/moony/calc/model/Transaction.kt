@@ -14,7 +14,6 @@ import java.io.Serializable
     )])
 class Transaction(
     var money: Double,
-    var isIncome: Boolean,
     var idCategory: Int,
     var note: String,
     var day: Int,

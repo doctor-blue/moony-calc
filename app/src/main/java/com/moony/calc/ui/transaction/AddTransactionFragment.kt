@@ -133,7 +133,6 @@ class AddTransactionFragment : BaseFragment() {
                     handleTextToDouble(
                         (if (money.contains('-')) money.replace('-', ' ').trim() else money)
                     ).toDouble(),
-                    category!!.isIncome,
                     category!!.idCategory,
                     edt_transaction_note.text.toString(),
                     calendar[Calendar.DAY_OF_MONTH],
