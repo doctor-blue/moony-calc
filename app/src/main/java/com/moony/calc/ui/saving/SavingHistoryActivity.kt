@@ -22,6 +22,7 @@ import com.moony.calc.ui.saving.history.SavingHistoryFragment
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.SavingHistory
+import com.moony.calc.model.SavingHistoryItem
 import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
@@ -33,14 +34,10 @@ class SavingHistoryActivity : BaseActivity() {
 
     private var calendar = Calendar.getInstance()
     private var dateAdded = ""
-    private var category: Category? = null
     private var isSaving = true
     private var idSaving = -1
-    private var savingHistory: SavingHistory? = null
+    private var savingHistoryItem: SavingHistoryItem? = null
 
-    private val categoryViewModel: CategoryViewModel by lazy {
-        ViewModelProvider(this)[CategoryViewModel::class.java]
-    }
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
         ViewModelProvider(this)[SavingHistoryViewModel::class.java]
     }
@@ -56,26 +53,22 @@ class SavingHistoryActivity : BaseActivity() {
     private fun initControls() {
         idSaving = intent.getIntExtra(SavingHistoryFragment.ID_SAVING, -1)
         isSaving = intent.getBooleanExtra(SavingHistoryFragment.IS_SAVING, true)
-        savingHistory =
-            intent.getSerializableExtra(SavingHistoryFragment.EDIT_HISTORY) as SavingHistory?
+        savingHistoryItem =
+            intent.getSerializableExtra(SavingHistoryFragment.EDIT_HISTORY) as SavingHistoryItem?
 
-        savingHistory?.let {
-            isSaving = it.isSaving
-            idSaving = it.idSaving
+        savingHistoryItem?.let {
+            isSaving = it.history.isSaving
 
-            edt_history_saving_description.setText(it.description)
+            edt_history_saving_description.setText(it.history.description)
 
             val minus = if (!isSaving) '-' else ' '
-            edt_saving_history_amount.setText(((minus.toString().trim() + it.amount.toString())))
-            dateAdded = it.date
+            edt_saving_history_amount.setText(((minus.toString().trim() + it.history.amount.toString())))
+            dateAdded = it.history.date
             txt_due_date.text = (resources.getString(R.string.date) + " " + dateAdded)
 
-            categoryViewModel.getCategory(it.idCategory)
-                .observe(this, androidx.lifecycle.Observer { category ->
-                    txt_title_category_saving_history.text = category.title
-                    Glide.with(this).load(AssetFolderManager.assetPath + category.iconUrl)
-                        .into(img_saving_history_category)
-                })
+            txt_title_category_saving_history.text = it.category.title
+            Glide.with(this).load(AssetFolderManager.assetPath + it.category.iconUrl)
+                .into(img_saving_history_category)
         }
 
         if (isSaving)
@@ -189,31 +182,28 @@ class SavingHistoryActivity : BaseActivity() {
                 snackbar.show()
             }
             else -> {
-                if (savingHistory != null) {
+                if (savingHistoryItem != null) {
                     var amount = edt_saving_history_amount.text.toString().toDouble()
                     if (!isSaving) amount *= -1
 
-                    savingHistory!!.amount = amount
-                    savingHistory!!.isSaving = isSaving
-                    savingHistory!!.date = dateAdded
-                    savingHistory!!.description = edt_history_saving_description.text.toString()
-                    category?.let {
-                        savingHistory!!.idCategory = it.idCategory
-                    }
+                    savingHistoryItem!!.history.amount = amount
+                    savingHistoryItem!!.history.isSaving = isSaving
+                    savingHistoryItem!!.history.date = dateAdded
+                    savingHistoryItem!!.history.description = edt_history_saving_description.text.toString()
 
-                    savingHistoryViewModel.updateSavingHistory(savingHistory!!)
+                    savingHistoryViewModel.updateSavingHistory(savingHistoryItem!!.history)
                     finish()
 
                 } else {
                     var amount = edt_saving_history_amount.text.toString().toDouble()
                     if (!isSaving) amount *= -1
-                    category?.let { category ->
+                    savingHistoryItem?.let {
                         val savingHistory = SavingHistory(
                             edt_history_saving_description.text.toString(),
                             idSaving,
                             amount,
                             isSaving,
-                            category.idCategory,
+                            it.category.idCategory,
                             dateAdded
                         )
                         savingHistoryViewModel.insertSavingHistory(savingHistory)
@@ -250,12 +240,14 @@ class SavingHistoryActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AddSavingGoalFragment.KEY_PICK_CATEGORY)
             if (resultCode == Activity.RESULT_OK) {
-                category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
+                savingHistoryItem?.let {
+                    it.category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category
 
-                Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
-                    .into(img_saving_history_category)
+                    Glide.with(this).load(AssetFolderManager.assetPath + it.category.iconUrl)
+                        .into(img_saving_history_category)
 
-                txt_title_category_saving_history.text = category!!.title
+                    txt_title_category_saving_history.text = it.category.title
+                }
 
 
             }
