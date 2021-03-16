@@ -16,14 +16,13 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
-import com.moony.calc.ui.category.CategoryViewModel
-import com.moony.calc.ui.saving.history.SavingHistoryViewModel
-import com.moony.calc.ui.saving.history.SavingHistoryFragment
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.SavingHistory
 import com.moony.calc.model.SavingHistoryItem
 import com.moony.calc.ui.category.CategoriesActivity
+import com.moony.calc.ui.saving.history.SavingHistoryFragment
+import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import kotlinx.android.synthetic.main.activity_saving_history.*
@@ -61,8 +60,7 @@ class SavingHistoryActivity : BaseActivity() {
 
             edt_history_saving_description.setText(it.history.description)
 
-            val minus = if (!isSaving) '-' else ' '
-            edt_saving_history_amount.setText(((minus.toString().trim() + it.history.amount.toString())))
+            edt_saving_history_amount.setText((it.history.amount.toString()))
             dateAdded = it.history.date
             txt_due_date.text = (resources.getString(R.string.date) + " " + dateAdded)
 
@@ -189,7 +187,8 @@ class SavingHistoryActivity : BaseActivity() {
                     savingHistoryItem!!.history.amount = amount
                     savingHistoryItem!!.history.isSaving = isSaving
                     savingHistoryItem!!.history.date = dateAdded
-                    savingHistoryItem!!.history.description = edt_history_saving_description.text.toString()
+                    savingHistoryItem!!.history.description =
+                        edt_history_saving_description.text.toString()
 
                     savingHistoryViewModel.updateSavingHistory(savingHistoryItem!!.history)
                     finish()
