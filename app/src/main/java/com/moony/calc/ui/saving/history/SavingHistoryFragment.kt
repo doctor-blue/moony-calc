@@ -2,7 +2,6 @@ package com.moony.calc.ui.saving.history
 
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

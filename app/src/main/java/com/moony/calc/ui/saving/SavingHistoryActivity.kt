@@ -36,6 +36,7 @@ class SavingHistoryActivity : BaseActivity() {
     private var isSaving = true
     private var idSaving = -1
     private var savingHistoryItem: SavingHistoryItem? = null
+    private var category: Category? = null
 
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
         ViewModelProvider(this)[SavingHistoryViewModel::class.java]
@@ -196,13 +197,14 @@ class SavingHistoryActivity : BaseActivity() {
                 } else {
                     var amount = edt_saving_history_amount.text.toString().toDouble()
                     if (!isSaving) amount *= -1
-                    savingHistoryItem?.let {
+
+                    category?.let {
                         val savingHistory = SavingHistory(
                             edt_history_saving_description.text.toString(),
                             idSaving,
                             amount,
                             isSaving,
-                            it.category.idCategory,
+                            it.idCategory,
                             dateAdded
                         )
                         savingHistoryViewModel.insertSavingHistory(savingHistory)
@@ -239,14 +241,14 @@ class SavingHistoryActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AddSavingGoalFragment.KEY_PICK_CATEGORY)
             if (resultCode == Activity.RESULT_OK) {
+                category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category
                 savingHistoryItem?.let {
-                    it.category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category
-
-                    Glide.with(this).load(AssetFolderManager.assetPath + it.category.iconUrl)
-                        .into(img_saving_history_category)
-
-                    txt_title_category_saving_history.text = it.category.title
+                    it.category = category!!
                 }
+                Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
+                    .into(img_saving_history_category)
+
+                txt_title_category_saving_history.text = category!!.title
 
 
             }
