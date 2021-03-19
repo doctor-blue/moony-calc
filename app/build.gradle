@@ -30,6 +30,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -84,5 +87,10 @@ dependencies {
     def nav_version = "2.3.4"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Chart lib
+    implementation 'com.github.furkanaskin:ClickablePieChart:1.0.8'
+
+
 
 }
