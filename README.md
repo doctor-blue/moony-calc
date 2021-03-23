@@ -1,2 +1,2 @@
-# Moony
+# Moony : Personal financial management application
 
