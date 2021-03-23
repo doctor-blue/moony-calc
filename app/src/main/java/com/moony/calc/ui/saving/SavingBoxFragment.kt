@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.model.Saving
+import com.moony.calc.model.SavingItem
 import kotlinx.android.synthetic.main.fragment_saving_box.*
 
 class SavingBoxFragment : BaseFragment() {
-    private lateinit var savings: List<Saving>
+    private lateinit var savings: List<SavingItem>
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
     lateinit var adapter: SavingBoxAdapter
 
@@ -41,7 +42,7 @@ class SavingBoxFragment : BaseFragment() {
         rv_saving_box.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         savingViewModel.getAllSaving().observe(this,
-            Observer { savings ->
+            { savings ->
                 this.savings = savings
                 adapter.setSavings(savings)
                 if (savings.isNotEmpty()) {

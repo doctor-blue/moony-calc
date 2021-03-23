@@ -15,6 +15,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.moony.calc.R
 import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.model.Saving
+import com.moony.calc.model.SavingItem
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
@@ -27,7 +28,7 @@ class SavingBoxAdapter(
     private val onClick: (Any) -> Unit
 ) : RecyclerView.Adapter<SavingBoxAdapter.SavingViewHolder>() {
     private val settings = Settings.getInstance(context)
-    private var savings: List<Saving> = listOf()
+    private var savings: List<SavingItem> = listOf()
 
     inner class SavingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgGoalCategoryItem: ImageView =
@@ -40,21 +41,18 @@ class SavingBoxAdapter(
             itemView.findViewById(R.id.pb_saving_goals_item)
         private val cardSavingBox: MaterialCardView = itemView.findViewById(R.id.card_saving_box)
 
-        fun onBind(saving: Saving, onClick: (Any) -> Unit) {
-            val categoryViewModel =
-                ViewModelProvider(context).get(CategoryViewModel::class.java)
+        fun onBind(savingItem: SavingItem, onClick: (Any) -> Unit) {
 
-            categoryViewModel.getCategory(saving.idCategory).observe(context, Observer { category ->
-                Glide.with(context).load(AssetFolderManager.assetPath + category.iconUrl)
-                    .into(imgGoalCategoryItem)
-            })
+            Glide.with(context).load(AssetFolderManager.assetPath + savingItem.category.iconUrl)
+                .into(imgGoalCategoryItem)
+
             val savingHistoryViewModel =
                 ViewModelProvider(context)[SavingHistoryViewModel::class.java]
-            savingHistoryViewModel.getCurrentAmount(saving.idSaving).observe(context, Observer {
+            savingHistoryViewModel.getCurrentAmount(savingItem.saving.idSaving).observe(context, Observer {
                 var saved = it
                 if (saved == null) saved = 0.0
 
-                var progress = floor(saved / saving.desiredAmount * 100).toInt()
+                var progress = floor(saved / savingItem.saving.desiredAmount * 100).toInt()
 
                 if (progress < 0) progress = 0
                 if (progress > 100) progress = 100
@@ -67,12 +65,12 @@ class SavingBoxAdapter(
             })
 
 
-            txtSavingDescriptionItem.text = saving.description
+            txtSavingDescriptionItem.text = savingItem.saving.description
             txtAmountProgressItem.text =
-                (saving.desiredAmount.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+                (savingItem.saving.desiredAmount.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
 
             cardSavingBox.setOnClickListener {
-                onClick(saving)
+                onClick(savingItem.saving)
             }
         }
     }
@@ -90,7 +88,7 @@ class SavingBoxAdapter(
         holder.onBind(savings[position], onClick)
     }
 
-    fun setSavings(savings: List<Saving>) {
+    fun setSavings(savings: List<SavingItem>) {
         this.savings = savings
         notifyDataSetChanged()
     }
