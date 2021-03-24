@@ -7,9 +7,13 @@ import com.moony.calc.base.BaseActivity
 
 
 class SplashScreenActivity : BaseActivity() {
-    override fun getLayoutId(): Int =R.layout.activity_splash_screen
+    override fun getLayoutId(): Int = R.layout.activity_splash_screen
 
-    override fun init(savedInstanceState: Bundle?) {
+    override fun initEvents() {
+
+    }
+
+    override fun initControls(savedInstanceState: Bundle?) {
         val intent = Intent(this, MainActivity::class.java)
         val thread: Thread = object : Thread() {
             override fun run() {
@@ -27,8 +31,6 @@ class SplashScreenActivity : BaseActivity() {
         thread.start()
 
     }
-
-
 
 
 }
