@@ -1,70 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/layout_root_add_categories"
-    android:orientation="vertical"
-    tools:context=".ui.category.AddCategoriesActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_add_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <data>
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_add_categories"
-            style="@style/Widget.Moony.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/save_menu"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="@string/add_categories" />
-    </com.google.android.material.appbar.AppBarLayout>
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_content_add_cate"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:padding="@dimen/_5sdp">
-
-        <ImageView
-            android:id="@+id/img_choose_category"
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            app:layout_constraintEnd_toStartOf="@id/edt_title_category"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_title_category"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:maxLength="25"
-            android:maxLines="1"
-            android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img_choose_category"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_add_categories"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_title_category"
-        tools:listitem="@layout/category_list_item" />
-</LinearLayout>
+        android:id="@+id/layout_root_add_categories"
+        android:orientation="vertical"
+        tools:context=".ui.category.AddCategoriesActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_add_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_add_categories"
+                style="@style/Widget.Moony.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:menu="@menu/save_menu"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:title="@string/add_categories" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_content_add_cate"
+            android:focusableInTouchMode="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/img_choose_category"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                app:layout_constraintEnd_toStartOf="@id/edt_title_category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_title_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:maxLength="25"
+                android:maxLines="1"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/img_choose_category"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_add_categories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_title_category"
+            tools:listitem="@layout/category_list_item" />
+    </LinearLayout>
+</layout>

@@ -1,17 +1,30 @@
 package com.moony.calc.base
 
 import android.os.Bundle
-import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
+
+    private lateinit var binding: ViewDataBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutId())
-        init(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, getLayoutId())
+        initControls(savedInstanceState)
+        initEvents()
     }
 
-    abstract fun init(savedInstanceState: Bundle?)
     abstract fun getLayoutId(): Int
+
+    abstract fun initControls(savedInstanceState: Bundle?)
+
+    abstract fun initEvents()
+
+    fun getViewBinding(): ViewDataBinding {
+        return binding
+    }
+
 }

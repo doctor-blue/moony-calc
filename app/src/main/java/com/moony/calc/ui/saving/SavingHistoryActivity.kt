@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.databinding.ActivitySavingHistoryBinding
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.SavingHistory
@@ -30,6 +31,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SavingHistoryActivity : BaseActivity() {
+    private val binding: ActivitySavingHistoryBinding
+        get() = (getViewBinding() as ActivitySavingHistoryBinding)
 
     private var calendar = Calendar.getInstance()
     private var dateAdded = ""
@@ -45,12 +48,7 @@ class SavingHistoryActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_saving_history
 
 
-    override fun init(savedInstanceState: Bundle?) {
-        initControls()
-        initEvents()
-    }
-
-    private fun initControls() {
+    override fun initControls(savedInstanceState: Bundle?) {
         idSaving = intent.getIntExtra(SavingHistoryFragment.ID_SAVING, -1)
         isSaving = intent.getBooleanExtra(SavingHistoryFragment.IS_SAVING, true)
         savingHistoryItem =
@@ -59,30 +57,30 @@ class SavingHistoryActivity : BaseActivity() {
         savingHistoryItem?.let {
             isSaving = it.history.isSaving
 
-            edt_history_saving_description.setText(it.history.description)
+            binding.edtHistorySavingDescription.setText(it.history.description)
 
-            edt_saving_history_amount.setText((it.history.amount.toString()))
+            binding.edtSavingHistoryAmount.setText((it.history.amount.toString()))
             dateAdded = it.history.date
-            txt_due_date.text = (resources.getString(R.string.date) + " " + dateAdded)
+            binding.txtDueDate.text = (resources.getString(R.string.date) + " " + dateAdded)
 
-            txt_title_category_saving_history.text = it.category.title
+            binding.txtTitleCategorySavingHistory.text = it.category.title
             Glide.with(this).load(AssetFolderManager.assetPath + it.category.iconUrl)
-                .into(img_saving_history_category)
+                .into(binding.imgSavingHistoryCategory)
         }
 
         if (isSaving)
-            toolbar_history_saving.title = resources.getString(R.string.more_money_on)
+            binding.toolbarHistorySaving.title = resources.getString(R.string.more_money_on)
         else
-            toolbar_history_saving.title = resources.getString(R.string.get_money_out)
+            binding.toolbarHistorySaving.title = resources.getString(R.string.get_money_out)
 
 
 
 
-        setSupportActionBar(toolbar_history_saving)
+        setSupportActionBar(binding.toolbarHistorySaving)
     }
 
-    private fun initEvents() {
-        edt_saving_history_amount.addTextChangedListener(object : TextWatcher {
+    override fun initEvents() {
+        binding.edtSavingHistoryAmount.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
@@ -92,7 +90,7 @@ class SavingHistoryActivity : BaseActivity() {
 
                 s?.let {
                     if (it.isNotEmpty()) {
-                        tip_history_saving_amount.error = null
+                        binding.tipHistorySavingAmount.error = null
                         if (it.toString().contains('.') || it.toString().contains(',')) {
                             /**
                              * "${handleTextToDouble(it.toString())}0" nhiều trường hợp nó ở dạng #. thay vì #.# nên thêm 0 để đc chuỗi dạng #.0
@@ -100,16 +98,17 @@ class SavingHistoryActivity : BaseActivity() {
                              */
                             val maxLength = "${handleTextToDouble(it.toString())}1".toDouble()
                                 .decimalFormat().length
-                            edt_saving_history_amount.filters =
+                            binding.edtSavingHistoryAmount.filters =
                                 arrayOf(InputFilter.LengthFilter(maxLength))
                         } else {
-                            edt_saving_history_amount.filters = arrayOf(InputFilter.LengthFilter(9))
+                            binding.edtSavingHistoryAmount.filters =
+                                arrayOf(InputFilter.LengthFilter(9))
                             if (it.length - 1 == 8) {
                                 //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
                                 val lastChar = it[8]
                                 if (!(lastChar == '.' || lastChar == ',')) {
-                                    edt_saving_history_amount.setText(it.subSequence(0, 8))
-                                    edt_saving_history_amount.setSelection(8)
+                                    binding.edtSavingHistoryAmount.setText(it.subSequence(0, 8))
+                                    binding.edtSavingHistoryAmount.setSelection(8)
                                 }
                             }
                         }
@@ -118,27 +117,27 @@ class SavingHistoryActivity : BaseActivity() {
             }
         })
 
-        edt_history_saving_description.addTextChangedListener(object : TextWatcher {
+        binding.edtHistorySavingDescription.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
                 Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (edt_history_saving_description.text.toString().trim().isNotEmpty()) {
-                    tip_history_saving_description.error = null
+                if (binding.edtHistorySavingDescription.text.toString().trim().isNotEmpty()) {
+                    binding.tipHistorySavingDescription.error = null
                 }
             }
         })
 
-        layout_saving_history_calendar.setOnClickListener {
+        binding.layoutSavingHistoryCalendar.setOnClickListener {
             pickDateTime()
         }
-        layout_saving_history_categories.setOnClickListener {
+        binding.layoutSavingHistoryCategories.setOnClickListener {
             val intent: Intent = Intent(this@SavingHistoryActivity, CategoriesActivity::class.java)
             startActivityForResult(intent, AddSavingGoalFragment.KEY_PICK_CATEGORY)
         }
-        toolbar_history_saving.setNavigationOnClickListener { finish() }
+        binding.toolbarHistorySaving.setNavigationOnClickListener { finish() }
 
     }
 
@@ -157,7 +156,7 @@ class SavingHistoryActivity : BaseActivity() {
     private fun saveHistory() {
         val snackbar: Snackbar =
             Snackbar.make(
-                layout_root_saving_history,
+                binding.layoutRootSavingHistory,
                 R.string.empty_date_error,
                 Snackbar.LENGTH_LONG
             )
@@ -167,40 +166,41 @@ class SavingHistoryActivity : BaseActivity() {
 
 
         when {
-            edt_saving_history_amount.text.toString().trim().isEmpty() -> {
-                tip_history_saving_amount.error = resources.getString(R.string.empty_error)
+            binding.edtSavingHistoryAmount.text.toString().trim().isEmpty() -> {
+                binding.tipHistorySavingAmount.error = resources.getString(R.string.empty_error)
             }
-            edt_history_saving_description.text.toString().trim().isEmpty() -> {
-                tip_history_saving_description.error = resources.getString(R.string.empty_error)
+            binding.edtHistorySavingDescription.text.toString().trim().isEmpty() -> {
+                binding.tipHistorySavingDescription.error =
+                    resources.getString(R.string.empty_error)
             }
-            txt_due_date.text.toString().trim().isEmpty() -> {
+            binding.txtDueDate.text.toString().trim().isEmpty() -> {
                 snackbar.show()
             }
-            txt_title_category_saving_history.text.toString().trim().isEmpty() -> {
+            binding.txtTitleCategorySavingHistory.text.toString().trim().isEmpty() -> {
                 snackbar.setText(R.string.empty_category_error)
                 snackbar.show()
             }
             else -> {
                 if (savingHistoryItem != null) {
-                    var amount = edt_saving_history_amount.text.toString().toDouble()
+                    var amount = binding.edtSavingHistoryAmount.text.toString().toDouble()
                     if (!isSaving) amount *= -1
 
                     savingHistoryItem!!.history.amount = amount
                     savingHistoryItem!!.history.isSaving = isSaving
                     savingHistoryItem!!.history.date = dateAdded
                     savingHistoryItem!!.history.description =
-                        edt_history_saving_description.text.toString()
+                        binding.edtHistorySavingDescription.text.toString()
 
                     savingHistoryViewModel.updateSavingHistory(savingHistoryItem!!.history)
                     finish()
 
                 } else {
-                    var amount = edt_saving_history_amount.text.toString().toDouble()
+                    var amount = binding.edtSavingHistoryAmount.text.toString().toDouble()
                     if (!isSaving) amount *= -1
 
                     category?.let {
                         val savingHistory = SavingHistory(
-                            edt_history_saving_description.text.toString(),
+                            binding.edtHistorySavingDescription.text.toString(),
                             idSaving,
                             amount,
                             isSaving,
@@ -231,7 +231,7 @@ class SavingHistoryActivity : BaseActivity() {
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
             dateAdded = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
-            txt_due_date.text = resources.getString(R.string.date) + " " + dateAdded
+            binding.txtDueDate.text = resources.getString(R.string.date) + " " + dateAdded
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
     }
@@ -246,9 +246,9 @@ class SavingHistoryActivity : BaseActivity() {
                     it.category = category!!
                 }
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
-                    .into(img_saving_history_category)
+                    .into(binding.imgSavingHistoryCategory)
 
-                txt_title_category_saving_history.text = category!!.title
+                binding.txtTitleCategorySavingHistory.text = category!!.title
 
 
             }

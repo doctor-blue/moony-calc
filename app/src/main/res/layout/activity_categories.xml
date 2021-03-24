@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.category.CategoriesActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <data>
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_categories"
-            style="@style/Widget.Moony.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="@string/categories" />
-    </com.google.android.material.appbar.AppBarLayout>
+    </data>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager_categories"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_15sdp"/>
-</LinearLayout>
+        android:orientation="vertical"
+        tools:context=".ui.category.CategoriesActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_categories"
+                style="@style/Widget.Moony.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:title="@string/categories" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager_categories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_15sdp" />
+    </LinearLayout>
+</layout>
