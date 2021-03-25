@@ -3,21 +3,23 @@ package com.moony.calc.ui.transaction
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter.LengthFilter
 import android.text.TextWatcher
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
-import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.base.BaseFragment
+import com.moony.calc.databinding.FragmentAddTransactionBinding
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.Transaction
+import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.formatDateTime
-import kotlinx.android.synthetic.main.fragment_add_transaction.*
 import java.util.*
 
 
@@ -33,37 +35,35 @@ class AddTransactionFragment : BaseFragment() {
         Settings.getInstance(baseContext!!)
     }
 
-    override fun init() {
-        initControls()
-        initEvents()
-    }
+    private val binding: FragmentAddTransactionBinding
+        get() = (getViewBinding() as FragmentAddTransactionBinding)
 
     override fun getLayoutId(): Int = R.layout.fragment_add_transaction
 
-    private fun initControls() {
+    override fun initControls(view: View, savedInstanceState: Bundle?) {
 
-        txt_transaction_time.text = calendar.formatDateTime()
+        binding.txtTransactionTime.text = calendar.formatDateTime()
 
-        edt_transaction_money.setSelection(edt_transaction_money.text.toString().length)
+        binding.edtTransactionMoney.setSelection(binding.edtTransactionMoney.text.toString().length)
 
-        txt_currency_unit.text = settings.getString(
+        binding.txtCurrencyUnit.text = settings.getString(
             Settings.SettingKey.CURRENCY_UNIT
         )
     }
 
 
-    private fun initEvents() {
-        layout_transaction_category.setOnClickListener {
+    override fun initEvents() {
+        binding.layoutTransactionCategory.setOnClickListener {
             val intent = Intent(requireContext(), CategoriesActivity::class.java)
             startActivityForResult(intent, requestCode)
         }
 
-        layout_transaction_date_time.setOnClickListener {
+        binding.layoutTransactionDateTime.setOnClickListener {
             pickDateTime()
         }
 
 
-        edt_transaction_money.addTextChangedListener(object : TextWatcher {
+        binding.edtTransactionMoney.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
@@ -73,24 +73,29 @@ class AddTransactionFragment : BaseFragment() {
 
                 s?.let {
                     if (s.isNotEmpty()) {
-                        textInput_transaction_money.error = null
+                        binding.textInputTransactionMoney.error = null
                         if (it.toString().contains('.') || it.toString().contains(',')) {
                             var maxLength = 11
 
                             if (it.toString().contains('-')) maxLength++
 
-                            edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
+                            binding.edtTransactionMoney.filters = arrayOf(LengthFilter(maxLength))
                         } else {
                             var maxLength = 9
                             if (it.toString().contains('-')) maxLength++
 
-                            edt_transaction_money.filters = arrayOf(LengthFilter(maxLength))
+                            binding.edtTransactionMoney.filters = arrayOf(LengthFilter(maxLength))
                             if (it.length - 1 == maxLength - 1) {
                                 //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
                                 val lastChar = it[maxLength - 1]
                                 if (!(lastChar == '.' || lastChar == ',')) {
-                                    edt_transaction_money.setText(it.subSequence(0, maxLength - 1))
-                                    edt_transaction_money.setSelection(maxLength - 1)
+                                    binding.edtTransactionMoney.setText(
+                                        it.subSequence(
+                                            0,
+                                            maxLength - 1
+                                        )
+                                    )
+                                    binding.edtTransactionMoney.setSelection(maxLength - 1)
                                 }
                             }
                         }
@@ -102,11 +107,11 @@ class AddTransactionFragment : BaseFragment() {
 
         })
 
-        toolbar_add_transaction.setNavigationOnClickListener {
+        binding.toolbarAddTransaction.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        toolbar_add_transaction.setOnMenuItemClickListener { item ->
+        binding.toolbarAddTransaction.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.mnu_save) {
                 saveTransaction()
             }
@@ -118,23 +123,23 @@ class AddTransactionFragment : BaseFragment() {
     private fun saveTransaction() {
         when {
 
-            edt_transaction_money.text.toString().trim().isEmpty() -> {
-                textInput_transaction_money.error = resources.getString(R.string.empty_error)
+            binding.edtTransactionMoney.text.toString().trim().isEmpty() -> {
+                binding.textInputTransactionMoney.error = resources.getString(R.string.empty_error)
             }
-            txt_title_transaction_category.text.toString().trim().isEmpty() -> {
-                textInput_transaction_title_category.error =
+            binding.txtTitleTransactionCategory.text.toString().trim().isEmpty() -> {
+                binding.textInputTransactionTitleCategory.error =
                     resources.getString(R.string.empty_category_error)
             }
             else -> {
 
-                val money = edt_transaction_money.text.toString()
+                val money = binding.edtTransactionMoney.text.toString()
 
                 val transaction = Transaction(
                     handleTextToDouble(
                         (if (money.contains('-')) money.replace('-', ' ').trim() else money)
                     ).toDouble(),
                     category!!.idCategory,
-                    edt_transaction_note.text.toString(),
+                    binding.edtTransactionNote.text.toString(),
                     calendar[Calendar.DAY_OF_MONTH],
                     calendar[Calendar.MONTH],
                     calendar[Calendar.YEAR]
@@ -153,7 +158,7 @@ class AddTransactionFragment : BaseFragment() {
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            txt_transaction_time.text = calendar.formatDateTime()
+            binding.txtTransactionTime.text = calendar.formatDateTime()
 
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
@@ -167,25 +172,25 @@ class AddTransactionFragment : BaseFragment() {
             if (resultCode == Activity.RESULT_OK) {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
-                    .into(img_categories)
+                    .into(binding.imgCategories)
 
-                txt_title_transaction_category.text = category!!.title
-                textInput_transaction_title_category.error = null
+                binding.txtTitleTransactionCategory.text = category!!.title
+                binding.textInputTransactionTitleCategory.error = null
 
-                var money = edt_transaction_money.text.toString()
+                var money = binding.edtTransactionMoney.text.toString()
 
                 if (!category!!.isIncome) {
-                    if (edt_transaction_money?.text.toString().isNotEmpty()) {
-                        edt_transaction_money.filters =
+                    if (binding.edtTransactionMoney?.text.toString().isNotEmpty()) {
+                        binding.edtTransactionMoney.filters =
                             arrayOf(LengthFilter(money.length + 1))
                     }
                     if (!money.contains('-'))
                         money = "-$money"
                 } else {
                     if (money.contains('-'))
-                        money=money.replace('-', ' ').trim()
+                        money = money.replace('-', ' ').trim()
                 }
-                edt_transaction_money.setText(money)
+                binding.edtTransactionMoney.setText(money)
             }
     }
 
