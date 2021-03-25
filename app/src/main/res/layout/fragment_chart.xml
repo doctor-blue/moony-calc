@@ -80,6 +80,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:centerColor="@color/backgroundColor"
+                            app:animationDuration="2000"
+                            app:showPopup="true"
+                            app:showPercentage="true"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -106,130 +109,10 @@
                         android:orientation="vertical"
                         android:paddingHorizontal="@dimen/_5sdp">
 
-                        <LinearLayout
-                            android:id="@+id/layout_line_1"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_chart_legend"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:visibility="invisible">
-
-                            <ImageView
-                                android:id="@+id/img_circle_line_1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_outline_lens_24" />
-
-                            <TextView
-                                android:id="@+id/txt_name_line_1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:maxLines="1"
-                                android:text="Name of transaction" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layout_line_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:visibility="invisible">
-
-                            <ImageView
-                                android:id="@+id/img_circle_line_2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_outline_lens_24" />
-
-                            <TextView
-                                android:id="@+id/txt_name_line_2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:maxLines="1"
-                                android:text="Name of transaction" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layout_line_3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:visibility="invisible">
-
-                            <ImageView
-                                android:id="@+id/img_circle_line_3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_outline_lens_24" />
-
-                            <TextView
-                                android:id="@+id/txt_name_line_3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:maxLines="1"
-                                android:text="Name of transaction" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layout_line_4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:visibility="invisible">
-
-                            <ImageView
-                                android:id="@+id/img_circle_line_4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_outline_lens_24" />
-
-                            <TextView
-                                android:id="@+id/txt_name_line_4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:maxLines="1"
-                                android:text="Name of transaction" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layout_line_5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:visibility="invisible">
-
-                            <ImageView
-                                android:id="@+id/img_circle_line_5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_outline_lens_24" />
-
-                            <TextView
-                                android:id="@+id/txt_name_line_5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:maxLines="1"
-                                android:text="Name of transaction" />
-
-                        </LinearLayout>
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -249,7 +132,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rev_finance_chart"
+            android:id="@+id/rv_chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/_8sdp"
