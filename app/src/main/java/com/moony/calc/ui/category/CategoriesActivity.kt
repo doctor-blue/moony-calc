@@ -4,14 +4,19 @@ import android.os.Bundle
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.base.BaseFragment
+import com.moony.calc.databinding.ActivityAddCategoriesBinding
+import com.moony.calc.databinding.ActivityCategoriesBinding
 import kotlinx.android.synthetic.main.activity_categories.*
 
 class CategoriesActivity : BaseActivity() {
+    private val binding: ActivityCategoriesBinding
+        get() = (getViewBinding() as ActivityCategoriesBinding)
+
     companion object{
         const val KEY="com.moony.calc.ui.category.CategoriesActivity"
         var isJustWatch=false
     }
-    override fun init(savedInstanceState: Bundle?) {
+    override fun initControls(savedInstanceState: Bundle?) {
         isJustWatch =intent.getBooleanExtra(KEY,false)
 
         val fragments = mutableListOf<BaseFragment>()
@@ -22,15 +27,18 @@ class CategoriesActivity : BaseActivity() {
 
 
         val fragmentAdapter = CategoriesPagerAdapter(supportFragmentManager, fragments, this)
-        viewpager_categories.adapter = fragmentAdapter
-        tab_layout_categories.setupWithViewPager(viewpager_categories)
+        binding.viewpagerCategories.adapter = fragmentAdapter
+        binding.tabLayoutCategories.setupWithViewPager(binding.viewpagerCategories)
 
-        toolbar_categories.setNavigationOnClickListener {
+        binding.toolbarCategories.setNavigationOnClickListener {
             finish()
         }
 
     }
 
     override fun getLayoutId(): Int = R.layout.activity_categories
+    override fun initEvents() {
+
+    }
 
 }

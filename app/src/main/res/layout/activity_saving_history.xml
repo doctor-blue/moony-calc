@@ -1,139 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/layout_root_saving_history"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.saving.SavingHistoryActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_history_saving"
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_root_saving_history"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.saving.SavingHistoryActivity">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_history_saving"
-            style="@style/Widget.Moony.Toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_history_saving"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/save_menu"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="@string/add_saving_history" />
-    </com.google.android.material.appbar.AppBarLayout>
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/appbar_history_saving">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_history_saving"
+                style="@style/Widget.Moony.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:menu="@menu/save_menu"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:title="@string/add_saving_history" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/_10sdp">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tip_history_saving_amount"
-                style="@style/Widget.Moony.TextInputLayout.OutlineBox.Dense"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/appbar_history_saving">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:hint="@string/amount"
-                app:errorEnabled="true"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                android:layout_height="match_parent"
+                android:padding="@dimen/_10sdp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_saving_history_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="numberDecimal"
-                    android:maxLength="14" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tip_history_saving_description"
-                style="@style/Widget.Moony.TextInputLayout.OutlineBox.Dense"
-                android:layout_width="match_parent"
-                app:layout_constraintTop_toBottomOf="@id/tip_history_saving_amount"
-                android:layout_height="wrap_content"
-                android:hint="@string/description"
-                app:counterEnabled="true"
-                app:counterMaxLength="100"
-                app:errorEnabled="true"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_history_saving_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text"
-                    android:maxLength="100" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-            <LinearLayout
-                android:id="@+id/layout_saving_history_calendar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tip_history_saving_description">
-
-                <ImageView
-                    android:id="@+id/img_saving_history_calendar"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_calendar" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txt_due_date"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tip_history_saving_amount"
+                    style="@style/Widget.Moony.TextInputLayout.OutlineBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:hint="@string/date"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/_16sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/img_saving_history_calendar"
-                    app:layout_constraintTop_toBottomOf="@id/tip_history_saving_amount" />
-            </LinearLayout>
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="@string/amount"
+                    app:errorEnabled="true"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/layout_saving_history_categories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_saving_history_calendar">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_saving_history_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="numberDecimal"
+                        android:maxLength="14" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/img_saving_history_category"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_unknown" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tip_history_saving_description"
+                    style="@style/Widget.Moony.TextInputLayout.OutlineBox.Dense"
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/tip_history_saving_amount"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="100"
+                    app:errorEnabled="true">
 
-                <TextView
-                    android:id="@+id/txt_title_category_saving_history"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_history_saving_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text"
+                        android:maxLength="100" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layout_saving_history_calendar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:hint="@string/select_category"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/_16sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/img_saving_history_calendar"
-                    app:layout_constraintTop_toBottomOf="@id/tip_history_saving_amount" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tip_history_saving_description">
+
+                    <ImageView
+                        android:id="@+id/img_saving_history_calendar"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_calendar" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_due_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:hint="@string/date"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/_16sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/img_saving_history_calendar"
+                        app:layout_constraintTop_toBottomOf="@id/tip_history_saving_amount" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_saving_history_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_saving_history_calendar">
+
+                    <ImageView
+                        android:id="@+id/img_saving_history_category"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_unknown" />
+
+                    <TextView
+                        android:id="@+id/txt_title_category_saving_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:hint="@string/select_category"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/_16sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/img_saving_history_calendar"
+                        app:layout_constraintTop_toBottomOf="@id/tip_history_saving_amount" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
