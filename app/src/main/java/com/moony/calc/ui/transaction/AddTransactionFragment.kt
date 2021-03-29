@@ -31,6 +31,7 @@ class AddTransactionFragment : BaseFragment() {
         ViewModelProvider(this)[TransactionViewModel::class.java]
     }
     private val calendar: Calendar = Calendar.getInstance()
+
     private val settings: Settings by lazy {
         Settings.getInstance(baseContext!!)
     }

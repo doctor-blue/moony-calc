@@ -4,20 +4,19 @@ import android.os.Bundle
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.base.BaseFragment
-import com.moony.calc.databinding.ActivityAddCategoriesBinding
 import com.moony.calc.databinding.ActivityCategoriesBinding
-import kotlinx.android.synthetic.main.activity_categories.*
 
 class CategoriesActivity : BaseActivity() {
     private val binding: ActivityCategoriesBinding
         get() = (getViewBinding() as ActivityCategoriesBinding)
 
-    companion object{
-        const val KEY="com.moony.calc.ui.category.CategoriesActivity"
-        var isJustWatch=false
+    companion object {
+        const val KEY = "com.moony.calc.ui.category.CategoriesActivity"
+        var isJustWatch = false
     }
+
     override fun initControls(savedInstanceState: Bundle?) {
-        isJustWatch =intent.getBooleanExtra(KEY,false)
+        isJustWatch = intent.getBooleanExtra(KEY, false)
 
         val fragments = mutableListOf<BaseFragment>()
         val incomeFragment = CategoriesFragment(true, this)

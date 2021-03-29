@@ -8,7 +8,6 @@ import androidx.navigation.findNavController
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
