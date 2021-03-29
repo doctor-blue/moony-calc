@@ -11,14 +11,17 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
+import com.moony.calc.databinding.ActivityAddCategoriesBinding
 import com.moony.calc.model.Category
 import com.moony.calc.utils.AssetFolderManager
-import kotlinx.android.synthetic.main.activity_add_categories.*
 
 
 class AddCategoriesActivity : BaseActivity() {
     private var isIncome = true
     private var linkImage = ""
+
+    private val binding: ActivityAddCategoriesBinding
+        get() = (getViewBinding() as ActivityAddCategoriesBinding)
 
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(this)[CategoryViewModel::class.java]
@@ -28,20 +31,20 @@ class AddCategoriesActivity : BaseActivity() {
        const val KEY = "com.moony.calc.ui.category.AddCategoriesActivity"
     }
 
-    override fun init(savedInstanceState: Bundle?) {
+    override fun initControls(savedInstanceState: Bundle?) {
         val intent = intent
-        setSupportActionBar(toolbar_add_categories)
+        setSupportActionBar(binding.toolbarAddCategories)
 
         intent.let {
             isIncome = intent.getBooleanExtra(KEY, true)
         }
 
         if (isIncome) {
-            toolbar_add_categories.title = resources.getString(R.string.add_income_category)
+            binding.toolbarAddCategories.title = resources.getString(R.string.add_income_category)
         } else {
-            toolbar_add_categories.title = resources.getString(R.string.add_expense_category)
+            binding.toolbarAddCategories.title = resources.getString(R.string.add_expense_category)
         }
-        toolbar_add_categories.setNavigationOnClickListener { finish() }
+        binding.toolbarAddCategories.setNavigationOnClickListener { finish() }
 
 
         with(AssetFolderManager) {
@@ -53,18 +56,22 @@ class AddCategoriesActivity : BaseActivity() {
             CategoriesListAdapter(AssetFolderManager.imageMap.keys.toList(), this) {
                 linkImage = it.toString()
                 Glide.with(this@AddCategoriesActivity)
-                    .load(AssetFolderManager.assetPath + linkImage).into(img_choose_category)
+                    .load(AssetFolderManager.assetPath + linkImage).into(binding.imgChooseCategory)
             }
-        rv_add_categories.setHasFixedSize(true)
-        rv_add_categories.layoutManager =
+        binding.rvAddCategories.setHasFixedSize(true)
+        binding.rvAddCategories.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv_add_categories.setItemViewCacheSize(20)
-        rv_add_categories.adapter = categoriesListAdapter
+        binding.rvAddCategories.setItemViewCacheSize(20)
+        binding.rvAddCategories.adapter = categoriesListAdapter
 
 
     }
 
     override fun getLayoutId(): Int = R.layout.activity_add_categories
+
+    override fun initEvents() {
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.save_menu, menu)
@@ -82,7 +89,7 @@ class AddCategoriesActivity : BaseActivity() {
     private fun saveCategory() {
         val snackBar: Snackbar =
             Snackbar.make(
-                layout_root_add_categories,
+                binding.layoutRootAddCategories,
                 R.string.please_select_icon,
                 Snackbar.LENGTH_LONG
             )
@@ -91,7 +98,7 @@ class AddCategoriesActivity : BaseActivity() {
         snackBar.animationMode = Snackbar.ANIMATION_MODE_FADE
 
         when {
-            edt_title_category.text.toString().trim().isEmpty() -> {
+            binding.edtTitleCategory.text.toString().trim().isEmpty() -> {
                 snackBar.setText(R.string.please_add_title)
                 snackBar.show()
             }
@@ -101,7 +108,7 @@ class AddCategoriesActivity : BaseActivity() {
             else -> {
                 categoryViewModel.insertCategory(
                     Category(
-                        edt_title_category.text.toString().trim(),
+                        binding.edtTitleCategory.text.toString().trim(),
                         linkImage,
                         isIncome
                     )

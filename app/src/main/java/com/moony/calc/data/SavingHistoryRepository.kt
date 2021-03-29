@@ -23,8 +23,10 @@ class SavingHistoryRepository(application: Application) {
     fun getCurrentSavingAmount(idSaving: Int): LiveData<Double> =
         savingHistoryDao.getCurrentSavingAmount(idSaving)
 
-    suspend fun deleteAllSavingHistoryBySaving(idSaving: Int)=
+    suspend fun deleteAllSavingHistoryBySaving(idSaving: Int) =
         savingHistoryDao.deleteAllSavingHistoryBySaving(idSaving)
+
+    fun getAllSavingHistoryItem(idSaving: Int) = savingHistoryDao.getAllSavingHistoryItem(idSaving)
 
 
 }

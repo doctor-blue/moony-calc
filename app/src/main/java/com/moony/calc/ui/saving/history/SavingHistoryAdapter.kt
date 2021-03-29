@@ -14,21 +14,19 @@ import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.model.SavingHistory
+import com.moony.calc.model.SavingHistoryItem
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 
 class SavingHistoryAdapter(
-    private val activity: FragmentActivity,
-    private val histories: List<SavingHistory>,
-    private val itemClick: (SavingHistory) -> Unit
+    private val itemClick: (SavingHistoryItem) -> Unit
 ) : RecyclerView.Adapter<SavingHistoryAdapter.SavingHistoryViewHolder>() {
-    private val categoryViewModel: CategoryViewModel by lazy {
-        ViewModelProvider(activity)[CategoryViewModel::class.java]
-    }
+
+    private var histories: List<SavingHistoryItem> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavingHistoryViewHolder {
         val view =
-            LayoutInflater.from(activity).inflate(R.layout.saving_history_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.saving_history_item, parent, false)
         return SavingHistoryViewHolder(view)
     }
 
@@ -36,6 +34,11 @@ class SavingHistoryAdapter(
 
     override fun onBindViewHolder(holder: SavingHistoryViewHolder, position: Int) {
         holder.onBind(histories[position])
+    }
+
+    fun refreshData(histories: List<SavingHistoryItem>){
+        this.histories = histories
+        notifyDataSetChanged()
     }
 
 
@@ -47,21 +50,19 @@ class SavingHistoryAdapter(
         private val layoutContent =
             itemView.findViewById<LinearLayout>(R.id.layout_saving_history_item)
 
-        fun onBind(savingHistory: SavingHistory) {
-            categoryViewModel.getCategory(savingHistory.idCategory).observe(activity, Observer {
-                Glide.with(activity).load(AssetFolderManager.assetPath + it.iconUrl)
-                    .into(imgCategory)
-            })
+        fun onBind(item: SavingHistoryItem) {
+            Glide.with(itemView.context).load(AssetFolderManager.assetPath + item.category.iconUrl)
+                .into(imgCategory)
 
-            txtMoney.text = savingHistory.amount.decimalFormat()
+            txtMoney.text = item.history.amount.decimalFormat()
 
-            if (savingHistory.description.length > 10) {
-                txtTitle.text = (savingHistory.description.substring(0, 10) + "...")
+            if (item.history.description.length > 10) {
+                txtTitle.text = (item.history.description.substring(0, 10) + "...")
             } else {
-                txtTitle.text = savingHistory.description
+                txtTitle.text = item.history.description
             }
             layoutContent.setOnClickListener {
-                itemClick(savingHistory)
+                itemClick(item)
             }
         }
     }

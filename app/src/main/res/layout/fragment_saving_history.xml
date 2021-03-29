@@ -1,53 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.saving.history.SavingHistoryFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_saving_history"
+    <data>
+
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/saving_history_item"/>
+        tools:context=".ui.saving.history.SavingHistoryFragment">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_180sdp"
-        android:layout_gravity="bottom|right"
-        android:id="@+id/btn_import_history"
-        android:layout_marginRight="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        app:layoutDescription="@xml/saving_money_scene"
-        tools:ignore="RtlHardcoded">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_saving_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/saving_history_item" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_expanded"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_expand_less"
-            app:backgroundTint="@color/white"
-            app:fabCustomSize="@dimen/_40sdp" />
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_180sdp"
+            android:layout_gravity="bottom|right"
+            android:id="@+id/btn_import_history"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:layoutDescription="@xml/saving_money_scene"
+            tools:ignore="RtlHardcoded">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_add_saving_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_add"
-            android:tint="@color/white"
-            app:fabCustomSize="@dimen/_50sdp" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_expanded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_expand_less"
+                app:backgroundTint="@color/white"
+                app:fabCustomSize="@dimen/_40sdp" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_subtract_saving_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_subtract"
-            android:tint="@color/white"
-            app:fabCustomSize="@dimen/_45sdp" />
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_add_saving_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_add"
+                android:tint="@color/white"
+                app:fabCustomSize="@dimen/_50sdp" />
 
-</FrameLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_subtract_saving_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_subtract"
+                android:tint="@color/white"
+                app:fabCustomSize="@dimen/_45sdp" />
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    </FrameLayout>
+</layout>

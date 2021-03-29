@@ -1,7 +1,6 @@
 package com.moony.calc.ui.chart
 
-import android.opengl.Visibility
-import android.util.Log
+import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.lifecycle.Observer
@@ -11,20 +10,18 @@ import com.faskn.lib.PieChart
 import com.faskn.lib.Slice
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
+import com.moony.calc.databinding.FragmentChartBinding
 import com.moony.calc.model.ChartItem
-import com.moony.calc.ui.transaction.TransactionAdapter
 import com.moony.calc.ui.transaction.TransactionViewModel
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog
-import kotlinx.android.synthetic.main.fragment_chart.*
-import kotlinx.android.synthetic.main.fragment_chart.btn_next_month
-import kotlinx.android.synthetic.main.fragment_chart.btn_pre_month
-import kotlinx.android.synthetic.main.fragment_chart.txt_transaction_date
-import kotlinx.android.synthetic.main.fragment_transaction.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ChartFragment : BaseFragment() {
+
+    private val binding: FragmentChartBinding
+        get() = (getViewBinding() as FragmentChartBinding)
+
     private var slices = arrayListOf<Slice>()
     private var sumOfGradedItems: Double = 0.0
     private var gradedItems: List<ChartItem> = listOf()
@@ -51,48 +48,43 @@ class ChartFragment : BaseFragment() {
         ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
     }
 
-    override fun init() {
-        initControl()
-        initEvent()
-    }
-
     override fun getLayoutId(): Int = R.layout.fragment_chart
 
-    private fun initControl() {
+    override fun initControls(view: View, savedInstanceState: Bundle?) {
         generateData()
         chartAdapter = ChartAdapter(fragmentActivity!!, chartItemClick)
-        rv_chart.setHasFixedSize(true)
-        rv_chart.layoutManager = LinearLayoutManager(fragmentActivity)
-        rv_chart.adapter = chartAdapter
+        binding.rvChart.setHasFixedSize(true)
+        binding.rvChart.layoutManager = LinearLayoutManager(fragmentActivity)
+        binding.rvChart.adapter = chartAdapter
         chartLegendAdapter = ChartLegendAdapter(fragmentActivity!!)
-        rv_chart_legend.setHasFixedSize(true)
-        rv_chart_legend.layoutManager = LinearLayoutManager(fragmentActivity)
-        rv_chart_legend.adapter = chartLegendAdapter
+        binding.rvChartLegend.setHasFixedSize(true)
+        binding.rvChartLegend.layoutManager = LinearLayoutManager(fragmentActivity)
+        binding.rvChartLegend.adapter = chartLegendAdapter
     }
 
-    private fun initEvent() {
-        center_text.setOnClickListener {
+    override fun initEvents() {
+        binding.centerText.setOnClickListener {
             isIncome = !isIncome
             generateData()
         }
 
-        btn_next_month.setOnClickListener {
+        binding.btnNextMonth.setOnClickListener {
 //            tiến thêm 1 tháng
             calNow.add(Calendar.MONTH, 1)
-            txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+            binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
 //            showProgressBar()
             generateData()
         }
-        btn_pre_month.setOnClickListener {
+        binding.btnPreMonth.setOnClickListener {
 
             calNow.add(Calendar.MONTH, -1)
-            txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+            binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
 //            showProgressBar()
             generateData()
         }
-        txt_transaction_date.setOnClickListener {
+        binding.txtTransactionDate.setOnClickListener {
             showMonthYearPickerDialog()
         }
     }
@@ -134,31 +126,31 @@ class ChartFragment : BaseFragment() {
             slices.add(Slice(sumOfGradedItems.toFloat() - sumOfFourItems, colors[4], "Other"))
         }
 
-        if(slices.isNotEmpty()) {
+        if (slices.isNotEmpty()) {
             val pieChart = PieChart(
                 slices = slices,
                 clickListener = null,
                 sliceStartPoint = SLICE_START_POINT,
                 sliceWidth = SLICE_WIDTH
             ).build()
-            chart.setPieChart(pieChart)
+            binding.chart.setPieChart(pieChart)
             chartLegendAdapter!!.refreshLegend(slices)
-            rv_chart_legend.visibility = View.VISIBLE
+            binding.rvChartLegend.visibility = View.VISIBLE
         } else {
-            chart.visibility = View.GONE
-            chart.visibility = View.VISIBLE
-            rv_chart_legend.visibility = View.GONE
+            binding.chart.visibility = View.GONE
+            binding.chart.visibility = View.VISIBLE
+            binding.rvChartLegend.visibility = View.GONE
         }
 
-        center_text.text = changeCenterText(isIncome, sumOfGradedItems)
+        binding.centerText.text = changeCenterText(isIncome, sumOfGradedItems)
 
     }
 
     private fun changeCenterText(isIncome: Boolean, sum: Double): String =
         if (isIncome) "${resources.getString(R.string.income)}\n$sum\$" else "${
-            resources.getString(
-                R.string.expenses
-            )
+        resources.getString(
+            R.string.expenses
+        )
         }\n$sum\$"
 
     private fun showMonthYearPickerDialog() {
@@ -169,7 +161,7 @@ class ChartFragment : BaseFragment() {
                 calNow.set(Calendar.YEAR, selectedYear)
                 calNow.set(Calendar.MONTH, selectedMonth)
 
-                txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+                binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
 //                showProgressBar()
                 generateData()

@@ -55,17 +55,6 @@ class TransactionAdapter(
         private val txtDate: TextView = itemView.findViewById(R.id.txt_transaction_date)
 
         fun onBind(transactionItem: TransactionItem, itemClick: (TransactionItem) -> Unit) {
-//            val categoryViewModel =
-//                ViewModelProvider(context).get(CategoryViewModel::class.java)
-
-//            categoryViewModel.getCategory(transaction.idCategory).observe(context, Observer {
-//                if (it != null) {
-//                    Glide.with(context).load(AssetFolderManager.assetPath + it.iconUrl)
-//                        .into(imgTransactionIcon)
-//                    txtTransactionName.text = it.title
-//                    category = it
-//                }
-//            })
 
             Glide.with(context).load(AssetFolderManager.assetPath + transactionItem.category.iconUrl)
                 .into(imgTransactionIcon)
