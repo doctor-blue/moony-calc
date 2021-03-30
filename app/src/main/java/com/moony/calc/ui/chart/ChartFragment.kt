@@ -1,5 +1,6 @@
 package com.moony.calc.ui.chart
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorRes
@@ -29,11 +30,10 @@ class ChartFragment : BaseFragment() {
     private var calNow = Calendar.getInstance()
     private var chartAdapter: ChartAdapter? = null
     private var chartLegendAdapter: ChartLegendAdapter? = null
-
-    companion object {
-        const val SLICE_WIDTH = 80f
-        const val SLICE_START_POINT = 0f
+    private val sliceWidth by lazy {
+        requireContext().resources.getDimension(R.dimen._16sdp)
     }
+    private val sliceStartPoint = 0f
 
     @ColorRes
     val colors = arrayListOf<Int>(
@@ -51,6 +51,7 @@ class ChartFragment : BaseFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_chart
 
     override fun initControls(view: View, savedInstanceState: Bundle?) {
+
         generateData()
         chartAdapter = ChartAdapter(fragmentActivity!!, chartItemClick)
         binding.rvChart.setHasFixedSize(true)
@@ -130,8 +131,8 @@ class ChartFragment : BaseFragment() {
             val pieChart = PieChart(
                 slices = slices,
                 clickListener = null,
-                sliceStartPoint = SLICE_START_POINT,
-                sliceWidth = SLICE_WIDTH
+                sliceStartPoint = sliceStartPoint,
+                sliceWidth = sliceWidth
             ).build()
             binding.chart.setPieChart(pieChart)
             chartLegendAdapter!!.refreshLegend(slices)
