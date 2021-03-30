@@ -24,7 +24,6 @@ abstract class BaseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
-        val view: View = inflater.inflate(getLayoutId(), container, false)
         fragmentActivity = activity
         baseContext = activity
         return binding.root
@@ -37,18 +36,15 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
         initControls(view, savedInstanceState)
         initEvents()
     }
 
-    open fun init(){}
-
     abstract fun getLayoutId(): Int
 
-    open fun initControls(view: View, savedInstanceState: Bundle?){}
+    abstract fun initControls(view: View, savedInstanceState: Bundle?)
 
-    open fun initEvents(){}
+    abstract fun initEvents()
 
     fun getViewBinding():ViewDataBinding{
         return binding
