@@ -81,9 +81,10 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 
-    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
-
     implementation 'com.github.doctor-blue:NoNameBottomBar:v0.0.4'
+
+    // chart
+    implementation 'com.github.furkanaskin:ClickablePieChart:1.0.8'
 
     def nav_version = "2.3.4"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

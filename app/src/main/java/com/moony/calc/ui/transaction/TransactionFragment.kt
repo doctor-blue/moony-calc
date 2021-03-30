@@ -41,7 +41,7 @@ class TransactionFragment : BaseFragment() {
 
 
     override fun getLayoutId(): Int = R.layout.fragment_transaction
-    
+
     override fun initControls(view: View, savedInstanceState: Bundle?) {
         refreshData()
         binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
@@ -68,7 +68,7 @@ class TransactionFragment : BaseFragment() {
             }
         }
 
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             updateTotalTransaction()
         }
 
@@ -102,7 +102,6 @@ class TransactionFragment : BaseFragment() {
             calNow[Calendar.YEAR]
         )
         transactionLiveData!!.observe(viewLifecycleOwner, transactionObserver)
-
 
 
     }
