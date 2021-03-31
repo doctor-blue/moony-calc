@@ -23,56 +23,22 @@ import com.moony.calc.utils.decimalFormat
 class TransactionAdapter(
     private val context: FragmentActivity,
     private val itemClick: (TransactionItem) -> Unit
-) : RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<TransactionViewHolder>() {
     private var transactions: List<TransactionItem> = listOf()
-    private val settings = Settings.getInstance(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.transaction_item, parent, false)
-        return ViewHolder(view)
+        return TransactionViewHolder(view,itemClick)
     }
 
     override fun getItemCount(): Int = transactions.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(transactions[position], itemClick)
+    override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
+        holder.onBind(transactions[position])
     }
 
     fun refreshTransactions(transactions: List<TransactionItem>) {
         this.transactions = transactions
         notifyDataSetChanged()
-    }
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imgTransactionIcon: ImageView =
-            itemView.findViewById(R.id.img_transaction)
-        private val txtTransactionName: TextView =
-            itemView.findViewById(R.id.txt_transaction_name)
-        private val cardTransaction: MaterialCardView =
-            itemView.findViewById(R.id.card_transaction)
-        private val txtTransactionMoney: TextView =
-            itemView.findViewById(R.id.txt_transaction_money)
-        private val txtDate: TextView = itemView.findViewById(R.id.txt_transaction_date)
-
-        fun onBind(transactionItem: TransactionItem, itemClick: (TransactionItem) -> Unit) {
-
-            Glide.with(context).load(AssetFolderManager.assetPath + transactionItem.category.iconUrl)
-                .into(imgTransactionIcon)
-            txtTransactionName.text = transactionItem.category.title
-
-            if (transactionItem.category.isIncome)
-                txtTransactionMoney.text =
-                    (transactionItem.transaction.money.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-            else
-                txtTransactionMoney.text =
-                    ((transactionItem.transaction.money * -1).decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-
-            txtDate.text = ("${transactionItem.transaction.day}/${transactionItem.transaction.month + 1}/${transactionItem.transaction.year}")
-
-            cardTransaction.setOnClickListener {
-                //thực hiện hàm click nội dung hàm sẽ được viết ở TransactionFragment
-                itemClick(transactionItem)
-            }
-        }
     }
 }
