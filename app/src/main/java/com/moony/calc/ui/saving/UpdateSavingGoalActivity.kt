@@ -15,25 +15,23 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
-import com.moony.calc.databinding.ActivitySavingHistoryBinding
 import com.moony.calc.databinding.ActivityUpdateSavingGoalBinding
-import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
 import com.moony.calc.ui.category.CategoriesActivity
+import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
-import kotlinx.android.synthetic.main.activity_update_saving_goal.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class UpdateSavingGoalActivity : BaseActivity() {
-    
+
     private val binding: ActivityUpdateSavingGoalBinding
         get() = (getViewBinding() as ActivityUpdateSavingGoalBinding)
-    
+
     private val calendar: Calendar = Calendar.getInstance()
     private var deadLine: String = ""
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
@@ -68,7 +66,8 @@ class UpdateSavingGoalActivity : BaseActivity() {
                              */
                             val maxLength = "${handleTextToDouble(it.toString())}1".toDouble()
                                 .decimalFormat().length
-                            binding.edtGoalAmount.filters = arrayOf(InputFilter.LengthFilter(maxLength))
+                            binding.edtGoalAmount.filters =
+                                arrayOf(InputFilter.LengthFilter(maxLength))
                         } else {
                             binding.edtGoalAmount.filters = arrayOf(InputFilter.LengthFilter(13))
                             if (it.length - 1 == 12) {
@@ -85,14 +84,14 @@ class UpdateSavingGoalActivity : BaseActivity() {
             }
         })
 
-         binding.edtGoalDescription.addTextChangedListener(object : TextWatcher {
+        binding.edtGoalDescription.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
                 Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if ( binding.edtGoalDescription.text.toString().trim().isNotEmpty()) {
+                if (binding.edtGoalDescription.text.toString().trim().isNotEmpty()) {
                     binding.textInputGoalDescription.error = null
                 }
             }
@@ -122,7 +121,7 @@ class UpdateSavingGoalActivity : BaseActivity() {
         }
     }
 
-    override fun initControls(savedInstanceState: Bundle?){
+    override fun initControls(savedInstanceState: Bundle?) {
         saving = intent.getSerializableExtra(SavingDetailActivity.EDIT_SAVINGS) as Saving
         saving?.let { sav ->
 
@@ -135,7 +134,7 @@ class UpdateSavingGoalActivity : BaseActivity() {
                 category = it
                 Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
                     .into(binding.imgGoalCategory)
-                 binding.txtTitleCategoryUpdateSaving.text = it.title
+                binding.txtTitleCategoryUpdateSaving.text = it.title
             })
 
         }
@@ -151,19 +150,23 @@ class UpdateSavingGoalActivity : BaseActivity() {
 
     private fun saveSavingGoal() {
         val snackbar: Snackbar =
-            Snackbar.make(binding.layoutRootUpdateGoal, R.string.empty_date_error, Snackbar.LENGTH_LONG)
+            Snackbar.make(
+                binding.layoutRootUpdateGoal,
+                R.string.empty_date_error,
+                Snackbar.LENGTH_LONG
+            )
         snackbar.setTextColor(resources.getColor(R.color.white))
         snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
         snackbar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
 
         when {
-             binding.edtGoalDescription.text.toString().trim().isEmpty() -> {
+            binding.edtGoalDescription.text.toString().trim().isEmpty() -> {
                 binding.textInputGoalDescription.error = resources.getString(R.string.empty_error)
             }
             binding.edtGoalAmount.text.toString().trim().isEmpty() -> {
                 binding.textInputGoalAmount.error = resources.getString(R.string.empty_error)
             }
-             binding.txtDueDate.text.toString().trim().isEmpty() -> {
+            binding.txtDueDate.text.toString().trim().isEmpty() -> {
                 snackbar.show()
             }
             binding.txtTitleCategoryUpdateSaving.text.toString().trim().isEmpty() -> {
@@ -172,7 +175,7 @@ class UpdateSavingGoalActivity : BaseActivity() {
             }
             else -> {
                 saving?.let {
-                    it.description =  binding.edtGoalDescription.text.toString().trim()
+                    it.description = binding.edtGoalDescription.text.toString().trim()
                     it.deadLine = deadLine
                     it.idCategory = category!!.idCategory
                     it.desiredAmount = binding.edtGoalAmount.text.toString().trim().toDouble()
@@ -197,7 +200,7 @@ class UpdateSavingGoalActivity : BaseActivity() {
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
             deadLine = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
-             binding.txtDueDate.text = resources.getString(R.string.due_date) + " " + deadLine
+            binding.txtDueDate.text = resources.getString(R.string.due_date) + " " + deadLine
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
     }
@@ -209,7 +212,7 @@ class UpdateSavingGoalActivity : BaseActivity() {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
                     .into(binding.imgGoalCategory)
-                 binding.txtTitleCategoryUpdateSaving.text = category!!.title
+                binding.txtTitleCategoryUpdateSaving.text = category!!.title
 
             }
         }

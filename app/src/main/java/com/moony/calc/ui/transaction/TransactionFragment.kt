@@ -1,5 +1,6 @@
 package com.moony.calc.ui.transaction
 
+import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
@@ -10,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
+import com.moony.calc.databinding.FragmentTransactionBinding
 import com.moony.calc.model.TransactionItem
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog
-import kotlinx.android.synthetic.main.fragment_transaction.*
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -35,21 +36,19 @@ class TransactionFragment : BaseFragment() {
         Settings.getInstance(baseContext!!)
     }
 
+    private val binding: FragmentTransactionBinding
+        get() = (getViewBinding() as FragmentTransactionBinding)
+
 
     override fun getLayoutId(): Int = R.layout.fragment_transaction
 
-    override fun init() {
-        initControl()
-        initEvent()
-    }
-
-    private fun initControl() {
+    override fun initControls(view: View, savedInstanceState: Bundle?) {
         refreshData()
-        txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+        binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
         transactionAdapter = TransactionAdapter(fragmentActivity!!, transactionItemClick)
-        rv_transaction.setHasFixedSize(true)
-        rv_transaction.layoutManager = LinearLayoutManager(fragmentActivity)
-        rv_transaction.adapter = transactionAdapter
+        binding.rvTransaction.setHasFixedSize(true)
+        binding.rvTransaction.layoutManager = LinearLayoutManager(fragmentActivity)
+        binding.rvTransaction.adapter = transactionAdapter
 
     }
 
@@ -69,28 +68,28 @@ class TransactionFragment : BaseFragment() {
             }
         }
 
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             updateTotalTransaction()
         }
 
-        progress_loading.visibility = View.INVISIBLE
+        binding.progressLoading.visibility = View.INVISIBLE
 
         if (list.isEmpty()) {
-            layout_list_empty.visibility = View.VISIBLE
-            rv_transaction.visibility = View.GONE
+            binding.layoutListEmpty.visibility = View.VISIBLE
+            binding.rvTransaction.visibility = View.GONE
         } else {
-            layout_list_empty.visibility = View.GONE
-            rv_transaction.visibility = View.VISIBLE
+            binding.layoutListEmpty.visibility = View.GONE
+            binding.rvTransaction.visibility = View.VISIBLE
         }
     }
 
     private fun updateTotalTransaction() {
 
-        txt_transaction_income.text =
+        binding.txtTransactionIncome.text =
             (totalIncome.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-        txt_transaction_expenses.text =
+        binding.txtTransactionExpenses.text =
             (totalExpenses.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
-        txt_transaction_balance.text =
+        binding.txtTransactionBalance.text =
             ((totalIncome - totalExpenses).decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
 
     }
@@ -103,7 +102,6 @@ class TransactionFragment : BaseFragment() {
             calNow[Calendar.YEAR]
         )
         transactionLiveData!!.observe(viewLifecycleOwner, transactionObserver)
-
 
 
     }
@@ -120,36 +118,36 @@ class TransactionFragment : BaseFragment() {
             )
         }
 
-    private fun initEvent() {
-        btn_add_transaction.setOnClickListener {
+    override fun initEvents() {
+        binding.btnAddTransaction.setOnClickListener {
             findNavController().navigate(R.id.action_transaction_fragment_to_addTransactionFragment)
         }
 
-        btn_next_month.setOnClickListener {
+        binding.btnNextMonth.setOnClickListener {
             //tiến thêm 1 tháng
             calNow.add(Calendar.MONTH, 1)
-            txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+            binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
             showProgressBar()
             refreshData()
         }
-        btn_pre_month.setOnClickListener {
+        binding.btnPreMonth.setOnClickListener {
 
             calNow.add(Calendar.MONTH, -1)
-            txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+            binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
             showProgressBar()
             refreshData()
         }
-        txt_transaction_date.setOnClickListener {
+        binding.txtTransactionDate.setOnClickListener {
             showMonthYearPickerDialog()
         }
     }
 
     private fun showProgressBar() {
-        progress_loading.visibility = View.VISIBLE
-        layout_list_empty.visibility = View.GONE
-        rv_transaction.visibility = View.GONE
+        binding.progressLoading.visibility = View.VISIBLE
+        binding.layoutListEmpty.visibility = View.GONE
+        binding.rvTransaction.visibility = View.GONE
     }
 
     private fun showMonthYearPickerDialog() {
@@ -160,7 +158,7 @@ class TransactionFragment : BaseFragment() {
                 calNow.set(Calendar.YEAR, selectedYear)
                 calNow.set(Calendar.MONTH, selectedMonth)
 
-                txt_transaction_date.text = calNow.formatMonth(Locale.ENGLISH)
+                binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
                 showProgressBar()
                 refreshData()

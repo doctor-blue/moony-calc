@@ -1,18 +1,20 @@
 package com.moony.calc.ui.transaction
 
+import android.os.Bundle
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
+import com.moony.calc.databinding.FragmentTransactionDetailBinding
 import com.moony.calc.model.TransactionItem
 import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
-import kotlinx.android.synthetic.main.fragment_transaction_detail.*
 import java.util.*
 
 class TransactionDetailFragment : BaseFragment() {
@@ -27,30 +29,28 @@ class TransactionDetailFragment : BaseFragment() {
         Settings.getInstance(baseContext!!)
     }
 
-    override fun init() {
-        initControls()
-        initEvents()
-    }
+    private val binding: FragmentTransactionDetailBinding
+        get() = (getViewBinding() as FragmentTransactionDetailBinding)
 
-    private fun initControls() {
+    override fun initControls(view: View, savedInstanceState: Bundle?) {
         transactionItem =
             arguments?.getSerializable(getString(R.string.transaction)) as TransactionItem
 
 //        Log.d("TransactionDetail", transaction.idCategory.toString())
 
-        txt_transaction_note.text = transactionItem.transaction.note
+        binding.txtTransactionNote.text = transactionItem.transaction.note
 
         Glide.with(this).load(AssetFolderManager.assetPath + transactionItem.category.iconUrl)
-            .into(img_category)
-        txt_category_title.text = transactionItem.category.title
+            .into(binding.imgCategory)
+        binding.txtCategoryTitle.text = transactionItem.category.title
 
         if (!transactionItem.category.isIncome) {
-            txt_transaction_money.text =
+            binding.txtTransactionMoney.text =
                 ((-1 * transactionItem.transaction.money).decimalFormat() + settings.getString(
                     Settings.SettingKey.CURRENCY_UNIT
                 ))
         } else
-            txt_transaction_money.text =
+            binding.txtTransactionMoney.text =
                 (transactionItem.transaction.money.decimalFormat() + settings.getString(
                     Settings.SettingKey.CURRENCY_UNIT
                 ))
@@ -58,14 +58,14 @@ class TransactionDetailFragment : BaseFragment() {
         calendar.set(Calendar.DAY_OF_MONTH, transactionItem.transaction.day)
         calendar.set(Calendar.MONTH, transactionItem.transaction.month)
         calendar.set(Calendar.YEAR, transactionItem.transaction.year)
-        txt_transaction_date.text = calendar.formatDateTime()
+        binding.txtTransactionDate.text = calendar.formatDateTime()
 
         calendar.set(Calendar.DAY_OF_MONTH, transactionItem.transaction.day)
     }
 
 
-    private fun initEvents() {
-        btn_update_transaction.setOnClickListener {
+    override fun initEvents() {
+        binding.btnUpdateTransaction.setOnClickListener {
             val bundle = bundleOf(
                 getString(R.string.transaction) to transactionItem,
             )
@@ -74,7 +74,7 @@ class TransactionDetailFragment : BaseFragment() {
                 bundle
             )
         }
-        toolbar_transaction_detail.setOnMenuItemClickListener {
+        binding.toolbarTransactionDetail.setOnMenuItemClickListener {
             if (it.itemId == R.id.mnu_delete) {
                 val builder = ConfirmDialogBuilder(requireContext())
                 builder.setContent(resources.getString(R.string.notice_delete_transaction))
@@ -89,7 +89,7 @@ class TransactionDetailFragment : BaseFragment() {
             }
             true
         }
-        toolbar_transaction_detail.setNavigationOnClickListener {
+        binding.toolbarTransactionDetail.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
     }

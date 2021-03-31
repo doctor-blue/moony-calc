@@ -26,7 +26,6 @@ import com.moony.calc.ui.saving.history.SavingHistoryFragment
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
-import kotlinx.android.synthetic.main.activity_saving_history.*
 import java.text.SimpleDateFormat
 import java.util.*
 

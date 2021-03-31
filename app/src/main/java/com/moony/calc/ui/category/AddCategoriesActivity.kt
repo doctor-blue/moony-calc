@@ -14,7 +14,6 @@ import com.moony.calc.base.BaseActivity
 import com.moony.calc.databinding.ActivityAddCategoriesBinding
 import com.moony.calc.model.Category
 import com.moony.calc.utils.AssetFolderManager
-import kotlinx.android.synthetic.main.activity_add_categories.*
 
 
 class AddCategoriesActivity : BaseActivity() {

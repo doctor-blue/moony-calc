@@ -9,18 +9,16 @@ import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.ActivitySavingDetailBinding
-import com.moony.calc.databinding.ActivitySavingHistoryBinding
-import com.moony.calc.ui.saving.history.SavingHistoryViewModel
+import com.moony.calc.model.Saving
 import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.ui.saving.history.SavingHistoryFragment
-import com.moony.calc.model.Saving
-import kotlinx.android.synthetic.main.activity_saving_detail.*
+import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 
 
 class SavingDetailActivity : BaseActivity() {
     private val binding: ActivitySavingDetailBinding
         get() = (getViewBinding() as ActivitySavingDetailBinding)
-    
+
     override fun getLayoutId(): Int = R.layout.activity_saving_detail
 
     companion object {

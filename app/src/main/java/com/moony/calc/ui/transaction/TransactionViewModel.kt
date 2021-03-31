@@ -37,4 +37,6 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
     fun getAllTransactionItem(month: Int, year: Int) = transactionRepository.getAllTransactionItem(month, year)
 
+    fun getChartData(month: Int, year: Int) = transactionRepository.getChartItem(month, year)
+
 }
