@@ -10,4 +10,10 @@
     <color name="light_blue">#CDEDF6</color>
     <color name="dark_brown">#CCCCCC</color>
     <color name="brown_tint">#666666</color>
+    <color name="chart_color_1">#E7CFC8</color>
+    <color name="chart_color_2">#97F2F3</color>
+    <color name="chart_color_3">#F1E0B0</color>
+    <color name="chart_color_4">#F1CDB0</color>
+    <color name="chart_color_5">#89AEB2</color>
+
 </resources>

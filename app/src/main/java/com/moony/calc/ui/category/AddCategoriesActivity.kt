@@ -106,9 +106,11 @@ class AddCategoriesActivity : BaseActivity() {
                 snackBar.show()
             }
             else -> {
+                var title = binding.edtTitleCategory.text.toString()
+                title = title.replaceFirst(title[0], title[0].toUpperCase())
                 categoryViewModel.insertCategory(
                     Category(
-                        binding.edtTitleCategory.text.toString().trim(),
+                        title.trim(),
                         linkImage,
                         isIncome
                     )
