@@ -15,15 +15,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/_8sdp"
             android:gravity="center"
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
-                android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_18sdp"
-                android:layout_marginRight="@dimen/_8sdp"
                 app:cardBackgroundColor="@color/backgroundColor"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardElevation="@dimen/_3sdp">
@@ -77,17 +76,17 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
+                            android:layout_gravity="center"
                             android:layout_height="wrap_content"
                             android:layout_weight="1">
 
                             <com.faskn.lib.ClickablePieChart
                                 android:id="@+id/chart"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="@dimen/_130sdp"
+                                android:layout_height="@dimen/_130sdp"
+                                app:centerColor="@color/white"
                                 app:animationDuration="2000"
-                                app:centerColor="@color/backgroundColor"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -100,8 +99,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Income\n$0.0"
-                                android:textColor="@color/textColor"
                                 android:textAlignment="center"
+                                android:textColor="@color/textColor"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
@@ -143,7 +142,6 @@
                 android:id="@+id/rv_chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_10sdp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

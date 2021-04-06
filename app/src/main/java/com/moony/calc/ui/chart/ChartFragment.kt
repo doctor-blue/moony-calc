@@ -1,6 +1,5 @@
 package com.moony.calc.ui.chart
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorRes
@@ -37,11 +36,11 @@ class ChartFragment : BaseFragment() {
 
     @ColorRes
     val colors = arrayListOf<Int>(
-        R.color.colorAccent,
-        R.color.blue,
-        R.color.colorPrimary,
-        R.color.backgroundColor,
-        R.color.brown_tint
+        R.color.chart_color_1,
+        R.color.chart_color_2,
+        R.color.chart_color_3,
+        R.color.chart_color_4,
+        R.color.chart_color_5
     )
 
     private val transactionViewModel: TransactionViewModel by lazy {
@@ -51,8 +50,8 @@ class ChartFragment : BaseFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_chart
 
     override fun initControls(view: View, savedInstanceState: Bundle?) {
-
         generateData()
+        binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
         chartAdapter = ChartAdapter(fragmentActivity!!, chartItemClick)
         binding.rvChart.setHasFixedSize(true)
         binding.rvChart.layoutManager = LinearLayoutManager(fragmentActivity)

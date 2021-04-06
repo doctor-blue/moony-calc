@@ -127,6 +127,7 @@ class CategoryIconListActivity : BaseActivity() {
                 snackBar.show()
             }
             else -> {
+
                 if (isPickIcon) {
                     val intent = Intent()
                     intent.putExtra(AddSavingGoalFragment.ICON_LINK, this.iconUrl)
@@ -136,13 +137,14 @@ class CategoryIconListActivity : BaseActivity() {
                     )
                     setResult(Activity.RESULT_OK, intent)
                 } else {
+                    var title = binding.edtTitleCategory.text.toString()
+                    title = title.replaceFirst(title[0], title[0].toUpperCase())
                     categoryViewModel.insertCategory(
                         Category(
-                            binding.edtTitleCategory.text.toString().trim(),
+                            title.trim(),
                             this.iconUrl,
                             isIncome
-                        )
-                    )
+                        ))
                 }
                 finish()
             }
