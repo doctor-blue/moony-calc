@@ -91,6 +91,7 @@ class AddSavingGoalFragment : BaseFragment() {
                 requireActivity().onBackPressed()
             }
         }
+        hideKeyboard()
     }
 
     override fun initEvents() {
@@ -159,6 +160,7 @@ class AddSavingGoalFragment : BaseFragment() {
 
         binding.toolbarAddSavingGoal.setNavigationOnClickListener {
             requireActivity().onBackPressed()
+            hideKeyboard()
         }
     }
 
