@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:id="@+id/layout_root_add_categories"
         android:orientation="vertical"
-        tools:context=".ui.category.AddCategoriesActivity">
+        tools:context=".ui.category.CategoryIconListActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_add_categories"

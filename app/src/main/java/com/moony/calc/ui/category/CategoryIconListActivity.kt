@@ -1,6 +1,8 @@
 package com.moony.calc.ui.category
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,12 +15,14 @@ import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.databinding.ActivityAddCategoriesBinding
 import com.moony.calc.model.Category
+import com.moony.calc.ui.saving.AddSavingGoalFragment
 import com.moony.calc.utils.AssetFolderManager
 
 
-class AddCategoriesActivity : BaseActivity() {
+class CategoryIconListActivity : BaseActivity() {
     private var isIncome = true
-    private var linkImage = ""
+    private var iconUrl = ""
+    private var isPickIcon = false
 
     private val binding: ActivityAddCategoriesBinding
         get() = (getViewBinding() as ActivityAddCategoriesBinding)
@@ -28,7 +32,8 @@ class AddCategoriesActivity : BaseActivity() {
     }
 
     companion object {
-       const val KEY = "com.moony.calc.ui.category.AddCategoriesActivity"
+        const val IS_INCOME_KEY = "com.moony.calc.ui.category.CategoryIconListActivity"
+        const val IS_PICK_ICON = "com.moony.calc.ui.category.CategoryIconListActivity.PICK_ICON"
     }
 
     override fun initControls(savedInstanceState: Bundle?) {
@@ -36,27 +41,43 @@ class AddCategoriesActivity : BaseActivity() {
         setSupportActionBar(binding.toolbarAddCategories)
 
         intent.let {
-            isIncome = intent.getBooleanExtra(KEY, true)
+            isIncome = intent.getBooleanExtra(IS_INCOME_KEY, true)
+            isPickIcon = intent.getBooleanExtra(IS_PICK_ICON, false)
+        }
+        if (!isPickIcon) {
+            if (isIncome) {
+                binding.toolbarAddCategories.title =
+                    resources.getString(R.string.add_income_category)
+            } else {
+                binding.toolbarAddCategories.title =
+                    resources.getString(R.string.add_expense_category)
+            }
+        } else {
+            binding.edtTitleCategory.isFocusable = false
+            binding.toolbarAddCategories.title =
+                resources.getString(R.string.select_icon)
         }
 
-        if (isIncome) {
-            binding.toolbarAddCategories.title = resources.getString(R.string.add_income_category)
-        } else {
-            binding.toolbarAddCategories.title = resources.getString(R.string.add_expense_category)
-        }
         binding.toolbarAddCategories.setNavigationOnClickListener { finish() }
 
 
         with(AssetFolderManager) {
-            context = this@AddCategoriesActivity
+            context = this@CategoryIconListActivity
             addItemToMap()
         }
 
         val categoriesListAdapter =
-            CategoriesListAdapter(AssetFolderManager.imageMap.keys.toList(), this) {
-                linkImage = it.toString()
-                Glide.with(this@AddCategoriesActivity)
-                    .load(AssetFolderManager.assetPath + linkImage).into(binding.imgChooseCategory)
+            CategoriesListAdapter(
+                AssetFolderManager.imageMap.keys.toList(),
+                this
+            ) { iconUrl, title ->
+                this.iconUrl = iconUrl
+                if (isPickIcon)
+                    binding.edtTitleCategory.setText(title)
+                Glide.with(this@CategoryIconListActivity)
+                    .load(AssetFolderManager.assetPath + this.iconUrl)
+                    .into(binding.imgChooseCategory)
+
             }
         binding.rvAddCategories.setHasFixedSize(true)
         binding.rvAddCategories.layoutManager =
@@ -80,13 +101,13 @@ class AddCategoriesActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (R.id.mnu_save == item.itemId) {
-            saveCategory()
+            save()
         }
         return super.onOptionsItemSelected(item)
     }
 
     @SuppressLint("WrongConstant")
-    private fun saveCategory() {
+    private fun save() {
         val snackBar: Snackbar =
             Snackbar.make(
                 binding.layoutRootAddCategories,
@@ -102,17 +123,27 @@ class AddCategoriesActivity : BaseActivity() {
                 snackBar.setText(R.string.please_add_title)
                 snackBar.show()
             }
-            linkImage.isEmpty() -> {
+            this.iconUrl.isEmpty() -> {
                 snackBar.show()
             }
             else -> {
-                categoryViewModel.insertCategory(
-                    Category(
-                        binding.edtTitleCategory.text.toString().trim(),
-                        linkImage,
-                        isIncome
+                if (isPickIcon) {
+                    val intent = Intent()
+                    intent.putExtra(AddSavingGoalFragment.ICON_LINK, this.iconUrl)
+                    intent.putExtra(
+                        AddSavingGoalFragment.TITLE,
+                        binding.edtTitleCategory.text.toString().trim()
                     )
-                )
+                    setResult(Activity.RESULT_OK, intent)
+                } else {
+                    categoryViewModel.insertCategory(
+                        Category(
+                            binding.edtTitleCategory.text.toString().trim(),
+                            this.iconUrl,
+                            isIncome
+                        )
+                    )
+                }
                 finish()
             }
         }

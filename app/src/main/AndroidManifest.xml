@@ -23,7 +23,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.saving.SavingDetailActivity" />
         <activity
-            android:name=".ui.category.AddCategoriesActivity"
+            android:name=".ui.category.CategoryIconListActivity"
             android:windowSoftInputMode="adjustResize" />
 
         <activity android:name=".ui.category.CategoriesActivity" />

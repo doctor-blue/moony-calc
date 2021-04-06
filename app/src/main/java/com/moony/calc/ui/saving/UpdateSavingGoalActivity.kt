@@ -9,18 +9,14 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.databinding.ActivityUpdateSavingGoalBinding
-import com.moony.calc.keys.MoonyKey
-import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
-import com.moony.calc.ui.category.CategoriesActivity
-import com.moony.calc.ui.category.CategoryViewModel
+import com.moony.calc.ui.category.CategoryIconListActivity
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import java.text.SimpleDateFormat
@@ -35,16 +31,17 @@ class UpdateSavingGoalActivity : BaseActivity() {
     private val calendar: Calendar = Calendar.getInstance()
     private var deadLine: String = ""
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
-    private var category: Category? = null
+    private var iconUrl = ""
 
-    private val categoryViewModel: CategoryViewModel by lazy {
-        ViewModelProvider(this)[CategoryViewModel::class.java]
-    }
+
     private var saving: Saving? = null
 
     companion object {
         const val KEY_PICK_CATEGORY = 1101
-        const val KEY_GET_TRANSACTION = 1102
+        const val KEY_PICK_ICON = 1102
+        const val ICON_LINK = "com.moony.calc.ui.saving.AddSavingGoalFragment.ICON_LINK";
+        const val TITLE = "com.moony.calc.ui.saving.AddSavingGoalFragment.TITLE";
+
     }
 
     override fun initEvents() {
@@ -102,10 +99,11 @@ class UpdateSavingGoalActivity : BaseActivity() {
         }
 
         binding.layoutGoalCategories.setOnClickListener {
-            val intent = Intent(this, CategoriesActivity::class.java)
+            val intent = Intent(this, CategoryIconListActivity::class.java)
+            intent.putExtra(CategoryIconListActivity.IS_PICK_ICON, true)
             startActivityForResult(
                 intent,
-                AddSavingGoalFragment.KEY_PICK_CATEGORY
+                KEY_PICK_ICON
             )
         }
 
@@ -123,19 +121,16 @@ class UpdateSavingGoalActivity : BaseActivity() {
 
     override fun initControls(savedInstanceState: Bundle?) {
         saving = intent.getSerializableExtra(SavingDetailActivity.EDIT_SAVINGS) as Saving
-        saving?.let { sav ->
+        saving?.let {
 
-            binding.edtGoalDescription.setText(sav.description)
-            binding.edtGoalAmount.setText(("${sav.desiredAmount}"))
-            binding.txtDueDate.text = sav.deadLine
-            deadLine = sav.deadLine
+            binding.edtGoalDescription.setText(it.description)
+            binding.edtGoalAmount.setText(("${it.desiredAmount}"))
+            binding.txtDueDate.text = it.deadLine
+            deadLine = it.deadLine
+            iconUrl = it.iconUrl
 
-            categoryViewModel.getCategory(sav.idCategory).observe(this, Observer {
-                category = it
-                Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
-                    .into(binding.imgGoalCategory)
-                binding.txtTitleCategoryUpdateSaving.text = it.title
-            })
+            Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
+                .into(binding.imgGoalCategory)
 
         }
     }
@@ -169,17 +164,16 @@ class UpdateSavingGoalActivity : BaseActivity() {
             binding.txtDueDate.text.toString().trim().isEmpty() -> {
                 snackbar.show()
             }
-            binding.txtTitleCategoryUpdateSaving.text.toString().trim().isEmpty() -> {
-                snackbar.setText(R.string.empty_category_error)
+            iconUrl.trim().isEmpty() -> {
+                snackbar.setText(R.string.empty_icon_error)
                 snackbar.show()
             }
             else -> {
                 saving?.let {
                     it.description = binding.edtGoalDescription.text.toString().trim()
                     it.deadLine = deadLine
-                    it.idCategory = category!!.idCategory
+                    it.iconUrl = iconUrl
                     it.desiredAmount = binding.edtGoalAmount.text.toString().trim().toDouble()
-
                     savingViewModel.updateSaving(it)
                 }
                 onBackPressed()
@@ -207,15 +201,16 @@ class UpdateSavingGoalActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == KEY_PICK_CATEGORY) {
+        if (requestCode == KEY_PICK_ICON)
             if (resultCode == Activity.RESULT_OK) {
-                category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
-                Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
+                iconUrl = data?.getStringExtra(ICON_LINK) ?: ""
+                val title = data?.getStringExtra(TITLE)
+
+                Glide.with(this).load(AssetFolderManager.assetPath + iconUrl)
                     .into(binding.imgGoalCategory)
-                binding.txtTitleCategoryUpdateSaving.text = category!!.title
+                binding.txtTitleCategoryUpdateSaving.text = title
 
             }
-        }
 
     }
 }

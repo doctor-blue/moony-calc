@@ -9,10 +9,9 @@ import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSavingDetailBinding
-import com.moony.calc.databinding.FragmentTransactionBinding
-import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
+import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
@@ -20,16 +19,12 @@ import kotlin.math.floor
 
 class SavingDetailFragment(var savings: Saving) : BaseFragment() {
 
-    private val categoryViewModel: CategoryViewModel by lazy {
-        ViewModelProvider(this)[CategoryViewModel::class.java]
-    }
     private val savingViewModel: SavingViewModel by lazy {
         ViewModelProvider(this)[SavingViewModel::class.java]
     }
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
         ViewModelProvider(this)[SavingHistoryViewModel::class.java]
     }
-    private var categoryLiveData: LiveData<Category>? = null
     private var moneySavedLiveData: LiveData<Double>? = null
     private var saving: Saving = savings
 
@@ -58,15 +53,10 @@ class SavingDetailFragment(var savings: Saving) : BaseFragment() {
             binding.txtSavingTotal.text = saving.desiredAmount.decimalFormat()
             (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.description
 
-            categoryLiveData?.removeObserver(categoryObserver)
-            categoryLiveData = categoryViewModel.getCategory(saving.idCategory)
-            categoryLiveData!!.observe(viewLifecycleOwner, categoryObserver)
+            Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
+                .into(binding.imgSavingDetailCategories)
+            binding.txtSavingDetailCategories.text = ""
         }
-    }
-    private val categoryObserver = Observer<Category> {
-        Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
-            .into(binding.imgSavingDetailCategories)
-        binding.txtSavingDetailCategories.text = it.title
     }
 
     private val moneySavedObserver = Observer<Double> {

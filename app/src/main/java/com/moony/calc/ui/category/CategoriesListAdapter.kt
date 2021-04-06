@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
 class CategoriesListAdapter(
     private val titles: List<Int>,
     val context: Context,
-    val onClick: (Any) -> Unit
+    val onClick: (String, Int) -> Unit
 ) :
     RecyclerView.Adapter<CategoriesListAdapter.CategoriesListViewHolder>() {
     private var viewPool = RecyclerView.RecycledViewPool()
@@ -44,7 +44,9 @@ class CategoriesListAdapter(
                         .await()
 
                 withContext(Dispatchers.Main) {
-                    val categoryAdapter = CategoryAdapter(context, listIcon, null,false, onClick)
+                    val categoryAdapter = CategoryAdapter(context, listIcon, null, false) {
+                        onClick(it as String, title)
+                    }
                     rvCategory.setHasFixedSize(true)
                     rvCategory.layoutManager = GridLayoutManager(context, 4)
                     rvCategory.adapter = categoryAdapter

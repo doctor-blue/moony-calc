@@ -90,4 +90,7 @@
         <item>$</item>
         <item>vnd</item>
     </string-array>
+    <string name="select_icon">Select icon</string>
+    <string name="empty_icon_error">Please select icon</string>
+    <string name="change_your_icon">Change your icon</string>
 </resources>

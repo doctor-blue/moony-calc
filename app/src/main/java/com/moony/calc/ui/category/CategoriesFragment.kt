@@ -36,8 +36,8 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
                 ) {
                     val category: Category = it as Category
                     if (category.title == activity.resources.getString(R.string.add)) {
-                        val intent = Intent(activity, AddCategoriesActivity::class.java)
-                        intent.putExtra(AddCategoriesActivity.KEY, isIncome)
+                        val intent = Intent(activity, CategoryIconListActivity::class.java)
+                        intent.putExtra(CategoryIconListActivity.IS_INCOME_KEY, isIncome)
                         startActivity(intent)
                     } else {
                         if (!CategoriesActivity.isJustWatch) {
