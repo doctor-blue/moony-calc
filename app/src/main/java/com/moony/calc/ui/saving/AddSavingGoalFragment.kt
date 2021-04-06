@@ -17,10 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentAddSavingGoalBinding
-import com.moony.calc.keys.MoonyKey
-import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
-import com.moony.calc.ui.category.CategoriesActivity
+import com.moony.calc.ui.category.CategoryIconListActivity
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import java.text.SimpleDateFormat
@@ -31,10 +29,13 @@ class AddSavingGoalFragment : BaseFragment() {
     private val calendar: Calendar = Calendar.getInstance()
     private var deadLine: String = ""
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
-    private var category: Category? = null
+    private var iconUrl = ""
 
     companion object {
         const val KEY_PICK_CATEGORY = 1101
+        const val KEY_PICK_ICON = 1102
+        const val ICON_LINK = "com.moony.calc.ui.saving.AddSavingGoalFragment.ICON_LINK";
+        const val TITLE = "com.moony.calc.ui.saving.AddSavingGoalFragment.TITLE";
     }
 
     private val binding: FragmentAddSavingGoalBinding
@@ -73,9 +74,9 @@ class AddSavingGoalFragment : BaseFragment() {
                 hideKeyboard()
                 snackbar.show()
             }
-            binding.txtTitleCategoryAddSaving.text.toString().trim().isEmpty() -> {
+            iconUrl.isEmpty() -> {
                 hideKeyboard()
-                snackbar.setText(R.string.empty_category_error)
+                snackbar.setText(R.string.empty_icon_error)
                 snackbar.show()
             }
             else -> {
@@ -83,8 +84,8 @@ class AddSavingGoalFragment : BaseFragment() {
                     binding.edtGoalDescription.text.toString().trim(),
                     binding.edtGoalAmount.text.toString().trim().toDouble(),
                     deadLine,
-                    category!!.idCategory,
-                    ""
+                    "",
+                    iconUrl
                 )
                 savingViewModel.insertSaving(saving)
                 requireActivity().onBackPressed()
@@ -148,10 +149,11 @@ class AddSavingGoalFragment : BaseFragment() {
         }
 
         binding.layoutGoalCategories.setOnClickListener {
-            val intent = Intent(requireContext(), CategoriesActivity::class.java)
+            val intent = Intent(requireContext(), CategoryIconListActivity::class.java)
+            intent.putExtra(CategoryIconListActivity.IS_PICK_ICON, true)
             startActivityForResult(
                 intent,
-                KEY_PICK_CATEGORY
+                KEY_PICK_ICON
             )
         }
 
@@ -184,12 +186,14 @@ class AddSavingGoalFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == KEY_PICK_CATEGORY)
+        if (requestCode == KEY_PICK_ICON)
             if (resultCode == Activity.RESULT_OK) {
-                category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
-                Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
+                iconUrl = data?.getStringExtra(ICON_LINK) ?: ""
+                val title = data?.getStringExtra(TITLE)
+
+                Glide.with(this).load(AssetFolderManager.assetPath + iconUrl)
                     .into(binding.imgGoalCategory)
-                binding.txtTitleCategoryAddSaving.text = category!!.title
+                binding.txtTitleCategoryAddSaving.text = title
 
             }
     }
