@@ -17,9 +17,11 @@ import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class TransactionFragment : BaseFragment() {
@@ -57,14 +59,16 @@ class TransactionFragment : BaseFragment() {
         totalExpenses = 0.0
         totalIncome = 0.0
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Default) {
             list.asFlow().collect {
                 if (it.category.isIncome) {
                     totalIncome += it.transaction.money
                 } else {
                     totalExpenses += it.transaction.money
                 }
-                updateTotalTransaction()
+                withContext(Dispatchers.Main){
+                    updateTotalTransaction()
+                }
             }
         }
 
@@ -124,7 +128,7 @@ class TransactionFragment : BaseFragment() {
         }
 
         binding.btnNextMonth.setOnClickListener {
-            //tiến thêm 1 tháng
+            //add 1 month
             calNow.add(Calendar.MONTH, 1)
             binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
