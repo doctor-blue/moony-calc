@@ -1,5 +1,7 @@
 package com.moony.calc.ui.settings
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -9,7 +11,8 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSettingBinding
 import com.moony.calc.utils.Settings
 
-class SettingFragment : BaseFragment() {
+
+class SettingFragment : BaseFragment(),View.OnClickListener {
 
     private val settings: Settings by lazy {
         Settings.getInstance(requireContext())
@@ -38,6 +41,14 @@ class SettingFragment : BaseFragment() {
             }
 
         }
+
+        binding.layoutInviteFriend.setOnClickListener(this)
+        binding.layoutFeedback.setOnClickListener(this)
+        binding.layoutRateUs.setOnClickListener(this)
+        binding.layoutAbout.setOnClickListener(this)
+        binding.layoutForDev.setOnClickListener(this)
+
+
     }
 
     override fun initControls(view: View, savedInstanceState: Bundle?) {
@@ -59,5 +70,36 @@ class SettingFragment : BaseFragment() {
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_setting
+
+    override fun onClick(v: View?) {
+
+        when(v?.id){
+            R.id.layout_invite_friend -> {
+
+            }
+            R.id.layout_feedback -> {
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("mailto:");
+                intent.putExtra(Intent.EXTRA_EMAIL  ,  arrayOf("devcomentry@gmail.com"));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Moony Feedback")
+                startActivity(Intent.createChooser(intent, "Send Email"))
+            }
+            R.id.layout_rate_us -> {
+
+            }
+            R.id.layout_about -> {
+                openLink("https://github.com/doctor-blue/moony")
+            }
+            R.id.layout_for_dev -> {
+                openLink("https://github.com/doctor-blue/moony-documentation/blob/master/DEVELOPER.md#some-useful-information-if-you-are-a-developer")
+            }
+        }
+    }
+
+    private fun openLink(url: String){
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
+    }
 
 }

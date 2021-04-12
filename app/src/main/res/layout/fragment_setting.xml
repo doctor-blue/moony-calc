@@ -111,6 +111,7 @@
             android:clickable="true"
             android:focusable="true"
             android:gravity="center_vertical"
+            android:id="@+id/layout_invite_friend"
             android:minHeight="@dimen/_60sdp"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_12sdp"
@@ -151,6 +152,7 @@
             android:gravity="center_vertical"
             android:minHeight="70dp"
             android:orientation="horizontal"
+            android:id="@+id/layout_feedback"
             android:paddingLeft="@dimen/_15sdp"
             android:paddingRight="@dimen/_15sdp">
 
@@ -185,6 +187,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:id="@+id/layout_rate_us"
             android:focusable="true"
             android:gravity="center_vertical"
             android:minHeight="70dp"
@@ -225,6 +228,7 @@
             android:clickable="true"
             android:focusable="true"
             android:gravity="center_vertical"
+            android:id="@+id/layout_about"
             android:minHeight="70dp"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/_15sdp"
@@ -245,6 +249,45 @@
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/ic_info"
+                android:tint="@color/brown_tint" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:background="@color/dark_brown" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:id="@+id/layout_for_dev"
+            android:minHeight="70dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp">
+
+            <TextView
+                style="@style/TextAppearance.Moony.Item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/for_developer" />
+
+            <View
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_developer_mode"
                 android:tint="@color/brown_tint" />
 
         </LinearLayout>

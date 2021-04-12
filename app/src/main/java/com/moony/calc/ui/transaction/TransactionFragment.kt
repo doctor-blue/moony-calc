@@ -37,6 +37,9 @@ class TransactionFragment : BaseFragment() {
     private val settings: Settings by lazy {
         Settings.getInstance(baseContext!!)
     }
+    private val currencyUnit by lazy {
+        settings.getString(Settings.SettingKey.CURRENCY_UNIT)
+    }
 
     private val binding: FragmentTransactionBinding
         get() = (getViewBinding() as FragmentTransactionBinding)
@@ -90,11 +93,11 @@ class TransactionFragment : BaseFragment() {
     private fun updateTotalTransaction() {
 
         binding.txtTransactionIncome.text =
-            (totalIncome.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+            (totalIncome.decimalFormat() + currencyUnit)
         binding.txtTransactionExpenses.text =
-            (totalExpenses.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+            (totalExpenses.decimalFormat() + currencyUnit)
         binding.txtTransactionBalance.text =
-            ((totalIncome - totalExpenses).decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+            ((totalIncome - totalExpenses).decimalFormat() + currencyUnit)
 
     }
 

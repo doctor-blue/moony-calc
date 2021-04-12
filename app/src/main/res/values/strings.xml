@@ -83,6 +83,7 @@
 <!--    <string name="about">About</string>-->
 
     <string name="currency_unit">Currency unit</string>
+    <string name="for_developer">For developer</string>
 
 
     <string-array name="currency">

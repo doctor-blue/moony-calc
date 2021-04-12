@@ -19,7 +19,7 @@ class SplashScreenActivity : BaseActivity() {
             override fun run() {
                 super.run()
                 try {
-                    sleep(4000)
+                    sleep(2000)
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 } finally {
