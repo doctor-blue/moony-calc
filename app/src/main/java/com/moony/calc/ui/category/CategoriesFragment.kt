@@ -16,6 +16,8 @@ import com.moony.calc.model.Category
 class CategoriesFragment(private val isIncome: Boolean, private val activity: BaseActivity) :
     BaseFragment() {
 
+    private var categoryNames: ArrayList<String> = arrayListOf()
+
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(fragmentActivity!!)[CategoryViewModel::class.java]
     }
@@ -27,6 +29,7 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
         categoryViewModel.getAllCategory(isIncome)
             .observe(viewLifecycleOwner, { list ->
                 val categories = list as MutableList<Category>
+                categoryNames = list.map { it.title } as ArrayList
 
                 categories.add(Category(activity.resources.getString(R.string.add), "", isIncome))
 
@@ -38,6 +41,7 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
                     if (category.title == activity.resources.getString(R.string.add)) {
                         val intent = Intent(activity, CategoryIconListActivity::class.java)
                         intent.putExtra(CategoryIconListActivity.IS_INCOME_KEY, isIncome)
+                        intent.putExtra(CategoryIconListActivity.CATEGORY_NAMES, categoryNames)
                         startActivity(intent)
                     } else {
                         if (!CategoriesActivity.isJustWatch) {
