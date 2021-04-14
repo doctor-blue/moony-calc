@@ -79,8 +79,6 @@
     <string name="notification">Notification</string>
     <string name="invite_friends">Invite friends</string>
     <string name="give_us_feedback">Give us feedback</string>
-<!--    <string name="rate_us">Rate us</string>-->
-<!--    <string name="about">About</string>-->
 
     <string name="currency_unit">Currency unit</string>
     <string name="for_developer">For developer</string>
@@ -95,4 +93,7 @@
     <string name="empty_icon_error">Please select icon</string>
     <string name="change_your_icon">Change your icon</string>
     <string name="exist_name_error">This name already exists</string>
+    <string name="saving">Saving</string>
+    <string name="add_to">Add to</string>
+    <string name="savings">savings</string>
 </resources>

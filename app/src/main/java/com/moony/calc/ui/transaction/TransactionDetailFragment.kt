@@ -34,26 +34,30 @@ class TransactionDetailFragment : BaseFragment() {
 
     override fun initControls(view: View, savedInstanceState: Bundle?) {
         transactionItem =
-            arguments?.getSerializable(getString(R.string.transaction)) as TransactionItem
+                arguments?.getSerializable(getString(R.string.transaction)) as TransactionItem
 
 //        Log.d("TransactionDetail", transaction.idCategory.toString())
 
         binding.txtTransactionNote.text = transactionItem.transaction.note
 
         Glide.with(this).load(AssetFolderManager.assetPath + transactionItem.category.iconUrl)
-            .into(binding.imgCategory)
-        binding.txtCategoryTitle.text = transactionItem.category.title
+                .into(binding.imgCategory)
+        if (transactionItem.category.resId != -1) {
+            binding.txtCategoryTitle.setText(transactionItem.category.resId)
+        }else{
+            binding.txtCategoryTitle.text = transactionItem.category.title
+        }
 
         if (!transactionItem.category.isIncome) {
             binding.txtTransactionMoney.text =
-                ((-1 * transactionItem.transaction.money).decimalFormat() + settings.getString(
-                    Settings.SettingKey.CURRENCY_UNIT
-                ))
+                    ((-1 * transactionItem.transaction.money).decimalFormat() + settings.getString(
+                            Settings.SettingKey.CURRENCY_UNIT
+                    ))
         } else
             binding.txtTransactionMoney.text =
-                (transactionItem.transaction.money.decimalFormat() + settings.getString(
-                    Settings.SettingKey.CURRENCY_UNIT
-                ))
+                    (transactionItem.transaction.money.decimalFormat() + settings.getString(
+                            Settings.SettingKey.CURRENCY_UNIT
+                    ))
 
         calendar.set(Calendar.DAY_OF_MONTH, transactionItem.transaction.day)
         calendar.set(Calendar.MONTH, transactionItem.transaction.month)
@@ -61,19 +65,25 @@ class TransactionDetailFragment : BaseFragment() {
         binding.txtTransactionDate.text = calendar.formatDateTime()
 
         calendar.set(Calendar.DAY_OF_MONTH, transactionItem.transaction.day)
+
+        if(transactionItem.category.resId == R.string.saving){
+            binding.btnUpdateTransaction.visibility = View.GONE
+        }
+
     }
 
 
     override fun initEvents() {
         binding.btnUpdateTransaction.setOnClickListener {
             val bundle = bundleOf(
-                getString(R.string.transaction) to transactionItem,
+                    getString(R.string.transaction) to transactionItem,
             )
             findNavController().navigate(
-                R.id.action_transactionDetailFragment_to_updateTransactionFragment,
-                bundle
+                    R.id.action_transactionDetailFragment_to_updateTransactionFragment,
+                    bundle
             )
         }
+
         binding.toolbarTransactionDetail.setOnMenuItemClickListener {
             if (it.itemId == R.id.mnu_delete) {
                 val builder = ConfirmDialogBuilder(requireContext())
@@ -89,9 +99,11 @@ class TransactionDetailFragment : BaseFragment() {
             }
             true
         }
+
         binding.toolbarTransactionDetail.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
+
     }
 
 

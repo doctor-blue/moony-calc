@@ -47,6 +47,7 @@ class CategoryAdapter(
         fun onBind(category: Category, onClick: (Any) -> Unit) {
             val categoryTitle =
                 if (category.resId != -1) txtCategoryName.context.resources.getString(category.resId) else category.title
+
             if (category.title.length >= 10) {
                 txtCategoryName.text = (categoryTitle.substring(0, 10) + "...")
             } else {
@@ -58,7 +59,7 @@ class CategoryAdapter(
                 btnRemoveCategory.visibility = View.GONE
             } else {
                 Glide.with(context).load("//android_asset/${category.iconUrl}").into(imgIcon)
-                if (canRemove) {
+                if (canRemove && category.resId != -1) {
                     btnRemoveCategory.visibility = View.VISIBLE
                     btnRemoveCategory.setOnClickListener {
                         val builder = ConfirmDialogBuilder(context)

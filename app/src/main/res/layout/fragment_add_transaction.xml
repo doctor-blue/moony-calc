@@ -85,7 +85,6 @@
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:gravity="center"
-                                android:text="$"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/_30sdp" />
                         </LinearLayout>
@@ -149,6 +148,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:gravity="center"
                             android:id="@+id/layout_saving_goals"
                             android:layout_width="match_parent"

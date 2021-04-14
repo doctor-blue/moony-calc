@@ -39,7 +39,13 @@ class TransactionViewHolder(itemView:View, itemClick: (TransactionItem) -> Unit)
         this.transactionItem = transactionItem
         Glide.with(itemView.context).load(AssetFolderManager.assetPath + transactionItem.category.iconUrl)
             .into(imgTransactionIcon)
-        txtTransactionName.text = transactionItem.category.title
+
+        if (transactionItem.category.resId != -1){
+            txtTransactionName.setText(transactionItem.category.resId)
+        }else{
+            txtTransactionName.text = transactionItem.category.title
+
+        }
 
         if (transactionItem.category.isIncome)
             txtTransactionMoney.text =
