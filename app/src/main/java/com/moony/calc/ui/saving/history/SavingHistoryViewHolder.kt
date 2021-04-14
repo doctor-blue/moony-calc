@@ -4,22 +4,23 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.moony.calc.R
-import com.moony.calc.model.SavingHistoryItem
+import com.moony.calc.model.SavingHistory
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 
-class SavingHistoryViewHolder(itemView: View,itemClick: (SavingHistoryItem) -> Unit) : RecyclerView.ViewHolder(itemView) {
-    private val imgCategory: ImageView = itemView.findViewById(R.id.img_saving_history_category)
+class SavingHistoryViewHolder(itemView: View,itemClick: (SavingHistory) -> Unit) : RecyclerView.ViewHolder(itemView) {
     private val txtTitle: TextView =
         itemView.findViewById(R.id.txt_saving_history_title)
     private val txtMoney: TextView = itemView.findViewById(R.id.txt_saving_history_money)
+    private val txtDate: TextView = itemView.findViewById(R.id.txt_saving_history_date)
     private val layoutContent =
-        itemView.findViewById<LinearLayout>(R.id.layout_saving_history_item)
+        itemView.findViewById<CardView>(R.id.layout_saving_history_item)
 
-    private var savingHistoryItem :SavingHistoryItem? = null
+    private var savingHistoryItem :SavingHistory? = null
 
     init {
         layoutContent.setOnClickListener {
@@ -29,19 +30,19 @@ class SavingHistoryViewHolder(itemView: View,itemClick: (SavingHistoryItem) -> U
         }
     }
 
-    fun onBind(item: SavingHistoryItem) {
+    fun onBind(item: SavingHistory) {
         savingHistoryItem = item
 
-        Glide.with(itemView.context).load(AssetFolderManager.assetPath + item.category.iconUrl)
-            .into(imgCategory)
+//        Glide.with(itemView.context).load(AssetFolderManager.assetPath + item.category.iconUrl)
+//            .into(imgCategory)
 
-        txtMoney.text = item.history.amount.decimalFormat()
+        txtMoney.text = item.amount.decimalFormat()
+        txtDate.text = item.date
 
-        if (item.history.description.length > 10) {
-            txtTitle.text = (item.history.description.substring(0, 10) + "...")
+        if (item.isSaving) {
+            txtTitle.text = txtTitle.context.resources.getString(R.string.money_in)
         } else {
-            txtTitle.text = item.history.description
+            txtTitle.text = txtTitle.context.resources.getString(R.string.money_out)
         }
-
     }
 }

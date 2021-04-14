@@ -34,7 +34,4 @@ class SavingHistoryViewModel(application: Application) : AndroidViewModel(applic
     fun deleteAllSavingHistoryBySaving(idSaving: Int) = viewModelScope.launch {
         savingHistoryRepository.deleteAllSavingHistoryBySaving(idSaving)
     }
-
-    fun getAllSavingHistoryItem(idSaving: Int) =
-        savingHistoryRepository.getAllSavingHistoryItem(idSaving)
 }

@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSavingHistoryBinding
-import com.moony.calc.model.SavingHistoryItem
-import com.moony.calc.ui.saving.SavingHistoryActivity
+import com.moony.calc.model.SavingHistory
 
 class SavingHistoryFragment() : BaseFragment() {
     private var idSaving: Int = 0
@@ -74,13 +73,13 @@ class SavingHistoryFragment() : BaseFragment() {
         binding.rvSavingHistory.setHasFixedSize(true)
         binding.rvSavingHistory.adapter = savingHistoryAdapter
 
-        savingHistoryViewModel.getAllSavingHistoryItem(idSaving)
+        savingHistoryViewModel.getAllSavingHistory(idSaving)
             .observe(viewLifecycleOwner, {
                 savingHistoryAdapter.refreshData(it)
             })
     }
 
-    private val onItemClick: (SavingHistoryItem) -> Unit = {
+    private val onItemClick: (SavingHistory) -> Unit = {
         val intent = Intent(baseContext, SavingHistoryActivity::class.java)
         intent.putExtra(EDIT_HISTORY, it)
         startActivity(intent)

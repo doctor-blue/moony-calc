@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moony.calc.R
-import com.moony.calc.model.SavingHistoryItem
+import com.moony.calc.model.SavingHistory
 
 class SavingHistoryAdapter(
-    private val itemClick: (SavingHistoryItem) -> Unit
+    private val itemClick: (SavingHistory) -> Unit
 ) : RecyclerView.Adapter<SavingHistoryViewHolder>() {
 
-    private var histories: List<SavingHistoryItem> = listOf()
+    private var histories: List<SavingHistory> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavingHistoryViewHolder {
         val view =
@@ -24,7 +24,7 @@ class SavingHistoryAdapter(
         holder.onBind(histories[position])
     }
 
-    fun refreshData(histories: List<SavingHistoryItem>) {
+    fun refreshData(histories: List<SavingHistory>) {
         this.histories = histories
         notifyDataSetChanged()
     }

@@ -26,7 +26,4 @@ class SavingHistoryRepository(application: Application) {
     suspend fun deleteAllSavingHistoryBySaving(idSaving: Int) =
         savingHistoryDao.deleteAllSavingHistoryBySaving(idSaving)
 
-    fun getAllSavingHistoryItem(idSaving: Int) = savingHistoryDao.getAllSavingHistoryItem(idSaving)
-
-
 }

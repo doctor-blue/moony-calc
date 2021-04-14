@@ -1,57 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_transaction"
+        android:id="@+id/layout_saving_history_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
         android:gravity="center"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/_3sdp"
-        app:cardElevation="@dimen/_2sdp"
-        android:layout_marginRight="@dimen/_3sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/_5sdp">
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_1sdp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="horizontal"
-            android:id="@+id/layout_saving_history_item"
-            android:padding="@dimen/_5sdp">
+            android:padding="@dimen/_10sdp">
 
             <ImageView
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:id="@+id/img_saving_history_category" />
+                android:id="@+id/img_saving_history_category"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txt_saving_history_title"
                 style="@style/TextAppearance.Moony.Subtitle1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:text="@string/empty" />
+                android:text="Empty"
+                app:layout_constraintEnd_toStartOf="@+id/txt_saving_history_money"
+                app:layout_constraintStart_toEndOf="@+id/img_saving_history_category"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteY="6dp" />
 
             <TextView
                 android:id="@+id/txt_saving_history_money"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:gravity="end"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="normal" />
-        </LinearLayout>
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_saving_history_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:text="11 july 2020"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintEnd_toEndOf="@id/txt_saving_history_title"
+                app:layout_constraintStart_toEndOf="@id/img_saving_history_category"
+                app:layout_constraintTop_toBottomOf="@id/txt_saving_history_title"
+                tools:ignore="NotSibling" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.google.android.material.card.MaterialCardView>
 </layout>

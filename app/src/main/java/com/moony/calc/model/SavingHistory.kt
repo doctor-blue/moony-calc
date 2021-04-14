@@ -5,19 +5,12 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "saving_history_table",
-    foreignKeys = [ForeignKey(
-        entity = Category::class,
-        parentColumns = arrayOf("idCategory"),
-        childColumns = arrayOf("idCategory"),
-        onDelete = ForeignKey.CASCADE
-    )])
+@Entity(tableName = "saving_history_table")
 class SavingHistory(
     var description: String,
     var idSaving: Int,
     var amount: Double,
     var isSaving: Boolean,
-    var idCategory: Int,
     var date:String
 ):Serializable {
     @PrimaryKey(autoGenerate = true)

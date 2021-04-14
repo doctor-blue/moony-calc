@@ -67,7 +67,7 @@
     <string name="add_saving_history">How much did you save?</string>
     <string name="date">Date :</string>
     <string name="get_money_out">Get the money out</string>
-    <string name="more_money_on">More money on</string>
+    <string name="more_money_in">More money in</string>
     <string name="more">More</string>
     <string name="your_balance">Your Balance</string>
     <string name="income_title">Income :</string>
@@ -95,4 +95,6 @@
     <string name="empty_icon_error">Please select icon</string>
     <string name="change_your_icon">Change your icon</string>
     <string name="exist_name_error">This name already exists</string>
+    <string name="money_in">Money in</string>
+    <string name="money_out">Money out</string>
 </resources>

@@ -19,7 +19,7 @@
         <activity android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.saving.SavingHistoryActivity"
+            android:name=".ui.saving.history.SavingHistoryActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.saving.SavingDetailActivity" />
         <activity
