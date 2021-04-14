@@ -23,6 +23,7 @@ class CategoryIconListActivity : BaseActivity() {
     private var isIncome = true
     private var iconUrl = ""
     private var isPickIcon = false
+    private var categoryNames: ArrayList<String>? = arrayListOf()
 
     private val binding: ActivityAddCategoriesBinding
         get() = (getViewBinding() as ActivityAddCategoriesBinding)
@@ -34,6 +35,7 @@ class CategoryIconListActivity : BaseActivity() {
     companion object {
         const val IS_INCOME_KEY = "com.moony.calc.ui.category.CategoryIconListActivity"
         const val IS_PICK_ICON = "com.moony.calc.ui.category.CategoryIconListActivity.PICK_ICON"
+        const val CATEGORY_NAMES = "com.moony.calc.ui.category.CategoryIconListActivity.CATEGORY_NAMES"
     }
 
     override fun initControls(savedInstanceState: Bundle?) {
@@ -43,19 +45,20 @@ class CategoryIconListActivity : BaseActivity() {
         intent.let {
             isIncome = intent.getBooleanExtra(IS_INCOME_KEY, true)
             isPickIcon = intent.getBooleanExtra(IS_PICK_ICON, false)
+            categoryNames = intent.getStringArrayListExtra(CATEGORY_NAMES)
         }
         if (!isPickIcon) {
             if (isIncome) {
                 binding.toolbarAddCategories.title =
-                    resources.getString(R.string.add_income_category)
+                        resources.getString(R.string.add_income_category)
             } else {
                 binding.toolbarAddCategories.title =
-                    resources.getString(R.string.add_expense_category)
+                        resources.getString(R.string.add_expense_category)
             }
         } else {
             binding.edtTitleCategory.isFocusable = false
             binding.toolbarAddCategories.title =
-                resources.getString(R.string.select_icon)
+                    resources.getString(R.string.select_icon)
         }
 
         binding.toolbarAddCategories.setNavigationOnClickListener { finish() }
@@ -67,21 +70,21 @@ class CategoryIconListActivity : BaseActivity() {
         }
 
         val categoriesListAdapter =
-            CategoriesListAdapter(
-                AssetFolderManager.imageMap.keys.toList(),
-                this
-            ) { iconUrl, title ->
-                this.iconUrl = iconUrl
-                if (isPickIcon)
-                    binding.edtTitleCategory.setText(title)
-                Glide.with(this@CategoryIconListActivity)
-                    .load(AssetFolderManager.assetPath + this.iconUrl)
-                    .into(binding.imgChooseCategory)
+                CategoriesListAdapter(
+                        AssetFolderManager.imageMap.keys.toList(),
+                        this
+                ) { iconUrl, title ->
+                    this.iconUrl = iconUrl
+                    if (isPickIcon)
+                        binding.edtTitleCategory.setText(title)
+                    Glide.with(this@CategoryIconListActivity)
+                            .load(AssetFolderManager.assetPath + this.iconUrl)
+                            .into(binding.imgChooseCategory)
 
-            }
+                }
         binding.rvAddCategories.setHasFixedSize(true)
         binding.rvAddCategories.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvAddCategories.setItemViewCacheSize(20)
         binding.rvAddCategories.adapter = categoriesListAdapter
 
@@ -108,43 +111,50 @@ class CategoryIconListActivity : BaseActivity() {
 
     @SuppressLint("WrongConstant")
     private fun save() {
+        if (categoryNames == null) categoryNames = arrayListOf("")
         val snackBar: Snackbar =
-            Snackbar.make(
-                binding.layoutRootAddCategories,
-                R.string.please_select_icon,
-                Snackbar.LENGTH_LONG
-            )
+                Snackbar.make(
+                        binding.layoutRootAddCategories,
+                        R.string.please_select_icon,
+                        Snackbar.LENGTH_LONG
+                )
         snackBar.setTextColor(resources.getColor(R.color.white))
         snackBar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
         snackBar.animationMode = Snackbar.ANIMATION_MODE_FADE
+        var title = binding.edtTitleCategory.text.toString().trim()
+        if (title.isNotEmpty())
+            title = title.replaceFirst(title[0], title[0].toUpperCase())
 
         when {
-            binding.edtTitleCategory.text.toString().trim().isEmpty() -> {
+            title.isEmpty() -> {
                 snackBar.setText(R.string.please_add_title)
                 snackBar.show()
             }
             this.iconUrl.isEmpty() -> {
                 snackBar.show()
             }
-            else -> {
 
+            categoryNames!!.contains(title) -> {
+                snackBar.setText(R.string.exist_name_error)
+                snackBar.show()
+            }
+
+            else -> {
                 if (isPickIcon) {
                     val intent = Intent()
                     intent.putExtra(AddSavingGoalFragment.ICON_LINK, this.iconUrl)
                     intent.putExtra(
-                        AddSavingGoalFragment.TITLE,
-                        binding.edtTitleCategory.text.toString().trim()
+                            AddSavingGoalFragment.TITLE,
+                            title
                     )
                     setResult(Activity.RESULT_OK, intent)
                 } else {
-                    var title = binding.edtTitleCategory.text.toString()
-                    title = title.replaceFirst(title[0], title[0].toUpperCase())
                     categoryViewModel.insertCategory(
-                        Category(
-                            title.trim(),
-                            this.iconUrl,
-                            isIncome
-                        ))
+                            Category(
+                                    title,
+                                    this.iconUrl,
+                                    isIncome
+                            ))
                 }
                 finish()
             }

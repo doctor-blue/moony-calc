@@ -94,4 +94,5 @@
     <string name="select_icon">Select icon</string>
     <string name="empty_icon_error">Please select icon</string>
     <string name="change_your_icon">Change your icon</string>
+    <string name="exist_name_error">This name already exists</string>
 </resources>
