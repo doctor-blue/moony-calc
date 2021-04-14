@@ -71,7 +71,7 @@ class SavingViewHolder(
             })
 
 
-        txtSavingDescriptionItem.text = saving.description
+        txtSavingDescriptionItem.text = saving.title
         txtAmountProgressItem.text =
             (saving.desiredAmount.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
 

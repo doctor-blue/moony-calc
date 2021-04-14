@@ -51,7 +51,7 @@ class SavingDetailFragment(var savings: Saving) : BaseFragment() {
             this.saving = it
             binding.txtSavingDetailDate.text = saving.deadLine
             binding.txtSavingTotal.text = saving.desiredAmount.decimalFormat()
-            (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.description
+            (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.title
 
             Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
                 .into(binding.imgSavingDetailCategories)

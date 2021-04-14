@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.InputFilter.LengthFilter
 import android.text.TextWatcher
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
@@ -15,8 +16,10 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentAddTransactionBinding
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
+import com.moony.calc.model.Saving
 import com.moony.calc.model.Transaction
 import com.moony.calc.ui.category.CategoriesActivity
+import com.moony.calc.ui.saving.SavingViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.formatDateTime
@@ -30,6 +33,11 @@ class AddTransactionFragment : BaseFragment() {
     private val transactionViewModel: TransactionViewModel by lazy {
         ViewModelProvider(this)[TransactionViewModel::class.java]
     }
+
+    private val savingViewModel: SavingViewModel by lazy {
+        ViewModelProvider(this)[SavingViewModel::class.java]
+    }
+
     private val calendar: Calendar = Calendar.getInstance()
 
     private val settings: Settings by lazy {
@@ -46,10 +54,15 @@ class AddTransactionFragment : BaseFragment() {
         binding.txtTransactionTime.text = calendar.formatDateTime()
 
         binding.edtTransactionMoney.setSelection(binding.edtTransactionMoney.text.toString().length)
+        val savingAdapter: ArrayAdapter<Saving> =
+            ArrayAdapter<Saving>(requireContext(), android.R.layout.simple_list_item_1)
+        binding.spinSavingGoals.adapter = savingAdapter
 
-        binding.txtCurrencyUnit.text = settings.getString(
-            Settings.SettingKey.CURRENCY_UNIT
-        )
+        savingViewModel.getAllSaving().observe(this, {
+            savingAdapter.clear()
+            savingAdapter.addAll(it)
+            savingAdapter.notifyDataSetChanged()
+        })
     }
 
 
@@ -175,7 +188,12 @@ class AddTransactionFragment : BaseFragment() {
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
                     .into(binding.imgCategories)
 
-                binding.txtTitleTransactionCategory.text = category!!.title
+                if (category!!.resId != -1) {
+                    binding.txtTitleTransactionCategory.text = category!!.title
+                } else {
+                    binding.txtTitleTransactionCategory.setText(category!!.resId)
+                }
+
                 binding.textInputTransactionTitleCategory.error = null
 
                 var money = binding.edtTransactionMoney.text.toString()

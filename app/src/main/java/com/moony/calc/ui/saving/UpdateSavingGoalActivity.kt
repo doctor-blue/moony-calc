@@ -123,7 +123,7 @@ class UpdateSavingGoalActivity : BaseActivity() {
         saving = intent.getSerializableExtra(SavingDetailActivity.EDIT_SAVINGS) as Saving
         saving?.let {
 
-            binding.edtGoalDescription.setText(it.description)
+            binding.edtGoalDescription.setText(it.title)
             binding.edtGoalAmount.setText(("${it.desiredAmount}"))
             binding.txtDueDate.text = it.deadLine
             deadLine = it.deadLine
@@ -170,7 +170,7 @@ class UpdateSavingGoalActivity : BaseActivity() {
             }
             else -> {
                 saving?.let {
-                    it.description = binding.edtGoalDescription.text.toString().trim()
+                    it.title = binding.edtGoalDescription.text.toString().trim()
                     it.deadLine = deadLine
                     it.iconUrl = iconUrl
                     it.desiredAmount = binding.edtGoalAmount.text.toString().trim().toDouble()

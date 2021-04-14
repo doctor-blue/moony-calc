@@ -6,13 +6,17 @@ import java.io.Serializable
 
 @Entity(tableName = "saving_goal")
 class Saving(
-    var description: String,
+    var title: String,
     var desiredAmount: Double,
     var deadLine: String,
     var imageLink: String = "Empty",
-    var iconUrl: String = ""
+    var iconUrl: String = "",
 ) : Serializable {
     @PrimaryKey(autoGenerate = true)
     var idSaving: Int = 0
+
+    override fun toString(): String {
+        return title
+    }
 
 }

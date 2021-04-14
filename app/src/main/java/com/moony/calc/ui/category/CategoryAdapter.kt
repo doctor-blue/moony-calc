@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.moony.calc.R
-import com.moony.calc.ui.transaction.TransactionViewModel
-import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.model.Category
+import com.moony.calc.ui.dialog.ConfirmDialogBuilder
+import com.moony.calc.ui.transaction.TransactionViewModel
 
 class CategoryAdapter(
     val context: Context,
@@ -45,10 +45,12 @@ class CategoryAdapter(
         }
 
         fun onBind(category: Category, onClick: (Any) -> Unit) {
+            val categoryTitle =
+                if (category.resId != -1) txtCategoryName.context.resources.getString(category.resId) else category.title
             if (category.title.length >= 10) {
-                txtCategoryName.text = (category.title.substring(0, 10) + "...")
+                txtCategoryName.text = (categoryTitle.substring(0, 10) + "...")
             } else {
-                txtCategoryName.text = category.title
+                txtCategoryName.text = categoryTitle
             }
 
             if (category.title == context.resources.getText(R.string.add)) {
