@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.moony.calc.R
 import com.moony.calc.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -44,8 +45,7 @@ abstract class MoonyDatabase : RoomDatabase() {
 
         private fun adDefaultCategory(categoryDao: CategoryDao) {
             GlobalScope.launch(Dispatchers.IO) {
-                //default category
-                //categoryDao.insertCategory(Category(context!!.resources.getString(R.string.empty),"categories/education/art.png"))
+                categoryDao.insertCategory(Category("","categories/income/salary.png",resId = R.string.saving))
             }
         }
     }

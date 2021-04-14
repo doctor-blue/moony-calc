@@ -85,7 +85,6 @@
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:gravity="center"
-                                android:text="$"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/_30sdp" />
                         </LinearLayout>
@@ -146,6 +145,28 @@
                                     android:textColor="@color/textColor"
                                     android:textSize="@dimen/_16sdp" />
                             </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:gravity="center"
+                            android:id="@+id/layout_saving_goals"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/_24sdp"
+                                android:layout_height="@dimen/_24sdp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_saving"
+                                android:tint="@color/colorPrimary" />
+
+                            <Spinner
+                                android:id="@+id/spin_saving_goals"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
                         <LinearLayout

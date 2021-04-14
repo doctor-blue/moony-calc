@@ -8,6 +8,9 @@ import android.text.Editable
 import android.text.InputFilter.LengthFilter
 import android.text.TextWatcher
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.databinding.adapters.AdapterViewBindingAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.moony.calc.R
@@ -15,11 +18,16 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentAddTransactionBinding
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
+import com.moony.calc.model.Saving
+import com.moony.calc.model.SavingHistory
 import com.moony.calc.model.Transaction
 import com.moony.calc.ui.category.CategoriesActivity
+import com.moony.calc.ui.saving.SavingViewModel
+import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.formatDateTime
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -30,7 +38,19 @@ class AddTransactionFragment : BaseFragment() {
     private val transactionViewModel: TransactionViewModel by lazy {
         ViewModelProvider(this)[TransactionViewModel::class.java]
     }
+
+    private val savingViewModel: SavingViewModel by lazy {
+        ViewModelProvider(this)[SavingViewModel::class.java]
+    }
+    private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
+        ViewModelProvider(this)[SavingHistoryViewModel::class.java]
+    }
+
     private val calendar: Calendar = Calendar.getInstance()
+
+    private var savings: List<Saving> = listOf()
+
+    private var savingPosition = -1
 
     private val settings: Settings by lazy {
         Settings.getInstance(baseContext!!)
@@ -46,10 +66,24 @@ class AddTransactionFragment : BaseFragment() {
         binding.txtTransactionTime.text = calendar.formatDateTime()
 
         binding.edtTransactionMoney.setSelection(binding.edtTransactionMoney.text.toString().length)
+        val savingAdapter: ArrayAdapter<Saving> =
+                ArrayAdapter<Saving>(requireContext(), android.R.layout.simple_list_item_1)
+        binding.spinSavingGoals.adapter = savingAdapter
 
-        binding.txtCurrencyUnit.text = settings.getString(
-            Settings.SettingKey.CURRENCY_UNIT
-        )
+        savingViewModel.getAllSaving().observe(this, {
+            savings = it
+            savingAdapter.clear()
+            savingAdapter.addAll(it)
+            savingAdapter.notifyDataSetChanged()
+
+            if (it.isNotEmpty()) {
+                category?.let {
+                    if (category!!.resId == R.string.saving) {
+                        binding.layoutSavingGoals.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
     }
 
 
@@ -68,7 +102,7 @@ class AddTransactionFragment : BaseFragment() {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
-                Unit
+                    Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
@@ -91,10 +125,10 @@ class AddTransactionFragment : BaseFragment() {
                                 val lastChar = it[maxLength - 1]
                                 if (!(lastChar == '.' || lastChar == ',')) {
                                     binding.edtTransactionMoney.setText(
-                                        it.subSequence(
-                                            0,
-                                            maxLength - 1
-                                        )
+                                            it.subSequence(
+                                                    0,
+                                                    maxLength - 1
+                                            )
                                     )
                                     binding.edtTransactionMoney.setSelection(maxLength - 1)
                                 }
@@ -118,6 +152,16 @@ class AddTransactionFragment : BaseFragment() {
             }
             true
         }
+        binding.spinSavingGoals.onItemSelectedListener = object : AdapterViewBindingAdapter.OnItemSelected, AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                savingPosition = position
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+        }
     }
 
 
@@ -129,23 +173,38 @@ class AddTransactionFragment : BaseFragment() {
             }
             binding.txtTitleTransactionCategory.text.toString().trim().isEmpty() -> {
                 binding.textInputTransactionTitleCategory.error =
-                    resources.getString(R.string.empty_category_error)
+                        resources.getString(R.string.empty_category_error)
             }
             else -> {
 
                 val money = binding.edtTransactionMoney.text.toString()
 
                 val transaction = Transaction(
-                    handleTextToDouble(
-                        (if (money.contains('-')) money.replace('-', ' ').trim() else money)
-                    ).toDouble(),
-                    category!!.idCategory,
-                    binding.edtTransactionNote.text.toString(),
-                    calendar[Calendar.DAY_OF_MONTH],
-                    calendar[Calendar.MONTH],
-                    calendar[Calendar.YEAR]
+                        handleTextToDouble(
+                                (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+                        ).toDouble(),
+                        category!!.idCategory,
+                        binding.edtTransactionNote.text.toString(),
+                        calendar[Calendar.DAY_OF_MONTH],
+                        calendar[Calendar.MONTH],
+                        calendar[Calendar.YEAR]
                 )
                 transactionViewModel.insertTransaction(transaction)
+
+                if (savingPosition != -1) {
+                    val description = requireContext().resources.getString(R.string.add_to) + " " + savings[savingPosition].title + " " + requireContext().resources.getString(R.string.savings)
+                    val spdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+                    val savingHistory = SavingHistory(
+                            description,
+                            savings[savingPosition].idSaving,
+                            handleTextToDouble(
+                                    (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+                            ).toDouble(),
+                            !category!!.isIncome,
+                            spdf.format(calendar.time)
+                    )
+                    savingHistoryViewModel.insertSavingHistory(savingHistory)
+                }
                 requireActivity().onBackPressed()
 
             }
@@ -173,17 +232,28 @@ class AddTransactionFragment : BaseFragment() {
             if (resultCode == Activity.RESULT_OK) {
                 category = data?.getSerializableExtra(MoonyKey.pickCategory) as Category?
                 Glide.with(this).load(AssetFolderManager.assetPath + category!!.iconUrl)
-                    .into(binding.imgCategories)
+                        .into(binding.imgCategories)
 
-                binding.txtTitleTransactionCategory.text = category!!.title
+                if (category!!.resId == -1) {
+                    binding.txtTitleTransactionCategory.text = category!!.title
+                } else {
+                    binding.txtTitleTransactionCategory.setText(category!!.resId)
+                }
+
+                if (savings.isNotEmpty()) {
+                    if (category!!.resId == R.string.saving) {
+                        binding.layoutSavingGoals.visibility = View.VISIBLE
+                    }
+                }
+
                 binding.textInputTransactionTitleCategory.error = null
 
                 var money = binding.edtTransactionMoney.text.toString()
 
                 if (!category!!.isIncome) {
-                    if (binding.edtTransactionMoney?.text.toString().isNotEmpty()) {
+                    if (binding.edtTransactionMoney.text.toString().isNotEmpty()) {
                         binding.edtTransactionMoney.filters =
-                            arrayOf(LengthFilter(money.length + 1))
+                                arrayOf(LengthFilter(money.length + 1))
                     }
                     if (!money.contains('-'))
                         money = "-$money"
