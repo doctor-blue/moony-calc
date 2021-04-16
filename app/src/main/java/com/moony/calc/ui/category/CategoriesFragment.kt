@@ -21,6 +21,7 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(fragmentActivity!!)[CategoryViewModel::class.java]
     }
+
     private val categoryAdapter by lazy {
         CategoryAdapter(
             activity,

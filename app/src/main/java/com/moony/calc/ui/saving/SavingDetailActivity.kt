@@ -47,7 +47,7 @@ class SavingDetailActivity : BaseActivity() {
         val fragments: List<BaseFragment> =
             mutableListOf(
                 SavingDetailFragment(saving),
-                SavingHistoryFragment(saving.idSaving)
+                SavingHistoryFragment(saving)
             )
         val savingDetailAdapter = SavingDetailAdapter(supportFragmentManager, fragments, this)
         binding.viewpagerDetailSaving.adapter = savingDetailAdapter

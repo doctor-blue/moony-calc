@@ -16,7 +16,7 @@ interface TransactionDao {
     suspend fun deleteTransaction(transaction: Transaction)
 
     @Insert
-    suspend fun insertTransaction(transaction: Transaction)
+    suspend fun insertTransaction(transaction: Transaction) :Long
 
     @Query("select*from transaction_table")
     fun getAllTransactions(): LiveData<List<Transaction>>

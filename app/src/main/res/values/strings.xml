@@ -100,4 +100,6 @@
     <string name="money_out">Money out</string>
     <string name="add_to">Add to</string>
     <string name="savings">savings</string>
+    <string name="title">Title</string>
+    <string name="take_money_out_of_savings">Take money out of savings</string>
 </resources>

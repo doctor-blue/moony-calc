@@ -46,6 +46,7 @@ abstract class MoonyDatabase : RoomDatabase() {
         private fun adDefaultCategory(categoryDao: CategoryDao) {
             GlobalScope.launch(Dispatchers.IO) {
                 categoryDao.insertCategory(Category("","categories/income/salary.png",resId = R.string.saving))
+                categoryDao.insertCategory(Category("","categories/income/salary.png",true,resId = R.string.saving))
             }
         }
     }

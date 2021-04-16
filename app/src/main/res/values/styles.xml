@@ -82,6 +82,7 @@
         <item name="boxStrokeColor">@color/textColor</item>
         <item name="hintTextColor">@color/textColor</item>
         <item name="boxStrokeWidth">@dimen/_1sdp</item>
+        <item name="errorIconTint">@color/error</item>
     </style>
 
     <style name="TextAppearance.Moony.Item" parent="TextAppearance.MaterialComponents.Subtitle1">

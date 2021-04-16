@@ -1,9 +1,7 @@
 package com.moony.calc.ui.saving.history
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -12,20 +10,21 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseActivity
 import com.moony.calc.databinding.ActivitySavingHistoryBinding
-import com.moony.calc.keys.MoonyKey
-import com.moony.calc.model.Category
+import com.moony.calc.model.Saving
 import com.moony.calc.model.SavingHistory
-import com.moony.calc.ui.category.CategoriesActivity
-import com.moony.calc.ui.saving.AddSavingGoalFragment
-import com.moony.calc.utils.AssetFolderManager
+import com.moony.calc.model.Transaction
+import com.moony.calc.ui.category.CategoryViewModel
+import com.moony.calc.ui.transaction.TransactionViewModel
 import com.moony.calc.utils.decimalFormat
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
 
 class SavingHistoryActivity : BaseActivity() {
     private val binding: ActivitySavingHistoryBinding
@@ -34,21 +33,29 @@ class SavingHistoryActivity : BaseActivity() {
     private var calendar = Calendar.getInstance()
     private var dateAdded = ""
     private var isSaving = true
-    private var idSaving = -1
+    private var saving: Saving? = null
     private var savingHistory: SavingHistory? = null
 
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
         ViewModelProvider(this)[SavingHistoryViewModel::class.java]
     }
 
+    private val transactionViewModel: TransactionViewModel by lazy {
+        ViewModelProvider(this)[TransactionViewModel::class.java]
+    }
+
+    private val categoryViewModel: CategoryViewModel by lazy {
+        ViewModelProvider(this)[CategoryViewModel::class.java]
+    }
+
     override fun getLayoutId(): Int = R.layout.activity_saving_history
 
 
     override fun initControls(savedInstanceState: Bundle?) {
-        idSaving = intent.getIntExtra(SavingHistoryFragment.ID_SAVING, -1)
+        saving = intent.getSerializableExtra(SavingHistoryFragment.SAVING) as Saving
         isSaving = intent.getBooleanExtra(SavingHistoryFragment.IS_SAVING, true)
         savingHistory =
-                intent.getSerializableExtra(SavingHistoryFragment.EDIT_HISTORY) as SavingHistory?
+            intent.getSerializableExtra(SavingHistoryFragment.EDIT_HISTORY) as SavingHistory?
 
         savingHistory?.let {
             isSaving = it.isSaving
@@ -76,7 +83,7 @@ class SavingHistoryActivity : BaseActivity() {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
-                    Unit
+                Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
@@ -89,12 +96,12 @@ class SavingHistoryActivity : BaseActivity() {
                              * chuyển về kiểu double sau đó format nó sẽ được chuỗi ở dạng #.00 và lấy độ dài làm max length cho edit_text
                              */
                             val maxLength = "${handleTextToDouble(it.toString())}1".toDouble()
-                                    .decimalFormat().length
+                                .decimalFormat().length
                             binding.edtSavingHistoryAmount.filters =
-                                    arrayOf(InputFilter.LengthFilter(maxLength))
+                                arrayOf(InputFilter.LengthFilter(maxLength))
                         } else {
                             binding.edtSavingHistoryAmount.filters =
-                                    arrayOf(InputFilter.LengthFilter(9))
+                                arrayOf(InputFilter.LengthFilter(9))
                             if (it.length - 1 == 8) {
                                 //kiểm tra nếu kí tự cuối cùng không là . or , thì xóa kí tự đó đi
                                 val lastChar = it[8]
@@ -113,7 +120,7 @@ class SavingHistoryActivity : BaseActivity() {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
-                    Unit
+                Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (binding.edtHistorySavingDescription.text.toString().trim().isNotEmpty()) {
@@ -144,11 +151,11 @@ class SavingHistoryActivity : BaseActivity() {
 
     private fun saveHistory() {
         val snackbar: Snackbar =
-                Snackbar.make(
-                        binding.layoutRootSavingHistory,
-                        R.string.empty_date_error,
-                        Snackbar.LENGTH_LONG
-                )
+            Snackbar.make(
+                binding.layoutRootSavingHistory,
+                R.string.empty_date_error,
+                Snackbar.LENGTH_LONG
+            )
         snackbar.setTextColor(resources.getColor(R.color.white))
         snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
         snackbar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
@@ -158,10 +165,10 @@ class SavingHistoryActivity : BaseActivity() {
             binding.edtSavingHistoryAmount.text.toString().trim().isEmpty() -> {
                 binding.tipHistorySavingAmount.error = resources.getString(R.string.empty_error)
             }
-            binding.edtHistorySavingDescription.text.toString().trim().isEmpty() -> {
-                binding.tipHistorySavingDescription.error =
-                        resources.getString(R.string.empty_error)
-            }
+//            binding.edtHistorySavingDescription.text.toString().trim().isEmpty() -> {
+//                binding.tipHistorySavingDescription.error =
+//                    resources.getString(R.string.empty_error)
+//            }
             binding.txtDueDate.text.toString().trim().isEmpty() -> {
                 snackbar.show()
             }
@@ -174,7 +181,7 @@ class SavingHistoryActivity : BaseActivity() {
                     savingHistory!!.isSaving = isSaving
                     savingHistory!!.date = dateAdded
                     savingHistory!!.description =
-                            binding.edtHistorySavingDescription.text.toString()
+                        binding.edtHistorySavingDescription.text.toString()
 
                     savingHistoryViewModel.updateSavingHistory(savingHistory!!)
                     finish()
@@ -183,15 +190,48 @@ class SavingHistoryActivity : BaseActivity() {
                     var amount = binding.edtSavingHistoryAmount.text.toString().toDouble()
                     if (!isSaving) amount *= -1
 
-                    val savingHistory = SavingHistory(
-                        binding.edtHistorySavingDescription.text.toString(),
-                        idSaving,
-                        amount,
-                        isSaving,
-                        dateAdded
-                    )
-                    savingHistoryViewModel.insertSavingHistory(savingHistory)
-                    finish()
+                    var description = binding.edtHistorySavingDescription.text.toString()
+
+                    if (description.isEmpty())
+                        description = if (isSaving) {
+                            resources.getString(R.string.add_to) +
+                                    " " +
+                                    saving!!.title +
+                                    " " +
+                                    resources.getString(R.string.savings)
+                        } else {
+                            resources.getString(R.string.take_money_out_of_savings) +
+                                    " " +
+                                    saving!!.title
+                        }
+                    categoryViewModel.getSavingCategory(!isSaving, R.string.saving)
+                        .observe(this, {
+                            lifecycleScope.launch {
+                                val transaction = Transaction(
+                                    abs(amount),
+                                    it.idCategory,
+                                    description,
+                                    calendar[Calendar.DAY_OF_MONTH],
+                                    calendar[Calendar.MONTH],
+                                    calendar[Calendar.YEAR],
+                                )
+                                val idTransaction =
+                                    transactionViewModel.insertTransaction(transaction)
+
+                                val savingHistory = SavingHistory(
+                                    description,
+                                    saving!!.idSaving,
+                                    amount,
+                                    isSaving,
+                                    dateAdded,
+                                    idTransaction.toInt()
+                                )
+                                savingHistoryViewModel.insertSavingHistory(savingHistory)
+                                finish()
+                            }
+                        })
+
+
                 }
             }
         }

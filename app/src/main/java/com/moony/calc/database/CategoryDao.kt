@@ -20,4 +20,7 @@ interface CategoryDao {
 
     @Query("select * from category_table where idCategory=:id")
     fun getCategory(id: Int): LiveData<Category>
+
+    @Query("select * from category_table where isIncome=:isIncome and resId = :resId")
+    fun getSavingCategory(isIncome: Boolean, resId: Int): LiveData<Category>
 }
