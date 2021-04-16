@@ -174,18 +174,21 @@ class AddTransactionFragment : BaseFragment() {
 
 
     private fun saveTransaction() {
+        val money = binding.edtTransactionMoney.text.toString()
         when {
+            money.isEmpty() || handleTextToDouble(
+                (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+            ).toDouble() == 0.0 -> {
 
-            binding.edtTransactionMoney.text.toString().trim().isEmpty() -> {
                 binding.textInputTransactionMoney.error = resources.getString(R.string.empty_error)
+
+
             }
             binding.txtTitleTransactionCategory.text.toString().trim().isEmpty() -> {
                 binding.textInputTransactionTitleCategory.error =
                     resources.getString(R.string.empty_category_error)
             }
             else -> {
-
-                val money = binding.edtTransactionMoney.text.toString()
                 var description = binding.edtTransactionNote.text.toString()
 
                 if (description.isEmpty() && savingPosition != -1)

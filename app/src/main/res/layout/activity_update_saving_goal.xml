@@ -43,7 +43,7 @@
                     style="@style/Widget.Moony.TextInputLayout.OutlineBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/description"
+                    android:hint="@string/title"
                     app:counterEnabled="true"
                     app:counterMaxLength="100"
                     app:errorEnabled="true"
