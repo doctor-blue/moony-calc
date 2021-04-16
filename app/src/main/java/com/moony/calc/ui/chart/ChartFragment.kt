@@ -105,13 +105,25 @@ class ChartFragment : BaseFragment() {
 
     private fun drawChart(gradedItems: List<ChartItem>) {
         slices.clear()
+        if (gradedItems.isEmpty()) {
+            binding.layoutListEmpty.visibility = View.VISIBLE
+            binding.rvChart.visibility = View.GONE
+            binding.nullLegendLayout.visibility = View.VISIBLE
+        } else {
+            binding.layoutListEmpty.visibility = View.GONE
+            binding.rvChart.visibility = View.VISIBLE
+            binding.nullLegendLayout.visibility = View.GONE
+        }
         sumOfGradedItems = 0.0
         for ((i, item) in gradedItems.withIndex()) {
             slices.add(
                 Slice(
                     item.sum.toFloat(),
                     if (i < 5) colors[i] else colors[0],
-                    item.category.title
+                    if (item.category.resId != -1) resources.getString(item.category.resId) else
+                        item.category.title
+
+
                 )
             )
             sumOfGradedItems += item.sum
@@ -148,9 +160,9 @@ class ChartFragment : BaseFragment() {
 
     private fun changeCenterText(isIncome: Boolean, sum: Double): String =
         if (isIncome) "${resources.getString(R.string.income)}\n$sum\$" else "${
-        resources.getString(
-            R.string.expenses
-        )
+            resources.getString(
+                R.string.expenses
+            )
         }\n$sum\$"
 
     private fun showMonthYearPickerDialog() {
