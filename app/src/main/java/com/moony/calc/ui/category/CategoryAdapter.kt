@@ -17,8 +17,6 @@ import com.moony.calc.ui.transaction.TransactionViewModel
 
 class CategoryAdapter(
     val context: Context,
-    private val links: List<String>?,
-    private val categories: List<Category>?,
     private val canRemove: Boolean,
     private val onClick: (Any) -> Unit
 
@@ -30,6 +28,8 @@ class CategoryAdapter(
     private val transactionViewModel by lazy {
         ViewModelProvider(context as FragmentActivity).get(TransactionViewModel::class.java)
     }
+    private var links: List<String>? = null
+    private var categories: List<Category> = listOf()
 
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgIcon: ImageView = itemView.findViewById(R.id.img_category_item)
@@ -54,7 +54,7 @@ class CategoryAdapter(
                 txtCategoryName.text = categoryTitle
             }
 
-            if (category.title == context.resources.getText(R.string.add)) {
+            if (category.resId == R.string.add) {
                 Glide.with(context).load(R.drawable.ic_add).into(imgIcon)
                 btnRemoveCategory.visibility = View.GONE
             } else {
@@ -90,13 +90,23 @@ class CategoryAdapter(
         return CategoryViewHolder(view)
     }
 
-    override fun getItemCount(): Int = links?.size ?: categories!!.size
+    override fun getItemCount(): Int = links?.size ?: categories.size
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         if (links != null) {
-            holder.onBind(links[position], onClick)
+            holder.onBind(links!![position], onClick)
         } else {
-            holder.onBind(categories!![position], onClick)
+            holder.onBind(categories[position], onClick)
         }
+    }
+
+    fun setCategoryList(categories: List<Category>) {
+        this.categories = categories
+        notifyDataSetChanged()
+    }
+
+    fun setLinks(links: List<String>?) {
+        this.links = links
+        notifyDataSetChanged()
     }
 }

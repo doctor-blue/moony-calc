@@ -21,40 +21,32 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(fragmentActivity!!)[CategoryViewModel::class.java]
     }
+    private val categoryAdapter by lazy {
+        CategoryAdapter(
+            activity,
+            CategoriesActivity.isCanRemove,
+            onCategoryItemClick
+        )
+    }
 
     private val binding: FragmentCategoriesBinding
         get() = (getViewBinding() as FragmentCategoriesBinding)
 
     override fun initControls(view: View, savedInstanceState: Bundle?) {
+
+
+        binding.rvCategories.setHasFixedSize(true)
+        binding.rvCategories.layoutManager = GridLayoutManager(activity, 4)
+        binding.rvCategories.adapter = categoryAdapter
+
         categoryViewModel.getAllCategory(isIncome)
             .observe(viewLifecycleOwner, { list ->
                 val categories = list as MutableList<Category>
                 categoryNames = list.map { it.title } as ArrayList
 
-                categories.add(Category(activity.resources.getString(R.string.add), "", isIncome))
+                categories.add(Category("", "", isIncome, R.string.add))
+                categoryAdapter.setCategoryList(categories)
 
-                val categoryAdapter = CategoryAdapter(
-                    activity, null, categories,
-                    CategoriesActivity.isCanRemove
-                ) {
-                    val category: Category = it as Category
-                    if (category.title == activity.resources.getString(R.string.add)) {
-                        val intent = Intent(activity, CategoryIconListActivity::class.java)
-                        intent.putExtra(CategoryIconListActivity.IS_INCOME_KEY, isIncome)
-                        intent.putExtra(CategoryIconListActivity.CATEGORY_NAMES, categoryNames)
-                        startActivity(intent)
-                    } else {
-                        if (!CategoriesActivity.isCanRemove) {
-                            val intent = Intent()
-                            intent.putExtra(MoonyKey.pickCategory, category)
-                            activity.setResult(Activity.RESULT_OK, intent)
-                            activity.finish()
-                        }
-                    }
-                }
-                binding.rvCategories.setHasFixedSize(true)
-                binding.rvCategories.layoutManager = GridLayoutManager(activity, 4)
-                binding.rvCategories.adapter = categoryAdapter
             })
     }
 
@@ -63,4 +55,21 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_categories
+
+    private val onCategoryItemClick: (Any) -> Unit = {
+        val category: Category = it as Category
+        if (category.resId == R.string.add) {
+            val intent = Intent(activity, CategoryIconListActivity::class.java)
+            intent.putExtra(CategoryIconListActivity.IS_INCOME_KEY, isIncome)
+            intent.putExtra(CategoryIconListActivity.CATEGORY_NAMES, categoryNames)
+            startActivity(intent)
+        } else {
+            if (!CategoriesActivity.isCanRemove) {
+                val intent = Intent()
+                intent.putExtra(MoonyKey.pickCategory, category)
+                activity.setResult(Activity.RESULT_OK, intent)
+                activity.finish()
+            }
+        }
+    }
 }
