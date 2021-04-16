@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSavingHistoryBinding
+import com.moony.calc.model.Saving
 import com.moony.calc.model.SavingHistory
 
 class SavingHistoryFragment() : BaseFragment() {
-    private var idSaving: Int = 0
+    private var saving:Saving? =null
 
-    constructor(idSaving: Int) : this() {
-        this.idSaving = idSaving
+    constructor(saving: Saving) : this() {
+        this.saving = saving
     }
 
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
@@ -30,7 +31,7 @@ class SavingHistoryFragment() : BaseFragment() {
 
 
     companion object {
-        const val ID_SAVING = "com.moony.calc.ui.saving.history.SavingHistoryFragment.ID_SAVING"
+        const val SAVING = "com.moony.calc.ui.saving.history.SavingHistoryFragment.SAVING"
         const val IS_SAVING = "com.moony.calc.ui.saving.history.SavingHistoryFragment.IS_SAVING"
         const val EDIT_HISTORY =
             "com.moony.calc.ui.saving.history.SavingHistoryFragment.EDIT_HISTORY"
@@ -55,13 +56,13 @@ class SavingHistoryFragment() : BaseFragment() {
 
         binding.btnAddSavingMoney.setOnClickListener {
             val intent = Intent(baseContext, SavingHistoryActivity::class.java)
-            intent.putExtra(ID_SAVING, idSaving)
+            intent.putExtra(SAVING, saving)
             intent.putExtra(IS_SAVING, true)
             startActivity(intent)
         }
         binding.btnSubtractSavingMoney.setOnClickListener {
             val intent = Intent(baseContext, SavingHistoryActivity::class.java)
-            intent.putExtra(ID_SAVING, idSaving)
+            intent.putExtra(SAVING, saving)
             intent.putExtra(IS_SAVING, false)
             startActivity(intent)
         }
@@ -73,7 +74,7 @@ class SavingHistoryFragment() : BaseFragment() {
         binding.rvSavingHistory.setHasFixedSize(true)
         binding.rvSavingHistory.adapter = savingHistoryAdapter
 
-        savingHistoryViewModel.getAllSavingHistory(idSaving)
+        savingHistoryViewModel.getAllSavingHistory(saving!!.idSaving)
             .observe(viewLifecycleOwner, {
                 savingHistoryAdapter.refreshData(it)
             })

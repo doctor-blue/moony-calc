@@ -27,4 +27,7 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
         categoryRepository.getAllCategory(isIncome)
 
     fun getCategory(id: Int): LiveData<Category> = categoryRepository.getCategory(id)
+
+    fun getSavingCategory(isIncome: Boolean, resId: Int) =
+        categoryRepository.getSavingCategory(isIncome, resId)
 }

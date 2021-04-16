@@ -11,6 +11,7 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentTransactionDetailBinding
 import com.moony.calc.model.TransactionItem
 import com.moony.calc.ui.dialog.ConfirmDialogBuilder
+import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
@@ -31,6 +32,11 @@ class TransactionDetailFragment : BaseFragment() {
 
     private val binding: FragmentTransactionDetailBinding
         get() = (getViewBinding() as FragmentTransactionDetailBinding)
+
+    private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
+        ViewModelProvider(this)[SavingHistoryViewModel::class.java]
+    }
+
 
     override fun initControls(view: View, savedInstanceState: Bundle?) {
         transactionItem =
@@ -91,6 +97,8 @@ class TransactionDetailFragment : BaseFragment() {
                 val dialog = builder.createDialog()
                 builder.btnConfirm.setOnClickListener {
                     transactionViewModel.deleteTransaction(transactionItem.transaction)
+                    savingHistoryViewModel.deleteSavingHistoryByTransaction(transactionItem.transaction.idTransaction)
+
                     dialog.dismiss()
                     requireActivity().onBackPressed()
                 }

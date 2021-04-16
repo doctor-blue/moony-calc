@@ -49,7 +49,12 @@ class UpdateTransactionFragment : BaseFragment() {
 
             Glide.with(this).load(AssetFolderManager.assetPath + item.category.iconUrl)
                 .into(binding.imgCategories)
-            binding.txtTitleTransactionCategory.text = item.category.title
+            if (item.category.resId != -1) {
+                binding.txtTitleTransactionCategory.setText(item.category.resId)
+            } else {
+                binding.txtTitleTransactionCategory.text = item.category.title
+
+            }
 
             if (item.category.isIncome) {
                 binding.edtTransactionMoney.setText(item.transaction.money.decimalFormat())
@@ -77,6 +82,7 @@ class UpdateTransactionFragment : BaseFragment() {
             val intent = Intent(requireContext(), CategoriesActivity::class.java)
             startActivityForResult(intent, requestCode)
         }
+
         binding.btnDeleteTransaction.setOnClickListener {
             //Delete Transaction
             transactionItem?.let { item ->
@@ -166,18 +172,21 @@ class UpdateTransactionFragment : BaseFragment() {
 
 
     private fun saveTransaction() {
+        val money = binding.edtTransactionMoney.text.toString()
         when {
+            money.isEmpty() || handleTextToDouble(
+                (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+            ).toDouble() == 0.0 -> {
 
-            binding.edtTransactionMoney.text.toString().trim().isEmpty() -> {
                 binding.textInputTransactionMoney.error = resources.getString(R.string.empty_error)
+
+
             }
             binding.txtTitleTransactionCategory.text.toString().trim().isEmpty() -> {
                 binding.textInputTransactionTitleCategory.error =
                     resources.getString(R.string.empty_category_error)
             }
             else -> {
-                val money = binding.edtTransactionMoney.text.toString()
-
                 transactionItem?.let { item ->
                     item.transaction.day = calendar[Calendar.DAY_OF_MONTH]
                     item.transaction.note = binding.edtTransactionNote.text.toString()
@@ -225,7 +234,13 @@ class UpdateTransactionFragment : BaseFragment() {
                     Glide.with(this).load(AssetFolderManager.assetPath + item.category.iconUrl)
                         .into(binding.imgCategories)
 
-                    binding.txtTitleTransactionCategory.text = item.category.title
+                    if (item.category.resId != -1) {
+                        binding.txtTitleTransactionCategory.setText(item.category.resId)
+                    } else {
+                        binding.txtTitleTransactionCategory.text = item.category.title
+
+                    }
+
                     binding.textInputTransactionTitleCategory.error = null
 
                     var money = binding.edtTransactionMoney.text.toString()
