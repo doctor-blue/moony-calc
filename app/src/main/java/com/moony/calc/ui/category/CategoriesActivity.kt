@@ -12,11 +12,11 @@ class CategoriesActivity : BaseActivity() {
 
     companion object {
         const val KEY = "com.moony.calc.ui.category.CategoriesActivity"
-        var isJustWatch = false
+        var isCanRemove = false
     }
 
     override fun initControls(savedInstanceState: Bundle?) {
-        isJustWatch = intent.getBooleanExtra(KEY, false)
+        isCanRemove = intent.getBooleanExtra(KEY, false)
 
         val fragments = mutableListOf<BaseFragment>()
         val incomeFragment = CategoriesFragment(true, this)

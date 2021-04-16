@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSettingBinding
+import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.utils.Settings
 
 
@@ -47,6 +48,7 @@ class SettingFragment : BaseFragment(),View.OnClickListener {
         binding.layoutRateUs.setOnClickListener(this)
         binding.layoutAbout.setOnClickListener(this)
         binding.layoutForDev.setOnClickListener(this)
+        binding.layoutCategory.setOnClickListener(this)
 
 
     }
@@ -77,6 +79,7 @@ class SettingFragment : BaseFragment(),View.OnClickListener {
             R.id.layout_invite_friend -> {
 
             }
+
             R.id.layout_feedback -> {
                 val intent = Intent(Intent.ACTION_SENDTO)
                 intent.data = Uri.parse("mailto:");
@@ -84,14 +87,23 @@ class SettingFragment : BaseFragment(),View.OnClickListener {
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Moony Feedback")
                 startActivity(Intent.createChooser(intent, "Send Email"))
             }
+
             R.id.layout_rate_us -> {
 
             }
+
             R.id.layout_about -> {
                 openLink("https://github.com/doctor-blue/moony")
             }
+
             R.id.layout_for_dev -> {
                 openLink("https://github.com/doctor-blue/moony-documentation/blob/master/DEVELOPER.md#some-useful-information-if-you-are-a-developer")
+            }
+
+            R.id.layout_category->{
+                val intent = Intent(requireContext(), CategoriesActivity::class.java)
+                intent.putExtra(CategoriesActivity.KEY,true)
+                startActivity(intent)
             }
         }
     }

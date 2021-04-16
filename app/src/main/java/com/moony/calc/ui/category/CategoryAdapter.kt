@@ -59,7 +59,7 @@ class CategoryAdapter(
                 btnRemoveCategory.visibility = View.GONE
             } else {
                 Glide.with(context).load("//android_asset/${category.iconUrl}").into(imgIcon)
-                if (canRemove && category.resId != -1) {
+                if (canRemove && category.resId == -1) {
                     btnRemoveCategory.visibility = View.VISIBLE
                     btnRemoveCategory.setOnClickListener {
                         val builder = ConfirmDialogBuilder(context)

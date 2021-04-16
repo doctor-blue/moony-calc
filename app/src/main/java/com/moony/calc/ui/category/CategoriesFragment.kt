@@ -35,7 +35,7 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
 
                 val categoryAdapter = CategoryAdapter(
                     activity, null, categories,
-                    CategoriesActivity.isJustWatch
+                    CategoriesActivity.isCanRemove
                 ) {
                     val category: Category = it as Category
                     if (category.title == activity.resources.getString(R.string.add)) {
@@ -44,7 +44,7 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ba
                         intent.putExtra(CategoryIconListActivity.CATEGORY_NAMES, categoryNames)
                         startActivity(intent)
                     } else {
-                        if (!CategoriesActivity.isJustWatch) {
+                        if (!CategoriesActivity.isCanRemove) {
                             val intent = Intent()
                             intent.putExtra(MoonyKey.pickCategory, category)
                             activity.setResult(Activity.RESULT_OK, intent)
