@@ -19,6 +19,7 @@ import com.moony.calc.model.Saving
 import com.moony.calc.ui.category.CategoryIconListActivity
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
+import com.moony.calc.utils.setAutoHideKeyboard
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,8 +40,8 @@ class UpdateSavingGoalActivity : BaseActivity() {
     companion object {
         const val KEY_PICK_CATEGORY = 1101
         const val KEY_PICK_ICON = 1102
-        const val ICON_LINK = "com.moony.calc.ui.saving.AddSavingGoalFragment.ICON_LINK";
-        const val TITLE = "com.moony.calc.ui.saving.AddSavingGoalFragment.TITLE";
+        const val ICON_LINK = "com.moony.calc.ui.saving.AddSavingGoalFragment.ICON_LINK"
+        const val TITLE = "com.moony.calc.ui.saving.AddSavingGoalFragment.TITLE"
 
     }
 
@@ -117,6 +118,9 @@ class UpdateSavingGoalActivity : BaseActivity() {
             }
             return@setOnMenuItemClickListener true
         }
+
+        binding.edtGoalAmount.setAutoHideKeyboard()
+        binding.edtGoalDescription.setAutoHideKeyboard()
     }
 
     override fun initControls(savedInstanceState: Bundle?) {

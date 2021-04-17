@@ -31,12 +31,16 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbar_history_saving">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:padding="@dimen/_10sdp">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -61,12 +65,12 @@
                     android:id="@+id/tip_history_saving_description"
                     style="@style/Widget.Moony.TextInputLayout.OutlineBox.Dense"
                     android:layout_width="match_parent"
-                    app:layout_constraintTop_toBottomOf="@id/tip_history_saving_amount"
                     android:layout_height="wrap_content"
                     android:hint="@string/description"
                     app:counterEnabled="true"
                     app:counterMaxLength="100"
-                    app:errorEnabled="true">
+                    app:errorEnabled="true"
+                    app:layout_constraintTop_toBottomOf="@id/tip_history_saving_amount">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edt_history_saving_description"
@@ -84,6 +88,8 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:gravity="center"
                     android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/_100sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tip_history_saving_description">
 
