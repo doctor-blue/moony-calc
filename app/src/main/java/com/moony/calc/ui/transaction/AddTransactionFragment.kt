@@ -28,8 +28,8 @@ import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.formatDateTime
+import com.moony.calc.utils.setAutoHideKeyboard
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -170,6 +170,10 @@ class AddTransactionFragment : BaseFragment() {
                 }
 
             }
+
+        binding.edtTransactionMoney.setAutoHideKeyboard()
+
+        binding.edtTransactionNote.setAutoHideKeyboard()
     }
 
 
@@ -211,7 +215,6 @@ class AddTransactionFragment : BaseFragment() {
                 lifecycleScope.launch {
                     val idTransaction = transactionViewModel.insertTransaction(transaction)
                     if (savingPosition != -1) {
-                        val spdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
                         val savingHistory = SavingHistory(
                             "",
                             savings[savingPosition].idSaving,
@@ -219,7 +222,7 @@ class AddTransactionFragment : BaseFragment() {
                                 (if (money.contains('-')) money.replace('-', ' ').trim() else money)
                             ).toDouble(),
                             !category!!.isIncome,
-                            spdf.format(calendar.time),
+                            calendar.formatDateTime(),
                             idTransaction.toInt()
                         )
                         savingHistoryViewModel.insertSavingHistory(savingHistory)

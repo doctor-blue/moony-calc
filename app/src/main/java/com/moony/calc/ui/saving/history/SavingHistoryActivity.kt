@@ -21,6 +21,7 @@ import com.moony.calc.model.Transaction
 import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.ui.transaction.TransactionViewModel
 import com.moony.calc.utils.decimalFormat
+import com.moony.calc.utils.setAutoHideKeyboard
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -135,6 +136,8 @@ class SavingHistoryActivity : BaseActivity() {
 
         binding.toolbarHistorySaving.setNavigationOnClickListener { finish() }
 
+        binding.edtHistorySavingDescription.setAutoHideKeyboard()
+        binding.edtSavingHistoryAmount.setAutoHideKeyboard()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

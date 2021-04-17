@@ -8,9 +8,12 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/layout_root_add_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/layout_root_add_categories"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         tools:context=".ui.category.CategoryIconListActivity">
 
@@ -33,11 +36,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_content_add_cate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/layout_content_add_cate"
-            android:focusableInTouchMode="true"
             android:layout_marginTop="@dimen/_10sdp"
+            android:focusableInTouchMode="true"
             android:padding="@dimen/_5sdp">
 
             <ImageView
@@ -56,9 +59,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
+                android:lines="1"
                 android:maxLength="15"
                 android:maxLines="1"
-                android:lines="1"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/img_choose_category"

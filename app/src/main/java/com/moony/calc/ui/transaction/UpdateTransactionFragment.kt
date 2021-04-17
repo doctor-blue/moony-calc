@@ -18,10 +18,7 @@ import com.moony.calc.model.Category
 import com.moony.calc.model.TransactionItem
 import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.ui.dialog.ConfirmDialogBuilder
-import com.moony.calc.utils.AssetFolderManager
-import com.moony.calc.utils.Settings
-import com.moony.calc.utils.decimalFormat
-import com.moony.calc.utils.formatDateTime
+import com.moony.calc.utils.*
 import java.util.*
 
 class UpdateTransactionFragment : BaseFragment() {
@@ -168,6 +165,8 @@ class UpdateTransactionFragment : BaseFragment() {
 
             true
         }
+        binding.edtTransactionMoney.setAutoHideKeyboard()
+        binding.edtTransactionNote.setAutoHideKeyboard()
     }
 
 

@@ -83,6 +83,7 @@ class SavingHistoryFragment() : BaseFragment() {
     private val onItemClick: (SavingHistory) -> Unit = {
         val intent = Intent(baseContext, SavingHistoryActivity::class.java)
         intent.putExtra(EDIT_HISTORY, it)
+        intent.putExtra(SAVING, saving)
         startActivity(intent)
     }
 

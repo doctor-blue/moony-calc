@@ -21,6 +21,7 @@ import com.moony.calc.model.Saving
 import com.moony.calc.ui.category.CategoryIconListActivity
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
+import com.moony.calc.utils.setAutoHideKeyboard
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -162,6 +163,9 @@ class AddSavingGoalFragment : BaseFragment() {
             requireActivity().onBackPressed()
             hideKeyboard()
         }
+
+        binding.edtGoalAmount.setAutoHideKeyboard()
+        binding.edtGoalDescription.setAutoHideKeyboard()
     }
 
 

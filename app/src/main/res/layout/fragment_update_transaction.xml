@@ -12,6 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:background="@color/backgroundColor"
         tools:context=".ui.transaction.UpdateTransactionFragment">
 
@@ -37,7 +40,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
 
                 <com.google.android.material.card.MaterialCardView
@@ -83,7 +91,6 @@
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 android:gravity="center"
-                                android:text="$"
                                 android:id="@+id/txt_currency_unit"
                                 android:textColor="@color/textColor"
                                 android:textSize="@dimen/_30sdp" />
