@@ -12,8 +12,9 @@ import kotlinx.coroutines.launch
 class TransactionViewModel(application: Application) : AndroidViewModel(application) {
     private val transactionRepository: TransactionRepository = TransactionRepository(application)
 
-   suspend fun insertTransaction(transaction: Transaction) =
+    fun insertTransaction(transaction: Transaction) = viewModelScope.launch {
         transactionRepository.insertTransaction(transaction)
+    }
 
 
 

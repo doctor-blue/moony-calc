@@ -212,8 +212,8 @@ class AddTransactionFragment : BaseFragment() {
                     calendar[Calendar.MONTH],
                     calendar[Calendar.YEAR]
                 )
+                transactionViewModel.insertTransaction(transaction)
                 lifecycleScope.launch {
-                    val idTransaction = transactionViewModel.insertTransaction(transaction)
                     if (savingPosition != -1) {
                         val savingHistory = SavingHistory(
                             "",
@@ -223,7 +223,7 @@ class AddTransactionFragment : BaseFragment() {
                             ).toDouble(),
                             !category!!.isIncome,
                             calendar.formatDateTime(),
-                            idTransaction.toInt()
+                            transaction.idTransaction
                         )
                         savingHistoryViewModel.insertSavingHistory(savingHistory)
                     }

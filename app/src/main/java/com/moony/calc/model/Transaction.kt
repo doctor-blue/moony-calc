@@ -3,7 +3,9 @@ package com.moony.calc.model
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.moony.calc.utils.SyncFlag
 import java.io.Serializable
+import java.util.*
 
 @Entity(tableName = "transaction_table",
     foreignKeys = [ForeignKey(
@@ -18,9 +20,10 @@ class Transaction(
     var note: String,
     var day: Int,
     var month: Int,
-    var year: Int
+    var year: Int,
+    var syncFlag: String = SyncFlag.NONE.toString()
 ) : Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var idTransaction: Int = 0
+    @PrimaryKey
+    var idTransaction: String = UUID.randomUUID().toString()
 
 }

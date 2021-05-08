@@ -26,7 +26,7 @@ class SavingHistoryRepository(application: Application) {
     suspend fun deleteAllSavingHistoryBySaving(idSaving: Int) =
         savingHistoryDao.deleteAllSavingHistoryBySaving(idSaving)
 
-    suspend fun deleteSavingHistoryByTransaction(idTransaction: Int) =
+    suspend fun deleteSavingHistoryByTransaction(idTransaction: String) =
         savingHistoryDao.deleteSavingHistoryByTransaction(idTransaction)
 
 }

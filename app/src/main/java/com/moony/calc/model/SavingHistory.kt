@@ -20,7 +20,7 @@ class SavingHistory(
     var amount: Double,
     var isSaving: Boolean,
     var date: String,
-    var idTransaction: Int
+    var idTransaction: String
 ) : Serializable {
     @PrimaryKey(autoGenerate = true)
     var idSavingHistory: Int = 0

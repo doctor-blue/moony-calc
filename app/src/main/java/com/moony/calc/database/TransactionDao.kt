@@ -16,7 +16,7 @@ interface TransactionDao {
     suspend fun deleteTransaction(transaction: Transaction)
 
     @Insert
-    suspend fun insertTransaction(transaction: Transaction) :Long
+    suspend fun insertTransaction(transaction: Transaction)
 
     @Query("select*from transaction_table")
     fun getAllTransactions(): LiveData<List<Transaction>>
@@ -25,7 +25,7 @@ interface TransactionDao {
     fun getAllTransactionsByDate(month: Int, year: Int): LiveData<List<Transaction>>
 
     @Query("select sum(money) as double from transaction_table where month=:month and year=:year")
-    fun getTotalMoney( month: Int, year: Int): LiveData<Double>
+    fun getTotalMoney(month: Int, year: Int): LiveData<Double>
 
     @Query("delete from transaction_table where idCategory=:idCategory")
     suspend fun deleteAllTransactionByCategory(idCategory: Int)
