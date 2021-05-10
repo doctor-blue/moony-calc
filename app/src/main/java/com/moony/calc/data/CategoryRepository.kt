@@ -13,7 +13,7 @@ class CategoryRepository(application: Application) {
 
     fun getAllCategory(isIncome: Boolean): LiveData<List<Category>> =categoryDao.getAllCategory(isIncome)
 
-    fun getCategory(id: Int): LiveData<Category> = categoryDao.getCategory(id)
+    fun getCategory(id: String): LiveData<Category> = categoryDao.getCategory(id)
     fun getSavingCategory(isIncome: Boolean, resId: Int)=categoryDao.getSavingCategory(isIncome, resId)
 
 

@@ -34,7 +34,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     fun getTotalMoney(month: Int, year: Int): LiveData<Double> =
         transactionRepository.getTotalMoney(month, year)
 
-    fun deleteAllTransactionByCategory(idCategory: Int) = viewModelScope.launch {
+    fun deleteAllTransactionByCategory(idCategory: String) = viewModelScope.launch {
         transactionRepository.deleteAllTransactionByCategory(idCategory)
     }
 

@@ -16,7 +16,7 @@ import java.util.*
     )])
 class Transaction(
     var money: Double,
-    var idCategory: Int,
+    var idCategory: String,
     var note: String,
     var day: Int,
     var month: Int,

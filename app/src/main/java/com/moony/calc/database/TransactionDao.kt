@@ -28,7 +28,7 @@ interface TransactionDao {
     fun getTotalMoney(month: Int, year: Int): LiveData<Double>
 
     @Query("delete from transaction_table where idCategory=:idCategory")
-    suspend fun deleteAllTransactionByCategory(idCategory: Int)
+    suspend fun deleteAllTransactionByCategory(idCategory: String)
 
     @Query("select transaction_table.*, category_table.* from transaction_table inner join category_table on transaction_table.idCategory = category_table.idCategory where month=:month and year=:year")
     fun getAllTransactionItem(month: Int, year: Int): LiveData<List<TransactionItem>>
