@@ -53,7 +53,12 @@ class ChartAdapter(
         fun onBind(chartItem: ChartItem, itemClick: (ChartItem) -> Unit) {
             Glide.with(context).load(AssetFolderManager.assetPath + chartItem.category.iconUrl)
                 .into(imgChartItem)
-            txtCategoryName.text = chartItem.category.title
+            if (chartItem.category.resId != -1) txtCategoryName.text = chartItem.category.title
+            if (chartItem.category.resId != -1) {
+                txtCategoryName.setText(chartItem.category.resId)
+            } else {
+                txtCategoryName.text = chartItem.category.title
+            }
             txtChartItemMoney.text = chartItem.sum.toString()
             txtPercent.text = ""
             cardChartItem.setOnClickListener {
@@ -61,8 +66,6 @@ class ChartAdapter(
             }
         }
     }
-
-
 
 
 }

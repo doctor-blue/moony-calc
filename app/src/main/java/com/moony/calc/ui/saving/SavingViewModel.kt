@@ -25,5 +25,5 @@ class SavingViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getAllSaving(): LiveData<List<Saving>> = savingRepository.getAllSavingGoals()
 
-    fun getSaving(idSaving: Int): LiveData<Saving> = savingRepository.getSaving(idSaving)
+    fun getSaving(idSaving: String): LiveData<Saving> = savingRepository.getSaving(idSaving)
 }

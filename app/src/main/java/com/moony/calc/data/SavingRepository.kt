@@ -17,5 +17,5 @@ class SavingRepository(application: Application) {
 
     suspend fun updateSaving(saving: Saving) = savingDao.updateSaving(saving)
 
-     fun  getSaving(idSaving: Int):LiveData<Saving> = savingDao.getSaving(idSaving)
+     fun  getSaving(idSaving: String):LiveData<Saving> = savingDao.getSaving(idSaving)
 }

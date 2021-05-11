@@ -49,6 +49,7 @@ abstract class MoonyDatabase : RoomDatabase() {
                 categoryDao.insertCategory(Category("","categories/income/salary.png",true,resId = R.string.saving))
             }
         }
+
     }
 
 }

@@ -28,7 +28,7 @@ class TransactionRepository(application: Application) {
     suspend fun updateTransaction(transaction: Transaction) =
         transactionDao.updateTransaction(transaction)
 
-    suspend fun deleteAllTransactionByCategory(idCategory: Int) =
+    suspend fun deleteAllTransactionByCategory(idCategory: String) =
         transactionDao.deleteAllTransactionByCategory(idCategory)
 
     fun getAllTransactionItem(month: Int, year: Int): LiveData<List<TransactionItem>> =

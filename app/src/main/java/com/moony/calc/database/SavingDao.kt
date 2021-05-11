@@ -20,6 +20,6 @@ interface SavingDao {
     fun getAllSavingGoals(): LiveData<List<Saving>>
 
     @Query("select * from saving_goal where idSaving=:idSaving")
-     fun  getSaving(idSaving: Int):LiveData<Saving>
+     fun  getSaving(idSaving: String):LiveData<Saving>
 
 }

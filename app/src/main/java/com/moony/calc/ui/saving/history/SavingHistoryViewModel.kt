@@ -11,13 +11,13 @@ class SavingHistoryViewModel(application: Application) : AndroidViewModel(applic
     private val savingHistoryRepository: SavingHistoryRepository =
         SavingHistoryRepository(application)
 
-    fun getAllSavingHistory(idSaving: Int) = savingHistoryRepository.getAllSavingHistory(idSaving)
+    fun getAllSavingHistory(idSaving: String) = savingHistoryRepository.getAllSavingHistory(idSaving)
 
     /**
      * Hàm dưới đây dùng để lấy all số tiền đã tiết kiệm được từ SavingHistory ra
      * lấy được số tiền hiện tại từ đây để tính ra % số tiền đã tiết kiệm được
      */
-    fun getCurrentAmount(idSaving: Int) = savingHistoryRepository.getCurrentSavingAmount(idSaving)
+    fun getCurrentAmount(idSaving: String) = savingHistoryRepository.getCurrentSavingAmount(idSaving)
 
     fun insertSavingHistory(savingHistory: SavingHistory) = viewModelScope.launch {
         savingHistoryRepository.insertSavingHistory(savingHistory)
@@ -31,11 +31,11 @@ class SavingHistoryViewModel(application: Application) : AndroidViewModel(applic
         savingHistoryRepository.deleteSavingHistory(savingHistory)
     }
 
-    fun deleteAllSavingHistoryBySaving(idSaving: Int) = viewModelScope.launch {
+    fun deleteAllSavingHistoryBySaving(idSaving: String) = viewModelScope.launch {
         savingHistoryRepository.deleteAllSavingHistoryBySaving(idSaving)
     }
 
-    fun deleteSavingHistoryByTransaction(idTransaction: Int) = viewModelScope.launch {
+    fun deleteSavingHistoryByTransaction(idTransaction: String) = viewModelScope.launch {
         savingHistoryRepository.deleteSavingHistoryByTransaction(idTransaction)
     }
 }
