@@ -4,17 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.moony.calc.R
 import com.moony.calc.model.*
+import com.moony.calc.utils.DateConverter
+import com.moony.calc.utils.TimestampConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Database(
     entities = [Transaction::class, Saving::class, Category::class, SavingHistory::class],
     version = 1
 )
+@TypeConverters(TimestampConverter::class)
 abstract class MoonyDatabase : RoomDatabase() {
     abstract fun getTransactionDao(): TransactionDao
     abstract fun getCategoryDao(): CategoryDao
