@@ -1,6 +1,5 @@
 package com.moony.calc.ui.chart
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.moony.calc.R
 import com.moony.calc.model.ChartItem
-import com.moony.calc.model.TransactionItem
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 

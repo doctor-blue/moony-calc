@@ -208,10 +208,7 @@ class AddTransactionFragment : BaseFragment() {
                     ).toDouble(),
                     category!!.idCategory,
                     description,
-                    calendar[Calendar.DAY_OF_MONTH],
-                    calendar[Calendar.MONTH],
-                    calendar[Calendar.YEAR],
-                    transactionTime = calendar.time,
+                    calendar.time,
                 )
                 transactionViewModel.insertTransaction(transaction)
                 lifecycleScope.launch {

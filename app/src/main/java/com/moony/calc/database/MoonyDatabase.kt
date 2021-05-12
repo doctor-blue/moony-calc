@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.moony.calc.R
 import com.moony.calc.model.*
-import com.moony.calc.utils.DateConverter
 import com.moony.calc.utils.TimestampConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

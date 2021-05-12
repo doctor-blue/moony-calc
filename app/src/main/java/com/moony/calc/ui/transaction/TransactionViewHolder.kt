@@ -11,6 +11,7 @@ import com.moony.calc.model.TransactionItem
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
+import com.moony.calc.utils.formatDateTime
 
 class TransactionViewHolder(itemView:View, itemClick: (TransactionItem) -> Unit)  : RecyclerView.ViewHolder(itemView) {
     private val imgTransactionIcon: ImageView =
@@ -55,7 +56,7 @@ class TransactionViewHolder(itemView:View, itemClick: (TransactionItem) -> Unit)
                 ((transactionItem.transaction.money * -1).decimalFormat() + settings.getString(
                     Settings.SettingKey.CURRENCY_UNIT))
 
-        txtDate.text = ("${transactionItem.transaction.day}/${transactionItem.transaction.month + 1}/${transactionItem.transaction.year}")
+        txtDate.text = transactionItem.transaction.transactionTime.formatDateTime()
 
     }
 

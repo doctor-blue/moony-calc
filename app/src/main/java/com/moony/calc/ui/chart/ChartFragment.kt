@@ -91,7 +91,7 @@ class ChartFragment : BaseFragment() {
 
     private fun generateData() {
         transactionViewModel.getChartData(calNow[Calendar.MONTH], calNow[Calendar.YEAR])
-            .observe(viewLifecycleOwner, Observer { items ->
+            .observe(viewLifecycleOwner, { items ->
                 gradedItems = items.filter { it.category.isIncome == isIncome }
                     .sortedByDescending { it.sum }
                 chartAdapter!!.refreshChartItems(gradedItems)
