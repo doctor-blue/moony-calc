@@ -10,7 +10,6 @@ import com.moony.calc.model.Saving
 
 class SavingBoxAdapter(
     private val context: FragmentActivity,
-    private val onGoalCompleted: () -> Unit,
     private val onClick: (Any) -> Unit
 ) : RecyclerView.Adapter<SavingViewHolder>() {
     private var savings: List<Saving> = listOf()
@@ -18,7 +17,7 @@ class SavingBoxAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavingViewHolder {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.saving_goals_item, parent, false)
-        return SavingViewHolder(view, context, onGoalCompleted, onClick)
+        return SavingViewHolder(view, context, onClick)
     }
 
     override fun getItemCount(): Int = savings.size

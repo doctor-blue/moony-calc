@@ -18,10 +18,7 @@ import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentAddTransactionBinding
 import com.moony.calc.keys.MoonyKey
-import com.moony.calc.model.Category
-import com.moony.calc.model.Saving
-import com.moony.calc.model.SavingHistory
-import com.moony.calc.model.Transaction
+import com.moony.calc.model.*
 import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.ui.saving.SavingViewModel
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
@@ -73,7 +70,7 @@ class AddTransactionFragment : BaseFragment() {
         binding.spinSavingGoals.adapter = savingAdapter
 
         savingViewModel.getAllSaving().observe(this, {
-            savings = it
+
             savingAdapter.clear()
             savingAdapter.addAll(it)
             savingAdapter.notifyDataSetChanged()

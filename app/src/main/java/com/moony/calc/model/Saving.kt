@@ -8,7 +8,7 @@ import com.moony.calc.utils.TimestampConverter
 import java.io.Serializable
 import java.util.*
 
-@Entity(tableName = "saving_goal")
+@Entity(tableName = "saving_goal_table")
 class Saving(
     var title: String,
     var desiredAmount: Double,
@@ -19,6 +19,7 @@ class Saving(
 ) : Serializable {
     @PrimaryKey
     var idSaving: String = UUID.randomUUID().toString()
+
     @TypeConverters(TimestampConverter::class)
     var createDate: Date = Calendar.getInstance().time
 

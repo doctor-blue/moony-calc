@@ -11,12 +11,20 @@ import java.util.*
 
 @Entity(
     tableName = "saving_history_table",
-    foreignKeys = [ForeignKey(
-        entity = Transaction::class,
-        parentColumns = arrayOf("idTransaction"),
-        childColumns = arrayOf("idTransaction"),
-        onDelete = ForeignKey.CASCADE
-    )]
+    foreignKeys = [
+        ForeignKey(
+            entity = Transaction::class,
+            parentColumns = arrayOf("idTransaction"),
+            childColumns = arrayOf("idTransaction"),
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Saving::class,
+            parentColumns = arrayOf("idSaving"),
+            childColumns = arrayOf("idSaving"),
+            onDelete = ForeignKey.CASCADE
+        ),
+    ]
 )
 class SavingHistory(
     var description: String,
@@ -29,6 +37,7 @@ class SavingHistory(
 ) : Serializable {
     @PrimaryKey
     var idSavingHistory: String = UUID.randomUUID().toString()
+
     @TypeConverters(TimestampConverter::class)
     var createDate: Date = Calendar.getInstance().time
 }
