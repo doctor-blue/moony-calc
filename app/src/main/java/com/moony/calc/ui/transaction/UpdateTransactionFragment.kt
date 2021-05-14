@@ -59,12 +59,8 @@ class UpdateTransactionFragment : BaseFragment() {
             } else
                 binding.edtTransactionMoney.setText(((-1 * item.transaction.money).decimalFormat()))
 
-            calendar.set(Calendar.DAY_OF_MONTH, item.transaction.day)
-            calendar.set(Calendar.MONTH, item.transaction.month)
-            calendar.set(Calendar.YEAR, item.transaction.year)
+            calendar.time = item.transaction.transactionTime
             binding.txtTransactionTime.text = calendar.formatDateTime()
-
-            calendar.set(Calendar.DAY_OF_MONTH, item.transaction.day)
 
         }
         binding.edtTransactionMoney.setSelection(binding.edtTransactionMoney.text.toString().length)
@@ -187,13 +183,11 @@ class UpdateTransactionFragment : BaseFragment() {
             }
             else -> {
                 transactionItem?.let { item ->
-                    item.transaction.day = calendar[Calendar.DAY_OF_MONTH]
+                    item.transaction.transactionTime = calendar.time
                     item.transaction.note = binding.edtTransactionNote.text.toString()
                     item.transaction.money = handleTextToDouble(
                         (if (money.contains('-')) money.replace('-', ' ').trim() else money)
                     ).toDouble()
-                    item.transaction.month = calendar[Calendar.MONTH]
-                    item.transaction.year = calendar[Calendar.YEAR]
 
                     transactionViewModel.updateTransaction(item.transaction)
                 }

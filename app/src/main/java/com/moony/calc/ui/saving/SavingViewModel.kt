@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.moony.calc.data.SavingRepository
 import com.moony.calc.model.Saving
+import com.moony.calc.model.SavingItem
 import kotlinx.coroutines.launch
 
 class SavingViewModel(application: Application) : AndroidViewModel(application) {
@@ -25,5 +26,7 @@ class SavingViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getAllSaving(): LiveData<List<Saving>> = savingRepository.getAllSavingGoals()
 
-    fun getSaving(idSaving: Int): LiveData<Saving> = savingRepository.getSaving(idSaving)
+    fun getSaving(idSaving: String): LiveData<Saving> = savingRepository.getSaving(idSaving)
+
+    fun getAllSavingItem(): LiveData<List<SavingItem>> = savingRepository.getAllSavingItem()
 }

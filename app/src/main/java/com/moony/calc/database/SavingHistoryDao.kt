@@ -17,15 +17,15 @@ interface SavingHistoryDao {
     suspend fun deleteSavingHistory(savingHistory: SavingHistory)
 
     @Query("select * from saving_history_table where idSaving=:idSaving")
-    fun getAllSavingHistory(idSaving: Int): LiveData<List<SavingHistory>>
+    fun getAllSavingHistory(idSaving: String): LiveData<List<SavingHistory>>
 
     @Query("select sum(amount) from saving_history_table where idSaving=:idSaving ")
-    fun getCurrentSavingAmount(idSaving: Int): LiveData<Double>
+    fun getCurrentSavingAmount(idSaving: String): LiveData<Double>
 
     @Query("delete from saving_history_table where idSaving=:idSaving")
-    suspend fun deleteAllSavingHistoryBySaving(idSaving: Int)
+    suspend fun deleteAllSavingHistoryBySaving(idSaving: String)
 
     @Query("delete from saving_history_table where idTransaction = :idTransaction")
-    suspend fun deleteSavingHistoryByTransaction(idTransaction: Int)
+    suspend fun deleteSavingHistoryByTransaction(idTransaction: String)
 
 }

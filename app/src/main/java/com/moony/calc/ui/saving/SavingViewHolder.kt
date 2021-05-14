@@ -20,7 +20,6 @@ import kotlin.math.floor
 class SavingViewHolder(
     itemView: View,
     private val context: FragmentActivity,
-    private val onGoalCompleted: () -> Unit,
     private val onClick: (Any) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -62,10 +61,6 @@ class SavingViewHolder(
 
                 if (progress < 0) progress = 0
                 if (progress > 100) progress = 100
-                if (progress == 100) {
-                    onGoalCompleted()
-                }
-
 
                 pbSavingGoalsItem.progress = progress
             })

@@ -65,12 +65,8 @@ class TransactionDetailFragment : BaseFragment() {
                             Settings.SettingKey.CURRENCY_UNIT
                     ))
 
-        calendar.set(Calendar.DAY_OF_MONTH, transactionItem.transaction.day)
-        calendar.set(Calendar.MONTH, transactionItem.transaction.month)
-        calendar.set(Calendar.YEAR, transactionItem.transaction.year)
+        calendar.time = transactionItem.transaction.transactionTime
         binding.txtTransactionDate.text = calendar.formatDateTime()
-
-        calendar.set(Calendar.DAY_OF_MONTH, transactionItem.transaction.day)
 
         if(transactionItem.category.resId == R.string.saving){
             binding.btnUpdateTransaction.visibility = View.GONE
