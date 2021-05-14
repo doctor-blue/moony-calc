@@ -5,6 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.moony.calc.data.SavingHistoryRepository
 import com.moony.calc.model.SavingHistory
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class SavingHistoryViewModel(application: Application) : AndroidViewModel(application) {
@@ -31,8 +33,8 @@ class SavingHistoryViewModel(application: Application) : AndroidViewModel(applic
         savingHistoryRepository.deleteSavingHistory(savingHistory)
     }
 
-    fun deleteAllSavingHistoryBySaving(idSaving: String) = viewModelScope.launch {
-        savingHistoryRepository.deleteAllSavingHistoryBySaving(idSaving)
+    fun deleteAllTransactionBySaving(idSaving: String) = GlobalScope.launch {
+        savingHistoryRepository.deleteAllTransactionBySaving(idSaving)
     }
 
     fun deleteSavingHistoryByTransaction(idTransaction: String) = viewModelScope.launch {

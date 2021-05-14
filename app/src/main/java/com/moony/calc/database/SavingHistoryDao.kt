@@ -28,4 +28,7 @@ interface SavingHistoryDao {
     @Query("delete from saving_history_table where idTransaction = :idTransaction")
     suspend fun deleteSavingHistoryByTransaction(idTransaction: String)
 
+    @Query("delete from transaction_table where idTransaction in (select  idTransaction from saving_history_table where idSaving =:idSaving)")
+    suspend fun deleteAllTransactionBySaving(idSaving: String)
+
 }
