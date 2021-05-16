@@ -103,4 +103,5 @@
     <string name="title">Title</string>
     <string name="take_money_out_of_savings">Take money out of savings</string>
     <string name="no_item_chart">No Chart Item</string>
+    <string name="redundancy">Redundancy</string>
 </resources>

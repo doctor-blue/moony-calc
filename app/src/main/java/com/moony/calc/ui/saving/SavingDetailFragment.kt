@@ -71,8 +71,12 @@ class SavingDetailFragment(var savings: Saving) : BaseFragment() {
         binding.txtSavingSaved.text = saved.decimalFormat()
 
         var remaining = (saving.desiredAmount - saved)
+        binding.txtTitleRemaining.setText(R.string.remaining)
 
-        if (remaining < 0) remaining = 0.0
+        if (remaining < 0) {
+            remaining = (saved - saving.desiredAmount)
+            binding.txtTitleRemaining.setText(R.string.redundancy)
+        }
 
         binding.txtSavingRemaining.text = remaining.decimalFormat()
 
