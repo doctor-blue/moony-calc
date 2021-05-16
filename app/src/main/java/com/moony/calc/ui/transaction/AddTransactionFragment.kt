@@ -70,7 +70,7 @@ class AddTransactionFragment : BaseFragment() {
         binding.spinSavingGoals.adapter = savingAdapter
 
         savingViewModel.getAllSaving().observe(this, {
-
+            savings = it
             savingAdapter.clear()
             savingAdapter.addAll(it)
             savingAdapter.notifyDataSetChanged()

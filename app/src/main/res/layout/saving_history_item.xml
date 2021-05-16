@@ -29,7 +29,7 @@
             android:padding="@dimen/_10sdp">
 
             <ImageView
-                android:id="@+id/img_saving_history_category"
+                android:id="@+id/img_saving_history"
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:text="Empty"
                 app:layout_constraintEnd_toStartOf="@+id/txt_saving_history_money"
-                app:layout_constraintStart_toEndOf="@+id/img_saving_history_category"
+                app:layout_constraintStart_toEndOf="@+id/img_saving_history"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteY="6dp" />
 
@@ -68,7 +68,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_11sdp"
                 app:layout_constraintEnd_toEndOf="@id/txt_saving_history_title"
-                app:layout_constraintStart_toEndOf="@id/img_saving_history_category"
+                app:layout_constraintStart_toEndOf="@id/img_saving_history"
                 app:layout_constraintTop_toBottomOf="@id/txt_saving_history_title"
                 tools:ignore="NotSibling" />
         </androidx.constraintlayout.widget.ConstraintLayout>
