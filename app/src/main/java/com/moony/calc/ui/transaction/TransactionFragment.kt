@@ -1,7 +1,10 @@
 package com.moony.calc.ui.transaction
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -109,8 +112,6 @@ class TransactionFragment : BaseFragment() {
             calNow[Calendar.YEAR]
         )
         transactionLiveData!!.observe(viewLifecycleOwner, transactionObserver)
-
-
     }
 
     private val transactionItemClick: (TransactionItem) -> Unit =
@@ -128,6 +129,16 @@ class TransactionFragment : BaseFragment() {
     override fun initEvents() {
         binding.btnAddTransaction.setOnClickListener {
             findNavController().navigate(R.id.action_transaction_fragment_to_addTransactionFragment)
+        }
+
+        binding.btnFilterTransaction.setOnClickListener {
+            val popupMenu: PopupMenu = PopupMenu(fragmentActivity, binding.btnFilterTransaction)
+            popupMenu.inflate(R.menu.transaction_filter_menu)
+            val menu = popupMenu.menu
+            popupMenu.setOnMenuItemClickListener { item ->
+                filterItemClicked(item)
+            }
+            popupMenu.show()
         }
 
         binding.btnNextMonth.setOnClickListener {
@@ -183,6 +194,26 @@ class TransactionFragment : BaseFragment() {
             .build()
             .show()
 
+    }
+
+    private fun filterItemClicked(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.mnu_filter_by_income -> {
+                transactionAdapter!!.filter.filter("Income")
+                Toast.makeText(fragmentActivity, "By Income", Toast.LENGTH_SHORT).show()
+            }
+
+            R.id.mnu_filter_by_expenses -> {
+                transactionAdapter!!.filter.filter("Expenses")
+                Toast.makeText(fragmentActivity, "By Expenses", Toast.LENGTH_SHORT).show()
+            }
+
+            R.id.mnu_filter_all -> {
+                transactionAdapter!!.filter.filter("All")
+                Toast.makeText(fragmentActivity, "All", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return true
     }
 
 }

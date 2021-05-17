@@ -82,7 +82,7 @@
                             android:id="@+id/chart"
                             android:layout_width="@dimen/_130sdp"
                             android:layout_height="@dimen/_130sdp"
-                            app:animationDuration="2000"
+                            app:animationDuration="1000"
                             app:centerColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
