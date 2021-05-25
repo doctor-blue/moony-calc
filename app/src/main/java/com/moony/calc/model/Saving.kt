@@ -12,7 +12,8 @@ import java.util.*
 class Saving(
     var title: String,
     var desiredAmount: Double,
-    var deadLine: String,
+    @TypeConverters(TimestampConverter::class)
+    var deadLine: Date,
     var imageLink: String = "Empty",
     var iconUrl: String = "",
     var syncFlag: String = SyncFlag.NONE.toString()

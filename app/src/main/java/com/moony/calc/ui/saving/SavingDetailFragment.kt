@@ -15,6 +15,8 @@ import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.floor
 
 class SavingDetailFragment(var savings: Saving) : BaseFragment() {
@@ -49,7 +51,7 @@ class SavingDetailFragment(var savings: Saving) : BaseFragment() {
     private val savingObserver = Observer<Saving> { saving ->
         saving?.let {
             this.saving = it
-            binding.txtSavingDetailDate.text = saving.deadLine
+            binding.txtSavingDetailDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(saving.deadLine)
             binding.txtSavingTotal.text = saving.desiredAmount.decimalFormat()
             (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.title
 
