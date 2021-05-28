@@ -129,7 +129,9 @@ class UpdateSavingGoalActivity : BaseActivity() {
 
             binding.edtGoalDescription.setText(it.title)
             binding.edtGoalAmount.setText(("${it.desiredAmount}"))
-            binding.txtDueDate.text = it.deadLine.toString()
+            binding.txtDueDate.text =
+                (resources.getString(R.string.due_date) + " " + SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(it.deadLine))
+
             deadLine = it.deadLine
             iconUrl = it.iconUrl
 
@@ -201,7 +203,7 @@ class UpdateSavingGoalActivity : BaseActivity() {
 
 //            deadLine = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
             deadLine = calendar.time
-            binding.txtDueDate.text = resources.getString(R.string.due_date) + " " + SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(deadLine)
+            binding.txtDueDate.text =( resources.getString(R.string.due_date) + " " + SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time))
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
     }
