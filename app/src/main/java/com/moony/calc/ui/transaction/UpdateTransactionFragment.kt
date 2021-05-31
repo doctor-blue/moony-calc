@@ -76,23 +76,6 @@ class UpdateTransactionFragment : BaseFragment() {
             startActivityForResult(intent, requestCode)
         }
 
-        binding.btnDeleteTransaction.setOnClickListener {
-            //Delete Transaction
-            transactionItem?.let { item ->
-                val builder = ConfirmDialogBuilder(requireContext())
-                builder.setContent(resources.getString(R.string.notice_delete_transaction))
-                val dialog = builder.createDialog()
-                builder.btnConfirm.setOnClickListener {
-                    transactionViewModel.deleteTransaction(item.transaction)
-                    dialog.dismiss()
-                    requireActivity().onBackPressed()
-                    requireActivity().onBackPressed()
-                }
-                builder.btnCancel.setOnClickListener { dialog.dismiss() }
-                builder.showDialog()
-
-            }
-        }
 
         binding.layoutTransactionDateTime.setOnClickListener {
             pickDateTime()

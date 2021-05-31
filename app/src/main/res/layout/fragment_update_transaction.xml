@@ -229,23 +229,6 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_delete_transaction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_delete_primary_color"
-                    app:fabCustomSize="@dimen/_50sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_finance_description"
-                    app:maxImageSize="@dimen/_24sdp"
-                    app:tint="@color/white" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>
