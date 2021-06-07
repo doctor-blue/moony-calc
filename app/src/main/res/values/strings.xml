@@ -29,7 +29,7 @@
     <string name="manage_your_spending_and_savings">Manage your spending and savings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="saved">Saved</string>
     <string name="remaining">Remaining</string>
     <string name="total">Total</string>
@@ -52,17 +52,17 @@
     <string name="transportation">Transportation</string>
     <string name="due_date">Due date: </string>
     <string name="empty_error">This field cannot be empty</string>
-    <string name="empty_date_error">Please select Date</string>
-    <string name="empty_category_error">Please select Category</string>
+    <string name="empty_date_error">Please select date</string>
+    <string name="empty_category_error">Please select category</string>
     <string name="please_add_title">Please add title for category</string>
     <string name="please_select_icon">Please select icon</string>
     <string name="add">Add</string>
     <string name="expenses">Expenses</string>
-    <string name="warning">warning</string>
-    <string name="ok">OK</string>
+    <string name="warning">Warning</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
     <string name="notice_delete_transaction">Do you really want to delete this transaction ?</string>
-    <string name="notice_delete_category">Do you really want to delete this Category and delete ALL Transaction about it ?</string>
+    <string name="notice_delete_category">Do you really want to delete this category and delete ALL transaction about it ?</string>
     <string name="notice_delete_saving">Do you really want to delete this saving goal ?</string>
     <string name="add_saving_history">How much did you save?</string>
     <string name="date">Date :</string>
@@ -99,7 +99,7 @@
     <string name="money_in">Money in</string>
     <string name="money_out">Money out</string>
     <string name="add_to">Add to</string>
-    <string name="savings">savings</string>
+    <string name="savings">Savings</string>
     <string name="title">Title</string>
-    <string name="take_money_out_of_savings">Take money out of savings</string>
+    <string name="take_money_out_of_savings" translatable="false">Take money out of savings</string>
 </resources>
