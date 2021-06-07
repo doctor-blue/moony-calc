@@ -73,8 +73,8 @@ class SavingDetailActivity : BaseActivity() {
             builder.setContent(resources.getString(R.string.notice_delete_saving))
             val dialog = builder.createDialog()
             builder.btnConfirm.setOnClickListener {
+                savingHistoryViewModel.deleteAllTransactionBySaving(saving.idSaving)
                 savingViewModel.deleteSaving(saving)
-                savingHistoryViewModel.deleteAllSavingHistoryBySaving(saving.idSaving)
                 dialog.dismiss()
                 finish()
             }

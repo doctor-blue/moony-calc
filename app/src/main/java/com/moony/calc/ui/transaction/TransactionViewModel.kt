@@ -12,8 +12,9 @@ import kotlinx.coroutines.launch
 class TransactionViewModel(application: Application) : AndroidViewModel(application) {
     private val transactionRepository: TransactionRepository = TransactionRepository(application)
 
-   suspend fun insertTransaction(transaction: Transaction) =
+    fun insertTransaction(transaction: Transaction) = viewModelScope.launch {
         transactionRepository.insertTransaction(transaction)
+    }
 
 
 
@@ -33,7 +34,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     fun getTotalMoney(month: Int, year: Int): LiveData<Double> =
         transactionRepository.getTotalMoney(month, year)
 
-    fun deleteAllTransactionByCategory(idCategory: Int) = viewModelScope.launch {
+    fun deleteAllTransactionByCategory(idCategory: String) = viewModelScope.launch {
         transactionRepository.deleteAllTransactionByCategory(idCategory)
     }
 

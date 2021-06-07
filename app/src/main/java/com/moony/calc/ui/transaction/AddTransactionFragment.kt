@@ -186,7 +186,6 @@ class AddTransactionFragment : BaseFragment() {
 
                 binding.textInputTransactionMoney.error = resources.getString(R.string.empty_error)
 
-
             }
             binding.txtTitleTransactionCategory.text.toString().trim().isEmpty() -> {
                 binding.textInputTransactionTitleCategory.error =
@@ -201,29 +200,25 @@ class AddTransactionFragment : BaseFragment() {
                             savings[savingPosition].title +
                             " " +
                             requireContext().resources.getString(R.string.savings)
-
+                val mon = handleTextToDouble(
+                    (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+                ).toDouble()
                 val transaction = Transaction(
-                    handleTextToDouble(
-                        (if (money.contains('-')) money.replace('-', ' ').trim() else money)
-                    ).toDouble(),
+                    mon,
                     category!!.idCategory,
                     description,
-                    calendar[Calendar.DAY_OF_MONTH],
-                    calendar[Calendar.MONTH],
-                    calendar[Calendar.YEAR]
+                    calendar.time,
                 )
+                transactionViewModel.insertTransaction(transaction)
                 lifecycleScope.launch {
-                    val idTransaction = transactionViewModel.insertTransaction(transaction)
                     if (savingPosition != -1) {
                         val savingHistory = SavingHistory(
                             "",
                             savings[savingPosition].idSaving,
-                            handleTextToDouble(
-                                (if (money.contains('-')) money.replace('-', ' ').trim() else money)
-                            ).toDouble(),
+                            if (category!!.isIncome) mon * -1 else mon,
                             !category!!.isIncome,
                             calendar.formatDateTime(),
-                            idTransaction.toInt()
+                            transaction.idTransaction
                         )
                         savingHistoryViewModel.insertSavingHistory(savingHistory)
                     }
@@ -266,6 +261,12 @@ class AddTransactionFragment : BaseFragment() {
                 if (savings.isNotEmpty()) {
                     if (category!!.resId == R.string.saving) {
                         binding.layoutSavingGoals.visibility = View.VISIBLE
+                        savingPosition = 0
+                        binding.spinSavingGoals.setSelection(savingPosition)
+                    } else {
+                        binding.layoutSavingGoals.visibility = View.GONE
+                        savingPosition = -1
+
                     }
                 }
 

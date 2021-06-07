@@ -28,15 +28,15 @@ import java.util.*
 class AddSavingGoalFragment : BaseFragment() {
 
     private val calendar: Calendar = Calendar.getInstance()
-    private var deadLine: String = ""
+    private var dueDate: Date? = null
     private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
     private var iconUrl = ""
 
     companion object {
         const val KEY_PICK_CATEGORY = 1101
         const val KEY_PICK_ICON = 1102
-        const val ICON_LINK = "com.moony.calc.ui.saving.AddSavingGoalFragment.ICON_LINK";
-        const val TITLE = "com.moony.calc.ui.saving.AddSavingGoalFragment.TITLE";
+        const val ICON_LINK = "com.moony.calc.ui.saving.AddSavingGoalFragment.ICON_LINK"
+        const val TITLE = "com.moony.calc.ui.saving.AddSavingGoalFragment.TITLE"
     }
 
     private val binding: FragmentAddSavingGoalBinding
@@ -81,10 +81,12 @@ class AddSavingGoalFragment : BaseFragment() {
                 snackbar.show()
             }
             else -> {
+                var title = binding.edtGoalDescription.text.toString().trim()
+                title = title.replaceFirst(title[0], title[0].toUpperCase())
                 val saving = Saving(
-                    binding.edtGoalDescription.text.toString().trim(),
+                    title,
                     binding.edtGoalAmount.text.toString().trim().toDouble(),
-                    deadLine,
+                    dueDate!!,
                     "",
                     iconUrl
                 )
@@ -184,8 +186,9 @@ class AddSavingGoalFragment : BaseFragment() {
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            deadLine = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
-            binding.txtDueDate.text = resources.getString(R.string.due_date) + " " + deadLine
+//            dueDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
+            dueDate = calendar.time
+            binding.txtDueDate.text = resources.getString(R.string.due_date) + " " + SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(dueDate!!)
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
     }

@@ -19,6 +19,7 @@ class SavingHistoryViewHolder(itemView: View,itemClick: (SavingHistory) -> Unit)
     private val txtDate: TextView = itemView.findViewById(R.id.txt_saving_history_date)
     private val layoutContent =
         itemView.findViewById<CardView>(R.id.layout_saving_history_item)
+    private val imgSavingHistory = itemView.findViewById<ImageView>(R.id.img_saving_history)
 
     private var savingHistoryItem :SavingHistory? = null
 
@@ -33,16 +34,15 @@ class SavingHistoryViewHolder(itemView: View,itemClick: (SavingHistory) -> Unit)
     fun onBind(item: SavingHistory) {
         savingHistoryItem = item
 
-//        Glide.with(itemView.context).load(AssetFolderManager.assetPath + item.category.iconUrl)
-//            .into(imgCategory)
-
         txtMoney.text = item.amount.decimalFormat()
         txtDate.text = item.date
 
         if (item.isSaving) {
             txtTitle.text = txtTitle.context.resources.getString(R.string.money_in)
+            imgSavingHistory.setImageResource(R.drawable.ic_money_in)
         } else {
             txtTitle.text = txtTitle.context.resources.getString(R.string.money_out)
+            imgSavingHistory.setImageResource(R.drawable.ic_money_out)
         }
     }
 }

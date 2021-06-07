@@ -17,16 +17,17 @@ class SavingHistoryRepository(application: Application) {
     suspend fun deleteSavingHistory(savingHistory: SavingHistory) =
         savingHistoryDao.deleteSavingHistory(savingHistory)
 
-    fun getAllSavingHistory(idSaving: Int): LiveData<List<SavingHistory>> =
+    fun getAllSavingHistory(idSaving: String): LiveData<List<SavingHistory>> =
         savingHistoryDao.getAllSavingHistory(idSaving)
 
-    fun getCurrentSavingAmount(idSaving: Int): LiveData<Double> =
+    fun getCurrentSavingAmount(idSaving: String): LiveData<Double> =
         savingHistoryDao.getCurrentSavingAmount(idSaving)
 
-    suspend fun deleteAllSavingHistoryBySaving(idSaving: Int) =
-        savingHistoryDao.deleteAllSavingHistoryBySaving(idSaving)
 
-    suspend fun deleteSavingHistoryByTransaction(idTransaction: Int) =
+    suspend fun deleteSavingHistoryByTransaction(idTransaction: String) =
         savingHistoryDao.deleteSavingHistoryByTransaction(idTransaction)
+
+    suspend fun deleteAllTransactionBySaving(idSaving: String) =
+        savingHistoryDao.deleteAllTransactionBySaving(idSaving)
 
 }

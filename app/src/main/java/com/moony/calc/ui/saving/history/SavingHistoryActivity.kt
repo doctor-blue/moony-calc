@@ -208,30 +208,25 @@ class SavingHistoryActivity : BaseActivity() {
                                     saving!!.title
                         }
                     categoryViewModel.getSavingCategory(!isSaving, R.string.saving)
-                        .observe(this, {
-                            lifecycleScope.launch {
-                                val transaction = Transaction(
-                                    abs(amount),
-                                    it.idCategory,
-                                    description,
-                                    calendar[Calendar.DAY_OF_MONTH],
-                                    calendar[Calendar.MONTH],
-                                    calendar[Calendar.YEAR],
-                                )
-                                val idTransaction =
-                                    transactionViewModel.insertTransaction(transaction)
+                        .observe(this, { category ->
+                            val transaction = Transaction(
+                                abs(amount),
+                                category.idCategory,
+                                description,
+                                calendar.time
+                            )
+                            transactionViewModel.insertTransaction(transaction)
 
-                                val savingHistory = SavingHistory(
-                                    description,
-                                    saving!!.idSaving,
-                                    amount,
-                                    isSaving,
-                                    dateAdded,
-                                    idTransaction.toInt()
-                                )
-                                savingHistoryViewModel.insertSavingHistory(savingHistory)
-                                finish()
-                            }
+                            val savingHistory = SavingHistory(
+                                description,
+                                saving!!.idSaving,
+                                amount,
+                                isSaving,
+                                dateAdded,
+                                transaction.idTransaction
+                            )
+                            savingHistoryViewModel.insertSavingHistory(savingHistory)
+                            finish()
                         })
 
 

@@ -1,6 +1,5 @@
 package com.moony.calc.ui.chart
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.moony.calc.R
 import com.moony.calc.model.ChartItem
-import com.moony.calc.model.TransactionItem
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 
@@ -53,7 +51,12 @@ class ChartAdapter(
         fun onBind(chartItem: ChartItem, itemClick: (ChartItem) -> Unit) {
             Glide.with(context).load(AssetFolderManager.assetPath + chartItem.category.iconUrl)
                 .into(imgChartItem)
-            txtCategoryName.text = chartItem.category.title
+            if (chartItem.category.resId != -1) txtCategoryName.text = chartItem.category.title
+            if (chartItem.category.resId != -1) {
+                txtCategoryName.setText(chartItem.category.resId)
+            } else {
+                txtCategoryName.text = chartItem.category.title
+            }
             txtChartItemMoney.text = chartItem.sum.toString()
             txtPercent.text = ""
             cardChartItem.setOnClickListener {
@@ -61,8 +64,6 @@ class ChartAdapter(
             }
         }
     }
-
-
 
 
 }

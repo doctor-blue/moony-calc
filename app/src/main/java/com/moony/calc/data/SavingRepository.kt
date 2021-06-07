@@ -4,12 +4,13 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.moony.calc.database.MoonyDatabase
 import com.moony.calc.model.Saving
+import com.moony.calc.model.SavingItem
 
 class SavingRepository(application: Application) {
     private var savingDao =
         MoonyDatabase.getInstance(application).getSavingDao()
 
-    fun getAllSavingGoals(): LiveData<List<Saving>> =savingDao.getAllSavingGoals()
+    fun getAllSavingGoals(): LiveData<List<Saving>> = savingDao.getAllSavingGoals()
 
     suspend fun insertSaving(saving: Saving) = savingDao.insertSaving(saving)
 
@@ -17,5 +18,8 @@ class SavingRepository(application: Application) {
 
     suspend fun updateSaving(saving: Saving) = savingDao.updateSaving(saving)
 
-     fun  getSaving(idSaving: Int):LiveData<Saving> = savingDao.getSaving(idSaving)
+    fun getSaving(idSaving: String): LiveData<Saving> = savingDao.getSaving(idSaving)
+
+    fun getAllSavingItem(): LiveData<List<SavingItem>> = savingDao.getAllSavingItem()
+
 }

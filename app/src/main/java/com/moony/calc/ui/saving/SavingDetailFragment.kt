@@ -9,12 +9,12 @@ import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSavingDetailBinding
-import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
-import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.floor
 
 class SavingDetailFragment(var savings: Saving) : BaseFragment() {
@@ -49,7 +49,8 @@ class SavingDetailFragment(var savings: Saving) : BaseFragment() {
     private val savingObserver = Observer<Saving> { saving ->
         saving?.let {
             this.saving = it
-            binding.txtSavingDetailDate.text = saving.deadLine
+            binding.txtSavingDetailDate.text =
+                SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(saving.deadLine)
             binding.txtSavingTotal.text = saving.desiredAmount.decimalFormat()
             (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.title
 
@@ -71,8 +72,12 @@ class SavingDetailFragment(var savings: Saving) : BaseFragment() {
         binding.txtSavingSaved.text = saved.decimalFormat()
 
         var remaining = (saving.desiredAmount - saved)
+        binding.txtTitleRemaining.setText(R.string.remaining)
 
-        if (remaining < 0) remaining = 0.0
+        if (remaining < 0) {
+            remaining = (saved - saving.desiredAmount)
+            binding.txtTitleRemaining.setText(R.string.redundancy)
+        }
 
         binding.txtSavingRemaining.text = remaining.decimalFormat()
 
