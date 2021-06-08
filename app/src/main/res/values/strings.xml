@@ -102,4 +102,29 @@
     <string name="savings">Savings</string>
     <string name="title">Title</string>
     <string name="take_money_out_of_savings" translatable="false">Take money out of savings</string>
+    <string name="books">Books</string>
+    <string name="phones">Phones</string>
+    <string name="games">Games</string>
+    <string name="cinema">Cinema</string>
+    <string name="baby">Baby</string>
+    <string name="pet">Pets</string>
+    <string name="fitnesss">Fitness</string>
+    <string name="foods">Foods</string>
+    <string name="drinks">Drinks</string>
+    <string name="repair">Repair</string>
+    <string name="travel">Travel</string>
+    <string name="lover">Love</string>
+    <string name="medicine">Medicine</string>
+    <string name="shoppingg">Shopping</string>
+    <string name="bus_ticket">Bus ticket</string>
+    <string name="train_ticket">Train ticket</string>
+    <string name="plane_ticket">Plane ticket</string>
+    <string name="taxi" translatable="false">Taxi</string>
+    <string name="parking">Parking</string>
+    <string name="snacks">Snacks</string>
+    <string name="health_check">Health check</string>
+    <string name="refuel">Refuel</string>
+    <string name="loan">Loan</string>
+    <string name="other">Other</string>
+
 </resources>
