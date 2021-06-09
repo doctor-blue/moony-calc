@@ -127,4 +127,7 @@
     <string name="loan">Loan</string>
     <string name="other">Other</string>
 
+    <string name="all">All</string>
+    <string name="no_item_chart">No item chart</string>
+    <string name="redundancy">Redundancy</string>
 </resources>
