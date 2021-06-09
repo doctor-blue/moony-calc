@@ -102,9 +102,6 @@
     <string name="savings">Savings</string>
     <string name="title">Title</string>
     <string name="take_money_out_of_savings" translatable="false">Take money out of savings</string>
-    <string name="all">All</string>
-    <string name="no_item_chart">No item chart</string>
-    <string name="redundancy">Redundancy</string>
     <string name="books">Books</string>
     <string name="phones">Phones</string>
     <string name="games">Games</string>
@@ -143,5 +140,7 @@
     <string name="bank_interest">Bank interest</string>
     <string name="bonus">Money bonus</string>
     <string name="salaryy">Monthly salary</string>
-
+    <string name="all">All</string>
+    <string name="no_item_chart">No item chart</string>
+    <string name="redundancy">Redundancy</string>
 </resources>

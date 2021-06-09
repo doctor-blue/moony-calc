@@ -84,9 +84,6 @@
     <string name="add_to">Thêm vào</string>
     <string name="savings">Các khoản tiết kiệm</string>
     <string name="title">Tiêu đề</string>
-    <string name="all">Tất cả</string>
-    <string name="no_item_chart">No item chart</string>
-    <string name="redundancy">Redundancy</string>
     <string name="books">Sách</string>
     <string name="phones">Điện thoại</string>
     <string name="games">Trò chơi</string>
@@ -122,5 +119,7 @@
     <string name="bank_interest">Tiền lãi ngân hàng</string>
     <string name="bonus">Tiền thưởng</string>
     <string name="salaryy">Tiền lương</string>
-
+    <string name="all">Tất cả</string>
+    <string name="no_item_chart">No item chart</string>
+    <string name="redundancy">Redundancy</string>
 </resources>
