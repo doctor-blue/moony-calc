@@ -126,7 +126,20 @@
     <string name="refuel">Refuel</string>
     <string name="loan">Loan</string>
     <string name="other">Other</string>
-
+    <string name="atm" translatable="false">ATM</string>
+    <string name="insurrance">Insurrance</string>
+    <string name="bill">Bill</string>
+    <string name="wedding">Wedding</string>
+   <string name="rent">Rent</string>
+    <string name="clothes">Clothes</string>
+    <string name="footwear">Foot wear</string>
+    <string name="party">Party</string>
+    <string name="charity">Charity</string>
+    <string name="dues" translatable="false">Dues</string>
+    <string name="sell">Sell things</string>
+    <string name="bank_interest">Bank interest</string>
+    <string name="bonus">Money bonus</string>
+    <string name="salaryy">Monthly salary</string>
     <string name="all">All</string>
     <string name="no_item_chart">No item chart</string>
     <string name="redundancy">Redundancy</string>
