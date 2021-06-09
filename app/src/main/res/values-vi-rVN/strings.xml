@@ -15,14 +15,14 @@
     <string name="select_category">Chọn danh mục</string>
     <string name="write_note">Ghi chú</string>
     <string name="today">Hôm nay</string>
-    <string name="tab_to_add_one">Không có giao dịch. Chọn \'+\' để thêm</string>
+    <string name="tab_to_add_one">Không có giao dịch.\nChọn \'+\' để thêm</string>
     <string name="add_goal">Thêm mục tiêu</string>
-    <string name="no_goals_tab_to_add_one">Không có mục tiêu. Chọn \'+\' để thêm</string>
+    <string name="no_goals_tab_to_add_one">Không có mục tiêu.\nChọn \'+\' để thêm</string>
     <string name="description">Mô tả</string>
     <string name="amount">Số tiền</string>
     <string name="add_categories">Thêm danh mục</string>
     <string name="transaction">Giao dịch</string>
-    <string name="saving_goals">Mục tiêu tiết kiệm</string>
+    <string name="saving_goals">Mục tiêu</string>
     <string name="select_month">Tháng</string>
     <string name="transaction_detail">Chi tiết giao dịch</string>
     <string name="manage_your_spending_and_savings">Quản lý chi tiêu và tiết kiệm</string>
@@ -79,11 +79,14 @@
     <string name="change_your_icon">Thay đổi biểu tượng</string>
     <string name="exist_name_error">Tên này đã tồn tại</string>
     <string name="saving">Tiết kiệm</string>
-    <string name="money_in">Khoản thu</string>
-    <string name="money_out">Khoản chi</string>
+    <string name="money_in">Thêm tiền</string>
+    <string name="money_out">Rút tiền</string>
     <string name="add_to">Thêm vào</string>
     <string name="savings">Các khoản tiết kiệm</string>
     <string name="title">Tiêu đề</string>
+    <string name="all">Tất cả</string>
+    <string name="no_item_chart">No item chart</string>
+    <string name="redundancy">Redundancy</string>
     <string name="books">Sách</string>
     <string name="phones">Điện thoại</string>
     <string name="games">Trò chơi</string>
@@ -105,6 +108,19 @@
     <string name="snacks">Ăn vặt</string>
     <string name="health_check">Khám bệnh</string>
     <string name="refuel">Đổ xăng</string>
-    <string name="loan">Vay tiền</string>
+    <string name="loan">Cho vay</string>
     <string name="other">Chi phí khác</string>
+    <string name="insurrance">Bảo hiểm</string>
+    <string name="bill">Hóa đơn</string>
+    <string name="wedding">Đám cưới</string>
+    <string name="rent">Thuê nhà</string>
+    <string name="clothes">Quần áo</string>
+    <string name="footwear">Giày dép</string>
+    <string name="party">Liên hoan</string>
+    <string name="charity">Từ thiện</string>
+    <string name="sell">Bán đồ</string>
+    <string name="bank_interest">Tiền lãi ngân hàng</string>
+    <string name="bonus">Tiền thưởng</string>
+    <string name="salaryy">Tiền lương</string>
+
 </resources>
