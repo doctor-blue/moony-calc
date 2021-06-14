@@ -200,11 +200,11 @@ class AddTransactionFragment : BaseFragment() {
                             savings[savingPosition].title +
                             " " +
                             requireContext().resources.getString(R.string.savings)
-
+                val mon = handleTextToDouble(
+                    (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+                ).toDouble()
                 val transaction = Transaction(
-                    handleTextToDouble(
-                        (if (money.contains('-')) money.replace('-', ' ').trim() else money)
-                    ).toDouble(),
+                    mon,
                     category!!.idCategory,
                     description,
                     calendar.time,
@@ -215,7 +215,7 @@ class AddTransactionFragment : BaseFragment() {
                         val savingHistory = SavingHistory(
                             "",
                             savings[savingPosition].idSaving,
-                            if (money.toDouble() < 0) money.toDouble() - 1 else money.toDouble() * -1,
+                            if (category!!.isIncome) mon * -1 else mon,
                             !category!!.isIncome,
                             calendar.formatDateTime(),
                             transaction.idTransaction
@@ -261,6 +261,12 @@ class AddTransactionFragment : BaseFragment() {
                 if (savings.isNotEmpty()) {
                     if (category!!.resId == R.string.saving) {
                         binding.layoutSavingGoals.visibility = View.VISIBLE
+                        savingPosition = 0
+                        binding.spinSavingGoals.setSelection(savingPosition)
+                    } else {
+                        binding.layoutSavingGoals.visibility = View.GONE
+                        savingPosition = -1
+
                     }
                 }
 

@@ -9,9 +9,7 @@ import com.bumptech.glide.Glide
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSavingDetailBinding
-import com.moony.calc.model.Category
 import com.moony.calc.model.Saving
-import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
@@ -51,7 +49,8 @@ class SavingDetailFragment(var savings: Saving) : BaseFragment() {
     private val savingObserver = Observer<Saving> { saving ->
         saving?.let {
             this.saving = it
-            binding.txtSavingDetailDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(saving.deadLine)
+            binding.txtSavingDetailDate.text =
+                SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(saving.deadLine)
             binding.txtSavingTotal.text = saving.desiredAmount.decimalFormat()
             (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.title
 
