@@ -107,6 +107,7 @@
     <string name="refuel">Đổ xăng</string>
     <string name="loan">Vay tiền</string>
     <string name="other">Chi phí khác</string>
+    <string name="no_item">Không có</string>
 
     <string name="all">Tất cả</string>
     <string name="no_item_chart">No item chart</string>

@@ -126,6 +126,7 @@
     <string name="refuel">Refuel</string>
     <string name="loan">Loan</string>
     <string name="other">Other</string>
+    <string name="no_item">No item</string>
 
     <string name="all">All</string>
     <string name="no_item_chart">No item chart</string>
