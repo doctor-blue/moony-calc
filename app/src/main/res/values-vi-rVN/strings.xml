@@ -84,6 +84,9 @@
     <string name="add_to">Thêm vào</string>
     <string name="savings">Các khoản tiết kiệm</string>
     <string name="title">Tiêu đề</string>
+    <string name="all">Tất cả</string>
+    <string name="no_item_chart">No item chart</string>
+    <string name="redundancy">Redundancy</string>
     <string name="books">Sách</string>
     <string name="phones">Điện thoại</string>
     <string name="games">Trò chơi</string>
@@ -107,9 +110,4 @@
     <string name="refuel">Đổ xăng</string>
     <string name="loan">Vay tiền</string>
     <string name="other">Chi phí khác</string>
-    <string name="no_item">Không có</string>
-
-    <string name="all">Tất cả</string>
-    <string name="no_item_chart">No item chart</string>
-    <string name="redundancy">Redundancy</string>
 </resources>
