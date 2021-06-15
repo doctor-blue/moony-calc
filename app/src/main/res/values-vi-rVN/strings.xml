@@ -79,14 +79,11 @@
     <string name="change_your_icon">Thay đổi biểu tượng</string>
     <string name="exist_name_error">Tên này đã tồn tại</string>
     <string name="saving">Tiết kiệm</string>
-    <string name="money_in">Khoản thu</string>
-    <string name="money_out">Khoản chi</string>
+    <string name="money_in">Thêm tiền</string>
+    <string name="money_out">Rút tiền</string>
     <string name="add_to">Thêm vào</string>
     <string name="savings">Các khoản tiết kiệm</string>
     <string name="title">Tiêu đề</string>
-    <string name="all">Tất cả</string>
-    <string name="no_item_chart">No item chart</string>
-    <string name="redundancy">Redundancy</string>
     <string name="books">Sách</string>
     <string name="phones">Điện thoại</string>
     <string name="games">Trò chơi</string>
@@ -108,6 +105,23 @@
     <string name="snacks">Ăn vặt</string>
     <string name="health_check">Khám bệnh</string>
     <string name="refuel">Đổ xăng</string>
-    <string name="loan">Vay tiền</string>
+    <string name="loan">Cho vay</string>
     <string name="other">Chi phí khác</string>
+    <string name="insurrance">Bảo hiểm</string>
+    <string name="bill">Hóa đơn</string>
+    <string name="wedding">Đám cưới</string>
+    <string name="rent">Thuê nhà</string>
+    <string name="clothes">Quần áo</string>
+    <string name="footwear">Giày dép</string>
+    <string name="party">Liên hoan</string>
+    <string name="charity">Từ thiện</string>
+    <string name="sell">Bán đồ</string>
+    <string name="bank_interest">Tiền lãi ngân hàng</string>
+    <string name="bonus">Tiền thưởng</string>
+    <string name="salary">Tiền lương</string>
+    <string name="all">Tất cả</string>
+    <string name="no_item_chart">No item chart</string>
+    <string name="redundancy">Redundancy</string>
+    <string name="no_item">No item</string>
+
 </resources>
