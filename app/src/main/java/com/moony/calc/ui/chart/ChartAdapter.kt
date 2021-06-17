@@ -13,6 +13,7 @@ import com.moony.calc.R
 import com.moony.calc.model.ChartItem
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
+import com.moony.calc.utils.decimalFormat
 
 class ChartAdapter(
     private val context: FragmentActivity,
@@ -57,7 +58,7 @@ class ChartAdapter(
             } else {
                 txtCategoryName.text = chartItem.category.title
             }
-            txtChartItemMoney.text = chartItem.sum.toString()
+            txtChartItemMoney.text = chartItem.sum.decimalFormat().toString() + settings.getString(Settings.SettingKey.CURRENCY_UNIT)
             txtPercent.text = ""
             cardChartItem.setOnClickListener {
                 itemClick(chartItem)

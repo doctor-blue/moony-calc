@@ -86,7 +86,7 @@ abstract class MoonyDatabase : RoomDatabase() {
                 categoryDao.insertCategory(Category("","categories/income/sell.png",true,resId = R.string.sell))
                 categoryDao.insertCategory(Category("","categories/income/interest.png",true,resId = R.string.bank_interest))
                 categoryDao.insertCategory(Category("","categories/income/bonus.png",true,resId = R.string.bonus))
-                categoryDao.insertCategory(Category("","categories/income/salary1.png",true,resId = R.string.salaryy))
+                categoryDao.insertCategory(Category("","categories/income/salary1.png",true,resId = R.string.salary))
                 categoryDao.insertCategory(Category("","categories/income/salary.png",true,resId = R.string.saving))
                 categoryDao.insertCategory(Category("","categories/money/money.png",true,resId = R.string.other))
 

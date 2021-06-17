@@ -13,6 +13,8 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentChartBinding
 import com.moony.calc.model.ChartItem
 import com.moony.calc.ui.transaction.TransactionViewModel
+import com.moony.calc.utils.Settings
+import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog
 import java.util.*
@@ -31,6 +33,9 @@ class ChartFragment : BaseFragment() {
     private var chartLegendAdapter: ChartLegendAdapter? = null
     private val sliceWidth by lazy {
         requireContext().resources.getDimension(R.dimen._16sdp)
+    }
+    private val settings: Settings by lazy {
+        Settings.getInstance(baseContext!!)
     }
     private val sliceStartPoint = 0f
 
@@ -159,11 +164,11 @@ class ChartFragment : BaseFragment() {
     }
 
     private fun changeCenterText(isIncome: Boolean, sum: Double): String =
-        if (isIncome) "${resources.getString(R.string.income)}\n$sum\$" else "${
+        if (isIncome) "${resources.getString(R.string.income)}\n${sum.decimalFormat()}${settings.getString(Settings.SettingKey.CURRENCY_UNIT)}" else "${
             resources.getString(
                 R.string.expenses
             )
-        }\n$sum\$"
+        }\n${sum.decimalFormat()}${settings.getString(Settings.SettingKey.CURRENCY_UNIT)}"
 
     private fun showMonthYearPickerDialog() {
         val builder = MonthPickerDialog.Builder(
