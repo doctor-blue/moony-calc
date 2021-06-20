@@ -13,10 +13,10 @@
     <color name="error">#FF7171</color>
 
 
-    <color name="chart_color_1">#E7CFC8</color>
-    <color name="chart_color_2">#97F2F3</color>
-    <color name="chart_color_3">#F1E0B0</color>
-    <color name="chart_color_4">#F1CDB0</color>
+    <color name="chart_color_1">#A02C2D</color>
+    <color name="chart_color_2">#D97904</color>
+    <color name="chart_color_3">#538C51</color>
+    <color name="chart_color_4">#CA7E8D</color>
     <color name="chart_color_5">#89AEB2</color>
 
 </resources>
