@@ -123,5 +123,7 @@
     <string name="no_item_chart">No item chart</string>
     <string name="redundancy">Redundancy</string>
     <string name="no_item">No item</string>
+    <string name="by_income">Đã lọc theo thu nhập</string>
+    <string name="by_expenses">Đã lọc theo chi tiêu</string>
 
 </resources>

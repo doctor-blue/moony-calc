@@ -36,6 +36,7 @@ class SavingHistoryActivity : BaseActivity() {
     private var isSaving = true
     private var saving: Saving? = null
     private var savingHistory: SavingHistory? = null
+    private var currentAmount: Double = 0.0
 
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
         ViewModelProvider(this)[SavingHistoryViewModel::class.java]
@@ -55,6 +56,7 @@ class SavingHistoryActivity : BaseActivity() {
     override fun initControls(savedInstanceState: Bundle?) {
         saving = intent.getSerializableExtra(SavingHistoryFragment.SAVING) as Saving
         isSaving = intent.getBooleanExtra(SavingHistoryFragment.IS_SAVING, true)
+        currentAmount = intent.getDoubleExtra(SavingHistoryFragment.CURRENT_AMOUNT, 0.0)
         savingHistory =
             intent.getSerializableExtra(SavingHistoryFragment.EDIT_HISTORY) as SavingHistory?
 
@@ -73,8 +75,7 @@ class SavingHistoryActivity : BaseActivity() {
         else
             binding.toolbarHistorySaving.title = resources.getString(R.string.get_money_out)
 
-
-
+        getCurrentAmount()
 
         setSupportActionBar(binding.toolbarHistorySaving)
     }
@@ -140,6 +141,14 @@ class SavingHistoryActivity : BaseActivity() {
         binding.edtSavingHistoryAmount.setAutoHideKeyboard()
     }
 
+    private fun getCurrentAmount() {
+        savingHistoryViewModel.getAllSavingHistory(saving!!.idSaving).observe(this, { list ->
+            for(item in list) {
+                currentAmount += item.amount
+            }
+        })
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.save_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -172,6 +181,11 @@ class SavingHistoryActivity : BaseActivity() {
 //                binding.tipHistorySavingDescription.error =
 //                    resources.getString(R.string.empty_error)
 //            }
+
+            binding.edtSavingHistoryAmount.text.toString().toDouble() > currentAmount && !isSaving -> {
+                binding.tipHistorySavingAmount.error = "The amount you entered exceeds the amount left in your savings "
+            }
+
             binding.txtDueDate.text.toString().trim().isEmpty() -> {
                 snackbar.show()
             }

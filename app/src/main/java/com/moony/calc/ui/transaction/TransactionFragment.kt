@@ -201,17 +201,17 @@ class TransactionFragment : BaseFragment() {
         when (item.itemId) {
             R.id.mnu_filter_by_income -> {
                 transactionAdapter!!.filter.filter("Income")
-                Toast.makeText(fragmentActivity, "By Income", Toast.LENGTH_SHORT).show()
+                Toast.makeText(fragmentActivity, baseContext!!.getString(R.string.by_income), Toast.LENGTH_SHORT).show()
             }
 
             R.id.mnu_filter_by_expenses -> {
                 transactionAdapter!!.filter.filter("Expenses")
-                Toast.makeText(fragmentActivity, "By Expenses", Toast.LENGTH_SHORT).show()
+                Toast.makeText(fragmentActivity, baseContext!!.getString(R.string.by_expenses), Toast.LENGTH_SHORT).show()
             }
 
             R.id.mnu_filter_all -> {
                 transactionAdapter!!.filter.filter("All")
-                Toast.makeText(fragmentActivity, "All", Toast.LENGTH_SHORT).show()
+                Toast.makeText(fragmentActivity, baseContext!!.getString(R.string.all), Toast.LENGTH_SHORT).show()
             }
         }
         return true

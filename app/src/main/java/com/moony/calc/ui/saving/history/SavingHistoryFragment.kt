@@ -35,10 +35,12 @@ class SavingHistoryFragment() : BaseFragment() {
         const val IS_SAVING = "com.moony.calc.ui.saving.history.SavingHistoryFragment.IS_SAVING"
         const val EDIT_HISTORY =
             "com.moony.calc.ui.saving.history.SavingHistoryFragment.EDIT_HISTORY"
+        const val CURRENT_AMOUNT="com.moony.calc.ui.saving.history.SavingHistoryFragment.CURRENT_AMOUNT"
     }
     private val binding: FragmentSavingHistoryBinding
         get() = (getViewBinding() as FragmentSavingHistoryBinding)
-    
+
+    private var currentAmount: Double = 0.0
 
     override fun initEvents() {
         binding.rvSavingHistory.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -60,6 +62,7 @@ class SavingHistoryFragment() : BaseFragment() {
             intent.putExtra(IS_SAVING, true)
             startActivity(intent)
         }
+
         binding.btnSubtractSavingMoney.setOnClickListener {
             val intent = Intent(baseContext, SavingHistoryActivity::class.java)
             intent.putExtra(SAVING, saving)
