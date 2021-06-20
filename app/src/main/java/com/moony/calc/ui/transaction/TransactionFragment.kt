@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentTransactionBinding
+import com.moony.calc.model.Transaction
 import com.moony.calc.model.TransactionItem
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
@@ -53,7 +54,7 @@ class TransactionFragment : BaseFragment() {
     override fun initControls(view: View, savedInstanceState: Bundle?) {
         refreshData()
         binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
-        transactionAdapter = TransactionAdapter(fragmentActivity!!, transactionItemClick)
+        transactionAdapter = TransactionAdapter(fragmentActivity!!, transactionItemClick,checkEmptyList)
         binding.rvTransaction.setHasFixedSize(true)
         binding.rvTransaction.layoutManager = LinearLayoutManager(fragmentActivity)
         binding.rvTransaction.adapter = transactionAdapter
@@ -72,7 +73,7 @@ class TransactionFragment : BaseFragment() {
                 } else {
                     totalExpenses += it.transaction.money
                 }
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     updateTotalTransaction()
                 }
             }
@@ -197,7 +198,7 @@ class TransactionFragment : BaseFragment() {
     }
 
     private fun filterItemClicked(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.mnu_filter_by_income -> {
                 transactionAdapter!!.filter.filter("Income")
                 Toast.makeText(fragmentActivity, "By Income", Toast.LENGTH_SHORT).show()
@@ -214,6 +215,16 @@ class TransactionFragment : BaseFragment() {
             }
         }
         return true
+    }
+
+    private val checkEmptyList: (List<TransactionItem>) -> Unit = {
+        if (it.isEmpty()) {
+            binding.layoutListEmpty.visibility = View.VISIBLE
+            binding.rvTransaction.visibility = View.GONE
+        } else {
+            binding.layoutListEmpty.visibility = View.GONE
+            binding.rvTransaction.visibility = View.VISIBLE
+        }
     }
 
 }

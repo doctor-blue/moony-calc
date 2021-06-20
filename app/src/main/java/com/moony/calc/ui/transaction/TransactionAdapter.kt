@@ -1,5 +1,6 @@
 package com.moony.calc.ui.transaction
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,14 +25,15 @@ import com.moony.calc.utils.decimalFormat
 
 class TransactionAdapter(
     private val context: FragmentActivity,
-    private val itemClick: (TransactionItem) -> Unit
+    private val itemClick: (TransactionItem) -> Unit,
+    private val checkEmptyList: (List<TransactionItem>) -> Unit
 ) : Filterable, RecyclerView.Adapter<TransactionViewHolder>() {
     private var transactions: List<TransactionItem> = listOf()
     private var allTransactions: List<TransactionItem> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.transaction_item, parent, false)
-        return TransactionViewHolder(view,itemClick)
+        return TransactionViewHolder(view, itemClick)
     }
 
     override fun getItemCount(): Int = transactions.size
@@ -50,18 +52,18 @@ class TransactionAdapter(
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val resultList: MutableList<TransactionItem> = mutableListOf()
-                when(constraint) {
+                when (constraint) {
                     "Income" -> {
-                        for(item in allTransactions) {
-                            if(item.category.isIncome) {
+                        for (item in allTransactions) {
+                            if (item.category.isIncome) {
                                 resultList.add(item)
                             }
                         }
                         transactions = resultList
                     }
                     "Expenses" -> {
-                        for(item in allTransactions) {
-                            if(!item.category.isIncome) {
+                        for (item in allTransactions) {
+                            if (!item.category.isIncome) {
                                 resultList.add(item)
                             }
                         }
@@ -78,7 +80,14 @@ class TransactionAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                transactions = results?.values as List<TransactionItem>
+                results?.let {
+                    transactions = if (it.values != null) {
+                        (it.values as List<TransactionItem>)
+                    } else {
+                        listOf()
+                    }
+                }
+                checkEmptyList(transactions)
                 notifyDataSetChanged()
             }
 
