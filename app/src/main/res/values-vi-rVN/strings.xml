@@ -125,5 +125,6 @@
     <string name="no_item">No item</string>
     <string name="by_income">Đã lọc theo thu nhập</string>
     <string name="by_expenses">Đã lọc theo chi tiêu</string>
+    <string name="remaining_not_enough">Số tiền còn lại không đủ</string>
 
 </resources>

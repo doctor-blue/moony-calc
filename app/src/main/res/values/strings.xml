@@ -146,5 +146,6 @@
     <string name="no_item">No item</string>
     <string name="by_income">Filtered by income</string>
     <string name="by_expenses">Filtered by expenses</string>
+    <string name="remaining_not_enough">The remaining amount is not enough</string>
 
 </resources>
