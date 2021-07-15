@@ -1,14 +1,13 @@
 package com.moony.calc.ui.category
 
 import android.os.Bundle
+import com.devcomentry.moonlight.binding.BindingActivity
 import com.moony.calc.R
-import com.moony.calc.base.BaseActivity
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.ActivityCategoriesBinding
 
-class CategoriesActivity : BaseActivity() {
-    private val binding: ActivityCategoriesBinding
-        get() = (getViewBinding() as ActivityCategoriesBinding)
+class CategoriesActivity :
+    BindingActivity<ActivityCategoriesBinding>(R.layout.activity_categories) {
 
     companion object {
         const val KEY = "com.moony.calc.ui.category.CategoriesActivity"
@@ -32,11 +31,6 @@ class CategoriesActivity : BaseActivity() {
         binding.toolbarCategories.setNavigationOnClickListener {
             finish()
         }
-
-    }
-
-    override fun getLayoutId(): Int = R.layout.activity_categories
-    override fun initEvents() {
 
     }
 

@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import com.devcomentry.moonlight.binding.BindingActivity
 import com.moony.calc.R
-import com.moony.calc.base.BaseActivity
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.ActivitySavingDetailBinding
 import com.moony.calc.model.Saving
@@ -15,11 +15,8 @@ import com.moony.calc.ui.saving.history.SavingHistoryFragment
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 
 
-class SavingDetailActivity : BaseActivity() {
-    private val binding: ActivitySavingDetailBinding
-        get() = (getViewBinding() as ActivitySavingDetailBinding)
-
-    override fun getLayoutId(): Int = R.layout.activity_saving_detail
+class SavingDetailActivity :
+    BindingActivity<ActivitySavingDetailBinding>(R.layout.activity_saving_detail) {
 
     companion object {
         const val EDIT_SAVINGS = "com.moony.calc.activities.EDIT_SAVINGS"
