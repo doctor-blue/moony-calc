@@ -79,8 +79,8 @@
     <string name="notification">Notification</string>
     <string name="invite_friends">Invite friends</string>
     <string name="give_us_feedback">Give us feedback</string>
-<!--    <string name="rate_us">Rate us</string>-->
-<!--    <string name="about">About</string>-->
+    <!--    <string name="rate_us">Rate us</string>-->
+    <!--    <string name="about">About</string>-->
 
     <string name="currency_unit">Currency unit</string>
     <string name="for_developer">For developer</string>
@@ -130,7 +130,7 @@
     <string name="insurrance">Insurrance</string>
     <string name="bill">Bill</string>
     <string name="wedding">Wedding</string>
-   <string name="rent">Rent</string>
+    <string name="rent">Rent</string>
     <string name="clothes">Clothes</string>
     <string name="footwear">Foot wear</string>
     <string name="party">Party</string>
@@ -139,8 +139,10 @@
     <string name="sell">Sell things</string>
     <string name="bank_interest">Bank interest</string>
     <string name="bonus">Money bonus</string>
-    <string name="salaryy">Monthly salary</string>
+    <string name="salary">Monthly salary</string>
     <string name="all">All</string>
     <string name="no_item_chart">No item chart</string>
     <string name="redundancy">Redundancy</string>
+    <string name="no_item">No item</string>
+
 </resources>

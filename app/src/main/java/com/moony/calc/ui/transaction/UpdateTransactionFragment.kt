@@ -65,9 +65,9 @@ class UpdateTransactionFragment : BaseFragment() {
         }
         binding.edtTransactionMoney.setSelection(binding.edtTransactionMoney.text.toString().length)
 
-        binding.txtCurrencyUnit.text = settings.getString(
-            Settings.SettingKey.CURRENCY_UNIT
-        )
+//        binding.txtCurrencyUnit.text = settings.getString(
+//            Settings.SettingKey.CURRENCY_UNIT
+//        )
     }
 
     override fun initEvents() {
