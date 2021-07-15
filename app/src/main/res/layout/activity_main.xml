@@ -22,15 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@+id/no_name_bottom_bar"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph='@navigation/nav_graph_main'
             tools:ignore="FragmentTagUsage" />
 
-        <com.doctorblue.noname_library.NoNameBottomBar
-            android:id="@+id/no_name_bottom_bar"
+        <com.devcomentry.library.MoonyNavBar
+            android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_38sdp"
             app:iconSize="@dimen/_18sdp"

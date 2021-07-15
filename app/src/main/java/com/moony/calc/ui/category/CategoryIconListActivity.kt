@@ -10,9 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.devcomentry.moonlight.binding.BindingActivity
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
-import com.moony.calc.base.BaseActivity
 import com.moony.calc.databinding.ActivityAddCategoriesBinding
 import com.moony.calc.model.Category
 import com.moony.calc.ui.saving.AddSavingGoalFragment
@@ -20,14 +20,12 @@ import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.setAutoHideKeyboard
 
 
-class CategoryIconListActivity : BaseActivity() {
+class CategoryIconListActivity :
+    BindingActivity<ActivityAddCategoriesBinding>(R.layout.activity_add_categories) {
     private var isIncome = true
     private var iconUrl = ""
     private var isPickIcon = false
     private var categoryNames: ArrayList<String>? = arrayListOf()
-
-    private val binding: ActivityAddCategoriesBinding
-        get() = (getViewBinding() as ActivityAddCategoriesBinding)
 
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(this)[CategoryViewModel::class.java]
@@ -93,7 +91,6 @@ class CategoryIconListActivity : BaseActivity() {
 
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_add_categories
 
     override fun initEvents() {
         binding.edtTitleCategory.setAutoHideKeyboard()

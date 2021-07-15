@@ -10,10 +10,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import com.devcomentry.moonlight.binding.BindingActivity
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
-import com.moony.calc.base.BaseActivity
 import com.moony.calc.databinding.ActivitySavingHistoryBinding
 import com.moony.calc.model.Saving
 import com.moony.calc.model.SavingHistory
@@ -22,14 +21,12 @@ import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.ui.transaction.TransactionViewModel
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.setAutoHideKeyboard
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
-class SavingHistoryActivity : BaseActivity() {
-    private val binding: ActivitySavingHistoryBinding
-        get() = (getViewBinding() as ActivitySavingHistoryBinding)
+class SavingHistoryActivity :
+    BindingActivity<ActivitySavingHistoryBinding>(R.layout.activity_saving_history) {
 
     private var calendar = Calendar.getInstance()
     private var dateAdded = ""
@@ -49,8 +46,6 @@ class SavingHistoryActivity : BaseActivity() {
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(this)[CategoryViewModel::class.java]
     }
-
-    override fun getLayoutId(): Int = R.layout.activity_saving_history
 
 
     override fun initControls(savedInstanceState: Bundle?) {

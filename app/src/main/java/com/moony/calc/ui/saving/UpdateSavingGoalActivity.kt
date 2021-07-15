@@ -11,9 +11,9 @@ import android.text.TextWatcher
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.devcomentry.moonlight.binding.BindingActivity
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
-import com.moony.calc.base.BaseActivity
 import com.moony.calc.databinding.ActivityUpdateSavingGoalBinding
 import com.moony.calc.model.Saving
 import com.moony.calc.ui.category.CategoryIconListActivity
@@ -24,10 +24,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class UpdateSavingGoalActivity : BaseActivity() {
+class UpdateSavingGoalActivity :
+    BindingActivity<ActivityUpdateSavingGoalBinding>(R.layout.activity_update_saving_goal) {
 
-    private val binding: ActivityUpdateSavingGoalBinding
-        get() = (getViewBinding() as ActivityUpdateSavingGoalBinding)
 
     private val calendar: Calendar = Calendar.getInstance()
     private var deadLine: Date? = null
@@ -130,7 +129,10 @@ class UpdateSavingGoalActivity : BaseActivity() {
             binding.edtGoalDescription.setText(it.title)
             binding.edtGoalAmount.setText(("${it.desiredAmount}"))
             binding.txtDueDate.text =
-                (resources.getString(R.string.due_date) + " " + SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(it.deadLine))
+                (resources.getString(R.string.due_date) + " " + SimpleDateFormat(
+                    "dd/MM/yyyy",
+                    Locale.ENGLISH
+                ).format(it.deadLine))
 
             deadLine = it.deadLine
             iconUrl = it.iconUrl
@@ -190,9 +192,6 @@ class UpdateSavingGoalActivity : BaseActivity() {
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_update_saving_goal
-    }
 
     @SuppressLint("SetTextI18n")
     private fun pickDateTime() {
@@ -203,7 +202,11 @@ class UpdateSavingGoalActivity : BaseActivity() {
 
 //            deadLine = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
             deadLine = calendar.time
-            binding.txtDueDate.text =( resources.getString(R.string.due_date) + " " + SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time))
+            binding.txtDueDate.text =
+                (resources.getString(R.string.due_date) + " " + SimpleDateFormat(
+                    "dd/MM/yyyy",
+                    Locale.ENGLISH
+                ).format(calendar.time))
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
     }
