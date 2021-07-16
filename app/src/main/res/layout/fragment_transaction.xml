@@ -7,7 +7,7 @@
 
         <import type="com.moony.calc.ui.transaction.TransactionViewModel" />
 
-        <import type="com.moony.calc.ui.transaction.TransactionAdapter" />
+        <import type="com.moony.calc.ui.adapter.TransactionAdapter" />
 
         <variable
             name="vm"
@@ -15,7 +15,7 @@
 
         <variable
             name="adapter"
-            type="TransactionAdapter" />
+            type="com.moony.calc.ui.adapter.TransactionAdapter" />
 
         <variable
             name="currencyUnit"

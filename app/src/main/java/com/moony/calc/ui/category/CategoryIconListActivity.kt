@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.databinding.ActivityAddCategoriesBinding
 import com.moony.calc.model.Category
+import com.moony.calc.ui.adapter.CategoriesListAdapter
 import com.moony.calc.ui.saving.AddSavingGoalFragment
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.setAutoHideKeyboard

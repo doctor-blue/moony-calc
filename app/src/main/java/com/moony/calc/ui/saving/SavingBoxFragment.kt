@@ -13,6 +13,7 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSavingBoxBinding
 import com.moony.calc.model.Saving
 import com.moony.calc.model.SavingItem
+import com.moony.calc.ui.adapter.SavingBoxAdapter
 
 class SavingBoxFragment : BaseFragment() {
     private lateinit var savings: List<Saving>

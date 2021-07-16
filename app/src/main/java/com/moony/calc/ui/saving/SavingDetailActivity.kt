@@ -10,6 +10,7 @@ import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.ActivitySavingDetailBinding
 import com.moony.calc.model.Saving
+import com.moony.calc.ui.adapter.SavingDetailAdapter
 import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.ui.saving.history.SavingHistoryFragment
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel

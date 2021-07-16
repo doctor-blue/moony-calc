@@ -5,6 +5,7 @@ import com.devcomentry.moonlight.binding.BindingActivity
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.ActivityCategoriesBinding
+import com.moony.calc.ui.adapter.CategoriesPagerAdapter
 
 class CategoriesActivity :
     BindingActivity<ActivityCategoriesBinding>(R.layout.activity_categories) {

@@ -1,4 +1,4 @@
-package com.moony.calc.ui.transaction
+package com.moony.calc.ui.adapter.viewholder
 
 import com.bumptech.glide.Glide
 import com.devcomentry.moonlight.binding.BindingViewHolder

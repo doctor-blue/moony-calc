@@ -2,7 +2,6 @@ package com.moony.calc.ui.transaction
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -13,6 +12,7 @@ import com.devcomentry.moonlight.binding.BindingFragment
 import com.moony.calc.R
 import com.moony.calc.databinding.FragmentTransactionBinding
 import com.moony.calc.model.TransactionItem
+import com.moony.calc.ui.adapter.TransactionAdapter
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog

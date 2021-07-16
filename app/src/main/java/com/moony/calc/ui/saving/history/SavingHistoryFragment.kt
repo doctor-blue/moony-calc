@@ -11,6 +11,7 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSavingHistoryBinding
 import com.moony.calc.model.Saving
 import com.moony.calc.model.SavingHistory
+import com.moony.calc.ui.adapter.SavingHistoryAdapter
 
 class SavingHistoryFragment() : BaseFragment() {
     private var saving:Saving? =null

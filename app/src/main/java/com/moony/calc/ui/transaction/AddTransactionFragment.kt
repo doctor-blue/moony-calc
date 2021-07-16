@@ -37,6 +37,7 @@ abstract class AddTransactionFragmentBase :
     BindingFragment<FragmentAddTransactionBinding>(R.layout.fragment_add_transaction) {
 
     protected val requestCode = 234
+
     protected val calendar: Calendar = Calendar.getInstance()
 
     protected val transactionViewModel: TransactionViewModel by activityViewModels()

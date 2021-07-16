@@ -12,6 +12,7 @@ import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentCategoriesBinding
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
+import com.moony.calc.ui.adapter.CategoryAdapter
 
 class CategoriesFragment(private val isIncome: Boolean, private val activity: AppCompatActivity) :
     BaseFragment() {
