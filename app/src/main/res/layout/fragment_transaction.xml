@@ -5,6 +5,21 @@
 
     <data>
 
+        <import type="com.moony.calc.ui.transaction.TransactionViewModel" />
+
+        <import type="com.moony.calc.ui.transaction.TransactionAdapter" />
+
+        <variable
+            name="vm"
+            type="TransactionViewModel" />
+
+        <variable
+            name="adapter"
+            type="TransactionAdapter" />
+
+        <variable
+            name="currencyUnit"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,30 +29,30 @@
         tools:context=".ui.transaction.TransactionFragment">
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/Widget.Moony.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.Moony.Headline5"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/transaction"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/transaction" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_add_transaction"
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:id="@+id/btn_add_transaction"
             app:cardElevation="@dimen/_3sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="@dimen/_10sdp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,23 +62,23 @@
                 <ImageView
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/ic_add"
-                    android:contentDescription="@string/app_name" />
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_add" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_filter_transaction"
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
-            app:layout_constraintEnd_toStartOf="@+id/btn_add_transaction"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:id="@+id/btn_filter_transaction"
             app:cardElevation="@dimen/_3sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="@dimen/_10sdp">
+            app:layout_constraintEnd_toStartOf="@+id/btn_add_transaction"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,8 +88,8 @@
                 <ImageView
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:src="@drawable/ic_filter"
-                    android:contentDescription="@string/app_name" />
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_filter" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -96,8 +111,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:gravity="center"
+                android:orientation="vertical"
                 android:padding="@dimen/_6sdp">
 
                 <LinearLayout
@@ -136,92 +151,92 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
                         android:text="@string/income_title"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
-                        android:maxLines="1"
-                        android:layout_weight="1"
                         tools:ignore="NestedWeights" />
 
                     <TextView
+                        android:id="@+id/txt_transaction_income"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
                         android:layout_weight="3"
                         android:gravity="end"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/white"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:maxLines="1"
-                        android:id="@+id/txt_transaction_income" />
+                        android:text="@{vm.totalIncome+currencyUnit}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
                         android:text="@string/expenses_title"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
-                        android:maxLines="1"
-                        android:layout_weight="1"
                         tools:ignore="NestedWeights" />
 
                     <TextView
+                        android:id="@+id/txt_transaction_expenses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
                         android:layout_weight="3"
                         android:gravity="end"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/white"
                         android:maxLines="1"
-                        android:id="@+id/txt_transaction_expenses" />
+                        android:text="@{vm.totalExpenses + currencyUnit}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
                         android:text="@string/your_balance"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_12sdp"
-                        android:maxLines="1"
-                        android:layout_weight="1"
                         tools:ignore="NestedWeights" />
 
                     <TextView
+                        android:id="@+id/txt_transaction_balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textStyle="normal"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@color/white"
-                        android:maxLines="1"
                         android:layout_weight="3"
                         android:gravity="end"
-                        android:id="@+id/txt_transaction_balance" />
+                        android:maxLines="1"
+                        android:text="@{vm.totalBalance + currencyUnit}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14sdp"
+                        android:textStyle="normal" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -235,26 +250,29 @@
             app:layout_constraintTop_toBottomOf="@id/card_overviews">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_transaction"
+                adapter="@{adapter}"
+                gone="@{vm.transactions.empty}"
+                submitList="@{vm.transactions}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/transaction_item"
-                android:id="@+id/rv_transaction"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:visibility="gone" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/transaction_item" />
 
             <LinearLayout
+                android:id="@+id/layout_list_empty"
+                gone="@{!vm.transactions.empty}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:id="@+id/layout_list_empty">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/tab_to_add_one"
                     android:layout_weight="4"
                     android:gravity="center"
+                    android:text="@string/tab_to_add_one"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/_20sdp" />
 
@@ -269,11 +287,12 @@
             </LinearLayout>
 
             <ProgressBar
+                android:id="@+id/progress_loading"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_centerInParent="true"
                 android:progress="50"
-                android:id="@+id/progress_loading" />
+                app:gone="@{!vm.isLoading()}" />
 
         </RelativeLayout>
         <!--

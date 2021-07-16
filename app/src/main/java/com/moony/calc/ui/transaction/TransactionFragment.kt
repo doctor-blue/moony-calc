@@ -2,40 +2,30 @@ package com.moony.calc.ui.transaction
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.devcomentry.moonlight.binding.BindingFragment
 import com.moony.calc.R
 import com.moony.calc.databinding.FragmentTransactionBinding
 import com.moony.calc.model.TransactionItem
 import com.moony.calc.utils.Settings
-import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class TransactionFragment :
     BindingFragment<FragmentTransactionBinding>(R.layout.fragment_transaction) {
 
     private var calNow = Calendar.getInstance()
-    private val transactionViewModel: TransactionViewModel by lazy {
-        ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
-    }
-    private var totalIncome: Double = 0.0
-    private var totalExpenses: Double = 0.0
+    private val transactionViewModel: TransactionViewModel by activityViewModels()
+
     private var transactionAdapter: TransactionAdapter? = null
     private var transactionLiveData: LiveData<List<TransactionItem>>? = null
 
@@ -49,63 +39,24 @@ class TransactionFragment :
 
     override fun initControls(savedInstanceState: Bundle?) {
         refreshData()
+
+        transactionAdapter = TransactionAdapter(transactionItemClick)
+
         binding {
             txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
-            transactionAdapter = TransactionAdapter(transactionItemClick)
-            rvTransaction.setHasFixedSize(true)
-            rvTransaction.layoutManager = LinearLayoutManager(requireActivity())
-            rvTransaction.adapter = transactionAdapter
+
+            lifecycleOwner = viewLifecycleOwner
+
+            currencyUnit = this@TransactionFragment.currencyUnit
+            adapter = transactionAdapter
+            vm = transactionViewModel
         }
     }
 
     private val transactionObserver = Observer<List<TransactionItem>> { list ->
-        transactionAdapter!!.refreshTransactions(list)
-        totalExpenses = 0.0
-        totalIncome = 0.0
-
-        lifecycleScope.launch(Dispatchers.Default) {
-            list.asFlow().collect {
-                if (it.category.isIncome) {
-                    totalIncome += it.transaction.money
-                } else {
-                    totalExpenses += it.transaction.money
-                }
-                withContext(Dispatchers.Main) {
-                    updateTotalTransaction()
-                }
-            }
-        }
-
-        if (list.isEmpty()) {
-            updateTotalTransaction()
-        }
-
-        binding {
-            progressLoading.visibility = View.INVISIBLE
-
-            if (list.isEmpty()) {
-                layoutListEmpty.visibility = View.VISIBLE
-                rvTransaction.visibility = View.GONE
-            } else {
-                layoutListEmpty.visibility = View.GONE
-                rvTransaction.visibility = View.VISIBLE
-            }
-        }
+        transactionAdapter!!.setAllTransaction(list)
+        transactionViewModel.submitList(list)
     }
-
-    private fun updateTotalTransaction() {
-
-        binding {
-            txtTransactionIncome.text =
-                (totalIncome.decimalFormat() + currencyUnit)
-            txtTransactionExpenses.text =
-                (totalExpenses.decimalFormat() + currencyUnit)
-            txtTransactionBalance.text =
-                ((totalIncome - totalExpenses).decimalFormat() + currencyUnit)
-        }
-
-    }
-
 
     private fun refreshData() {
         transactionLiveData?.removeObserver(transactionObserver)
@@ -135,10 +86,9 @@ class TransactionFragment :
             }
 
             btnFilterTransaction.setOnClickListener {
-                val popupMenu: PopupMenu =
+                val popupMenu =
                     PopupMenu(requireActivity(), btnFilterTransaction)
                 popupMenu.inflate(R.menu.transaction_filter_menu)
-                val menu = popupMenu.menu
                 popupMenu.setOnMenuItemClickListener { item ->
                     filterItemClicked(item)
                 }
@@ -150,7 +100,7 @@ class TransactionFragment :
                 calNow.add(Calendar.MONTH, 1)
                 txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
-                showProgressBar()
+                transactionViewModel.setLoading(true)
                 refreshData()
             }
             btnPreMonth.setOnClickListener {
@@ -158,20 +108,12 @@ class TransactionFragment :
                 calNow.add(Calendar.MONTH, -1)
                 txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
-                showProgressBar()
+                transactionViewModel.setLoading(true)
                 refreshData()
             }
             txtTransactionDate.setOnClickListener {
                 showMonthYearPickerDialog()
             }
-        }
-    }
-
-    private fun showProgressBar() {
-        binding {
-            progressLoading.visibility = View.VISIBLE
-            layoutListEmpty.visibility = View.GONE
-            rvTransaction.visibility = View.GONE
         }
     }
 
@@ -185,7 +127,7 @@ class TransactionFragment :
 
                 binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
-                showProgressBar()
+                transactionViewModel.setLoading(true)
                 refreshData()
             }, calNow.get(Calendar.YEAR), calNow.get(Calendar.MONTH)
         )

@@ -12,7 +12,6 @@ class TransactionAdapter(
     private val itemClick: (TransactionItem) -> Unit
 ) : Filterable,
     BindingListAdapter<TransactionItem, TransactionItemBinding>(
-        itemClick,
         R.layout.transaction_item
     ) {
 
@@ -23,9 +22,8 @@ class TransactionAdapter(
         return TransactionViewHolder(itemClick, binding)
     }
 
-    fun refreshTransactions(transactions: List<TransactionItem>) {
+    fun setAllTransaction(transactions: List<TransactionItem>) {
         allTransactions = transactions
-        submitList(transactions)
     }
 
     override fun getFilter(): Filter {

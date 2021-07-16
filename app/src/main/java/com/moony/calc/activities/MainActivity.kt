@@ -8,8 +8,9 @@ import androidx.navigation.findNavController
 import com.devcomentry.moonlight.binding.BindingActivity
 import com.moony.calc.R
 import com.moony.calc.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private lateinit var navController: NavController
