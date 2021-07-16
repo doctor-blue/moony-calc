@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devcomentry.moonlight.binding.BindingFragment
 import com.moony.calc.R
-import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentTransactionBinding
 import com.moony.calc.model.TransactionItem
 import com.moony.calc.utils.Settings
@@ -27,10 +27,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class TransactionFragment : BaseFragment() {
+class TransactionFragment :
+    BindingFragment<FragmentTransactionBinding>(R.layout.fragment_transaction) {
+
     private var calNow = Calendar.getInstance()
     private val transactionViewModel: TransactionViewModel by lazy {
-        ViewModelProvider(fragmentActivity!!)[TransactionViewModel::class.java]
+        ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
     }
     private var totalIncome: Double = 0.0
     private var totalExpenses: Double = 0.0
@@ -38,26 +40,22 @@ class TransactionFragment : BaseFragment() {
     private var transactionLiveData: LiveData<List<TransactionItem>>? = null
 
     private val settings: Settings by lazy {
-        Settings.getInstance(baseContext!!)
+        Settings.getInstance(requireContext())
     }
     private val currencyUnit by lazy {
         settings.getString(Settings.SettingKey.CURRENCY_UNIT)
     }
 
-    private val binding: FragmentTransactionBinding
-        get() = (getViewBinding() as FragmentTransactionBinding)
 
-
-    override fun getLayoutId(): Int = R.layout.fragment_transaction
-
-    override fun initControls(view: View, savedInstanceState: Bundle?) {
+    override fun initControls(savedInstanceState: Bundle?) {
         refreshData()
-        binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
-        transactionAdapter = TransactionAdapter(fragmentActivity!!, transactionItemClick)
-        binding.rvTransaction.setHasFixedSize(true)
-        binding.rvTransaction.layoutManager = LinearLayoutManager(fragmentActivity)
-        binding.rvTransaction.adapter = transactionAdapter
-
+        binding {
+            txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
+            transactionAdapter = TransactionAdapter(transactionItemClick)
+            rvTransaction.setHasFixedSize(true)
+            rvTransaction.layoutManager = LinearLayoutManager(requireActivity())
+            rvTransaction.adapter = transactionAdapter
+        }
     }
 
     private val transactionObserver = Observer<List<TransactionItem>> { list ->
@@ -72,7 +70,7 @@ class TransactionFragment : BaseFragment() {
                 } else {
                     totalExpenses += it.transaction.money
                 }
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     updateTotalTransaction()
                 }
             }
@@ -82,25 +80,29 @@ class TransactionFragment : BaseFragment() {
             updateTotalTransaction()
         }
 
-        binding.progressLoading.visibility = View.INVISIBLE
+        binding {
+            progressLoading.visibility = View.INVISIBLE
 
-        if (list.isEmpty()) {
-            binding.layoutListEmpty.visibility = View.VISIBLE
-            binding.rvTransaction.visibility = View.GONE
-        } else {
-            binding.layoutListEmpty.visibility = View.GONE
-            binding.rvTransaction.visibility = View.VISIBLE
+            if (list.isEmpty()) {
+                layoutListEmpty.visibility = View.VISIBLE
+                rvTransaction.visibility = View.GONE
+            } else {
+                layoutListEmpty.visibility = View.GONE
+                rvTransaction.visibility = View.VISIBLE
+            }
         }
     }
 
     private fun updateTotalTransaction() {
 
-        binding.txtTransactionIncome.text =
-            (totalIncome.decimalFormat() + currencyUnit)
-        binding.txtTransactionExpenses.text =
-            (totalExpenses.decimalFormat() + currencyUnit)
-        binding.txtTransactionBalance.text =
-            ((totalIncome - totalExpenses).decimalFormat() + currencyUnit)
+        binding {
+            txtTransactionIncome.text =
+                (totalIncome.decimalFormat() + currencyUnit)
+            txtTransactionExpenses.text =
+                (totalExpenses.decimalFormat() + currencyUnit)
+            txtTransactionBalance.text =
+                ((totalIncome - totalExpenses).decimalFormat() + currencyUnit)
+        }
 
     }
 
@@ -127,50 +129,55 @@ class TransactionFragment : BaseFragment() {
         }
 
     override fun initEvents() {
-        binding.btnAddTransaction.setOnClickListener {
-            findNavController().navigate(R.id.action_transaction_fragment_to_addTransactionFragment)
-        }
-
-        binding.btnFilterTransaction.setOnClickListener {
-            val popupMenu: PopupMenu = PopupMenu(fragmentActivity, binding.btnFilterTransaction)
-            popupMenu.inflate(R.menu.transaction_filter_menu)
-            val menu = popupMenu.menu
-            popupMenu.setOnMenuItemClickListener { item ->
-                filterItemClicked(item)
+        binding {
+            btnAddTransaction.setOnClickListener {
+                findNavController().navigate(R.id.action_transaction_fragment_to_addTransactionFragment)
             }
-            popupMenu.show()
-        }
 
-        binding.btnNextMonth.setOnClickListener {
-            //add 1 month
-            calNow.add(Calendar.MONTH, 1)
-            binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
+            btnFilterTransaction.setOnClickListener {
+                val popupMenu: PopupMenu =
+                    PopupMenu(requireActivity(), btnFilterTransaction)
+                popupMenu.inflate(R.menu.transaction_filter_menu)
+                val menu = popupMenu.menu
+                popupMenu.setOnMenuItemClickListener { item ->
+                    filterItemClicked(item)
+                }
+                popupMenu.show()
+            }
 
-            showProgressBar()
-            refreshData()
-        }
-        binding.btnPreMonth.setOnClickListener {
+            btnNextMonth.setOnClickListener {
+                //add 1 month
+                calNow.add(Calendar.MONTH, 1)
+                txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
-            calNow.add(Calendar.MONTH, -1)
-            binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
+                showProgressBar()
+                refreshData()
+            }
+            btnPreMonth.setOnClickListener {
 
-            showProgressBar()
-            refreshData()
-        }
-        binding.txtTransactionDate.setOnClickListener {
-            showMonthYearPickerDialog()
+                calNow.add(Calendar.MONTH, -1)
+                txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
+
+                showProgressBar()
+                refreshData()
+            }
+            txtTransactionDate.setOnClickListener {
+                showMonthYearPickerDialog()
+            }
         }
     }
 
     private fun showProgressBar() {
-        binding.progressLoading.visibility = View.VISIBLE
-        binding.layoutListEmpty.visibility = View.GONE
-        binding.rvTransaction.visibility = View.GONE
+        binding {
+            progressLoading.visibility = View.VISIBLE
+            layoutListEmpty.visibility = View.GONE
+            rvTransaction.visibility = View.GONE
+        }
     }
 
     private fun showMonthYearPickerDialog() {
         val builder = MonthPickerDialog.Builder(
-            fragmentActivity,
+            requireActivity(),
             { selectedMonth, selectedYear ->
 
                 calNow.set(Calendar.YEAR, selectedYear)
@@ -197,20 +204,20 @@ class TransactionFragment : BaseFragment() {
     }
 
     private fun filterItemClicked(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.mnu_filter_by_income -> {
                 transactionAdapter!!.filter.filter("Income")
-                Toast.makeText(fragmentActivity, "By Income", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "By Income", Toast.LENGTH_SHORT).show()
             }
 
             R.id.mnu_filter_by_expenses -> {
                 transactionAdapter!!.filter.filter("Expenses")
-                Toast.makeText(fragmentActivity, "By Expenses", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "By Expenses", Toast.LENGTH_SHORT).show()
             }
 
             R.id.mnu_filter_all -> {
                 transactionAdapter!!.filter.filter("All")
-                Toast.makeText(fragmentActivity, "All", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "All", Toast.LENGTH_SHORT).show()
             }
         }
         return true

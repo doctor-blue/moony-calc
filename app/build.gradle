@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 apply from: "$rootDir/dependencies.gradle"
 
@@ -78,7 +79,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$versions.glide"
 
     //implement coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core$versions.coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
 
     implementation "com.github.doctor-blue:moony_nav_bar_android:$versions.moonyNavBar"
@@ -90,4 +91,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 
+    implementation "com.google.dagger:hilt-android:$versions.hilt"
+    kapt "com.google.dagger:hilt-compiler:$versions.hilt"
+}
+kapt {
+    correctErrorTypes true
 }

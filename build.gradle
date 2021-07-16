@@ -8,11 +8,12 @@ buildscript {
         google()
         jcenter()
 
-        
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$versions.gradleBuildTool"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt"
 
     }
 }
@@ -22,7 +23,7 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-        
+
     }
 }
 task clean(type: Delete) {

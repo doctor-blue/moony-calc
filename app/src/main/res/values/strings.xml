@@ -139,7 +139,7 @@
     <string name="sell">Sell things</string>
     <string name="bank_interest">Bank interest</string>
     <string name="bonus">Money bonus</string>
-    <string name="salary">Monthly salary</string>
+    <string name="monthly_salary">Monthly salary</string>
     <string name="all">All</string>
     <string name="no_item_chart">No item chart</string>
     <string name="redundancy">Redundancy</string>

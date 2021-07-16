@@ -118,7 +118,7 @@
     <string name="sell">Bán đồ</string>
     <string name="bank_interest">Tiền lãi ngân hàng</string>
     <string name="bonus">Tiền thưởng</string>
-    <string name="salary">Tiền lương</string>
+    <string name="monthly_salary">Tiền lương</string>
     <string name="all">Tất cả</string>
     <string name="no_item_chart">No item chart</string>
     <string name="redundancy">Redundancy</string>

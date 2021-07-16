@@ -87,7 +87,7 @@ abstract class MoonyDatabase : RoomDatabase() {
                     Category("","categories/income/sell.png",true,resId = R.string.sell),
                     Category("","categories/income/interest.png",true,resId = R.string.bank_interest),
                     Category("","categories/income/bonus.png",true,resId = R.string.bonus),
-                    Category("","categories/income/salary1.png",true,resId = R.string.salary),
+                    Category("","categories/income/salary1.png",true,resId = R.string.monthly_salary),
                     Category("","categories/income/salary.png",true,resId = R.string.saving),
                     Category("","categories/money/money.png",true,resId = R.string.other)
                 )
