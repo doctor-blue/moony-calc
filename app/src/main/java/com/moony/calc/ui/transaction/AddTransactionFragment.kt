@@ -33,53 +33,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
 
-@AndroidEntryPoint
-class AddTransactionFragment :
+abstract class AddTransactionFragmentBase :
     BindingFragment<FragmentAddTransactionBinding>(R.layout.fragment_add_transaction) {
-    private var category: Category? = null
-    private val requestCode = 234
 
-    private val transactionViewModel: TransactionViewModel by activityViewModels()
+    protected val requestCode = 234
+    protected val calendar: Calendar = Calendar.getInstance()
 
-    private val savingViewModel: SavingViewModel by lazy {
-        ViewModelProvider(this)[SavingViewModel::class.java]
-    }
-    private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
-        ViewModelProvider(this)[SavingHistoryViewModel::class.java]
-    }
+    protected val transactionViewModel: TransactionViewModel by activityViewModels()
 
-    private val calendar: Calendar = Calendar.getInstance()
+    protected var savings: List<Saving> = listOf()
 
-    private var savings: List<Saving> = listOf()
+    protected var savingPosition = -1
 
-    private var savingPosition = -1
-
-
-    override fun initControls(savedInstanceState: Bundle?) {
-        binding {
-            txtTransactionTime.text = calendar.formatDateTime()
-
-            edtTransactionMoney.setSelection(edtTransactionMoney.text.toString().length)
-            val savingAdapter: ArrayAdapter<Saving> =
-                ArrayAdapter<Saving>(requireContext(), android.R.layout.simple_list_item_1)
-            spinSavingGoals.adapter = savingAdapter
-
-            savingViewModel.getAllSaving().observe(viewLifecycleOwner, {
-                savings = it
-                savingAdapter.clear()
-                savingAdapter.addAll(it)
-                savingAdapter.notifyDataSetChanged()
-
-                if (it.isNotEmpty()) {
-                    category?.let {
-                        if (category!!.resId == R.string.saving) {
-                            layoutSavingGoals.visibility = View.VISIBLE
-                        }
-                    }
-                }
-            })
-        }
-    }
+    protected var category: Category? = null
 
 
     override fun initEvents() {
@@ -151,7 +117,7 @@ class AddTransactionFragment :
 
             toolbarAddTransaction.setOnMenuItemClickListener { item ->
                 if (item.itemId == R.id.mnu_save) {
-                    saveTransaction()
+                    checkInput()
                 }
                 true
             }
@@ -179,8 +145,20 @@ class AddTransactionFragment :
         }
     }
 
+    private fun pickDateTime() {
+        val dialog = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-    private fun saveTransaction() {
+            binding.txtTransactionTime.text = calendar.formatDateTime()
+
+        }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
+        dialog.show()
+
+    }
+
+    private fun checkInput() {
         binding {
             val money = edtTransactionMoney.text.toString()
             when {
@@ -196,56 +174,94 @@ class AddTransactionFragment :
                         resources.getString(R.string.empty_category_error)
                 }
                 else -> {
-                    var description = edtTransactionNote.text.toString()
-
-                    if (description.isEmpty() && savingPosition != -1)
-                        description = requireContext().resources.getString(R.string.add_to) +
-                                " " +
-                                savings[savingPosition].title +
-                                " " +
-                                requireContext().resources.getString(R.string.savings)
-                    val mon = handleTextToDouble(
-                        (if (money.contains('-')) money.replace('-', ' ').trim() else money)
-                    ).toDouble()
-                    val transaction = Transaction(
-                        mon,
-                        category!!.idCategory,
-                        description,
-                        calendar.time,
-                    )
-                    transactionViewModel.insertTransaction(transaction)
-                    lifecycleScope.launch {
-                        if (savingPosition != -1) {
-                            val savingHistory = SavingHistory(
-                                "",
-                                savings[savingPosition].idSaving,
-                                if (category!!.isIncome) mon * -1 else mon,
-                                !category!!.isIncome,
-                                calendar.formatDateTime(),
-                                transaction.idTransaction
-                            )
-                            savingHistoryViewModel.insertSavingHistory(savingHistory)
-                        }
-                    }
-                    requireActivity().onBackPressed()
-
+                    saveTransaction(money)
                 }
             }
         }
 
     }
 
-    private fun pickDateTime() {
-        val dialog = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+    protected abstract fun saveTransaction(money: String)
 
-            binding.txtTransactionTime.text = calendar.formatDateTime()
+    protected fun handleTextToDouble(s: String): String {
+        var text = s
+        if (text.contains(',')) {
+            text = text.replace(',', '.')
+        }
+        return text
+    }
+}
 
-        }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
-        dialog.show()
+@AndroidEntryPoint
+class AddTransactionFragment : AddTransactionFragmentBase() {
 
+    private val savingViewModel: SavingViewModel by lazy {
+        ViewModelProvider(this)[SavingViewModel::class.java]
+    }
+    private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
+        ViewModelProvider(this)[SavingHistoryViewModel::class.java]
+    }
+
+    override fun saveTransaction(money: String) {
+        var description = binding.edtTransactionNote.text.toString()
+
+        if (description.isEmpty() && savingPosition != -1)
+            description = requireContext().resources.getString(R.string.add_to) +
+                    " " +
+                    savings[savingPosition].title +
+                    " " +
+                    requireContext().resources.getString(R.string.savings)
+        val mon = handleTextToDouble(
+            (if (money.contains('-')) money.replace('-', ' ').trim() else money)
+        ).toDouble()
+        val transaction = Transaction(
+            mon,
+            category!!.idCategory,
+            description,
+            calendar.time,
+        )
+        transactionViewModel.insertTransaction(transaction)
+        lifecycleScope.launch {
+            if (savingPosition != -1) {
+                val savingHistory = SavingHistory(
+                    "",
+                    savings[savingPosition].idSaving,
+                    if (category!!.isIncome) mon * -1 else mon,
+                    !category!!.isIncome,
+                    calendar.formatDateTime(),
+                    transaction.idTransaction
+                )
+                savingHistoryViewModel.insertSavingHistory(savingHistory)
+            }
+        }
+        requireActivity().onBackPressed()
+    }
+
+
+    override fun initControls(savedInstanceState: Bundle?) {
+        binding {
+            txtTransactionTime.text = calendar.formatDateTime()
+
+            edtTransactionMoney.setSelection(edtTransactionMoney.text.toString().length)
+            val savingAdapter: ArrayAdapter<Saving> =
+                ArrayAdapter<Saving>(requireContext(), android.R.layout.simple_list_item_1)
+            spinSavingGoals.adapter = savingAdapter
+
+            savingViewModel.getAllSaving().observe(viewLifecycleOwner, {
+                savings = it
+                savingAdapter.clear()
+                savingAdapter.addAll(it)
+                savingAdapter.notifyDataSetChanged()
+
+                if (it.isNotEmpty()) {
+                    category?.let {
+                        if (category!!.resId == R.string.saving) {
+                            layoutSavingGoals.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -295,14 +311,6 @@ class AddTransactionFragment :
                     edtTransactionMoney.setText(money)
                 }
         }
-    }
-
-    private fun handleTextToDouble(s: String): String {
-        var text = s
-        if (text.contains(',')) {
-            text = text.replace(',', '.')
-        }
-        return text
     }
 
 
