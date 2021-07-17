@@ -3,43 +3,44 @@ package com.moony.calc.ui.category
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.activityViewModels
+import com.devcomentry.moonlight.binding.BindingFragment
 import com.moony.calc.R
-import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentCategoriesBinding
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
 import com.moony.calc.ui.adapter.CategoryAdapter
+import com.moony.calc.ui.transaction.TransactionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CategoriesFragment(private val isIncome: Boolean, private val activity: AppCompatActivity) :
-    BaseFragment() {
+    BindingFragment<FragmentCategoriesBinding>(R.layout.fragment_categories) {
 
     private var categoryNames: ArrayList<String> = arrayListOf()
 
-    private val categoryViewModel: CategoryViewModel by lazy {
-        ViewModelProvider(fragmentActivity!!)[CategoryViewModel::class.java]
-    }
+    private val transactionViewModel: TransactionViewModel by activityViewModels()
+
+    private val categoryViewModel: CategoryViewModel by activityViewModels()
 
     private val categoryAdapter by lazy {
         CategoryAdapter(
-            activity,
+            categoryViewModel,
+            transactionViewModel,
             CategoriesActivity.isCanRemove,
             onCategoryItemClick
         )
     }
 
-    private val binding: FragmentCategoriesBinding
-        get() = (getViewBinding() as FragmentCategoriesBinding)
 
-    override fun initControls(view: View, savedInstanceState: Bundle?) {
-
-
-        binding.rvCategories.setHasFixedSize(true)
-        binding.rvCategories.layoutManager = GridLayoutManager(activity, 4)
-        binding.rvCategories.adapter = categoryAdapter
+    override fun initControls(savedInstanceState: Bundle?) {
+        binding {
+            lifecycleOwner = viewLifecycleOwner
+            isIncome = this@CategoriesFragment.isIncome
+            adapter = categoryAdapter
+            vm = categoryViewModel
+        }
 
         categoryViewModel.getAllCategory(isIncome)
             .observe(viewLifecycleOwner, { list ->
@@ -47,16 +48,12 @@ class CategoriesFragment(private val isIncome: Boolean, private val activity: Ap
                 categoryNames = list.map { it.title } as ArrayList
 
                 categories.add(Category("", "", isIncome, R.string.add))
-                categoryAdapter.setCategoryList(categories)
+
+                categoryViewModel.submitCategories(categories, isIncome)
 
             })
     }
 
-    override fun initEvents() {
-
-    }
-
-    override fun getLayoutId(): Int = R.layout.fragment_categories
 
     private val onCategoryItemClick: (Any) -> Unit = {
         val category: Category = it as Category

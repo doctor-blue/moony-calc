@@ -9,7 +9,7 @@ import com.moony.calc.base.BaseFragment
 
 class CategoriesPagerAdapter(
     fm: FragmentManager,
-    val fragments: List<BaseFragment>,
+    val fragments: List<Fragment>,
     val context: Context
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment  = fragments[position]

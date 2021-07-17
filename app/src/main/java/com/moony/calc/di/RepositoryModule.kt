@@ -1,6 +1,8 @@
 package com.moony.calc.di
 
+import com.moony.calc.data.CategoryRepository
 import com.moony.calc.data.TransactionRepository
+import com.moony.calc.database.CategoryDao
 import com.moony.calc.database.TransactionDao
 import dagger.Module
 import dagger.Provides
@@ -14,5 +16,11 @@ object RepositoryModule {
 
     @Provides
     @ViewModelScoped
-    fun provideTransactionRepository(dao:TransactionDao) = TransactionRepository(dao)
+    fun provideTransactionRepository(dao: TransactionDao): TransactionRepository =
+        TransactionRepository(dao)
+
+    @Provides
+    @ViewModelScoped
+    fun provideCategoryRepository(dao: CategoryDao): CategoryRepository = CategoryRepository(dao)
+
 }

@@ -1,15 +1,31 @@
 package com.moony.calc.ui.category
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moony.calc.data.CategoryRepository
 import com.moony.calc.model.Category
+import com.moony.calc.model.TransactionItem
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CategoryViewModel(application: Application) : AndroidViewModel(application) {
-    private val categoryRepository: CategoryRepository = CategoryRepository(application)
+@HiltViewModel
+class CategoryViewModel @Inject constructor(private val categoryRepository: CategoryRepository) : ViewModel() {
+
+    val incomeCategories: MutableLiveData<List<Category>> = MutableLiveData(listOf())
+    val expensesCategories: MutableLiveData<List<Category>> = MutableLiveData(listOf())
+
+    fun submitCategories(categories:List<Category>,isIncome: Boolean){
+        if (isIncome){
+            incomeCategories.value = categories
+        }else{
+            expensesCategories.value = categories
+        }
+    }
+
 
     fun insertCategory(category: Category) = viewModelScope.launch {
         categoryRepository.insertCategory(category)
