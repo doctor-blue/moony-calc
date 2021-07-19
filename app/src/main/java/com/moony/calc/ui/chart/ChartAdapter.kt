@@ -1,68 +1,53 @@
 package com.moony.calc.ui.chart
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.card.MaterialCardView
+import com.devcomentry.moonlight.binding.BindingListAdapter
+import com.devcomentry.moonlight.binding.BindingViewHolder
 import com.moony.calc.R
+import com.moony.calc.databinding.TransactionItemBinding
 import com.moony.calc.model.ChartItem
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 
 class ChartAdapter(
-    private val context: FragmentActivity,
-    private val itemClick: (ChartItem) -> Unit
-) : RecyclerView.Adapter<ChartAdapter.ViewHolder>() {
+        private val itemClick: (ChartItem) -> Unit
+) : BindingListAdapter<ChartItem, TransactionItemBinding>(R.layout.transaction_item) {
 
-    private var chartItems: List<ChartItem> = listOf()
-    private val settings = Settings.getInstance(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.transaction_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(getBinding(parent))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(chartItems[position], itemClick)
-    }
+    inner class ViewHolder(
+            private val binding: TransactionItemBinding
+    ) : BindingViewHolder<ChartItem, TransactionItemBinding>(binding) {
+        private var chartItem: ChartItem? = null
+        private val settings = Settings.getInstance(binding.root.context)
 
-    override fun getItemCount(): Int = chartItems.size
+        init {
 
-    fun refreshChartItems(chartItems: List<ChartItem>) {
-        this.chartItems = chartItems
-        notifyDataSetChanged()
-    }
+            binding.cardTransaction.setOnClickListener {
+                chartItem?.let {
+                    itemClick(it)
+                }
+            }
+        }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imgChartItem: ImageView = itemView.findViewById(R.id.img_transaction)
-        private val txtCategoryName: TextView =
-            itemView.findViewById(R.id.txt_transaction_name)
-        private val cardChartItem: MaterialCardView =
-            itemView.findViewById(R.id.card_transaction)
-        private val txtChartItemMoney: TextView =
-            itemView.findViewById(R.id.txt_transaction_money)
-        private val txtPercent: TextView = itemView.findViewById(R.id.txt_transaction_date)
+        override fun onBind(item: ChartItem) {
+            chartItem = item
 
-        fun onBind(chartItem: ChartItem, itemClick: (ChartItem) -> Unit) {
-            Glide.with(context).load(AssetFolderManager.assetPath + chartItem.category.iconUrl)
-                .into(imgChartItem)
-            if (chartItem.category.resId != -1) txtCategoryName.text = chartItem.category.title
-            if (chartItem.category.resId != -1) {
-                txtCategoryName.setText(chartItem.category.resId)
+            Glide.with(binding.root.context).load(AssetFolderManager.assetPath + item.category.iconUrl)
+                    .into(binding.imgTransaction)
+
+            if (item.category.resId != -1) {
+                binding.txtTransactionName.setText(item.category.resId)
             } else {
-                txtCategoryName.text = chartItem.category.title
+                binding.txtTransactionName.text = item.category.title
             }
-            txtChartItemMoney.text = chartItem.sum.decimalFormat().toString() + settings.getString(Settings.SettingKey.CURRENCY_UNIT)
-            txtPercent.text = ""
-            cardChartItem.setOnClickListener {
-                itemClick(chartItem)
-            }
+            binding.txtTransactionMoney.text = (item.sum.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+            binding.txtTransactionDate.text = ""
         }
     }
 
