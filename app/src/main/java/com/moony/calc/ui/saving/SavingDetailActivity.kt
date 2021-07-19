@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.devcomentry.moonlight.binding.BindingActivity
 import com.moony.calc.R
@@ -14,19 +16,19 @@ import com.moony.calc.ui.adapter.SavingDetailAdapter
 import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.ui.saving.history.SavingHistoryFragment
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SavingDetailActivity :
-    BindingActivity<ActivitySavingDetailBinding>(R.layout.activity_saving_detail) {
+        BindingActivity<ActivitySavingDetailBinding>(R.layout.activity_saving_detail) {
 
     companion object {
         const val EDIT_SAVINGS = "com.moony.calc.activities.EDIT_SAVINGS"
     }
 
     private lateinit var saving: Saving
-    private val savingViewModel: SavingViewModel by lazy {
-        ViewModelProvider(this)[SavingViewModel::class.java]
-    }
+    private val savingViewModel: SavingViewModel by viewModels()
+
     private val savingHistoryViewModel: SavingHistoryViewModel by lazy {
         ViewModelProvider(this)[SavingHistoryViewModel::class.java]
     }
@@ -42,18 +44,21 @@ class SavingDetailActivity :
 
         saving = intent.getSerializableExtra(SavingBoxFragment.SAVING_KEY) as Saving
 
-        val fragments: List<BaseFragment> =
-            mutableListOf(
-                SavingDetailFragment(saving),
-                SavingHistoryFragment(saving)
-            )
+        val fragments: List<Fragment> =
+                mutableListOf(
+                        SavingDetailFragment(saving),
+                        SavingHistoryFragment(saving)
+                )
         val savingDetailAdapter = SavingDetailAdapter(supportFragmentManager, fragments, this)
-        binding.viewpagerDetailSaving.adapter = savingDetailAdapter
-        binding.tabLayoutSaving.setupWithViewPager(binding.viewpagerDetailSaving)
-        binding.toolbarSavingDetail.title = saving.title
+        binding {
+            viewpagerDetailSaving.adapter = savingDetailAdapter
+            tabLayoutSaving.setupWithViewPager(viewpagerDetailSaving)
+            toolbarSavingDetail.title = saving.title
+            setSupportActionBar(toolbarSavingDetail)
+
+        }
 
 
-        setSupportActionBar(binding.toolbarSavingDetail)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -2,16 +2,26 @@ package com.moony.calc.ui.saving.history
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moony.calc.data.SavingHistoryRepository
 import com.moony.calc.model.SavingHistory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SavingHistoryViewModel(application: Application) : AndroidViewModel(application) {
-    private val savingHistoryRepository: SavingHistoryRepository =
-        SavingHistoryRepository(application)
+@HiltViewModel
+class SavingHistoryViewModel @Inject constructor(private val savingHistoryRepository: SavingHistoryRepository) : ViewModel() {
+
+    val savingHistoryList :MutableLiveData<List<SavingHistory>> = MutableLiveData(listOf())
+
+
+    fun submitList(list: List<SavingHistory>){
+        savingHistoryList.value = list
+    }
 
     fun getAllSavingHistory(idSaving: String) = savingHistoryRepository.getAllSavingHistory(idSaving)
 

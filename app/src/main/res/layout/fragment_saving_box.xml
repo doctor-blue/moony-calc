@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="com.moony.calc.ui.saving.SavingViewModel" />
+
+        <import type="com.moony.calc.ui.adapter.SavingBoxAdapter" />
+
+        <variable
+            name="vm"
+            type="SavingViewModel" />
+
+        <variable
+            name="adapter"
+            type="SavingBoxAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,27 +25,27 @@
         tools:context=".ui.saving.SavingBoxFragment">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_saving_box"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp"
             android:layout_marginLeft="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_18sdp"
             android:layout_marginRight="@dimen/_8sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:cardBackgroundColor="@color/colorPrimary"
             app:cardCornerRadius="@dimen/_10sdp"
-            android:id="@+id/card_saving_box"
-            app:cardElevation="@dimen/_3sdp">
+            app:cardElevation="@dimen/_3sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <RelativeLayout
                 android:layout_width="@dimen/_280sdp"
                 android:layout_height="@dimen/_120sdp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_2sdp"
-                android:gravity="center"
                 android:layout_marginRight="@dimen/_2sdp"
                 android:background="@android:color/transparent"
+                android:gravity="center"
                 android:padding="@dimen/_5sdp">
 
                 <com.google.android.material.textview.MaterialTextView
@@ -42,10 +53,10 @@
                     style="@style/Widget.Moony.Headline5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="@string/goal"
                     android:textColor="@color/white"
                     tools:ignore="RelativeOverlap" />
@@ -55,32 +66,32 @@
                     style="@style/Widget.Moony.Headline5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_below="@+id/txt_title_saving_chart1"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/in_progress" />
+                    android:text="@string/in_progress"
+                    android:textColor="@color/white" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_title_saving_chart3"
                     style="@style/Widget.Moony.Headline5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_below="@+id/txt_title_saving_chart2"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/completed" />
+                    android:text="@string/completed"
+                    android:textColor="@color/white" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_total_goal"
                     style="@style/Widget.Moony.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:textColor="@color/white"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:text="0" />
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="0"
+                    android:textColor="@color/white" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_total_in_progress"
@@ -90,9 +101,9 @@
                     android:layout_below="@id/txt_total_goal"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:textColor="@color/white"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/white" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_total_completed"
@@ -102,30 +113,30 @@
                     android:layout_below="@+id/txt_total_in_progress"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:textColor="@color/white"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/white" />
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_add_saving_goals"
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_35sdp"
-            android:id="@+id/btn_add_saving_goals"
-            app:cardBackgroundColor="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_saving_box"
             android:layout_marginTop="@dimen/_35sdp"
-            app:cardElevation="@dimen/_3sdp"
-            app:cardCornerRadius="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp">
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_saving_box">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="@dimen/_24sdp"
@@ -136,52 +147,54 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/Widget.Moony.Headline4"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_40sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_saving_box"
-            style="@style/Widget.Moony.Headline4"
-            android:textSize="@dimen/_30sdp"
-            android:gravity="center"
-            android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:gravity="center"
             android:text="@string/saving_goals"
-            android:layout_marginTop="@dimen/_35sdp" />
+            android:textSize="@dimen/_30sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_saving_box" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="center"
             android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/btn_add_saving_goals">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_saving_box"
+                adapter="@{adapter}"
+                gone="@{vm.savingList.empty}"
+                submitList="@{vm.savingList}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/saving_goals_item"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
-                android:id="@+id/rv_saving_box"
-                android:visibility="visible" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/saving_goals_item" />
 
             <LinearLayout
+                android:id="@+id/layout_list_empty"
+                gone="@{!vm.savingList.empty}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:id="@+id/layout_list_empty">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txt_add_goal_manual"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/no_goals_tab_to_add_one"
                     android:layout_weight="3"
                     android:gravity="center"
+                    android:text="@string/no_goals_tab_to_add_one"
                     android:textSize="@dimen/_20sdp" />
 
                 <TextView
@@ -189,10 +202,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="\@.@"
                     android:gravity="center"
-                    android:textSize="@dimen/_80sdp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:text="\@.@"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="@dimen/_80sdp" />
             </LinearLayout>
         </RelativeLayout>
 

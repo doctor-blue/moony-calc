@@ -3,12 +3,12 @@ package com.moony.calc.data
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.moony.calc.database.MoonyDatabase
+import com.moony.calc.database.SavingDao
 import com.moony.calc.model.Saving
 import com.moony.calc.model.SavingItem
+import javax.inject.Inject
 
-class SavingRepository(application: Application) {
-    private var savingDao =
-        MoonyDatabase.getInstance(application).getSavingDao()
+class SavingRepository @Inject constructor( private var savingDao:SavingDao)  {
 
     fun getAllSavingGoals(): LiveData<List<Saving>> = savingDao.getAllSavingGoals()
 

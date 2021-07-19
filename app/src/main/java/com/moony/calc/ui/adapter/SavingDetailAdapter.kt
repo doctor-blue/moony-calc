@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 
-class SavingDetailAdapter(fm: FragmentManager, val fragments: List<BaseFragment>,val context: Context) :
+class SavingDetailAdapter(fm: FragmentManager, val fragments: List<Fragment>,val context: Context) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment = fragments[position]
     override fun getCount(): Int = fragments.size

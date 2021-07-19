@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.devcomentry.moonlight.binding.BindingActivity
 import com.google.android.material.snackbar.Snackbar
@@ -20,17 +20,18 @@ import com.moony.calc.ui.category.CategoryIconListActivity
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.setAutoHideKeyboard
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class UpdateSavingGoalActivity :
-    BindingActivity<ActivityUpdateSavingGoalBinding>(R.layout.activity_update_saving_goal) {
+        BindingActivity<ActivityUpdateSavingGoalBinding>(R.layout.activity_update_saving_goal) {
 
 
     private val calendar: Calendar = Calendar.getInstance()
     private var deadLine: Date? = null
-    private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
+    private val savingViewModel: SavingViewModel by viewModels()
     private var iconUrl = ""
 
 
@@ -49,7 +50,7 @@ class UpdateSavingGoalActivity :
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
-                Unit
+                    Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
@@ -62,9 +63,9 @@ class UpdateSavingGoalActivity :
                              * chuyển về kiểu double sau đó format nó sẽ được chuỗi ở dạng #.00 và lấy độ dài làm max length cho edit_text
                              */
                             val maxLength = "${handleTextToDouble(it.toString())}1".toDouble()
-                                .decimalFormat().length
+                                    .decimalFormat().length
                             binding.edtGoalAmount.filters =
-                                arrayOf(InputFilter.LengthFilter(maxLength))
+                                    arrayOf(InputFilter.LengthFilter(maxLength))
                         } else {
                             binding.edtGoalAmount.filters = arrayOf(InputFilter.LengthFilter(13))
                             if (it.length - 1 == 12) {
@@ -85,7 +86,7 @@ class UpdateSavingGoalActivity :
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
-                Unit
+                    Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (binding.edtGoalDescription.text.toString().trim().isNotEmpty()) {
@@ -102,8 +103,8 @@ class UpdateSavingGoalActivity :
             val intent = Intent(this, CategoryIconListActivity::class.java)
             intent.putExtra(CategoryIconListActivity.IS_PICK_ICON, true)
             startActivityForResult(
-                intent,
-                KEY_PICK_ICON
+                    intent,
+                    KEY_PICK_ICON
             )
         }
 
@@ -129,16 +130,16 @@ class UpdateSavingGoalActivity :
             binding.edtGoalDescription.setText(it.title)
             binding.edtGoalAmount.setText(("${it.desiredAmount}"))
             binding.txtDueDate.text =
-                (resources.getString(R.string.due_date) + " " + SimpleDateFormat(
-                    "dd/MM/yyyy",
-                    Locale.ENGLISH
-                ).format(it.deadLine))
+                    (resources.getString(R.string.due_date) + " " + SimpleDateFormat(
+                            "dd/MM/yyyy",
+                            Locale.ENGLISH
+                    ).format(it.deadLine))
 
             deadLine = it.deadLine
             iconUrl = it.iconUrl
 
             Glide.with(this).load(AssetFolderManager.assetPath + it.iconUrl)
-                .into(binding.imgGoalCategory)
+                    .into(binding.imgGoalCategory)
 
         }
     }
@@ -153,11 +154,11 @@ class UpdateSavingGoalActivity :
 
     private fun saveSavingGoal() {
         val snackbar: Snackbar =
-            Snackbar.make(
-                binding.layoutRootUpdateGoal,
-                R.string.empty_date_error,
-                Snackbar.LENGTH_LONG
-            )
+                Snackbar.make(
+                        binding.layoutRootUpdateGoal,
+                        R.string.empty_date_error,
+                        Snackbar.LENGTH_LONG
+                )
         snackbar.setTextColor(resources.getColor(R.color.white))
         snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
         snackbar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
@@ -203,10 +204,10 @@ class UpdateSavingGoalActivity :
 //            deadLine = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
             deadLine = calendar.time
             binding.txtDueDate.text =
-                (resources.getString(R.string.due_date) + " " + SimpleDateFormat(
-                    "dd/MM/yyyy",
-                    Locale.ENGLISH
-                ).format(calendar.time))
+                    (resources.getString(R.string.due_date) + " " + SimpleDateFormat(
+                            "dd/MM/yyyy",
+                            Locale.ENGLISH
+                    ).format(calendar.time))
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
         dialog.show()
     }
@@ -219,7 +220,7 @@ class UpdateSavingGoalActivity :
                 val title = data?.getStringExtra(TITLE)
 
                 Glide.with(this).load(AssetFolderManager.assetPath + iconUrl)
-                    .into(binding.imgGoalCategory)
+                        .into(binding.imgGoalCategory)
                 binding.txtTitleCategoryUpdateSaving.text = title
 
             }

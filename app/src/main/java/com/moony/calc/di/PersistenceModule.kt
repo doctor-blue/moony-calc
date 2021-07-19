@@ -24,4 +24,12 @@ object PersistenceModule {
     @Provides
     @Singleton
     fun provideCategoryDao(database: MoonyDatabase) = database.getCategoryDao()
+
+    @Provides
+    @Singleton
+    fun provideSavingDao(database: MoonyDatabase) = database.getSavingDao()
+
+    @Provides
+    @Singleton
+    fun provideSavingHistoryDao(database: MoonyDatabase) = database.getSavingHistoryDao()
 }

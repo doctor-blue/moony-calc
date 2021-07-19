@@ -5,6 +5,17 @@
 
     <data>
 
+        <import type="com.moony.calc.ui.saving.history.SavingHistoryViewModel" />
+
+        <import type="com.moony.calc.ui.adapter.SavingHistoryAdapter" />
+
+        <variable
+            name="vm"
+            type="SavingHistoryViewModel" />
+
+        <variable
+            name="adapter"
+            type="SavingHistoryAdapter" />
     </data>
 
     <FrameLayout
@@ -14,15 +25,18 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_saving_history"
+            adapter="@{adapter}"
+            submitList="@{vm.savingHistoryList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/saving_history_item" />
 
         <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/btn_import_history"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_180sdp"
             android:layout_gravity="bottom|right"
-            android:id="@+id/btn_import_history"
             android:layout_marginRight="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             app:layoutDescription="@xml/saving_money_scene"
