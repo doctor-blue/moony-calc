@@ -1,49 +1,29 @@
 package com.moony.calc.ui.chart
 
 import android.content.res.ColorStateList
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.RecyclerView
+import com.devcomentry.moonlight.binding.BindingListAdapter
+import com.devcomentry.moonlight.binding.BindingViewHolder
 import com.faskn.lib.Slice
 import com.moony.calc.R
+import com.moony.calc.databinding.ChartLegendItemBinding
 
 
-class ChartLegendAdapter(
-    private val context: FragmentActivity,
-) : RecyclerView.Adapter<ChartLegendAdapter.ViewHolder>() {
-
-    private var slices: ArrayList<Slice> = arrayListOf()
-    private var colors = arrayListOf<Int>()
+class ChartLegendAdapter: BindingListAdapter<Slice, ChartLegendItemBinding>(R.layout.chart_legend_item) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.chart_legend_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(getBinding(parent))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(slices[position])
-    }
+    inner class ViewHolder(
+            private val binding: ChartLegendItemBinding
+    ) : BindingViewHolder<Slice, ChartLegendItemBinding>(binding) {
 
-    override fun getItemCount(): Int = slices.size
-
-    fun refreshLegend(slices: ArrayList<Slice>) {
-        this.slices = slices
-        notifyDataSetChanged()
-    }
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imgLegendCircle: ImageView = itemView.findViewById(R.id.img_legend_circle)
-        private val txtLegendName: TextView = itemView.findViewById(R.id.txt_legend_name)
-
-        fun onBind(slice: Slice) {
-            imgLegendCircle.imageTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(itemView.context, slice.color))
-            txtLegendName.text = slice.name
+        override fun onBind(item: Slice) {
+            binding.imgLegendCircle.imageTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(itemView.context, item.color))
+            binding.txtLegendName.text = item.name
         }
 
     }

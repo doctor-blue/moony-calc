@@ -1,15 +1,14 @@
 package com.moony.calc.data
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import com.moony.calc.database.MoonyDatabase
+import com.moony.calc.database.TransactionDao
 import com.moony.calc.model.ChartItem
 import com.moony.calc.model.Transaction
 import com.moony.calc.model.TransactionItem
+import javax.inject.Inject
 
-class TransactionRepository(application: Application) {
-    private var transactionDao =
-        MoonyDatabase.getInstance(application).getTransactionDao()
+class TransactionRepository @Inject constructor(private val transactionDao: TransactionDao) {
+
 
     fun getAllTransaction(): LiveData<List<Transaction>> = transactionDao.getAllTransactions()
 

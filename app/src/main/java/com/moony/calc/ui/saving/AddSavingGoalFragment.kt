@@ -11,8 +11,10 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.devcomentry.moonlight.binding.BindingFragment
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
@@ -22,14 +24,16 @@ import com.moony.calc.ui.category.CategoryIconListActivity
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.setAutoHideKeyboard
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddSavingGoalFragment : BaseFragment() {
+@AndroidEntryPoint
+class AddSavingGoalFragment : BindingFragment<FragmentAddSavingGoalBinding>(R.layout.fragment_add_saving_goal) {
 
     private val calendar: Calendar = Calendar.getInstance()
     private var dueDate: Date? = null
-    private val savingViewModel: SavingViewModel by lazy { ViewModelProvider(this)[SavingViewModel::class.java] }
+    private val savingViewModel: SavingViewModel by activityViewModels()
     private var iconUrl = ""
 
     companion object {
@@ -39,12 +43,7 @@ class AddSavingGoalFragment : BaseFragment() {
         const val TITLE = "com.moony.calc.ui.saving.AddSavingGoalFragment.TITLE"
     }
 
-    private val binding: FragmentAddSavingGoalBinding
-        get() = (getViewBinding() as FragmentAddSavingGoalBinding)
-
-    override fun getLayoutId(): Int = R.layout.fragment_add_saving_goal
-
-    override fun initControls(view: View, savedInstanceState: Bundle?) {
+    override fun initControls(savedInstanceState: Bundle?) {
         binding.toolbarAddSavingGoal.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.mnu_save) {
                 saveSavingGoal()

@@ -8,6 +8,7 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.devcomentry.moonlight.binding.BindingActivity
@@ -21,10 +22,12 @@ import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.ui.transaction.TransactionViewModel
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.setAutoHideKeyboard
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class SavingHistoryActivity :
     BindingActivity<ActivitySavingHistoryBinding>(R.layout.activity_saving_history) {
 
@@ -39,14 +42,9 @@ class SavingHistoryActivity :
         ViewModelProvider(this)[SavingHistoryViewModel::class.java]
     }
 
-    private val transactionViewModel: TransactionViewModel by lazy {
-        ViewModelProvider(this)[TransactionViewModel::class.java]
-    }
+    private val transactionViewModel: TransactionViewModel by viewModels()
 
-    private val categoryViewModel: CategoryViewModel by lazy {
-        ViewModelProvider(this)[CategoryViewModel::class.java]
-    }
-
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     override fun initControls(savedInstanceState: Bundle?) {
         saving = intent.getSerializableExtra(SavingHistoryFragment.SAVING) as Saving

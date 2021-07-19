@@ -3,6 +3,7 @@ package com.moony.calc.ui.transaction
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -16,13 +17,14 @@ import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 import com.moony.calc.utils.formatDateTime
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class TransactionDetailFragment : BaseFragment() {
 
-    private val transactionViewModel: TransactionViewModel by lazy {
-        ViewModelProvider(this)[TransactionViewModel::class.java]
-    }
+    private val transactionViewModel: TransactionViewModel by activityViewModels()
+
     private lateinit var transactionItem: TransactionItem
     private var calendar = Calendar.getInstance()
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,11 +16,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.databinding.ActivityAddCategoriesBinding
 import com.moony.calc.model.Category
+import com.moony.calc.ui.adapter.CategoriesListAdapter
 import com.moony.calc.ui.saving.AddSavingGoalFragment
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.setAutoHideKeyboard
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CategoryIconListActivity :
     BindingActivity<ActivityAddCategoriesBinding>(R.layout.activity_add_categories) {
     private var isIncome = true
@@ -27,9 +30,7 @@ class CategoryIconListActivity :
     private var isPickIcon = false
     private var categoryNames: ArrayList<String>? = arrayListOf()
 
-    private val categoryViewModel: CategoryViewModel by lazy {
-        ViewModelProvider(this)[CategoryViewModel::class.java]
-    }
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     companion object {
         const val IS_INCOME_KEY = "com.moony.calc.ui.category.CategoryIconListActivity"
@@ -40,55 +41,60 @@ class CategoryIconListActivity :
 
     override fun initControls(savedInstanceState: Bundle?) {
         val intent = intent
-        setSupportActionBar(binding.toolbarAddCategories)
+        binding {
+            setSupportActionBar(toolbarAddCategories)
 
-        intent.let {
-            isIncome = intent.getBooleanExtra(IS_INCOME_KEY, true)
-            isPickIcon = intent.getBooleanExtra(IS_PICK_ICON, false)
-            categoryNames = intent.getStringArrayListExtra(CATEGORY_NAMES)
-        }
-        if (!isPickIcon) {
-            if (isIncome) {
-                binding.toolbarAddCategories.title =
-                    resources.getString(R.string.add_income_category)
+            intent.let {
+                isIncome = intent.getBooleanExtra(IS_INCOME_KEY, true)
+                isPickIcon = intent.getBooleanExtra(IS_PICK_ICON, false)
+                categoryNames = intent.getStringArrayListExtra(CATEGORY_NAMES)
+            }
+            if (!isPickIcon) {
+                if (isIncome) {
+                    toolbarAddCategories.title =
+                        resources.getString(R.string.add_income_category)
+                } else {
+                    toolbarAddCategories.title =
+                        resources.getString(R.string.add_expense_category)
+                }
             } else {
-                binding.toolbarAddCategories.title =
-                    resources.getString(R.string.add_expense_category)
+                edtTitleCategory.isFocusable = false
+                toolbarAddCategories.title =
+                    resources.getString(R.string.select_icon)
             }
-        } else {
-            binding.edtTitleCategory.isFocusable = false
-            binding.toolbarAddCategories.title =
-                resources.getString(R.string.select_icon)
-        }
 
-        binding.toolbarAddCategories.setNavigationOnClickListener { finish() }
+            toolbarAddCategories.setNavigationOnClickListener { finish() }
 
 
-        with(AssetFolderManager) {
-            context = this@CategoryIconListActivity
-            addItemToMap()
-        }
-
-        val categoriesListAdapter =
-            CategoriesListAdapter(
-                AssetFolderManager.imageMap.keys.toList(),
-                this
-            ) { iconUrl, title ->
-                this.iconUrl = iconUrl
-                if (isPickIcon)
-                    binding.edtTitleCategory.setText(title)
-                Glide.with(this@CategoryIconListActivity)
-                    .load(AssetFolderManager.assetPath + this.iconUrl)
-                    .into(binding.imgChooseCategory)
-
+            with(AssetFolderManager) {
+                context = this@CategoryIconListActivity
+                addItemToMap()
             }
-        binding.rvAddCategories.setHasFixedSize(true)
-        binding.rvAddCategories.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvAddCategories.setItemViewCacheSize(20)
-        binding.rvAddCategories.adapter = categoriesListAdapter
 
+            val categoriesListAdapter =
+                CategoriesListAdapter(
+                    AssetFolderManager.imageMap.keys.toList(),
+                    this@CategoryIconListActivity
+                ) { iconUrl, title ->
+                    this@CategoryIconListActivity.iconUrl = iconUrl
+                    if (isPickIcon)
+                        edtTitleCategory.setText(title)
+                    Glide.with(this@CategoryIconListActivity)
+                        .load(AssetFolderManager.assetPath + this@CategoryIconListActivity.iconUrl)
+                        .into(imgChooseCategory)
 
+                }
+            rvAddCategories.setHasFixedSize(true)
+            rvAddCategories.layoutManager =
+                LinearLayoutManager(
+                    this@CategoryIconListActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            rvAddCategories.setItemViewCacheSize(20)
+            rvAddCategories.adapter = categoriesListAdapter
+
+        }
     }
 
 
@@ -122,7 +128,7 @@ class CategoryIconListActivity :
         snackBar.animationMode = Snackbar.ANIMATION_MODE_FADE
         var title = binding.edtTitleCategory.text.toString().trim()
         if (title.isNotEmpty())
-            title = title.replaceFirst(title[0], title[0].toUpperCase())
+            title = title.replaceFirst(title[0], title[0].uppercaseChar())
 
         when {
             title.isEmpty() -> {
