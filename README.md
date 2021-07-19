@@ -21,11 +21,20 @@
 - [Dagger Hilt](https://dagger.dev/hilt/) - Hilt is a dependency injection library for Android that reduces the boilerplate of doing manual dependency injection in your project. Doing manual dependency injection requires you to construct every class and its dependencies by hand, and to use containers to reuse and manage dependencies. 
 - [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
 - [Moonlight](https://github.com/doctor-blue/moonlight): Android DataBinding kit.
-
-    
-    ## Architecture
+- Other open source libraries:
+  - [MoonyNavBar](https://github.com/doctor-blue/moony_nav_bar_android) - Bottom navigation bar.
+  - [Glide](https://github.com/bumptech/glide) - Glide is a fast and efficient open source media management and image loading framework for Android that wraps media decoding, memory and disk caching, and resource pooling into a simple and easy to use interface.
+  - [Sdp](https://github.com/intuit/sdp) - An android lib that provides a new size unit - sdp (scalable dp). This size unit scales with the screen size. It can help Android developers with supporting multiple screens.
+## Architecture
     
 This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture.
+
+## Screenshots
+<p align="center">
+<img src="./screenshots/transaction.png" width="272" height="550"/> <img src="./screenshots/transaction_detail.png" width="272" height="550"/> 
+<img src="./screenshots/saving_goal.png" width="272" height="550"/> <img src="./screenshots/chart.png" width="272" height="550"/> 
+
+</p>
 ## Contribute
 
 All suggestions and contributions are more than welcome!
