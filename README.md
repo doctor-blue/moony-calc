@@ -35,6 +35,7 @@ This app uses [***MVVM (Model View View-Model)***](https://developer.android.com
 <img src="./screenshots/saving_goal.png" width="272" height="550"/> <img src="./screenshots/chart.png" width="272" height="550"/> 
 
 </p>
+
 ## Contribute
 
 All suggestions and contributions are more than welcome!
