@@ -25,7 +25,7 @@ class MonthView extends ListView {
     private static final int MAX_NUM_ROWS = 3;
     private static final int DAY_SEPARATOR_WIDTH = 1;
     // days to display
-    private int _numDays = DEFAULT_NUM_DAYS;
+    private final int _numDays = DEFAULT_NUM_DAYS;
     private int _numCells = _numDays;
     private int _numRows = DEFAULT_NUM_ROWS;
     // layout padding
@@ -37,16 +37,16 @@ class MonthView extends ListView {
     private Paint _monthNumberDisabledPaint;
     private Paint _monthNumberSelectedPaint;
     // month
-    private String[] _monthNames;
-    private int _monthTextSize;
-    private int _monthHeaderSize;
-    private int _monthSelectedCircleSize;
+    private final String[] _monthNames;
+    private final int _monthTextSize;
+    private final int _monthHeaderSize;
+    private final int _monthSelectedCircleSize;
     private int _monthBgSelectedColor;
     private int _monthFontColorNormal;
     private int _monthFontColorSelected;
     private int _monthFontColorDisabled;
     private int _maxMonth, _minMonth;
-    private int _rowHeightKey;
+    private final int _rowHeightKey;
     private int _selectedMonth = -1;
     // listener
     private OnMonthClickListener _onMonthClickListener;

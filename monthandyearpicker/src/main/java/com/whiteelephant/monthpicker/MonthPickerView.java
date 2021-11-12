@@ -37,7 +37,7 @@ class MonthPickerView extends FrameLayout {
     MonthPickerDialog.OnMonthChangedListener _onMonthChanged;
     OnDateSet _onDateSet;
     OnCancel _onCancel;
-    private String[] _monthNames;
+    private final String[] _monthNames;
 
     /*private static final int[] ATTRS_TEXT_COLOR = new int[] {
             com.android.internal.R.attr.textColor};

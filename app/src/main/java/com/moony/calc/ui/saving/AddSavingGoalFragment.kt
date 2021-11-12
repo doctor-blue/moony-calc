@@ -81,7 +81,7 @@ class AddSavingGoalFragment : BindingFragment<FragmentAddSavingGoalBinding>(R.la
             }
             else -> {
                 var title = binding.edtGoalDescription.text.toString().trim()
-                title = title.replaceFirst(title[0], title[0].toUpperCase())
+                title = title.replaceFirst(title[0], title[0].uppercaseChar())
                 val saving = Saving(
                     title,
                     binding.edtGoalAmount.text.toString().trim().toDouble(),

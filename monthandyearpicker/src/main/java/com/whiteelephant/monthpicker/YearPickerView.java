@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 class YearPickerView extends ListView {
 
-    private Context _context;
+    private final Context _context;
     final YearAdapter _adapter;
     final int _viewSize;
     final int _childSize;

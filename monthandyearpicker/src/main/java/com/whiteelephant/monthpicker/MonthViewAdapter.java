@@ -17,7 +17,7 @@ import java.util.HashMap;
 class MonthViewAdapter extends BaseAdapter {
 
     private int _minMonth, _maxMonth, _activatedMonth;
-    private Context _context;
+    private final Context _context;
     private HashMap<String, Integer> _colors;
     private OnDaySelectedListener mOnDaySelectedListener;
 

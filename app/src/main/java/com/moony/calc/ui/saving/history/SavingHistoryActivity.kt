@@ -49,7 +49,7 @@ class SavingHistoryActivity :
     override fun initControls(savedInstanceState: Bundle?) {
         saving = intent.getSerializableExtra(SavingHistoryFragment.SAVING) as Saving
         isSaving = intent.getBooleanExtra(SavingHistoryFragment.IS_SAVING, true)
-        currentAmount = intent.getDoubleExtra(SavingHistoryFragment.CURRENT_AMOUNT, 0.0)
+
         savingHistory =
             intent.getSerializableExtra(SavingHistoryFragment.EDIT_HISTORY) as SavingHistory?
 

@@ -21,7 +21,7 @@ public class WaveView extends LinearLayout {
 
     private int mProgress;
 
-    private Wave mWave;
+    private final Wave mWave;
 
     public WaveView(Context context, AttributeSet attrs) {
         super(context, attrs);

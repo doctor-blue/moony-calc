@@ -1,17 +1,17 @@
 ext.versions = [
-        "compileSdk"       : 30,
+        "compileSdk"       : 31,
         "buildTools"       : "30.0.3",
         "minSdk"           : 21,
-        "targetSdk"        : 30,
+        "targetSdk"        : 31,
         "versionCode"      : 1,
         "versionName"      : "1.0",
-        "gradleBuildTool"  : "4.2.0",
+        "gradleBuildTool"  : "7.0.3",
         "kotlin"           : "1.5.21",
         "material"         : "1.4.0",
 
         //jetpack
         "room"             : "2.3.0",
-        "lifecycle"        : "2.2.0",
+        "lifecycle"        : "2.4.0",
         "navigation"       : "2.3.5",
 
         // 3rd party
@@ -25,5 +25,5 @@ ext.versions = [
         "pieChart"         : "1.0.8",
 
         //Dagger hilt
-        "hilt"             : "2.37",
+        "hilt"             : "2.38.1",
 ]
