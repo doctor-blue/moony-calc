@@ -9,18 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.devcomentry.moonlight.binding.BindingActivity
 import com.moony.calc.R
-import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.ActivitySavingDetailBinding
 import com.moony.calc.model.Saving
 import com.moony.calc.ui.adapter.SavingDetailAdapter
-import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.ui.saving.history.SavingHistoryFragment
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
+import com.moony.calc.utils.showDialogDelete
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SavingDetailActivity :
-        BindingActivity<ActivitySavingDetailBinding>(R.layout.activity_saving_detail) {
+    BindingActivity<ActivitySavingDetailBinding>(R.layout.activity_saving_detail) {
 
     companion object {
         const val EDIT_SAVINGS = "com.moony.calc.activities.EDIT_SAVINGS"
@@ -45,10 +44,10 @@ class SavingDetailActivity :
         saving = intent.getSerializableExtra(SavingBoxFragment.SAVING_KEY) as Saving
 
         val fragments: List<Fragment> =
-                mutableListOf(
-                        SavingDetailFragment(saving),
-                        SavingHistoryFragment(saving)
-                )
+            mutableListOf(
+                SavingDetailFragment(saving),
+                SavingHistoryFragment(saving)
+            )
         val savingDetailAdapter = SavingDetailAdapter(supportFragmentManager, fragments, this)
         binding {
             viewpagerDetailSaving.adapter = savingDetailAdapter
@@ -72,17 +71,11 @@ class SavingDetailActivity :
             intent.putExtra(EDIT_SAVINGS, saving)
             startActivity(intent)
         } else {
-            val builder = ConfirmDialogBuilder(this)
-            builder.setContent(resources.getString(R.string.notice_delete_saving))
-            val dialog = builder.createDialog()
-            builder.btnConfirm.setOnClickListener {
+            showDialogDelete(R.string.notice_delete_saving) {
                 savingHistoryViewModel.deleteAllTransactionBySaving(saving.idSaving)
                 savingViewModel.deleteSaving(saving)
-                dialog.dismiss()
                 finish()
             }
-            builder.btnCancel.setOnClickListener { dialog.dismiss() }
-            builder.showDialog()
         }
         return true
 

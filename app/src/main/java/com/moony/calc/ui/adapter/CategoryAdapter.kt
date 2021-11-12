@@ -1,19 +1,13 @@
 package com.moony.calc.ui.adapter
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.devcomentry.moonlight.binding.BindingListAdapter
-import com.devcomentry.moonlight.binding.BindingViewHolder
 import com.moony.calc.R
 import com.moony.calc.databinding.CategoryItemBinding
-import com.moony.calc.model.Category
 import com.moony.calc.ui.adapter.viewholder.CategoryIconViewHolder
 import com.moony.calc.ui.adapter.viewholder.CategoryViewHolder
 import com.moony.calc.ui.adapter.viewholder.CategoryViewHolderBase
 import com.moony.calc.ui.category.CategoryViewModel
-import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.ui.transaction.TransactionViewModel
 
 class CategoryAdapter(

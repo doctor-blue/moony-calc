@@ -19,4 +19,14 @@
     <color name="chart_color_4">#CA7E8D</color>
     <color name="chart_color_5">#89AEB2</color>
 
+    <color name="light_2">#F5F5F5</color>
+    <color name="dark">#101010</color>
+    <color name="dark_2">#181818</color>
+    <color name="dark_3">#303030</color>
+    <color name="black_00">#A3000000</color>
+    <color name="text_dark">#DFFFFFFF</color>
+    <color name="icon_dark">#DFFFFFFF</color>
+    <color name="text_light">#323232</color>
+    <color name="icon_light">#323232</color>
+    <color name="line_stroke">#2C2C2C</color>
 </resources>

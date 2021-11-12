@@ -7,12 +7,12 @@ import com.moony.calc.R
 import com.moony.calc.databinding.CategoryItemBinding
 import com.moony.calc.model.Category
 import com.moony.calc.ui.category.CategoryViewModel
-import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.ui.transaction.TransactionViewModel
+import com.moony.calc.utils.showDialogDelete
 
 abstract class CategoryViewHolderBase(
     protected val binding: CategoryItemBinding
-) : BindingViewHolder<Any,CategoryItemBinding>(binding)
+) : BindingViewHolder<Any, CategoryItemBinding>(binding)
 
 class CategoryViewHolder(
     private val categoryViewModel: CategoryViewModel,
@@ -29,19 +29,13 @@ class CategoryViewHolder(
             onClick(category!!)
         }
         binding.btnRemoveCategory.setOnClickListener {
-            val builder = ConfirmDialogBuilder(itemView.context)
-            builder.setContent(itemView.context.resources.getString(R.string.notice_delete_category))
-            val dialog = builder.createDialog()
-
-            builder.btnConfirm.setOnClickListener {
-
+            itemView.context.showDialogDelete(
+                R.string.notice_delete_category
+            ) {
                 transactionViewModel.deleteAllTransactionByCategory(category!!.idCategory)
                 categoryViewModel.deleteCategory(category!!)
-                dialog.dismiss()
-
             }
-            builder.btnCancel.setOnClickListener { dialog.dismiss() }
-            builder.showDialog()
+
 
         }
     }
@@ -51,7 +45,9 @@ class CategoryViewHolder(
 
         category = item as Category
         val categoryTitle =
-            if (category!!.resId != -1) binding.txtCategoryItemName.context.resources.getString(category!!.resId) else category!!.title
+            if (category!!.resId != -1) binding.txtCategoryItemName.context.resources.getString(
+                category!!.resId
+            ) else category!!.title
 
         if (category!!.title.length >= 10) {
             binding.txtCategoryItemName.text = (categoryTitle.substring(0, 10) + "...")

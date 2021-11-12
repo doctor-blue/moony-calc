@@ -11,12 +11,8 @@ import com.moony.calc.R
 import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentTransactionDetailBinding
 import com.moony.calc.model.TransactionItem
-import com.moony.calc.ui.dialog.ConfirmDialogBuilder
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
-import com.moony.calc.utils.AssetFolderManager
-import com.moony.calc.utils.Settings
-import com.moony.calc.utils.decimalFormat
-import com.moony.calc.utils.formatDateTime
+import com.moony.calc.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -42,35 +38,35 @@ class TransactionDetailFragment : BaseFragment() {
 
     override fun initControls(view: View, savedInstanceState: Bundle?) {
         transactionItem =
-                arguments?.getSerializable(getString(R.string.transaction)) as TransactionItem
+            arguments?.getSerializable(getString(R.string.transaction)) as TransactionItem
 
 //        Log.d("TransactionDetail", transaction.idCategory.toString())
 
         binding.txtTransactionNote.text = transactionItem.transaction.note
 
         Glide.with(this).load(AssetFolderManager.assetPath + transactionItem.category.iconUrl)
-                .into(binding.imgCategory)
+            .into(binding.imgCategory)
         if (transactionItem.category.resId != -1) {
             binding.txtCategoryTitle.setText(transactionItem.category.resId)
-        }else{
+        } else {
             binding.txtCategoryTitle.text = transactionItem.category.title
         }
 
         if (!transactionItem.category.isIncome) {
             binding.txtTransactionMoney.text =
-                    ((-1 * transactionItem.transaction.money).decimalFormat() + settings.getString(
-                            Settings.SettingKey.CURRENCY_UNIT
-                    ))
+                ((-1 * transactionItem.transaction.money).decimalFormat() + settings.getString(
+                    Settings.SettingKey.CURRENCY_UNIT
+                ))
         } else
             binding.txtTransactionMoney.text =
-                    (transactionItem.transaction.money.decimalFormat() + settings.getString(
-                            Settings.SettingKey.CURRENCY_UNIT
-                    ))
+                (transactionItem.transaction.money.decimalFormat() + settings.getString(
+                    Settings.SettingKey.CURRENCY_UNIT
+                ))
 
         calendar.time = transactionItem.transaction.transactionTime
         binding.txtTransactionDate.text = calendar.formatDateTime()
 
-        if(transactionItem.category.resId == R.string.saving){
+        if (transactionItem.category.resId == R.string.saving) {
             binding.btnUpdateTransaction.visibility = View.GONE
         }
 
@@ -80,28 +76,22 @@ class TransactionDetailFragment : BaseFragment() {
     override fun initEvents() {
         binding.btnUpdateTransaction.setOnClickListener {
             val bundle = bundleOf(
-                    getString(R.string.transaction) to transactionItem,
+                getString(R.string.transaction) to transactionItem,
             )
             findNavController().navigate(
-                    R.id.action_transactionDetailFragment_to_updateTransactionFragment,
-                    bundle
+                R.id.action_transactionDetailFragment_to_updateTransactionFragment,
+                bundle
             )
         }
 
         binding.toolbarTransactionDetail.setOnMenuItemClickListener {
             if (it.itemId == R.id.mnu_delete) {
-                val builder = ConfirmDialogBuilder(requireContext())
-                builder.setContent(resources.getString(R.string.notice_delete_transaction))
-                val dialog = builder.createDialog()
-                builder.btnConfirm.setOnClickListener {
+                requireContext().showDialogDelete {
                     transactionViewModel.deleteTransaction(transactionItem.transaction)
                     savingHistoryViewModel.deleteSavingHistoryByTransaction(transactionItem.transaction.idTransaction)
 
-                    dialog.dismiss()
                     requireActivity().onBackPressed()
                 }
-                builder.btnCancel.setOnClickListener { dialog.dismiss() }
-                builder.showDialog()
             }
             true
         }
