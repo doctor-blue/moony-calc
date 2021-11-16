@@ -4,9 +4,9 @@ ext.versions = [
         "minSdk"           : 21,
         "targetSdk"        : 31,
         "versionCode"      : 1,
-        "versionName"      : "1.0",
+        "versionName"      : "1.0.0",
         "gradleBuildTool"  : "7.0.3",
-        "kotlin"           : "1.5.21",
+        "kotlin"           : "1.5.31",
         "material"         : "1.4.0",
 
         //jetpack

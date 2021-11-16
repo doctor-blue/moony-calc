@@ -11,7 +11,7 @@ android {
     buildToolsVersion versions.buildTools
 
     defaultConfig {
-        applicationId "com.moony.calc"
+        applicationId "com.bookmark.money.finance.tracker.budget.wallet.manager"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode versions.versionCode
