@@ -8,16 +8,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.devcomentry.moonlight.binding.BindingFragment
 import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
-import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentAddSavingGoalBinding
 import com.moony.calc.model.Saving
 import com.moony.calc.ui.category.CategoryIconListActivity
@@ -29,7 +26,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class AddSavingGoalFragment : BindingFragment<FragmentAddSavingGoalBinding>(R.layout.fragment_add_saving_goal) {
+class AddSavingGoalFragment :
+    BindingFragment<FragmentAddSavingGoalBinding>(R.layout.fragment_add_saving_goal) {
 
     private val calendar: Calendar = Calendar.getInstance()
     private var dueDate: Date? = null
@@ -187,8 +185,13 @@ class AddSavingGoalFragment : BindingFragment<FragmentAddSavingGoalBinding>(R.la
 
 //            dueDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
             dueDate = calendar.time
-            binding.txtDueDate.text = resources.getString(R.string.due_date) + " " + SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(dueDate!!)
+            binding.txtDueDate.text =
+                resources.getString(R.string.due_date) + " " + SimpleDateFormat(
+                    "dd/MM/yyyy",
+                    Locale.ENGLISH
+                ).format(dueDate!!)
         }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
+        dialog.datePicker.minDate = System.currentTimeMillis()
         dialog.show()
     }
 
