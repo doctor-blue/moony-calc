@@ -1,4 +1,4 @@
-package com.moony.calc.ui.adapter.viewholder
+package com.moony.calc.ui.category.adapter
 
 import com.bumptech.glide.Glide
 import com.moony.calc.databinding.CategoryItemBinding

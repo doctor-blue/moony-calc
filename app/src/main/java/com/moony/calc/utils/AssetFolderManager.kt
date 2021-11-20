@@ -1,5 +1,6 @@
 package com.moony.calc.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.moony.calc.R
 import kotlinx.coroutines.Deferred
@@ -7,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
+@SuppressLint("StaticFieldLeak")
 object AssetFolderManager {
     const val assetPath = "//android_asset/"
     lateinit var context: Context

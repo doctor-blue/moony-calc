@@ -1,4 +1,4 @@
-package com.moony.calc.ui.adapter
+package com.moony.calc.ui.category.adapter
 
 import android.content.Context
 import androidx.fragment.app.Fragment

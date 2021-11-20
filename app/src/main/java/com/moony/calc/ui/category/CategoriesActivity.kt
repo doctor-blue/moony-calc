@@ -3,11 +3,9 @@ package com.moony.calc.ui.category
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.devcomentry.moonlight.binding.BindingActivity
-import com.devcomentry.moonlight.binding.BindingFragment
 import com.moony.calc.R
-import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.ActivityCategoriesBinding
-import com.moony.calc.ui.adapter.CategoriesPagerAdapter
+import com.moony.calc.ui.category.adapter.CategoriesPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

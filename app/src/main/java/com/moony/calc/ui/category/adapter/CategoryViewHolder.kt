@@ -1,4 +1,4 @@
-package com.moony.calc.ui.adapter.viewholder
+package com.moony.calc.ui.category.adapter
 
 import android.view.View
 import com.bumptech.glide.Glide

@@ -6,7 +6,7 @@
 
         <import type="com.moony.calc.ui.category.CategoryViewModel" />
 
-        <import type="com.moony.calc.ui.adapter.CategoryAdapter" />
+        <import type="com.moony.calc.ui.category.adapter.CategoryAdapter" />
 
         <variable
             name="vm"
@@ -14,7 +14,7 @@
 
         <variable
             name="adapter"
-            type="CategoryAdapter" />
+            type="com.moony.calc.ui.category.adapter.CategoryAdapter" />
 
         <variable
             name="isIncome"

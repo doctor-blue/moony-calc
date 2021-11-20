@@ -1,6 +1,5 @@
-package com.moony.calc.ui.adapter.viewholder
+package com.moony.calc.ui.saving.adapter
 
-import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide

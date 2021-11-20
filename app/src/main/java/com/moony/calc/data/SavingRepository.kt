@@ -1,8 +1,6 @@
 package com.moony.calc.data
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import com.moony.calc.database.MoonyDatabase
 import com.moony.calc.database.SavingDao
 import com.moony.calc.model.Saving
 import com.moony.calc.model.SavingItem

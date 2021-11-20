@@ -7,7 +7,7 @@
 
         <import type="com.moony.calc.ui.saving.SavingViewModel" />
 
-        <import type="com.moony.calc.ui.adapter.SavingBoxAdapter" />
+        <import type="com.moony.calc.ui.saving.adapter.SavingBoxAdapter" />
 
         <variable
             name="vm"
@@ -15,7 +15,7 @@
 
         <variable
             name="adapter"
-            type="SavingBoxAdapter" />
+            type="com.moony.calc.ui.saving.adapter.SavingBoxAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

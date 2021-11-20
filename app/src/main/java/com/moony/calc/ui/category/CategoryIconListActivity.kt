@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.devcomentry.moonlight.binding.BindingActivity
@@ -16,7 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.moony.calc.R
 import com.moony.calc.databinding.ActivityAddCategoriesBinding
 import com.moony.calc.model.Category
-import com.moony.calc.ui.adapter.CategoriesListAdapter
+import com.moony.calc.ui.category.adapter.CategoriesListAdapter
 import com.moony.calc.ui.saving.AddSavingGoalFragment
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.setAutoHideKeyboard

@@ -1,4 +1,4 @@
-package com.moony.calc.ui.adapter
+package com.moony.calc.ui.transaction.adapter
 
 import android.view.ViewGroup
 import android.widget.Filter
@@ -7,7 +7,6 @@ import com.devcomentry.moonlight.binding.BindingListAdapter
 import com.moony.calc.R
 import com.moony.calc.databinding.TransactionItemBinding
 import com.moony.calc.model.TransactionItem
-import com.moony.calc.ui.adapter.viewholder.TransactionViewHolder
 
 class TransactionAdapter(
     private val itemClick: (TransactionItem) -> Unit

@@ -1,11 +1,11 @@
-package com.moony.calc.ui.adapter
+package com.moony.calc.ui.saving.history.adapter
 
 import android.view.ViewGroup
 import com.devcomentry.moonlight.binding.BindingListAdapter
 import com.moony.calc.R
 import com.moony.calc.databinding.SavingHistoryItemBinding
 import com.moony.calc.model.SavingHistory
-import com.moony.calc.ui.adapter.viewholder.SavingHistoryViewHolder
+import com.moony.calc.ui.saving.history.adapter.SavingHistoryViewHolder
 
 class SavingHistoryAdapter(
     private val itemClick: (SavingHistory) -> Unit

@@ -10,7 +10,7 @@ import com.moony.calc.R
 import com.moony.calc.databinding.FragmentCategoriesBinding
 import com.moony.calc.keys.MoonyKey
 import com.moony.calc.model.Category
-import com.moony.calc.ui.adapter.CategoryAdapter
+import com.moony.calc.ui.category.adapter.CategoryAdapter
 import com.moony.calc.ui.transaction.TransactionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

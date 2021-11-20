@@ -7,12 +7,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.moony.calc.R
-import com.moony.calc.model.*
+import com.moony.calc.model.Category
+import com.moony.calc.model.Saving
+import com.moony.calc.model.SavingHistory
+import com.moony.calc.model.Transaction
 import com.moony.calc.utils.TimestampConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
 
 @Database(
     entities = [Transaction::class, Saving::class, Category::class, SavingHistory::class],
@@ -43,11 +45,11 @@ abstract class MoonyDatabase : RoomDatabase() {
         private val callback = object : RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                adDefaultCategory(instance!!.getCategoryDao())
+                addDefaultCategory(instance!!.getCategoryDao())
             }
         }
 
-        private fun adDefaultCategory(categoryDao: CategoryDao) {
+        private fun addDefaultCategory(categoryDao: CategoryDao) {
             GlobalScope.launch(Dispatchers.IO) {
                 val defaultCategories = listOf(
                     Category("","categories/life/atm.png",resId = R.string.atm),

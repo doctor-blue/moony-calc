@@ -7,7 +7,7 @@
 
         <import type="com.moony.calc.ui.saving.history.SavingHistoryViewModel" />
 
-        <import type="com.moony.calc.ui.adapter.SavingHistoryAdapter" />
+        <import type="com.moony.calc.ui.saving.history.adapter.SavingHistoryAdapter" />
 
         <variable
             name="vm"
@@ -15,7 +15,7 @@
 
         <variable
             name="adapter"
-            type="SavingHistoryAdapter" />
+            type="com.moony.calc.ui.saving.history.adapter.SavingHistoryAdapter" />
     </data>
 
     <FrameLayout

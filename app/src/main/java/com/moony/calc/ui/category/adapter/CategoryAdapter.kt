@@ -1,12 +1,12 @@
-package com.moony.calc.ui.adapter
+package com.moony.calc.ui.category.adapter
 
 import android.view.ViewGroup
 import com.devcomentry.moonlight.binding.BindingListAdapter
 import com.moony.calc.R
 import com.moony.calc.databinding.CategoryItemBinding
-import com.moony.calc.ui.adapter.viewholder.CategoryIconViewHolder
-import com.moony.calc.ui.adapter.viewholder.CategoryViewHolder
-import com.moony.calc.ui.adapter.viewholder.CategoryViewHolderBase
+import com.moony.calc.ui.category.adapter.CategoryIconViewHolder
+import com.moony.calc.ui.category.adapter.CategoryViewHolder
+import com.moony.calc.ui.category.adapter.CategoryViewHolderBase
 import com.moony.calc.ui.category.CategoryViewModel
 import com.moony.calc.ui.transaction.TransactionViewModel
 

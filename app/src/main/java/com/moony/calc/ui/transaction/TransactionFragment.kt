@@ -13,7 +13,7 @@ import com.devcomentry.moonlight.binding.BindingFragment
 import com.moony.calc.R
 import com.moony.calc.databinding.FragmentTransactionBinding
 import com.moony.calc.model.TransactionItem
-import com.moony.calc.ui.adapter.TransactionAdapter
+import com.moony.calc.ui.transaction.adapter.TransactionAdapter
 import com.moony.calc.utils.Settings
 import com.moony.calc.utils.formatMonth
 import com.whiteelephant.monthpicker.MonthPickerDialog

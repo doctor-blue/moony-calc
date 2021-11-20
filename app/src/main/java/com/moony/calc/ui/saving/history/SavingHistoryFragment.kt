@@ -4,16 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devcomentry.moonlight.binding.BindingFragment
 import com.moony.calc.R
-import com.moony.calc.base.BaseFragment
 import com.moony.calc.databinding.FragmentSavingHistoryBinding
 import com.moony.calc.model.Saving
 import com.moony.calc.model.SavingHistory
-import com.moony.calc.ui.adapter.SavingHistoryAdapter
+import com.moony.calc.ui.saving.history.adapter.SavingHistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

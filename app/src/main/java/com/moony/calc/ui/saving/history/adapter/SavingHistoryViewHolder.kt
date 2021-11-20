@@ -1,6 +1,5 @@
-package com.moony.calc.ui.adapter.viewholder
+package com.moony.calc.ui.saving.history.adapter
 
-import android.view.View
 import com.devcomentry.moonlight.binding.BindingViewHolder
 import com.moony.calc.R
 import com.moony.calc.databinding.SavingHistoryItemBinding
