@@ -90,7 +90,12 @@
         android:id="@+id/addTransactionFragment"
         android:name="com.moony.calc.ui.transaction.AddTransactionFragment"
         android:label="fragment_add_transaction"
-        tools:layout="@layout/fragment_add_transaction" />
+        tools:layout="@layout/fragment_add_transaction" >
+        <argument
+            android:name="balance"
+            app:argType="string"
+            android:defaultValue="0" />
+    </fragment>
     <fragment
         android:id="@+id/updateTransactionFragment"
         android:name="com.moony.calc.ui.transaction.UpdateTransactionFragment"

@@ -29,6 +29,7 @@ import com.moony.calc.ui.saving.history.SavingHistoryViewModel
 import com.moony.calc.utils.AssetFolderManager
 import com.moony.calc.utils.formatDateTime
 import com.moony.calc.utils.setAutoHideKeyboard
+import com.moony.calc.utils.showDialogConfirm
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
@@ -204,6 +205,8 @@ class AddTransactionFragment : AddTransactionFragmentBase() {
     }
 
     override fun saveTransaction(money: String) {
+        val balance = arguments?.getString("balance")?.toDouble()
+
         var description = binding.edtTransactionNote.text.toString()
 
         if (description.isEmpty() && savingPosition != -1)
@@ -221,13 +224,27 @@ class AddTransactionFragment : AddTransactionFragmentBase() {
             description,
             calendar.time,
         )
+        if (!category!!.isIncome && balance != null && balance < mon) {
+            requireContext().showDialogConfirm(
+                getString(R.string.transaction_greater_than_balance_alert) + " $mon! " + getString(R.string.create_transaction_alert),
+                lifecycle,
+                {}) {
+                confirmCreateTransaction(transaction)
+            }
+        } else {
+            confirmCreateTransaction(transaction)
+        }
+
+    }
+
+    private fun confirmCreateTransaction(transaction: Transaction) {
         transactionViewModel.insertTransaction(transaction)
         lifecycleScope.launch {
             if (savingPosition != -1) {
                 val savingHistory = SavingHistory(
                     "",
                     savings[savingPosition].idSaving,
-                    if (category!!.isIncome) mon * -1 else mon,
+                    if (category!!.isIncome) transaction.money * -1 else transaction.money,
                     !category!!.isIncome,
                     calendar.formatDateTime(),
                     transaction.idTransaction

@@ -83,7 +83,10 @@ class TransactionFragment :
     override fun initEvents() {
         binding {
             btnAddTransaction.setOnClickListener {
-                findNavController().navigate(R.id.action_transaction_fragment_to_addTransactionFragment)
+                findNavController().navigate(
+                    R.id.action_transaction_fragment_to_addTransactionFragment,
+                    bundleOf("balance" to transactionViewModel.totalBalance.value)
+                )
             }
 
             btnFilterTransaction.setOnClickListener {

@@ -1,5 +1,8 @@
 package com.moony.calc.ui.settings
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,10 +14,13 @@ import com.moony.calc.R
 import com.moony.calc.databinding.FragmentSettingBinding
 import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.utils.Settings
+import com.moony.calc.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragment_setting), View.OnClickListener {
+class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragment_setting),
+    View.OnClickListener {
 
     private val settings: Settings by lazy {
         Settings.getInstance(requireContext())
@@ -31,8 +37,8 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                     settings.put(
-                            Settings.SettingKey.CURRENCY_UNIT,
-                            if (p2 != 0) currencyArr[p2] else ""
+                        Settings.SettingKey.CURRENCY_UNIT,
+                        if (p2 != 0) currencyArr[p2] else ""
                     )
 
                 }
@@ -57,9 +63,9 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
     override fun initControls(savedInstanceState: Bundle?) {
 
         ArrayAdapter.createFromResource(
-                requireContext(),
-                R.array.currency,
-                R.layout.spinner_item
+            requireContext(),
+            R.array.currency,
+            R.layout.spinner_item
         ).also { arrayAdapter ->
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.settingsSpinner.adapter = arrayAdapter
@@ -76,7 +82,14 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
 
         when (v?.id) {
             R.id.layout_invite_friend -> {
-
+                val clipboard: ClipboardManager? =
+                    requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+                val clip: ClipData = ClipData.newPlainText(
+                    "",
+                    "http://play.google¬.com/store/apps/details?id=${requireContext().packageName}"
+                )
+                clipboard!!.setPrimaryClip(clip)
+                requireContext().showToast(R.string.copied_link_to_clipbroad)
             }
 
             R.id.layout_feedback -> {
@@ -88,7 +101,7 @@ class SettingFragment : BindingFragment<FragmentSettingBinding>(R.layout.fragmen
             }
 
             R.id.layout_rate_us -> {
-
+                openLink("http://play.google.com/store/apps/details?id=${requireContext().packageName}")
             }
 
             R.id.layout_about -> {

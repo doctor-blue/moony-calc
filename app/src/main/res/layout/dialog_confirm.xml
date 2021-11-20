@@ -4,53 +4,74 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/warning"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        style="@style/Widget.Moony.Title2"
-        android:id="@+id/txt_title_confirm_dialog"
-        android:layout_marginStart="@dimen/_20sdp" />
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/txt_title_confirm_dialog"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginLeft="@dimen/_15sdp"
-        android:id="@+id/txt_content_confirm_dialog"
-        android:textColor="?colorPrimary"
-        android:textSize="@dimen/_12sdp"
-        />
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_content_confirm_dialog"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:layout_marginRight="@dimen/_15sdp"
-        android:text="@string/ok"
-        app:backgroundTint="?colorAccent"
-        android:id="@+id/btn_confirm_confirm_dialog"
-        />
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/btn_confirm_confirm_dialog"
-        app:layout_constraintTop_toBottomOf="@id/txt_content_confirm_dialog"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_30sdp"
-        app:backgroundTint="@color/white"
-        android:text="@string/cancel"
-        android:id="@+id/btn_cancel_confirm_dialog"
-        android:layout_marginRight="@dimen/_30sdp"
-        android:textColor="?colorPrimary"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.82"
+        android:background="@drawable/bg_radius_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:text="@string/alert"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/text_light"
+            android:layout_marginTop="@dimen/space_screen_normal"
+            android:textSize="@dimen/text_size_16"
+            android:fontFamily="@font/inter_semibold_600"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_marginStart="@dimen/space_screen_normal"
+            android:layout_marginEnd="@dimen/space_screen_normal"
+            android:layout_width="0dp"
+            android:text="@string/notice_delete_transaction"
+            app:layout_constraintTop_toBottomOf="@id/txt_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:textColor="@color/text_light"
+            android:layout_marginTop="@dimen/space_screen_small"
+            android:layout_height="wrap_content"/>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_screen_normal"
+            android:layout_marginBottom="@dimen/space_screen_normal"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tvContent"
+            app:layout_constraintStart_toStartOf="@id/tvContent"
+            app:layout_constraintTop_toBottomOf="@id/tvContent">
 
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_medium_500"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/text_light" />
 
+            <TextView
+                android:id="@+id/tvOk"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_save"
+                android:fontFamily="@font/inter_medium_500"
+                android:gravity="center"
+                android:text="@string/ok"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
