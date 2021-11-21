@@ -78,8 +78,8 @@
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_180sdp"
                 android:layout_marginTop="@dimen/_30sdp"
-                app:cardCornerRadius="@dimen/_90sdp"
                 app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_90sdp"
                 app:cardElevation="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,12 +93,12 @@
                     app:blow_wave_color="@color/colorAccent" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_saving_progress"
                     style="@style/Widget.Moony.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="20%"
-                    android:id="@+id/txt_saving_progress"
                     android:textColor="@color/blue"
                     android:textSize="@dimen/_30sdp" />
             </com.google.android.material.card.MaterialCardView>
@@ -108,33 +108,11 @@
                 style="@style/Widget.Moony.Title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:text="@string/saved"
-                app:layout_constraintEnd_toStartOf="@+id/txt_title_total"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_saving_total" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_title_remaining"
-                style="@style/Widget.Moony.Title2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:text="@string/remaining"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txt_title_total"
-                app:layout_constraintTop_toBottomOf="@+id/txt_saving_total" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_title_total"
-                style="@style/Widget.Moony.Title2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:text="@string/total"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/saved"
+                app:layout_constraintEnd_toStartOf="@+id/txt_title_remaining"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_saving_progress" />
+                app:layout_constraintTop_toBottomOf="@+id/card_saving_progress" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txt_saving_saved"
@@ -145,24 +123,20 @@
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_18sdp"
                 android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/txt_title_saved"
                 app:layout_constraintStart_toStartOf="@id/txt_title_saved"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_saved" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_saving_remaining"
-                style="@style/Widget.Moony.Headline4"
+                android:id="@+id/txt_title_total"
+                style="@style/Widget.Moony.Title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_40sdp"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/_18sdp"
-                android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/txt_title_remaining"
-                app:layout_constraintStart_toStartOf="@+id/txt_title_remaining"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title_remaining" />
+                android:layout_marginTop="@dimen/_30sdp"
+                android:text="@string/total"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_title_remaining"
+                app:layout_constraintTop_toBottomOf="@id/card_saving_progress" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txt_saving_total"
@@ -175,17 +149,63 @@
                 app:layout_constraintEnd_toEndOf="@+id/txt_title_total"
                 app:layout_constraintStart_toStartOf="@+id/txt_title_total"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_total" />
-            <!--   <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txt_saving_needed"
-                style="@style/Widget.Moony.Title1"
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_title_remaining"
+                style="@style/Widget.Moony.Title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Saving needed"
                 android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/remaining"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_saving_remaining"/>
-    -->
+                app:layout_constraintTop_toBottomOf="@+id/txt_saving_total" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_title_money"
+                style="@style/Widget.Moony.Title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money"
+                app:layout_constraintEnd_toStartOf="@+id/txt_title_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_remaining" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_saving_remaining_money"
+                style="@style/Widget.Moony.Headline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="@+id/txt_title_money"
+                app:layout_constraintStart_toStartOf="@+id/txt_title_money"
+                app:layout_constraintTop_toBottomOf="@id/txt_title_money" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_title_time"
+                style="@style/Widget.Moony.Title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_title_money"
+                app:layout_constraintTop_toBottomOf="@id/txt_title_remaining" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_saving_remaining_days"
+                style="@style/Widget.Moony.Headline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="@+id/txt_title_time"
+                app:layout_constraintStart_toStartOf="@+id/txt_title_time"
+                app:layout_constraintTop_toBottomOf="@id/txt_title_time" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

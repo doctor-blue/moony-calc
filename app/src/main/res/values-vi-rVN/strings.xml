@@ -121,7 +121,7 @@
     <string name="monthly_salary">Tiền lương</string>
     <string name="all">Tất cả</string>
     <string name="no_item_chart">No item chart</string>
-    <string name="redundancy">Redundancy</string>
+    <string name="redundancy">Dư thừa</string>
     <string name="no_item">No item</string>
     <string name="by_income">Đã lọc theo thu nhập</string>
     <string name="by_expenses">Đã lọc theo chi tiêu</string>
@@ -129,5 +129,11 @@
     <string name="create_transaction_alert">Bạn có thực sự muốn tạo giao dịch này?</string>
     <string name="transaction_greater_than_balance_alert">Khoản thu của bạn nhỏ hơn </string>
     <string name="copied_link_to_clipbroad">Liên kết được sao chép vào khay nhớ tạm</string>
+    <string name="money">Số tiền</string>
+    <string name="time">Thời gian</string>
+    <string name="day">Ngày</string>
+    <string name="days">Ngày</string>
+    <string name="expired">Hết hạn</string>
+    <string name="exceeds_the_amount">Số tiền bạn đã nhập vượt quá số tiền còn lại trong khoản tiết kiệm của bạn</string>
 
 </resources>

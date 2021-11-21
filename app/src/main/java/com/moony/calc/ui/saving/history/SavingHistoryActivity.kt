@@ -176,7 +176,7 @@ class SavingHistoryActivity :
 //            }
 
             binding.edtSavingHistoryAmount.text.toString().toDouble() > currentAmount && !isSaving -> {
-                binding.tipHistorySavingAmount.error = "The amount you entered exceeds the amount left in your savings "
+                binding.tipHistorySavingAmount.error = getText(R.string.exceeds_the_amount)
             }
 
             binding.txtDueDate.text.toString().trim().isEmpty() -> {
