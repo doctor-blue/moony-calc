@@ -21,7 +21,8 @@ import java.util.*
 import kotlin.math.floor
 
 @AndroidEntryPoint
-class SavingDetailFragment(var savings: Saving) : BindingFragment<FragmentSavingDetailBinding>(R.layout.fragment_saving_detail) {
+class SavingDetailFragment(var savings: Saving) :
+    BindingFragment<FragmentSavingDetailBinding>(R.layout.fragment_saving_detail) {
 
     private val savingViewModel: SavingViewModel by activityViewModels()
 
@@ -44,16 +45,23 @@ class SavingDetailFragment(var savings: Saving) : BindingFragment<FragmentSaving
     private val savingObserver = Observer<Saving> { saving ->
         saving?.let {
             this.saving = it
-     binding {
-         txtSavingDetailDate.text =
-                 SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(saving.deadLine)
-         txtSavingTotal.text = saving.desiredAmount.decimalFormat()
-         (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.title
+            binding {
+                txtSavingDetailDate.text =
+                    SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(saving.deadLine)
+                txtSavingTotal.text = saving.desiredAmount.decimalFormat()
+                (requireActivity() as SavingDetailActivity).supportActionBar?.title = it.title
 
-         Glide.with(this@SavingDetailFragment).load(AssetFolderManager.assetPath + it.iconUrl)
-                 .into(imgSavingDetailCategories)
-         txtSavingDetailCategories.text = ""
-     }
+                Glide.with(this@SavingDetailFragment)
+                    .load(AssetFolderManager.assetPath + it.iconUrl)
+                    .into(imgSavingDetailCategories)
+                txtSavingDetailCategories.text = ""
+                if(remainingDays(saving.deadLine) >= 0) {
+                    txtSavingRemainingDays.text =
+                        remainingDays(saving.deadLine).toString() + " " + getText(R.string.day)
+                } else {
+                    txtSavingRemainingDays.text = getText(R.string.expired)
+                }
+            }
         }
     }
 
@@ -76,10 +84,17 @@ class SavingDetailFragment(var savings: Saving) : BindingFragment<FragmentSaving
                 txtTitleRemaining.setText(R.string.redundancy)
             }
 
-            txtSavingRemaining.text = remaining.decimalFormat()
+            txtSavingRemainingMoney.text = remaining.decimalFormat()
         }
+    }
 
+    private fun remainingDays(dueDate: Date): Long {
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.MILLISECOND] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.HOUR] = 0
 
-
+        return (dueDate.time - calendar.timeInMillis) / (1000 * 60 * 60 * 24)
     }
 }

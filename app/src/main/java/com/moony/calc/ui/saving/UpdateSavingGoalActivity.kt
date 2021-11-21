@@ -128,7 +128,7 @@ class UpdateSavingGoalActivity :
         saving?.let {
 
             binding.edtGoalDescription.setText(it.title)
-            binding.edtGoalAmount.setText(("${it.desiredAmount}"))
+            binding.edtGoalAmount.setText(("${it.desiredAmount.decimalFormat()}"))
             binding.txtDueDate.text =
                 (resources.getString(R.string.due_date) + " " + SimpleDateFormat(
                     "dd/MM/yyyy",
