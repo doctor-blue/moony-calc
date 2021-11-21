@@ -114,4 +114,8 @@
         android:name="com.moony.calc.ui.settings.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/savingHistoryDetailFragment"
+        android:name="com.moony.calc.ui.saving.history.SavingHistoryDetailActivity"
+        android:label="SavingHistoryDetailFragment" />
 </navigation>

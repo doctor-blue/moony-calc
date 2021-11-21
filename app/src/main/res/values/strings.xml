@@ -156,5 +156,6 @@
     <string name="days">Days</string>
     <string name="expired">Expired</string>
     <string name="exceeds_the_amount">The amount you entered exceeds the amount left in your savings</string>
+    <string name="history_detail">History detail</string>
 
 </resources>

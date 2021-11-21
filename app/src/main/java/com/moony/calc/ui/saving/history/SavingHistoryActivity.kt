@@ -136,7 +136,7 @@ class SavingHistoryActivity :
 
     private fun getCurrentAmount() {
         savingHistoryViewModel.getAllSavingHistory(saving!!.idSaving).observe(this, { list ->
-            for(item in list) {
+            for (item in list) {
                 currentAmount += item.amount
             }
         })
@@ -165,7 +165,23 @@ class SavingHistoryActivity :
         snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.colorAccent))
         snackbar.animationMode = Snackbar.ANIMATION_MODE_SLIDE
 
+        var amount = binding.edtSavingHistoryAmount.text.toString().toDouble()
+        if (!isSaving) amount *= -1
 
+        var description = binding.edtHistorySavingDescription.text.toString()
+
+        if (description.isEmpty())
+            description = if (isSaving) {
+                resources.getString(R.string.add_to) +
+                        " " +
+                        saving!!.title +
+                        " " +
+                        resources.getString(R.string.savings)
+            } else {
+                resources.getString(R.string.take_money_out_of_savings) +
+                        " " +
+                        saving!!.title
+            }
         when {
             binding.edtSavingHistoryAmount.text.toString().trim().isEmpty() -> {
                 binding.tipHistorySavingAmount.error = resources.getString(R.string.empty_error)
@@ -175,7 +191,8 @@ class SavingHistoryActivity :
 //                    resources.getString(R.string.empty_error)
 //            }
 
-            binding.edtSavingHistoryAmount.text.toString().toDouble() > currentAmount && !isSaving -> {
+            binding.edtSavingHistoryAmount.text.toString()
+                .toDouble() > currentAmount && !isSaving -> {
                 binding.tipHistorySavingAmount.error = getText(R.string.exceeds_the_amount)
             }
 
@@ -184,36 +201,31 @@ class SavingHistoryActivity :
             }
             else -> {
                 if (savingHistory != null) {
-                    var amount = binding.edtSavingHistoryAmount.text.toString().toDouble()
-                    if (!isSaving) amount *= -1
 
-                    savingHistory!!.amount = amount
-                    savingHistory!!.isSaving = isSaving
-                    savingHistory!!.date = dateAdded
-                    savingHistory!!.description =
-                        binding.edtHistorySavingDescription.text.toString()
 
-                    savingHistoryViewModel.updateSavingHistory(savingHistory!!)
-                    finish()
+                    categoryViewModel.getSavingCategory(!isSaving, R.string.saving)
+                        .observe(this, { category ->
+                            val transaction = Transaction(
+                                abs(amount),
+                                category.idCategory,
+                                description,
+                                calendar.time
+                            )
+                            transaction.idTransaction = savingHistory!!.idTransaction
+                            transactionViewModel.updateTransaction(transaction)
 
+                            savingHistory!!.amount = amount
+                            savingHistory!!.isSaving = isSaving
+                            savingHistory!!.date = dateAdded
+                            savingHistory!!.description =
+                                binding.edtHistorySavingDescription.text.toString()
+
+                            savingHistoryViewModel.updateSavingHistory(savingHistory!!)
+                            SavingHistoryDetailActivity.thisActivity.finish()
+                            finish()
+                        })
                 } else {
-                    var amount = binding.edtSavingHistoryAmount.text.toString().toDouble()
-                    if (!isSaving) amount *= -1
 
-                    var description = binding.edtHistorySavingDescription.text.toString()
-
-                    if (description.isEmpty())
-                        description = if (isSaving) {
-                            resources.getString(R.string.add_to) +
-                                    " " +
-                                    saving!!.title +
-                                    " " +
-                                    resources.getString(R.string.savings)
-                        } else {
-                            resources.getString(R.string.take_money_out_of_savings) +
-                                    " " +
-                                    saving!!.title
-                        }
                     categoryViewModel.getSavingCategory(!isSaving, R.string.saving)
                         .observe(this, { category ->
                             val transaction = Transaction(
