@@ -102,7 +102,7 @@ abstract class MoonyDatabase : RoomDatabase() {
                         "categories/transportation/parking_lot.png",
                     ),
                     Category(context.getString(R.string.refuel), "categories/transportation/fuel.png"),
-                    Category(context.getString(R.string.saving), "categories/income/salary.png"),
+                    Category(context.getString(R.string.saving), "categories/income/salary.png", resId = R.string.saving),
                     Category(context.getString(R.string.other), "categories/money/money.png"),
 
                     Category(context.getString(R.string.sell), "categories/income/sell.png", true),
@@ -117,7 +117,7 @@ abstract class MoonyDatabase : RoomDatabase() {
                         "categories/income/salary1.png",
                         true,
                     ),
-                    Category(context.getString(R.string.saving), "categories/income/salary.png", true),
+                    Category(context.getString(R.string.saving), "categories/income/salary.png", true, resId = R.string.saving),
                     Category(context.getString(R.string.other), "categories/money/money.png", true)
                 )
                 defaultCategories.forEach {

@@ -44,10 +44,7 @@ class CategoryViewHolder(
     override fun onBind(item: Any) {
 
         category = item as Category
-        val categoryTitle =
-            if (category!!.resId != -1) binding.txtCategoryItemName.context.resources.getString(
-                category!!.resId
-            ) else category!!.title
+        val categoryTitle = category!!.title
 
         if (category!!.title.length >= 10) {
             binding.txtCategoryItemName.text = (categoryTitle.substring(0, 10) + "...")

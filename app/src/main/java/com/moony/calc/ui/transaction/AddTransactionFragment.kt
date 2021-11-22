@@ -293,11 +293,7 @@ class AddTransactionFragment : AddTransactionFragmentBase() {
                         .load(AssetFolderManager.assetPath + category!!.iconUrl)
                         .into(imgCategories)
 
-                    if (category!!.resId == -1) {
-                        txtTitleTransactionCategory.text = category!!.title
-                    } else {
-                        txtTitleTransactionCategory.setText(category!!.resId)
-                    }
+                    txtTitleTransactionCategory.text = category!!.title
 
                     if (savings.isNotEmpty()) {
                         if (category!!.resId == R.string.saving) {

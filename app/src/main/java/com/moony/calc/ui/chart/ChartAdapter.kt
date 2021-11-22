@@ -12,7 +12,7 @@ import com.moony.calc.utils.Settings
 import com.moony.calc.utils.decimalFormat
 
 class ChartAdapter(
-        private val itemClick: (ChartItem) -> Unit
+    private val itemClick: (ChartItem) -> Unit
 ) : BindingListAdapter<ChartItem, TransactionItemBinding>(R.layout.transaction_item) {
 
 
@@ -21,7 +21,7 @@ class ChartAdapter(
     }
 
     inner class ViewHolder(
-            private val binding: TransactionItemBinding
+        private val binding: TransactionItemBinding
     ) : BindingViewHolder<ChartItem, TransactionItemBinding>(binding) {
         private var chartItem: ChartItem? = null
         private val settings = Settings.getInstance(binding.root.context)
@@ -38,15 +38,14 @@ class ChartAdapter(
         override fun onBind(item: ChartItem) {
             chartItem = item
 
-            Glide.with(binding.root.context).load(AssetFolderManager.assetPath + item.category.iconUrl)
-                    .into(binding.imgTransaction)
+            Glide.with(binding.root.context)
+                .load(AssetFolderManager.assetPath + item.category.iconUrl)
+                .into(binding.imgTransaction)
 
-            if (item.category.resId != -1) {
-                binding.txtTransactionName.setText(item.category.resId)
-            } else {
-                binding.txtTransactionName.text = item.category.title
-            }
-            binding.txtTransactionMoney.text = (item.sum.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
+
+            binding.txtTransactionName.text = item.category.title
+            binding.txtTransactionMoney.text =
+                (item.sum.decimalFormat() + settings.getString(Settings.SettingKey.CURRENCY_UNIT))
             binding.txtTransactionDate.text = ""
         }
     }

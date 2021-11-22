@@ -32,12 +32,8 @@ class UpdateTransactionFragment :
                     .load(AssetFolderManager.assetPath + item.category.iconUrl)
                     .into(imgCategories)
 
-                if (item.category.resId != -1) {
-                    txtTitleTransactionCategory.setText(item.category.resId)
-                } else {
                     txtTitleTransactionCategory.text = item.category.title
 
-                }
 
                 if (item.category.isIncome) {
                     edtTransactionMoney.setText(item.transaction.money.decimalFormat())
@@ -83,12 +79,8 @@ class UpdateTransactionFragment :
                             .load(AssetFolderManager.assetPath + item.category.iconUrl)
                             .into(imgCategories)
 
-                        if (item.category.resId != -1) {
-                            txtTitleTransactionCategory.setText(item.category.resId)
-                        } else {
                             txtTitleTransactionCategory.text = item.category.title
 
-                        }
 
                         textInputTransactionTitleCategory.error = null
 

@@ -46,11 +46,8 @@ class TransactionDetailFragment : BaseFragment() {
 
         Glide.with(this).load(AssetFolderManager.assetPath + transactionItem.category.iconUrl)
             .into(binding.imgCategory)
-        if (transactionItem.category.resId != -1) {
-            binding.txtCategoryTitle.setText(transactionItem.category.resId)
-        } else {
-            binding.txtCategoryTitle.text = transactionItem.category.title
-        }
+
+        binding.txtCategoryTitle.text = transactionItem.category.title
 
         if (!transactionItem.category.isIncome) {
             binding.txtTransactionMoney.text =

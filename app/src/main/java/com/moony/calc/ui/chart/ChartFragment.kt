@@ -41,11 +41,11 @@ class ChartFragment : BindingFragment<FragmentChartBinding>(R.layout.fragment_ch
 
     @ColorRes
     val colors = arrayListOf(
-            R.color.chart_color_1,
-            R.color.chart_color_2,
-            R.color.chart_color_3,
-            R.color.chart_color_4,
-            R.color.chart_color_5
+        R.color.chart_color_1,
+        R.color.chart_color_2,
+        R.color.chart_color_3,
+        R.color.chart_color_4,
+        R.color.chart_color_5
     )
 
     private val transactionViewModel: TransactionViewModel by activityViewModels()
@@ -93,12 +93,12 @@ class ChartFragment : BindingFragment<FragmentChartBinding>(R.layout.fragment_ch
 
     private fun generateData() {
         transactionViewModel.getChartData(calNow[Calendar.MONTH], calNow[Calendar.YEAR])
-                .observe(viewLifecycleOwner, { items ->
-                    gradedItems = items.filter { it.category.isIncome == isIncome }
-                            .sortedByDescending { it.sum }
-                    chartAdapter.submitList(gradedItems)
-                    drawChart(gradedItems)
-                })
+            .observe(viewLifecycleOwner, { items ->
+                gradedItems = items.filter { it.category.isIncome == isIncome }
+                    .sortedByDescending { it.sum }
+                chartAdapter.submitList(gradedItems)
+                drawChart(gradedItems)
+            })
     }
 
     private val chartItemClick: (ChartItem) -> Unit = {
@@ -119,14 +119,13 @@ class ChartFragment : BindingFragment<FragmentChartBinding>(R.layout.fragment_ch
         sumOfGradedItems = 0.0
         for ((i, item) in gradedItems.withIndex()) {
             slices.add(
-                    Slice(
-                            item.sum.toFloat(),
-                            if (i < 5) colors[i] else colors[0],
-                            if (item.category.resId != -1) resources.getString(item.category.resId) else
-                                item.category.title
+                Slice(
+                    item.sum.toFloat(),
+                    if (i < 5) colors[i] else colors[0],
+                    item.category.title
 
 
-                    )
+                )
             )
             sumOfGradedItems += item.sum
         }
@@ -142,10 +141,10 @@ class ChartFragment : BindingFragment<FragmentChartBinding>(R.layout.fragment_ch
 
         if (slices.isNotEmpty()) {
             val pieChart = PieChart(
-                    slices = slices,
-                    clickListener = null,
-                    sliceStartPoint = sliceStartPoint,
-                    sliceWidth = sliceWidth
+                slices = slices,
+                clickListener = null,
+                sliceStartPoint = sliceStartPoint,
+                sliceWidth = sliceWidth
             ).build()
             binding.chart.setPieChart(pieChart)
             chartLegendAdapter.submitList(slices)
@@ -161,36 +160,40 @@ class ChartFragment : BindingFragment<FragmentChartBinding>(R.layout.fragment_ch
     }
 
     private fun changeCenterText(isIncome: Boolean, sum: Double): String =
-            if (isIncome) "${resources.getString(R.string.income)}\n${sum.decimalFormat()}${settings.getString(Settings.SettingKey.CURRENCY_UNIT)}" else "${
-                resources.getString(
-                        R.string.expenses
-                )
-            }\n${sum.decimalFormat()}${settings.getString(Settings.SettingKey.CURRENCY_UNIT)}"
+        if (isIncome) "${resources.getString(R.string.income)}\n${sum.decimalFormat()}${
+            settings.getString(
+                Settings.SettingKey.CURRENCY_UNIT
+            )
+        }" else "${
+            resources.getString(
+                R.string.expenses
+            )
+        }\n${sum.decimalFormat()}${settings.getString(Settings.SettingKey.CURRENCY_UNIT)}"
 
     private fun showMonthYearPickerDialog() {
         val builder = MonthPickerDialog.Builder(
-                requireContext(),
-                { selectedMonth, selectedYear ->
+            requireContext(),
+            { selectedMonth, selectedYear ->
 
-                    calNow.set(Calendar.YEAR, selectedYear)
-                    calNow.set(Calendar.MONTH, selectedMonth)
+                calNow.set(Calendar.YEAR, selectedYear)
+                calNow.set(Calendar.MONTH, selectedMonth)
 
-                    binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
+                binding.txtTransactionDate.text = calNow.formatMonth(Locale.ENGLISH)
 
 //                showProgressBar()
-                    generateData()
-                }, calNow.get(Calendar.YEAR), calNow.get(Calendar.MONTH)
+                generateData()
+            }, calNow.get(Calendar.YEAR), calNow.get(Calendar.MONTH)
         )
 
         builder.setActivatedMonth(Calendar.JULY)
-                .setMinYear(1990)
-                .setActivatedYear(calNow.get(Calendar.YEAR))
-                .setMaxYear(2100)
-                .setActivatedMonth(calNow.get(Calendar.MONTH))
-                .setMinMonth(Calendar.JANUARY)
-                .setTitle(resources.getString(R.string.select_month))
-                .setMaxMonth(Calendar.DECEMBER)
-                .build()
-                .show()
+            .setMinYear(1990)
+            .setActivatedYear(calNow.get(Calendar.YEAR))
+            .setMaxYear(2100)
+            .setActivatedMonth(calNow.get(Calendar.MONTH))
+            .setMinMonth(Calendar.JANUARY)
+            .setTitle(resources.getString(R.string.select_month))
+            .setMaxMonth(Calendar.DECEMBER)
+            .build()
+            .show()
     }
 }

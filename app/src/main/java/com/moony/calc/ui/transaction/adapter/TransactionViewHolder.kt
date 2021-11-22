@@ -33,12 +33,7 @@ class TransactionViewHolder(
             .load(AssetFolderManager.assetPath + item.category.iconUrl)
             .into(binding.imgTransaction)
 
-        if (item.category.resId != -1) {
-            binding.txtTransactionName.setText(item.category.resId)
-        } else {
-            binding.txtTransactionName.text = item.category.title
-
-        }
+        binding.txtTransactionName.text = item.category.title
 
         if (item.category.isIncome)
             binding.txtTransactionMoney.text =
