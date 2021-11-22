@@ -34,12 +34,14 @@ class SavingDetailFragment(var savings: Saving) :
 
 
     override fun initControls(savedInstanceState: Bundle?) {
+
+    }
+
+    override fun onResume() {
         savingViewModel.getSaving(saving.idSaving).observe(viewLifecycleOwner, savingObserver)
-
         moneySavedLiveData = savingHistoryViewModel.getCurrentAmount(saving.idSaving)
-
         moneySavedLiveData!!.observe(viewLifecycleOwner, moneySavedObserver)
-
+        super.onResume()
     }
 
     private val savingObserver = Observer<Saving> { saving ->
