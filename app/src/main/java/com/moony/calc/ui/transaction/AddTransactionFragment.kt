@@ -26,10 +26,7 @@ import com.moony.calc.model.Transaction
 import com.moony.calc.ui.category.CategoriesActivity
 import com.moony.calc.ui.saving.SavingViewModel
 import com.moony.calc.ui.saving.history.SavingHistoryViewModel
-import com.moony.calc.utils.AssetFolderManager
-import com.moony.calc.utils.formatDateTime
-import com.moony.calc.utils.setAutoHideKeyboard
-import com.moony.calc.utils.showDialogConfirm
+import com.moony.calc.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
@@ -226,7 +223,7 @@ class AddTransactionFragment : AddTransactionFragmentBase() {
         )
         if (!category!!.isIncome && balance != null && balance < mon) {
             requireContext().showDialogConfirm(
-                getString(R.string.transaction_greater_than_balance_alert) + " $mon! " + getString(R.string.create_transaction_alert),
+                getString(R.string.transaction_greater_than_balance_alert) + " ${mon.decimalFormat()}! " + getString(R.string.create_transaction_alert),
                 lifecycle,
                 {}) {
                 confirmCreateTransaction(transaction)

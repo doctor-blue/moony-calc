@@ -68,10 +68,10 @@
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:src="@drawable/ic_unknown"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_history_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_history_money"
+                    app:layout_constraintTop_toTopOf="@+id/txt_history_title"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -90,13 +90,13 @@
                     android:id="@+id/img_note"
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
                     android:src="@drawable/ic_note"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_history_note"
                     app:layout_constraintEnd_toEndOf="@+id/img_history"
                     app:layout_constraintStart_toStartOf="@+id/img_history"
-                    app:layout_constraintTop_toBottomOf="@+id/img_history"
-                    tools:ignore="ContentDescription"
-                    app:tint="@color/colorPrimary" />
+                    app:layout_constraintTop_toTopOf="@+id/txt_history_note"
+                    app:tint="@color/colorPrimary"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/txt_history_note"
@@ -114,11 +114,11 @@
                     android:id="@+id/img_history_date"
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
                     android:src="@drawable/ic_calendar"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_history_date"
                     app:layout_constraintEnd_toEndOf="@id/img_note"
                     app:layout_constraintStart_toStartOf="@+id/img_note"
-                    app:layout_constraintTop_toBottomOf="@+id/img_note"
+                    app:layout_constraintTop_toTopOf="@+id/txt_history_date"
                     tools:ignore="ContentDescription" />
 
                 <TextView
