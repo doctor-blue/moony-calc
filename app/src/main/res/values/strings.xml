@@ -148,7 +148,7 @@
     <string name="by_expenses">Filtered by expenses</string>
     <string name="alert">Alert</string>
     <string name="create_transaction_alert">Do you really want to create this transaction?</string>
-    <string name="transaction_greater_than_balance_alert">Your income is lower than </string>
+    <string name="transaction_greater_than_balance_alert">Your balance is lower than </string>
     <string name="copied_link_to_clipbroad">Copied link to clipboard</string>
     <string name="money">Money</string>
     <string name="time">Time</string>

@@ -55,10 +55,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
                     android:text="askjdfka"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -69,11 +67,10 @@
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:src="@drawable/ic_unknown"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_category_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_transaction_money"
+                    app:layout_constraintTop_toTopOf="@+id/txt_category_title"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -82,7 +79,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:text="@string/transaction_detail"
@@ -94,12 +90,12 @@
                     android:id="@+id/img_note"
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
                     android:src="@drawable/ic_note"
                     android:tint="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_transaction_note"
                     app:layout_constraintEnd_toEndOf="@+id/img_category"
                     app:layout_constraintStart_toStartOf="@+id/img_category"
-                    app:layout_constraintTop_toBottomOf="@+id/img_category"
+                    app:layout_constraintTop_toTopOf="@+id/txt_transaction_note"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -109,7 +105,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
                     android:text="@string/transaction_detail"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/txt_category_title"
@@ -119,11 +114,11 @@
                     android:id="@+id/img_transaction_date"
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
-                    android:layout_marginTop="@dimen/_30sdp"
                     android:src="@drawable/ic_calendar"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_transaction_date"
                     app:layout_constraintEnd_toEndOf="@id/img_note"
                     app:layout_constraintStart_toStartOf="@+id/img_note"
-                    app:layout_constraintTop_toBottomOf="@+id/img_note"
+                    app:layout_constraintTop_toTopOf="@+id/txt_transaction_date"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -133,7 +128,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_40sdp"
                     android:text="@string/transaction_detail"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -149,7 +143,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_35sdp"
-            android:layout_marginRight="@dimen/_35sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_edit"
             app:fabCustomSize="@dimen/_40sdp"
