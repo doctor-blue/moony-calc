@@ -135,5 +135,6 @@
     <string name="days">Ngày</string>
     <string name="expired">Hết hạn</string>
     <string name="exceeds_the_amount">Số tiền bạn đã nhập vượt quá số tiền còn lại trong khoản tiết kiệm của bạn</string>
-
+    <string name="history_detail">Chi tiết</string>
+    <string name="confirm_delete_mess">Bạn có thực sự muốn xoá không?</string>
 </resources>

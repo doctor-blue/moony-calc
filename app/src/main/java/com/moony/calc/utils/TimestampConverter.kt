@@ -17,14 +17,14 @@ class TimestampConverter {
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
-            null
+            Date()
         } else {
-            null
+            Date()
         }
     }
 
     @TypeConverter
     fun dateToTimestamp(value: Date?): String? {
-        return if (value == null) null else df.format(value)
+        return if (value == null) "" else df.format(value)
     }
 }

@@ -157,5 +157,6 @@
     <string name="expired">Expired</string>
     <string name="exceeds_the_amount">The amount you entered exceeds the amount left in your savings</string>
     <string name="history_detail">History detail</string>
+    <string name="confirm_delete_mess">Do you really want to delete this?</string>
 
 </resources>
