@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:text="@string/total"
+                android:text="@string/goal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/txt_title_remaining"
                 app:layout_constraintTop_toBottomOf="@id/card_saving_progress" />

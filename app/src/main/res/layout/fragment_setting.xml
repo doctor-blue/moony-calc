@@ -43,36 +43,36 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/_60sdp"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingRight="@dimen/_15sdp">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:minHeight="@dimen/_60sdp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingLeft="@dimen/_15sdp"-->
+<!--            android:paddingRight="@dimen/_15sdp">-->
 
-            <TextView
-                style="@style/TextAppearance.Moony.Item"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/notification" />
+<!--            <TextView-->
+<!--                style="@style/TextAppearance.Moony.Item"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@string/notification" />-->
 
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:thumbTint="@color/switch_color_primary" />
+<!--            <Switch-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:thumbTint="@color/switch_color_primary" />-->
 
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            android:background="@color/dark_brown" />
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginLeft="@dimen/_15sdp"-->
+<!--            android:layout_marginRight="@dimen/_15sdp"-->
+<!--            android:background="@color/dark_brown" />-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

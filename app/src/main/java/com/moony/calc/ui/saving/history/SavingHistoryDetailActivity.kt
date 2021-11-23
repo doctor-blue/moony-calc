@@ -74,6 +74,9 @@ class SavingHistoryDetailActivity :
                 }
                 true
             }
+            toolbarHistoryDetail.setNavigationOnClickListener {
+                finish()
+            }
         }
     }
 
