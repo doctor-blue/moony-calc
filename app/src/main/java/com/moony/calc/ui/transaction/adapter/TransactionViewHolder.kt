@@ -20,7 +20,7 @@ class TransactionViewHolder(
 
     init {
         binding.cardTransaction.setOnClickListener {
-            //thực hiện hàm click nội dung hàm sẽ được viết ở TransactionFragment
+            //thực hiện hàm - click nội dung hàm sẽ được viết ở TransactionFragment
             transactionItem?.let {
                 itemClick(it)
             }

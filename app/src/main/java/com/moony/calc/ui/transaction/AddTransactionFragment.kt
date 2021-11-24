@@ -221,7 +221,7 @@ class AddTransactionFragment : AddTransactionFragmentBase() {
             description,
             calendar.time,
         )
-        if (!category!!.isIncome && balance != null && balance < mon) {
+        if (!category!!.isIncome && balance != null && balance < mon && checkSameMonth()) {
             requireContext().showDialogConfirm(
                 getString(R.string.transaction_greater_than_balance_alert) + " ${mon.decimalFormat()}! " + getString(R.string.create_transaction_alert),
                 lifecycle,
@@ -323,6 +323,9 @@ class AddTransactionFragment : AddTransactionFragmentBase() {
                 }
         }
     }
-
+    private fun checkSameMonth(): Boolean {
+        val currentDate = Calendar.getInstance()
+        return currentDate[Calendar.MONTH] == calendar[Calendar.MONTH] && currentDate[Calendar.YEAR] == calendar[Calendar.YEAR]
+    }
 
 }
